@@ -12,6 +12,8 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public Vector2 currentDirection { get; private set; }
+
     private float xInput, yInput;
     private Rigidbody2D _rb2D;
 
@@ -23,15 +25,16 @@ public class PlayerController : MonoBehaviour {
         xInput = Input.GetAxisRaw("Horizontal");
         yInput = Input.GetAxisRaw("Vertical");
 
+        currentDirection = new Vector2(xInput, yInput);
+
         if (HasInput) {
-            Move();
+            Move(currentDirection);
         }
     }
 
-    public void Move() {
+    public void Move(Vector2 direction) {
         Vector2 currentPosition = transform.position;
-        _rb2D.MovePosition(new Vector2(currentPosition.x + (xInput * speed * Time.fixedDeltaTime), 
-                                      currentPosition.y + (yInput * speed * Time.fixedDeltaTime)));
+        _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
     }
 
 }
