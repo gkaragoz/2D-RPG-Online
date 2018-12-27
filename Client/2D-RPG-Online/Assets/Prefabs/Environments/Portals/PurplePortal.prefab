@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 212546322938005662}
   - component: {fileID: 95625863113211258}
   - component: {fileID: 114009826530923558}
+  - component: {fileID: 114306473223216606}
   m_Layer: 0
   m_Name: PurplePortal
   m_TagString: Untagged
@@ -119,6 +120,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6769cc91b13b6349ba85d413183421f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114306473223216606
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1421921468602014}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501cca58d5da12c47a5098ff75d8bff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95505192276163284}
+  spawnedTransform: {fileID: 4769565647760840, guid: 8cf9f3913169acc45bfd86a9b6a1a614,
+    type: 2}
 --- !u!212 &212546322938005662
 SpriteRenderer:
   m_ObjectHideFlags: 1

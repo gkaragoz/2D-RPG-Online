@@ -38,6 +38,7 @@ GameObject:
   - component: {fileID: 212341121161962442}
   - component: {fileID: 95614467620609578}
   - component: {fileID: 114756491897690418}
+  - component: {fileID: 114500057806841490}
   m_Layer: 0
   m_Name: GreenPortal
   m_TagString: Untagged
@@ -108,6 +109,20 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114500057806841490
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1363376672052574}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 501cca58d5da12c47a5098ff75d8bff6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  animator: {fileID: 95784383926170316}
+  spawnedTransform: {fileID: 4769565647760840, guid: 8cf9f3913169acc45bfd86a9b6a1a614,
+    type: 2}
 --- !u!114 &114756491897690418
 MonoBehaviour:
   m_ObjectHideFlags: 1
