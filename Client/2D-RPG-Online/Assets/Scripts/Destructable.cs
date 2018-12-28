@@ -18,6 +18,10 @@ public class Destructable : MonoBehaviour {
     }
 
     public void OnDamageTaken() {
+        if (health <= 0) {
+            return;
+        }
+
         _animator.SetTrigger("Damage");
         health--;
 
