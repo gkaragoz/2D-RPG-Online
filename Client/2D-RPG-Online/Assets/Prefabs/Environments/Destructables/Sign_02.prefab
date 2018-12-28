@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95378242997271058}
   - component: {fileID: 114288486793364154}
   - component: {fileID: 61303600833412624}
+  - component: {fileID: 114480685350057074}
   m_Layer: 8
   m_Name: Sign_02
   m_TagString: Untagged
@@ -97,6 +98,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b6769cc91b13b6349ba85d413183421f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &114480685350057074
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715647245576804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38b9e05cd381fc4296bc62a3836d202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 2
 --- !u!212 &212894964365456344
 SpriteRenderer:
   m_ObjectHideFlags: 1

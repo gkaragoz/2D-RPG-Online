@@ -66,7 +66,7 @@ public class PlayerController : MonoBehaviour {
         Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
         for (int ii = 0; ii < objectsToDamage.Length; ii++) {
             //Run on damage function in the victim side.
-            Debug.Log(objectsToDamage[ii].gameObject.name);
+            objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
         }
 
         IsAttacking = true;

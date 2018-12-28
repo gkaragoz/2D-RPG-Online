@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95991550281248342}
   - component: {fileID: 114761559499356860}
   - component: {fileID: 61740931453239686}
+  - component: {fileID: 114462093671320558}
   m_Layer: 8
   m_Name: Crate
   m_TagString: Untagged
@@ -86,6 +87,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114462093671320558
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1771019263214638}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b38b9e05cd381fc4296bc62a3836d202, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  health: 3
 --- !u!114 &114761559499356860
 MonoBehaviour:
   m_ObjectHideFlags: 1
