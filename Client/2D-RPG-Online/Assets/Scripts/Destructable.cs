@@ -17,6 +17,10 @@ public class Destructable : MonoBehaviour {
         _animator.SetTrigger("Destruct");
     }
 
+    public void ShakeCamera() {
+        CameraShaker.Instance.ShakeOnce(Random.Range(1f, 2f), 5f, 0.1f, 1f);
+    }
+
     public void OnDamageTaken() {
         if (health <= 0) {
             return;
