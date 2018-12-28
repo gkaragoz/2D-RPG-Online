@@ -25,6 +25,8 @@ GameObject:
   - component: {fileID: 50525237351770638}
   - component: {fileID: 114863544182535238}
   - component: {fileID: 114825978496376422}
+  - component: {fileID: 114944457240004086}
+  - component: {fileID: 114068955486274758}
   m_Layer: 0
   m_Name: Gladiator
   m_TagString: Untagged
@@ -137,6 +139,25 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &114068955486274758
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268566873604978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58b718141f5e3ac4f998d8f54fda1959, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackSpeed: 0.5
+  attackRangeX: 0.35
+  attackRangeY: 0.35
+  attackables:
+    serializedVersion: 2
+    m_Bits: 768
+  attackHitPoint: {fileID: 4450166004219728}
+  _nextAttackTime: 0
 --- !u!114 &114825978496376422
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -159,17 +180,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc7da4d23d3eaa94f9a0f9b9708dd2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 3
-  attackSpeed: 0.5
-  attackRangeX: 0.35
-  attackRangeY: 0.35
-  attackables:
-    serializedVersion: 2
-    m_Bits: 768
-  attackHitPoint: {fileID: 4450166004219728}
   _xInput: 0
   _yInput: 0
-  _nextAttackTime: 0
+--- !u!114 &114944457240004086
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1268566873604978}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fbbf4beb607d273488739664b0f87ef1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  speed: 3
 --- !u!212 &212517003826479548
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -6,20 +6,21 @@ public class PlayerAnimator : MonoBehaviour {
 
     private Animator _animator;
     private PlayerController _playerController;
+    private PlayerAttack _playerAttack;
     private SpriteRenderer _spriteRenderer;
 
     private void Start() {
         _animator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
+        _playerAttack = GetComponent<PlayerAttack>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
 
-        _playerController.onAttacking += OnAttack;
+        _playerAttack.onAttacking += OnAttack;
     }
 
     private void Update() {
         if (_playerController.HasInput) {
             float xValue = _playerController.CurrentDirection.x;
-            float yValue = _playerController.CurrentDirection.y;
 
             if (xValue < 0) {
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
