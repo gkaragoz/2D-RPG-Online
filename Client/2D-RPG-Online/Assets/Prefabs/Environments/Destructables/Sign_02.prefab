@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114288486793364154}
   - component: {fileID: 61303600833412624}
   - component: {fileID: 114480685350057074}
+  - component: {fileID: 210228139165929062}
   m_Layer: 8
   m_Name: Sign_02
   m_TagString: Untagged
@@ -110,6 +111,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 2
+--- !u!210 &210228139165929062
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1715647245576804}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!212 &212894964365456344
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -24,6 +24,7 @@ GameObject:
   - component: {fileID: 114146525421318442}
   - component: {fileID: 61449020349370944}
   - component: {fileID: 114783655791933312}
+  - component: {fileID: 210680303778890160}
   m_Layer: 8
   m_Name: Pottery
   m_TagString: Untagged
@@ -110,6 +111,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 1
+--- !u!210 &210680303778890160
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1807856985079706}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!212 &212384545167547942
 SpriteRenderer:
   m_ObjectHideFlags: 1

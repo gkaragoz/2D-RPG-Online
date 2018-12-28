@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4860425396422304}
   - component: {fileID: 212381818104766668}
   - component: {fileID: 60979074370041816}
+  - component: {fileID: 210173546003686434}
   m_Layer: 0
   m_Name: Rock_1
   m_TagString: Untagged
@@ -87,6 +88,16 @@ PolygonCollider2D:
       - {x: 0.32999998, y: -0.63}
       - {x: 0.45, y: -0.59}
       - {x: 0.53, y: -0.55}
+--- !u!210 &210173546003686434
+SortingGroup:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1747977562721624}
+  m_Enabled: 1
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
 --- !u!212 &212381818104766668
 SpriteRenderer:
   m_ObjectHideFlags: 1
