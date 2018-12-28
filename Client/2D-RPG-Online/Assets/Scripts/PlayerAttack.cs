@@ -30,6 +30,8 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     public void Attack() {
+        AudioManager.instance.Play("swing" + Random.Range(1, 3));
+
         _nextAttackTime = Time.time + attackSpeed;
 
         Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);

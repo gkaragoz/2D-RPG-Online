@@ -788,7 +788,7 @@ MonoBehaviour:
   sounds:
   - name: footstep
     clip: {fileID: 8300000, guid: fe7e014e5dd315a408e53c61456d1513, type: 3}
-    volume: 0.5
+    volume: 0.3
     volumeVariance: 0.5
     pitch: 1
     pitchVariance: 1
@@ -804,6 +804,36 @@ MonoBehaviour:
     pitchVariance: 0
     loop: 1
     mixerGroup: {fileID: 243538156050603238, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing1
+    clip: {fileID: 8300000, guid: b59e1950f9083534bba26cc9b207441d, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing2
+    clip: {fileID: 8300000, guid: 51b65f93ec117fc4481920ea7a47f4d1, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing3
+    clip: {fileID: 8300000, guid: 17e070d9e94cab349ab0666037a2949e, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
       type: 2}
     source: {fileID: 0}
 --- !u!4 &1933754460
