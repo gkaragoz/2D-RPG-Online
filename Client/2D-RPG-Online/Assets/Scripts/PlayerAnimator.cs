@@ -12,12 +12,14 @@ public class PlayerAnimator : MonoBehaviour {
         _animator = GetComponent<Animator>();
         _playerController = GetComponent<PlayerController>();
         _spriteRenderer = GetComponent<SpriteRenderer>();
+
+        _playerController.onAttacking += OnAttack;
     }
 
     private void Update() {
         if (_playerController.HasInput) {
-            float xValue = _playerController.currentDirection.x;
-            float yValue = _playerController.currentDirection.y;
+            float xValue = _playerController.CurrentDirection.x;
+            float yValue = _playerController.CurrentDirection.y;
 
             if (xValue < 0) {
                 _spriteRenderer.flipX = true;
@@ -29,6 +31,10 @@ public class PlayerAnimator : MonoBehaviour {
         } else {
             _animator.SetBool("Run", false);
         }
+    }
+
+    private void OnAttack() {
+        _animator.SetTrigger("Attack");
     }
 
 }
