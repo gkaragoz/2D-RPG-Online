@@ -836,6 +836,36 @@ MonoBehaviour:
     mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
       type: 2}
     source: {fileID: 0}
+  - name: destruct1
+    clip: {fileID: 8300000, guid: 8a300d0ee9b9c204e9bed811e6788bce, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: destruct2
+    clip: {fileID: 8300000, guid: ebbe651c130c06845bccfebe54d87d6e, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: destruct3
+    clip: {fileID: 8300000, guid: e92ce840c04091940ac4094907a4b369, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
 --- !u!4 &1933754460
 Transform:
   m_ObjectHideFlags: 0

@@ -14,6 +14,7 @@ public class Destructable : MonoBehaviour {
     }
 
     private void Destruct() {
+        AudioManager.instance.Play("destruct" + Random.Range(1, 3));
         _animator.SetTrigger("Destruct");
     }
 
