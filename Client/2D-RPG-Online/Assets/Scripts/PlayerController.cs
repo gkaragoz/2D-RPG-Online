@@ -25,10 +25,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    [Header("Debug")]
     [SerializeField]
+    [Utils.ReadOnly]
     private float _xInput, _yInput;
     [SerializeField]
+    [Utils.ReadOnly]
     private float _nextAttackTime;
     private Rigidbody2D _rb2D;
 
