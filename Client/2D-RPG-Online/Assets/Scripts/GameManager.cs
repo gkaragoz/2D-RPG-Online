@@ -43,11 +43,6 @@ public class GameManager : MonoBehaviour {
         onGameStateChanged.Invoke(GameState.PREGAME, _currentGameState);
     }
 
-    public void LoginAsAGuest() {
-        UIManager.instance.HideLoginPanel();
-        UIManager.instance.ShowSelectClassPanel();
-    }
-
     public void TogglePause() {
         UpdateState(_currentGameState == GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING);
     }

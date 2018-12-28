@@ -20,19 +20,23 @@ public class UIManager : MonoBehaviour {
 
     #endregion
 
-    public GameObject loginPanel;
-    public GameObject selectClassPanel;
+    public LoginManager loginManager;
+    public ClassManager classManager;
 
     public void HideLoginPanel() {
-        loginPanel.SetActive(false);
+        loginManager.Hide();
+    }
+
+    public void ShowLoginPanel() {
+        loginManager.Show();
     }
 
     public void HideSelectClassPanel() {
-        selectClassPanel.SetActive(false);
+        classManager.Hide();
     }
 
     public void ShowSelectClassPanel() {
-        selectClassPanel.SetActive(true);
+        classManager.Show();
     }
 
 }
