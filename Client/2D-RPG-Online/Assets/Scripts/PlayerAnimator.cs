@@ -22,9 +22,9 @@ public class PlayerAnimator : MonoBehaviour {
             float yValue = _playerController.CurrentDirection.y;
 
             if (xValue < 0) {
-                _spriteRenderer.flipX = true;
+                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
             } else {
-                _spriteRenderer.flipX = false;
+                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
             }
 
             _animator.SetBool("Run", true);
