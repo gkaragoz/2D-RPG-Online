@@ -31,6 +31,7 @@ public class GameManager : MonoBehaviour {
 
     public EventGameState onGameStateChanged;
 
+    private string _currentLevelName;
     private GameState _currentGameState = GameState.PREGAME;
 
     public GameState CurrentGameState {
@@ -40,6 +41,11 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         onGameStateChanged.Invoke(GameState.PREGAME, _currentGameState);
+    }
+
+    public void LoginAsAGuest() {
+        UIManager.instance.HideLoginPanel();
+        UIManager.instance.ShowSelectClassPanel();
     }
 
     public void TogglePause() {
