@@ -1,0 +1,13 @@
+--- Ships
+RAFT1:
+    id  : "raft-1#"
+    assetName : "RAFT1"
+    slopeSpeed : 15
+    absSpeed : 30
+    maxSuppliesCount: 250
+    maxSailorsCount: 1
+    marketPrice: 1
+    rotationSpeed: 15
+    movementSpeed: 15
+    maxHealth: 250
+

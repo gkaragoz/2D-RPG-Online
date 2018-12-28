@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Assembly-CSharp</name>
+    </assembly>
+    <members>
+        <member name="F:CameraShakeInstance.Magnitude">
+            <summary>
+            The intensity of the shake. It is recommended that you use ScaleMagnitude to alter the magnitude of a shake.
+            </summary>
+        </member>
+        <member name="F:CameraShakeInstance.Roughness">
+            <summary>
+            Roughness of the shake. It is recommended that you use ScaleRoughness to alter the roughness of a shake.
+            </summary>
+        </member>
+        <member name="F:CameraShakeInstance.PositionInfluence">
+            <summary>
+            How much influence this shake has over the local position axes of the camera.
+            </summary>
+        </member>
+        <member name="F:CameraShakeInstance.RotationInfluence">
+            <summary>
+            How much influence this shake has over the local rotation axes of the camera.
+            </summary>
+        </member>
+        <member name="F:CameraShakeInstance.DeleteOnInactive">
+            <summary>
+            Should this shake be removed from the CameraShakeInstance list when not active?
+            </summary>
+        </member>
+        <member name="M:CameraShakeInstance.#ctor(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Will create a new instance that will shake once and fade over the given number of seconds.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="fadeOutTime">How long, in seconds, to fade out the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+        </member>
+        <member name="M:CameraShakeInstance.#ctor(System.Single,System.Single)">
+            <summary>
+            Will create a new instance that will start a sustained shake.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+        </member>
+        <member name="M:CameraShakeInstance.StartFadeOut(System.Single)">
+            <summary>
+            Starts a fade out over the given number of seconds.
+            </summary>
+            <param name="fadeOutTime">The duration, in seconds, of the fade out.</param>
+        </member>
+        <member name="M:CameraShakeInstance.StartFadeIn(System.Single)">
+            <summary>
+            Starts a fade in over the given number of seconds.
+            </summary>
+            <param name="fadeInTime">The duration, in seconds, of the fade in.</param>
+        </member>
+        <member name="P:CameraShakeInstance.ScaleRoughness">
+            <summary>
+            Scales this shake's roughness while preserving the initial Roughness.
+            </summary>
+        </member>
+        <member name="P:CameraShakeInstance.ScaleMagnitude">
+            <summary>
+            Scales this shake's magnitude while preserving the initial Magnitude.
+            </summary>
+        </member>
+        <member name="P:CameraShakeInstance.NormalizedFadeTime">
+            <summary>
+            A normalized value (about 0 to about 1) that represents the current level of intensity.
+            </summary>
+        </member>
+        <member name="P:CameraShakeInstance.CurrentState">
+            <summary>
+            Gets the current state of the shake.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.Bump">
+            <summary>
+            [One-Shot] A high magnitude, short, yet smooth shake.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.Explosion">
+            <summary>
+            [One-Shot] An intense and rough shake.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.Earthquake">
+            <summary>
+            [Sustained] A continuous, rough shake.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.BadTrip">
+            <summary>
+            [Sustained] A bizarre shake with a very high magnitude and low roughness.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.HandheldCamera">
+            <summary>
+            [Sustained] A subtle, slow shake. 
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.Vibration">
+            <summary>
+            [Sustained] A very rough, yet low magnitude shake.
+            </summary>
+        </member>
+        <member name="P:CameraShakePresets.RoughDriving">
+            <summary>
+            [Sustained] A slightly rough, medium magnitude shake.
+            </summary>
+        </member>
+        <member name="F:CameraShaker.Instance">
+            <summary>
+            The single instance of the CameraShake in the current scene. Do not use if you have multiple instances.
+            </summary>
+        </member>
+        <member name="F:CameraShaker.DefaultPosInfluence">
+            <summary>
+            The default position influcence of all shakes created by this shaker.
+            </summary>
+        </member>
+        <member name="F:CameraShaker.DefaultRotInfluence">
+            <summary>
+            The default rotation influcence of all shakes created by this shaker.
+            </summary>
+        </member>
+        <member name="M:CameraShaker.GetInstance(System.String)">
+            <summary>
+            Gets the CameraShaker with the given name, if it exists.
+            </summary>
+            <param name="name">The name of the camera shaker instance.</param>
+            <returns></returns>
+        </member>
+        <member name="M:CameraShaker.Shake(CameraShakeInstance)">
+            <summary>
+            Starts a shake using the given preset.
+            </summary>
+            <param name="shake">The preset to use.</param>
+            <returns>A CameraShakeInstance that can be used to alter the shake's properties.</returns>
+        </member>
+        <member name="M:CameraShaker.ShakeOnce(System.Single,System.Single,System.Single,System.Single)">
+            <summary>
+            Shake the camera once, fading in and out  over a specified durations.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+            <param name="fadeInTime">How long to fade in the shake, in seconds.</param>
+            <param name="fadeOutTime">How long to fade out the shake, in seconds.</param>
+            <returns>A CameraShakeInstance that can be used to alter the shake's properties.</returns>
+        </member>
+        <member name="M:CameraShaker.ShakeOnce(System.Single,System.Single,System.Single,System.Single,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Shake the camera once, fading in and out over a specified durations.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+            <param name="fadeInTime">How long to fade in the shake, in seconds.</param>
+            <param name="fadeOutTime">How long to fade out the shake, in seconds.</param>
+            <param name="posInfluence">How much this shake influences position.</param>
+            <param name="rotInfluence">How much this shake influences rotation.</param>
+            <returns>A CameraShakeInstance that can be used to alter the shake's properties.</returns>
+        </member>
+        <member name="M:CameraShaker.StartShake(System.Single,System.Single,System.Single)">
+            <summary>
+            Start shaking the camera.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+            <param name="fadeInTime">How long to fade in the shake, in seconds.</param>
+            <returns>A CameraShakeInstance that can be used to alter the shake's properties.</returns>
+        </member>
+        <member name="M:CameraShaker.StartShake(System.Single,System.Single,System.Single,UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Start shaking the camera.
+            </summary>
+            <param name="magnitude">The intensity of the shake.</param>
+            <param name="roughness">Roughness of the shake. Lower values are smoother, higher values are more jarring.</param>
+            <param name="fadeInTime">How long to fade in the shake, in seconds.</param>
+            <param name="posInfluence">How much this shake influences position.</param>
+            <param name="rotInfluence">How much this shake influences rotation.</param>
+            <returns>A CameraShakeInstance that can be used to alter the shake's properties.</returns>
+        </member>
+        <member name="P:CameraShaker.ShakeInstances">
+            <summary>
+            Gets a copy of the list of current camera shake instances.
+            </summary>
+        </member>
+        <member name="M:CameraUtilities.SmoothDampEuler(UnityEngine.Vector3,UnityEngine.Vector3,UnityEngine.Vector3@,System.Single)">
+            <summary>
+            Smoothes a Vector3 that represents euler angles.
+            </summary>
+            <param name="current">The current Vector3 value.</param>
+            <param name="target">The target Vector3 value.</param>
+            <param name="velocity">A refernce Vector3 used internally.</param>
+            <param name="smoothTime">The time to smooth, in seconds.</param>
+            <returns>The smoothed Vector3 value.</returns>
+        </member>
+        <member name="M:CameraUtilities.MultiplyVectors(UnityEngine.Vector3,UnityEngine.Vector3)">
+            <summary>
+            Multiplies each element in Vector3 v by the corresponding element of w.
+            </summary>
+        </member>
+    </members>
+</doc>
