@@ -7,29 +7,42 @@ public class PlayerController : MonoBehaviour {
     public delegate void AttackEvent();
     public event AttackEvent onAttacking;
 
+    [Header("Initialization")]
     public float speed = 3f;
+    public float attackSpeed = 1f;
 
     public bool HasInput {
         get {
-            return (xInput != 0 || yInput != 0) ? true : false;
+            return (_xInput != 0 || _yInput != 0) ? true : false;
         }
     }
 
     public Vector2 CurrentDirection { get; private set; }
     public bool IsAttacking { get; private set; }
+    public bool CanAttack {
+        get {
+            return Time.time > _nextAttackTime;
+        }
+    }
 
-    private float xInput, yInput;
+    [Header("Debug")]
+    [SerializeField]
+    private float _xInput, _yInput;
+    [SerializeField]
+    private float _nextAttackTime;
     private Rigidbody2D _rb2D;
 
     private void Start() {
         _rb2D = GetComponent<Rigidbody2D>();
+
+        _nextAttackTime = 2f;
     }
 
     private void FixedUpdate() {
-        xInput = Input.GetAxisRaw("Horizontal");
-        yInput = Input.GetAxisRaw("Vertical");
+        _xInput = Input.GetAxisRaw("Horizontal");
+        _yInput = Input.GetAxisRaw("Vertical");
 
-        CurrentDirection = new Vector2(xInput, yInput);
+        CurrentDirection = new Vector2(_xInput, _yInput);
 
         if (HasInput && !IsAttacking) {
             Move(CurrentDirection);
@@ -37,12 +50,14 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.Space) && !IsAttacking) {
+        if (Input.GetKey(KeyCode.Space) && !IsAttacking && CanAttack) {
             Attack();
         }
     }
 
     public void Attack() {
+        _nextAttackTime = Time.time + attackSpeed;
+
         IsAttacking = true;
 
         if (onAttacking != null) {
