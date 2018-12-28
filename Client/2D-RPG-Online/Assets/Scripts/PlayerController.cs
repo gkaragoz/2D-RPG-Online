@@ -10,6 +10,10 @@ public class PlayerController : MonoBehaviour {
     [Header("Initialization")]
     public float speed = 3f;
     public float attackSpeed = 1f;
+    public float attackRangeX = 0.35f;
+    public float attackRangeY = 0.35f;
+    public LayerMask attackables;
+    public Transform attackHitPoint;
 
     public bool HasInput {
         get {
@@ -59,6 +63,12 @@ public class PlayerController : MonoBehaviour {
     public void Attack() {
         _nextAttackTime = Time.time + attackSpeed;
 
+        Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
+        for (int ii = 0; ii < objectsToDamage.Length; ii++) {
+            //Run on damage function in the victim side.
+            Debug.Log(objectsToDamage[ii].gameObject.name);
+        }
+
         IsAttacking = true;
 
         if (onAttacking != null) {
@@ -74,6 +84,13 @@ public class PlayerController : MonoBehaviour {
     public void Move(Vector2 direction) {
         Vector2 currentPosition = transform.position;
         _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
+    }
+
+    private void OnDrawGizmos() {
+        if (attackHitPoint != null) {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(attackHitPoint.position, new Vector3(attackRangeX, attackRangeY, 1f));
+        }
     }
 
 }
