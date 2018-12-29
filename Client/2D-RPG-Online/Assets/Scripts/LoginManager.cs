@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using ShiftServer.SocketClient;
+using ShiftServer.Client;
 
 public class LoginManager : Menu {
 

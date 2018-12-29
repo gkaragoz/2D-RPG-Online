@@ -1,32 +1,50 @@
-﻿using ShiftServer.SocketClient;
-using System;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
+using ShiftServer.Client;
 
 
-public class NetworkManager : Menu
+public class NetworkManager : MonoBehaviour
 {
+    
+    private static NetworkClient networkClient;
 
-    #region Singleton
 
-    public static NetworkManager instance;
-    public static NetworkClient networkClient;
-    void Awake()
+
+    private void Start()
     {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-
         networkClient = new NetworkClient();
         networkClient.Connect("localhost", 1337);
-        DontDestroyOnLoad(instance);
+
+        networkClient.AddEventListener(ShiftServerMsgID.ShiftServerConnectOk, OnConnected);
     }
 
-    #endregion
+    private void OnConnected(ShiftServerMsg obj)
+    {
+        Debug.Log("Connected To Server");
+    }
+
+    IEnumerator foo()
+    {
+
+        yield return new WaitForEndOfFrame();
+
+    }
+
+ 
+    private void FixedUpdate()
+    {
+        
+    }
+
+    public static void SendMessage(ShiftServerMsgID msgId)
+    {
+        networkClient.SendMessage(msgId);
+    }
 
 
 }
