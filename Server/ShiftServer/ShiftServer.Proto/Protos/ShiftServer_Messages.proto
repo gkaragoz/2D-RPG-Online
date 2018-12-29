@@ -1,0 +1,26 @@
+﻿syntax = "proto3";
+
+
+message ShiftServerMsg {
+	ShiftServerMsgID msgId = 1;  // Msg type
+}
+/// Control message ID.
+enum ShiftServerMsgID
+{
+
+	ShiftServer_Invalid = 0;						// Reserved
+	ShiftServer_RouterPingRequest = 1;				// Client -> Router
+	ShiftServer_RouterPingReply = 2;				// Router -> Client
+	ShiftServer_GameserverPingRequest = 3;			// Router -> Server
+	ShiftServer_GameserverPingReply = 4;			// Server -> Router -> Client
+	ShiftServer_GameserverSessionRequest = 5;		// Client -> Router
+	ShiftServer_GameserverSessionEstablished = 6;	// Router -> Client
+	ShiftServer_NoSession = 7;						// Router -> Server, Router -> Client
+	ShiftServer_Diagnostic = 8;						// Diagnostic / status message Router -> Client
+	ShiftServer_JoinRequest = 9;					// Join
+	ShiftServer_Stats = 13;							// Any -> Any
+	ShiftServer_ConnectRequest = 18;				// Client->router->server
+	ShiftServer_ConnectOK = 19;						// Server->router->client.
+	ShiftServer_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
+	ShiftServer_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+};
