@@ -8,5 +8,9 @@ namespace ShiftServer.Server.Core
 {
     interface IGameObject
     {
+        void OnAttack();
+        void OnHit();
+        void OnMove(); 
+
     }
 }

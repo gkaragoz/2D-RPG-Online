@@ -2,22 +2,75 @@
 
 
 message ShiftServerData {
-	ShiftEventId eventId = 1;  // Msg type
+	ServerEventId eid = 1;  // Event type
+	SessionData session = 2; // SessionData
+	ClientData clData = 3; // ClientData
+	repeated GameObject updatedGameObjects = 4; // GameObjects list
+
+	// interaction message
+	ObjectAction interaction = 5;
 }
 
 /// Control message ID.
-enum ShiftEventId
+enum ServerEventId
 {
 
-	ShiftServer_Invalid = 0;						// Reserved
-	ShiftServer_GameserverSessionRequest = 5;		// Client -> Router
-	ShiftServer_GameserverSessionEstablished = 6;	// Router -> Client
-	ShiftServer_NoSession = 7;						// Router -> Server, Router -> Client
-	ShiftServer_Diagnostic = 8;						// Diagnostic / status message Router -> Client
-	ShiftServer_JoinRequest = 9;					// Join
-	ShiftServer_Stats = 13;							// Any -> Any
-	ShiftServer_ConnectRequest = 18;				// Client->router->server
-	ShiftServer_ConnectOK = 19;						// Server->router->client.
-	ShiftServer_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
-	ShiftServer_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+	S_Invalid = 0;						// Reserved
+	S_GameserverSessionRequest = 5;		// Client -> Router
+	S_GameserverSessionEstablished = 6;	// Router -> Client
+	S_NoSession = 7;						// Router -> Server, Router -> Client
+	S_Diagnostic = 8;						// Diagnostic / status message Router -> Client
+	S_JoinRequest = 9;					// Join
+	S_Stats = 13;							// Any -> Any
+	S_ConnectRequest = 18;				// Client->router->server
+	S_ConnectOK = 19;						// Server->router->client.
+	S_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
+	S_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+
+	//Interaction events
+	S_OMove = 22;
+	S_OAttack = 23;
+	S_ODead = 24;
+	S_OUse = 25;
+
 };
+
+
+message SessionData {
+	string sid = 2;
+}
+
+message ObjectAction {
+	GameObject currentObject = 1;
+	repeated GameObject interactedObjects = 2;
+}
+
+message ClientData {
+	string ver = 1;
+	string machine_name = 2;
+	string machine_id = 3;
+	string guid = 4;
+}
+
+message GameObject {
+
+	int32 oid = 1;
+	xVector3 position = 4;
+	xVector3 rotation = 5;
+}
+
+message PlayerInput {
+
+	int32 oid = 1;
+	xVector3 scale = 2;
+	xVector3 position = 3;
+	xVector3 rotation = 4;
+}
+
+message xVector3 {
+
+	float x = 1;
+	float y = 2;
+	float z = 3;
+}
+

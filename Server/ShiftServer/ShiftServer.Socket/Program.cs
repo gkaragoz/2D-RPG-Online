@@ -1,3 +1,4 @@
+using ShiftServer.Proto.Models;
 using ShiftServer.Server.Core;
 using ShiftServer.Server.Helper;
 using System;
@@ -20,53 +21,31 @@ namespace ShiftServer.Server
         /// <param name="args"></param>
         static void Main(string[] args)
         {
+
             serverProvider = new ServerProvider();
+            serverProvider.AddEventListener(ServerEventId.SJoinRequest, )
             serverProvider.Listen();
 
-
-            
+            //Run Server Simulation
             int timerInterval = TickrateUtil.Set(15);
-
-
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            // Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
-            aTimer.Interval = timerInterval;
-            aTimer.Enabled = true;
-
-
-
-            bool runForever = true;
-            while (runForever)
-            {
-                Console.Write("Command [q cls count]: ");
-                string userInput = Console.ReadLine();
-                if (String.IsNullOrEmpty(userInput)) continue;
-
-                List<string> clients;
-
-                switch (userInput)
-                {
-                    case "q":
-                        serverProvider.Stop();
-                        runForever = false;
-                        break;
-                    case "cls":
-                        Console.Clear();
-                        break;
-                    case "count":
-                        int count = serverProvider.ClientCount();
-                        Console.WriteLine("Total user : " + count);
-                        break;
-                      
-                }
-            }
+            SetInterval(timerInterval, UpdateWorld);
         }
-
-        private static void OnTimedEvent(object source, ElapsedEventArgs e)
+     
+        private static void UpdateWorld(object source, ElapsedEventArgs e)
         {
             serverProvider.Update();
         }
+
+        private static void SetInterval(int timerInterval, Action<object, ElapsedEventArgs> updateWorld)
+        {
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(updateWorld);
+            // Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
+            aTimer.Interval = timerInterval;
+            aTimer.Enabled = true;
+        }
+
+
 
     }
 }

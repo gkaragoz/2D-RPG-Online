@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Client.Core;
+using ShiftServer.Proto.Models;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -43,9 +44,9 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="eventType">Shift Server event list</param>
         /// <param name="listener">Callback function which fired when event triggered</param>
-        public void AddEventListener(ShiftServerMsgID eventType, Action<ShiftServerMsg> listener)
+        public void AddEventListener(ServerEventId eventType, Action<ShiftServerData> listener)
         {
-            gameProvider.messageManager.events.Add(new EventCallback {
+            gameProvider.dataHandler.events.Add(new EventCallback {
                 CallbackFunc = listener,
                 EventId = eventType
             });
@@ -63,7 +64,7 @@ namespace ShiftServer.Client
         /// <summary>
         /// Craft and send data to server
         /// </summary>
-        public void SendMessage(ShiftServerMsg data)
+        public void SendMessage(ShiftServerData data)
         {
             byte[] bb = gameProvider.CraftData(data);
 

@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Server.Factory.Movement
 {
-    class MotionMaster
+    public class MotionMaster
     {
+        public static void OnConnected(ShiftServerData data)
+        {
+            Console.WriteLine("OnConnected event triggered::event_id::" + (int)data.Eid);
+        }
     }
 }

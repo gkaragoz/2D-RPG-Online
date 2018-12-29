@@ -1,28 +1,24 @@
+﻿using ShiftServer.Server.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
-using ShiftServer.Client;
-namespace ShiftServer.SocketTest
-{
-    class Program
-    {
-        private static NetworkClient networkClient = null;
 
-        static void Main(string[] args)
+namespace ShiftServer.Server.Helper
+{
+    public class ConsoleUI
+    {
+        public void RunConsoleUI(ServerProvider serverProvider)
         {
-            Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
-            networkClient = new NetworkClient();
-            networkClient.Connect("localhost", 1337);
-            networkClient.AddEventListener(ServerEventId.SConnectOk, OnConnected);
 
 
             bool runForever = true;
+
             while (runForever)
             {
                 Console.Write("Command [q cls count]: ");
+
                 string userInput = Console.ReadLine();
                 if (String.IsNullOrEmpty(userInput)) continue;
 
@@ -31,22 +27,19 @@ namespace ShiftServer.SocketTest
                 switch (userInput)
                 {
                     case "q":
-                        networkClient.Disconnect();
+                        serverProvider.Stop();
                         runForever = false;
                         break;
                     case "cls":
                         Console.Clear();
                         break;
-
+                    case "count":
+                        int count = serverProvider.ClientCount();
+                        Console.WriteLine("Total user : " + count);
+                        break;
 
                 }
             }
-
-        }
-      
-        public static void OnConnected(ShiftServerData data)
-        {
-            Console.WriteLine("OnConnected event triggered::event_id::" + (int)data.Eid);
         }
     }
 }

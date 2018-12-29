@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Client.Core
+namespace ShiftServer.Proto.Handlers
 {
 
 

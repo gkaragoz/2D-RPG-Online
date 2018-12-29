@@ -3,6 +3,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 using Google.Protobuf;
+using ShiftServer.Proto.Handlers;
 using ShiftServer.Server.Helper;
 
 namespace ShiftServer.Client.Core
@@ -14,10 +15,10 @@ namespace ShiftServer.Client.Core
     {
         public Telepathy.Client client = null;
         public Thread listenerThread = null;
-        public MsgManager messageManager = null;
+        public DataHandler dataHandler = null;
         public GameProvider()
         {
-            messageManager = new MsgManager();
+            dataHandler = new DataHandler();
         }
 
         /// <summary>
@@ -80,11 +81,11 @@ namespace ShiftServer.Client.Core
             client.Send(bb);
         }
 
-        public byte[] CraftData(ShiftServerMsg data)
+        public byte[] CraftData(ShiftServerData data)
         {
-            ShiftServerMsg msg = new ShiftServerMsg
+            ShiftServerData msg = new ShiftServerData
             {
-                MsgId = data.MsgId
+                Eid = data.Eid
             };
 
             return msg.ToByteArray();
@@ -120,10 +121,11 @@ namespace ShiftServer.Client.Core
                                 Console.WriteLine("Connected");
                                 break;
                             case Telepathy.EventType.Data:
-                                this.messageManager.HandleMessage(msg.data);
+                                this.dataHandler.HandleMessage(msg.data);
                                 break;
                             case Telepathy.EventType.Disconnected:
                                 Console.WriteLine("Disconnected");
+                                client.Disconnect();
                                 break;
                         }
                     }

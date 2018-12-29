@@ -37,6 +37,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,17 +51,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ICommand.cs" />
-    <Compile Include="Core\ICreature.cs" />
-    <Compile Include="Core\ICreatureItem.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Core\IWorld.cs" />
-    <Compile Include="Core\MsgManager.cs" />
     <Compile Include="Core\ServerProvider.cs" />
-    <Compile Include="Factory\AI\CreatureAI.cs" />
-    <Compile Include="Factory\Combat\IThreatManager.cs" />
-    <Compile Include="Factory\Entities\Player.cs" />
-    <Compile Include="Factory\Loot\LootManager.cs" />
+    <Compile Include="Factory\Entities\GameObject.cs" />
     <Compile Include="Factory\Movement\MotionMaster.cs" />
+    <Compile Include="Helper\ConsoleUI.cs" />
     <Compile Include="Helper\TickRate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -73,6 +70,11 @@
       <Project>{ce127e51-41a4-4c6a-9f9b-10954401e692}</Project>
       <Name>ShiftServer.Proto</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Factory\AI\" />
+    <Folder Include="Factory\Combat\" />
+    <Folder Include="Factory\Loot\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

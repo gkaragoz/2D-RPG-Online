@@ -59,7 +59,6 @@
   <ItemGroup>
     <Compile Include="Core\EventCallback.cs" />
     <Compile Include="Core\GameProvider.cs" />
-    <Compile Include="Core\MsgManager.cs" />
     <Compile Include="Data\Entities\Enums.cs" />
     <Compile Include="NetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
