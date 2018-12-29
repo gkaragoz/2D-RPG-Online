@@ -15,7 +15,7 @@ namespace ShiftServer.SocketTest
         {
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new NetworkClient();
-            networkClient.Connect();
+            networkClient.Connect("localhost", 1337);
 
 
             //this timer interval simulate the fixed update in unity. must control on server every time

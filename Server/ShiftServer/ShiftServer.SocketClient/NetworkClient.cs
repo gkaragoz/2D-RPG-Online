@@ -25,11 +25,13 @@ namespace ShiftServer.SocketClient
         }
 
         /// <summary>
-        /// Connect is triggered when login event is fired
+        /// Connect to tcp socket
         /// </summary>
-        public void Connect()
+        /// <param name="client">client object</param>
+        /// <returns></returns>
+        public void Connect(string address, int port)
         {
-            gameProvider.Connect();
+            gameProvider.Connect(address, port);
         }
 
         /// <summary>

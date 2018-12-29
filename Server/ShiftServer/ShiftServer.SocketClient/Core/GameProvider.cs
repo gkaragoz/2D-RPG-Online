@@ -17,13 +17,13 @@ namespace ShiftServer.SocketClient.Core
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Connect()
+        public void Connect(string address, int port)
         {
             try
             {   
                 // create and connect the client
                 client = new Telepathy.Client();
-                client.Connect("localhost", 1337);
+                client.Connect(address, port);
             }
             catch (Exception ex)
             {
