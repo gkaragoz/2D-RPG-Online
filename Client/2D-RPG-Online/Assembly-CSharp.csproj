@@ -95,7 +95,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
-    <None Include="Assets\Scripts\Network\ShiftServer\ShiftServer.Client.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
@@ -315,6 +314,9 @@
     <Reference Include="protobuf-net">
       <HintPath>D:/Projects/GKOG_WORKSPACE/Game/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/protobuf-net.dll</HintPath>
     </Reference>
+    <Reference Include="ShiftServer.Client">
+      <HintPath>D:/Projects/GKOG_WORKSPACE/Game/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/ShiftServer.Client.dll</HintPath>
+    </Reference>
     <Reference Include="ShiftServer.Proto">
       <HintPath>D:/Projects/GKOG_WORKSPACE/Game/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/ShiftServer.Proto.dll</HintPath>
     </Reference>
@@ -326,9 +328,6 @@
     </Reference>
     <Reference Include="UnityEngine.StandardEvents">
       <HintPath>C:/Users/gurcaglar/AppData/Local/Unity/cache/packages/packages.unity.com/com.unity.standardevents@1.0.13/UnityEngine.StandardEvents.dll</HintPath>
-    </Reference>
-    <Reference Include="ShiftServer.Client">
-      <HintPath>D:/Projects/GKOG_WORKSPACE/Game/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/ShiftServer.Client.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>D:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>

@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Net.Sockets;
+using System.Threading;
+using System.Timers;
 using Google.Protobuf;
+using ShiftServer.Server.Helper;
 
 namespace ShiftServer.Client.Core
 {
@@ -10,8 +13,10 @@ namespace ShiftServer.Client.Core
     public class GameProvider
     {
         public Telepathy.Client client = null;
+        public Thread listenerThread = null;
         public MsgManager messageManager = null;
-        public GameProvider() {
+        public GameProvider()
+        {
             messageManager = new MsgManager();
         }
 
@@ -23,9 +28,10 @@ namespace ShiftServer.Client.Core
         public void Connect(string address, int port)
         {
             try
-            {   
+            {
                 // create and connect the client
-                client = new Telepathy.Client();
+                client = new Telepathy.Client();               
+                this.SetFixedUpdateInterval();
                 client.Connect(address, port);
             }
             catch (Exception ex)
@@ -60,7 +66,7 @@ namespace ShiftServer.Client.Core
                 throw;
             }
         }
-       
+
         /// <summary> 	
         /// Send message to server using socket connection. 	
         /// </summary> 	
@@ -74,39 +80,52 @@ namespace ShiftServer.Client.Core
             client.Send(bb);
         }
 
-        public byte[] CraftData(ShiftServerMsgID shiftServerMsgID)
+        public byte[] CraftData(ShiftServerMsg data)
         {
             ShiftServerMsg msg = new ShiftServerMsg
             {
-                MsgId = shiftServerMsgID
+                MsgId = data.MsgId
             };
 
             return msg.ToByteArray();
         }
 
-        /// <summary> 	
-        /// 
-        /// </summary>     
-        public void ListenForData()
+       
+        public void SetFixedUpdateInterval()
+        {
+            //this timer interval simulate the fixed update in unity. must control on server every time
+            int timerInterval = TickrateUtil.Set(15);
+
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(FixedUpdate);
+            // Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
+            aTimer.Interval = timerInterval;
+            aTimer.Enabled = true;
+
+        }
+
+        public void FixedUpdate(object source, ElapsedEventArgs e)
         {
             try
             {
-
-                // grab all new messages. do this in your Update loop.
-                Telepathy.Message msg;
-                while (client.GetNextMessage(out msg))
+                if (client.Connected)
                 {
-                    switch (msg.eventType)
+                    // grab all new messages. do this in your Update loop.
+                    Telepathy.Message msg;
+                    while (client.GetNextMessage(out msg))
                     {
-                        case Telepathy.EventType.Connected:
-                            Console.WriteLine("Connected");
-                            break;
-                        case Telepathy.EventType.Data:
-                            this.messageManager.HandleMessage(msg.data);
-                            break;
-                        case Telepathy.EventType.Disconnected:
-                            Console.WriteLine("Disconnected");
-                            break;
+                        switch (msg.eventType)
+                        {
+                            case Telepathy.EventType.Connected:
+                                Console.WriteLine("Connected");
+                                break;
+                            case Telepathy.EventType.Data:
+                                this.messageManager.HandleMessage(msg.data);
+                                break;
+                            case Telepathy.EventType.Disconnected:
+                                Console.WriteLine("Disconnected");
+                                break;
+                        }
                     }
                 }
             }
@@ -115,5 +134,8 @@ namespace ShiftServer.Client.Core
                 Console.WriteLine("Socket exception: " + socketException);
             }
         }
+
+
+
     }
 }

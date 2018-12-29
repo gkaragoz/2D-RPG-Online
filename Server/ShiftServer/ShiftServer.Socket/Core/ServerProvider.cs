@@ -24,12 +24,14 @@ namespace ShiftServer.Server.Core
             {
                 switch (msg.eventType)
                 {
+                    
                     case Telepathy.EventType.Connected:
-                        Console.WriteLine(msg.connectionId + " Connected");
 
+                        Console.WriteLine(msg.connectionId + " Connected");
+                        
                         ShiftServerMsg data = new ShiftServerMsg();
                         data.MsgId = ShiftServerMsgID.ShiftServerConnectOk;
-                        
+                        var client = server.GetClient(msg.connectionId);
                         SendData(msg.connectionId, data);
 
                         clientCount++;

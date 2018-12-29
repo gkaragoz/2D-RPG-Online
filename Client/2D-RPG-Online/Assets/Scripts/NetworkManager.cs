@@ -19,8 +19,14 @@ public class NetworkManager : MonoBehaviour
     {
         networkClient = new NetworkClient();
         networkClient.Connect("localhost", 1337);
-
         networkClient.AddEventListener(ShiftServerMsgID.ShiftServerConnectOk, OnConnected);
+
+    }
+
+    private void OnDestroy()
+    {
+        if (networkClient != null)
+            networkClient.Disconnect();
     }
 
     private void OnConnected(ShiftServerMsg obj)
@@ -28,22 +34,10 @@ public class NetworkManager : MonoBehaviour
         Debug.Log("Connected To Server");
     }
 
-    IEnumerator foo()
-    {
-
-        yield return new WaitForEndOfFrame();
-
-    }
-
  
-    private void FixedUpdate()
+    public static void SendMessage(ShiftServerMsg data)
     {
-        
-    }
-
-    public static void SendMessage(ShiftServerMsgID msgId)
-    {
-        networkClient.SendMessage(msgId);
+        networkClient.SendMessage(data);
     }
 
 

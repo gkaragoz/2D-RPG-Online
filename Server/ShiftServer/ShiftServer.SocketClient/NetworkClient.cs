@@ -1,8 +1,11 @@
 ﻿using ShiftServer.Client.Core;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace ShiftServer.Client
 {
@@ -55,20 +58,14 @@ namespace ShiftServer.Client
             gameProvider.Disconnect();
         }
 
-        /// <summary>
-        /// Put this method to your FixedUpdate function
-        /// </summary>
-        public void Receive()
-        {
-            gameProvider.ListenForData();
-        }
+      
 
         /// <summary>
         /// Craft and send data to server
         /// </summary>
-        public void SendMessage(ShiftServerMsgID shiftServerMsgID)
+        public void SendMessage(ShiftServerMsg data)
         {
-            byte[] bb = gameProvider.CraftData(shiftServerMsgID);
+            byte[] bb = gameProvider.CraftData(data);
 
             if (bb.Length > 0)
                 gameProvider.SendMessage(bb);

@@ -25,7 +25,7 @@ namespace ShiftServer.Server
 
 
             
-            int timerInterval = TickRate.Calc(15);
+            int timerInterval = TickrateUtil.Set(15);
 
 
             System.Timers.Timer aTimer = new System.Timers.Timer();

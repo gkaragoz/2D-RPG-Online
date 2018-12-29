@@ -16,17 +16,7 @@ namespace ShiftServer.SocketTest
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new NetworkClient();
             networkClient.Connect("localhost", 1337);
-
             networkClient.AddEventListener(ShiftServerMsgID.ShiftServerConnectOk, OnConnected);
-
-            //this timer interval simulate the fixed update in unity. must control on server every time
-            int timerInterval = 1000/15;
-
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            // Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
-            aTimer.Interval = timerInterval;
-            aTimer.Enabled = true;
 
 
             bool runForever = true;
@@ -53,11 +43,7 @@ namespace ShiftServer.SocketTest
             }
 
         }
-        private static void OnTimedEvent(object source, ElapsedEventArgs e)
-        {
-            networkClient.Receive();
-        }
-
+      
         public static void OnConnected(ShiftServerMsg data)
         {
             Console.WriteLine("OnConnected event triggered::event_id::" + (int)data.MsgId);

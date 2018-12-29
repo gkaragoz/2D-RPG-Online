@@ -1,18 +1,15 @@
 ﻿syntax = "proto3";
 
 
-message ShiftServerMsg {
-	ShiftServerMsgID msgId = 1;  // Msg type
+message ShiftServerData {
+	ShiftEventId eventId = 1;  // Msg type
 }
+
 /// Control message ID.
-enum ShiftServerMsgID
+enum ShiftEventId
 {
 
 	ShiftServer_Invalid = 0;						// Reserved
-	ShiftServer_RouterPingRequest = 1;				// Client -> Router
-	ShiftServer_RouterPingReply = 2;				// Router -> Client
-	ShiftServer_GameserverPingRequest = 3;			// Router -> Server
-	ShiftServer_GameserverPingReply = 4;			// Server -> Router -> Client
 	ShiftServer_GameserverSessionRequest = 5;		// Client -> Router
 	ShiftServer_GameserverSessionEstablished = 6;	// Router -> Client
 	ShiftServer_NoSession = 7;						// Router -> Server, Router -> Client
