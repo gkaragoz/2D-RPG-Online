@@ -1,12 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Net;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ShiftServer.Socket.Core
 {
@@ -36,7 +28,9 @@ namespace ShiftServer.Socket.Core
                         clientCount++;
                         break;
                     case Telepathy.EventType.Data:
-                        Console.WriteLine(msg.connectionId + " Data: " + BitConverter.ToString(msg.data));
+                        //TODO burasi async olmak zorunda
+                        
+                        MsgManager.HandleMessage(msg.data);
                         break;
                     case Telepathy.EventType.Disconnected:
                         clientCount--;

@@ -3,7 +3,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace ShiftServer.SocketClient
 {
@@ -50,11 +49,14 @@ namespace ShiftServer.SocketClient
         }
 
         /// <summary>
-        /// Send data to server
+        /// Craft and send data to server
         /// </summary>
-        public void SendMessage()
+        public void SendMessage(ShiftServerMsgID shiftServerMsgID)
         {
-            gameProvider.SendMessage();
+            byte[] bb = gameProvider.CraftData(shiftServerMsgID);
+
+            if (bb.Length > 0)
+                gameProvider.SendMessage(bb);
         }
 
        

@@ -1,11 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
+using Google.Protobuf;
 
 namespace ShiftServer.SocketClient.Core
 {
@@ -15,7 +10,6 @@ namespace ShiftServer.SocketClient.Core
     public class GameProvider
     {
         public Telepathy.Client client = null;
-
         public GameProvider() { }
 
         /// <summary>
@@ -41,6 +35,15 @@ namespace ShiftServer.SocketClient.Core
             }
         }
 
+        public bool IsConnecting()
+        {
+            return client.Connecting;
+        }
+
+        public bool IsConnected()
+        {
+            return client.Connected;
+        }
         public void Disconnect()
         {
             try
@@ -58,16 +61,24 @@ namespace ShiftServer.SocketClient.Core
         /// <summary> 	
         /// Send message to server using socket connection. 	
         /// </summary> 	
-        public void SendMessage()
+        public void SendMessage(byte[] bb)
         {
             if (client == null)
             {
                 return;
             }
-
-
             // send a message to server
-            client.Send(new byte[] { 0xFF });
+            client.Send(bb);
+        }
+
+        public byte[] CraftData(ShiftServerMsgID shiftServerMsgID)
+        {
+            ShiftServerMsg msg = new ShiftServerMsg
+            {
+                MsgId = shiftServerMsgID
+            };
+
+            return msg.ToByteArray();
         }
 
         /// <summary> 	

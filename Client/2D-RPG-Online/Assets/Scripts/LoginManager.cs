@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ShiftServer.SocketClient;
 
 public class LoginManager : Menu {
 
@@ -22,7 +23,8 @@ public class LoginManager : Menu {
     public void Login() {
         //Check and get username & password input fields.
 
-        //Send a request to login with username and password.
+        //Send a request to login with username and password. 
+        
     }
 
     public void LoginAsAGuest() {
@@ -30,12 +32,15 @@ public class LoginManager : Menu {
         UIManager.instance.ShowSelectClassPanel();
 
         //Send a request to login as a guest.
+
+        //TO-DO: SEND REQUEST TO AUTH SERVER AND GET TOKEN IF SUCCESS
     }
 
     public void JoinGame() {
         UIManager.instance.HideSelectClassPanel();
-
         //Send a request to join game.
+        //TO-DO: JOIN TO TCP SOCKET
+
     }
 
 }
