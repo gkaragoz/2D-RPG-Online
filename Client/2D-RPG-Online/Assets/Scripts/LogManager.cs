@@ -29,6 +29,7 @@ public class LogManager : Menu {
     public GameObject logTextPrefab;
     public int maxLogsCount = 25;
     public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
+    public FadeInOut fadeInOut;
 
     [Header("Debug")]
     [SerializeField]
@@ -38,6 +39,7 @@ public class LogManager : Menu {
     private void Start() {
         Application.logMessageReceived += LogCallback;
 
+        AddLog("Press TAB to toggle Log Panel.", Log.Type.Info);
         AddLog("Press 1 to show Info message.", Log.Type.Info);
         AddLog("Press 2 to show Error message.", Log.Type.Info);
         AddLog("Press 3 to show Loot message.", Log.Type.Info);
@@ -61,10 +63,19 @@ public class LogManager : Menu {
         if (Input.GetKeyDown(KeyCode.Alpha5)) {
             AddLog("Example drop log.", Log.Type.Drop);
         }
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            Toggle();
+        }
     }
 
-    public override void Toggle() {
-        base.Toggle();
+    public new void Toggle() {
+        isOpen = !isOpen;
+
+        if (isOpen) {
+            fadeInOut.ShowImmediately(true);
+        } else {
+            fadeInOut.HideImmediately();
+        }
     }
 
     public void AddLog(string text, Log.Type logType) {
@@ -83,6 +94,16 @@ public class LogManager : Menu {
         log.dateTime = DateTime.Now;
         log.UI.text = string.Format("[{0}] <color={1}>{2}</color>", log.dateTime.ToLongTimeString(), colorStringHEX, log.message);
         _allLogs.Add(log);
+
+        ShowPanel();
+    }
+
+    private void ShowPanel() {
+        fadeInOut.FadeIn();
+    }
+
+    private void HidePanel() {
+        fadeInOut.FadeOut();
     }
 
     private Color GetLogColor(Log.Type logType) {
@@ -109,7 +130,7 @@ public class LogManager : Menu {
         return color;
     }
 
-    void LogCallback(string condition, string stackTrace, LogType type) {
+    private void LogCallback(string condition, string stackTrace, LogType type) {
         switch (type) {
             case LogType.Error:
             case LogType.Exception:
