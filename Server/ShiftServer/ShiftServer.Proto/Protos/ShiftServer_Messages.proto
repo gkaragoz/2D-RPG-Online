@@ -2,6 +2,7 @@
 
 
 message ShiftServerData {
+
 	MSBaseEventId basevtid = 1;
 	MSServerEvent svevtid = 2;  // Event type
 	MSPlayerEvent plevtid = 3;  // Sub ev type
@@ -11,6 +12,7 @@ message ShiftServerData {
 
 	// interaction message
 	ObjectAction interaction = 7;
+	PlayerObject playerObject = 8;
 }
 
 /// Control message ID.
@@ -25,10 +27,11 @@ enum MSPlayerEvent
 {
 
 	//Interaction events
-	MS_OMove = 0;
-	MS_OAttack = 1;
-	MS_ODead = 2;
-	MS_OUse = 3;
+	OnCreatePlayer = 0;
+	OnMove = 1;
+	OnAttack = 2;
+	OnDead = 3;
+	OnUse = 4;
 
 };
 
@@ -56,11 +59,13 @@ message SessionData {
 }
 
 message ObjectAction {
+
 	sGameObject currentObject = 1;
 	repeated sGameObject interactedObjects = 2;
 }
 
 message ClientData {
+
 	string ver = 1;
 	string loginname = 2;
 	string machine_name = 3;
@@ -70,19 +75,29 @@ message ClientData {
 
 message sGameObject {
 
-	int32 oid = 1;
+	string guid = 1;
 
 	float pos_x = 2;
 	float pos_y = 3;
 	float pos_z = 4;
 
-	float rot_x = 5;
-	float rot_y = 6;
-	float rot_z = 7;
-	
-	float scl_x = 8;
-	float scl_y = 9;
-	float scl_z = 10;
+}
+
+message PlayerObject {
+
+	sGameObject pObject = 1;
+	PlayerClass pClass = 2;
+	int32 currentHp = 3;
+	int32 maxHp = 4;
+
+}
+
+enum PlayerClass {
+
+	Warrior = 0;
+	Archer = 1;
+	Mage = 2;
+	Priest = 3;
 }
 
 message PlayerInput {

@@ -97,6 +97,7 @@ namespace ShiftServer.Server.Core
                             ShiftServerData data = new ShiftServerData();
                             data.Basevtid = MSBaseEventId.MsServerEvent;
                             data.Svevtid = MSServerEvent.MsConnectOk;
+
                             SendDataByConnId(msg.connectionId, data);
                             world.Clients.Add(msg.connectionId, new ShiftClient
                             {
@@ -105,11 +106,14 @@ namespace ShiftServer.Server.Core
                                 UserSession = new Session()
                             });
                             break;
+
                         case Telepathy.EventType.Data:
+
                             world.Clients.TryGetValue(msg.connectionId, out shift);
 
                             if (client.Connected)
                                 dataHandler.HandleMessage(msg.data, shift);
+
                             break;
                         case Telepathy.EventType.Disconnected:
 
