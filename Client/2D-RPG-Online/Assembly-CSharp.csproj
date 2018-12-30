@@ -73,7 +73,9 @@
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Log.cs" />
     <Compile Include="Assets\Scripts\LoginManager.cs" />
+    <Compile Include="Assets\Scripts\LogManager.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
