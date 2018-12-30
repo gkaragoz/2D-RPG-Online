@@ -4,12 +4,15 @@ using UnityEngine;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
-
+    
     public bool HasInput {
         get {
-            return (_xInput != 0 || _yInput != 0) ? true : false;
+            return (CurrentInput != Vector2.zero) ? true : false;
         }
     }
+
+    public Vector2 CurrentInput { get; private set; }
+    public Vector2 LastInput { get; private set; }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -21,11 +24,17 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
+        LastInput = CurrentInput;
+
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
 
+        CurrentInput = new Vector2(_xInput, _yInput);
+
         if (HasInput) { 
             Move();
+        } else {
+            Stop();
         }
     }
 
@@ -40,7 +49,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void Move() {
-        _characterController.Move(new Vector2(_xInput, _yInput));
+        _characterController.Move(CurrentInput);
+    }
+
+    public void Stop() {
+        _characterController.Stop();
     }
 
 }

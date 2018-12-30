@@ -14,52 +14,41 @@ using UnityEngine;
 /// <term>CharacterAttack</term>
 /// <description>See <see cref="CharacterAttack"/></description>
 /// </item>
+/// <item>
+/// <term>CharacterAnimator</term>
+/// <description>See <see cref="CharacterAnimator"/></description>
+/// </item>
 /// </list>
 /// </summary>
-[RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack))]
+[RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
-
-    [SerializeField]
-    [Utils.ReadOnly]
-    private Vector2 _currentDirection;
-
-    public Vector2 CurrentDirection {
-        get {
-            return _currentDirection;
-        }
-        private set {
-            _currentDirection = value;
-        }
-    }
-
-    public bool IsMoving {
-        get {
-            return _characterMotor.IsMoving;
-        }
-    }
 
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
+    private CharacterAnimator _characterAnimator;
 
     private void Start() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
+        _characterAnimator = GetComponent<CharacterAnimator>();
     }
 
     public void Attack() {
         if (!_characterAttack.IsAttacking && _characterAttack.CanAttack) {
             _characterAttack.Attack();
+            _characterAnimator.OnAttack();
         }
     }
 
     public void Move(Vector2 direction) {
-        CurrentDirection = direction;
-
         if (!_characterAttack.IsAttacking) {
-            _characterMotor.Move(CurrentDirection);
+            _characterMotor.Move(direction);
+            _characterAnimator.OnMove(direction);
         }
+    }
 
-        CurrentDirection = Vector2.zero;
+    public void Stop() {
+        _characterAnimator.OnStop();
     }
 
 }

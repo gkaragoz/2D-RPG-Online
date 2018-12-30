@@ -8,17 +8,6 @@ using UnityEngine;
 public class CharacterAttack : MonoBehaviour {
 
     /// <summary>
-    /// Attack Event registers.
-    /// </summary>
-    public delegate void AttackEvent();
-
-    /// <summary>
-    /// This event called on character goes to attack.
-    /// </summary>
-    /// See <see cref="Attack"/>
-    public event AttackEvent onAttacking;
-
-    /// <summary>
     /// Character's attack speed. Lower value is quicker attack.
     /// </summary>
     [Header("Initialization")]
@@ -84,10 +73,6 @@ public class CharacterAttack : MonoBehaviour {
         }
 
         IsAttacking = true;
-
-        if (onAttacking != null) {
-            onAttacking.Invoke();
-        }
     }
 
     /// <summary>

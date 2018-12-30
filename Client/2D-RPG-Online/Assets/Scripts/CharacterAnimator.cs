@@ -11,54 +11,45 @@ public class CharacterAnimator : MonoBehaviour {
     /// Animator component.
     /// </summary>
     private Animator _animator;
-    /// <summary>
-    /// CharacterController class reference to be able to read user inputs.
-    /// </summary>
-    private CharacterController _characterController;
-    /// <summary>
-    /// CharacterAttack class reference to listen attack event.
-    /// </summary>
-    private CharacterAttack _playerAttack;
 
     /// <summary>
     /// Get component references.
     /// </summary>
-    /// <remarks>
-    /// <para>Add listener to onAttacking event.</para>
-    /// See <see cref="OnAttack"/>
-    /// </remarks>
     private void Start() {
         _animator = GetComponent<Animator>();
-        _characterController = GetComponent<CharacterController>();
-        _playerAttack = GetComponent<CharacterAttack>();
-
-        _playerAttack.onAttacking += OnAttack;
     }
 
     /// <summary>
-    /// Checking player's has input or not. If so, than handle the RUN animation of player.
+    /// Handles character's run animations.
     /// </summary>
-    private void Update() {
-        if (_characterController.IsMoving) {
-            float xValue = _characterController.CurrentDirection.x;
+    /// <remarks>
+    /// <para>If xValue on input is less than zero than this method flips the transform.localScale of this gameObject.</para>
+    /// See <see cref="CharacterController.Move(Vector2)"/>
+    /// </remarks>
+    public void OnMove(Vector2 direction) {
+        float xValue = direction.x;
 
-            if (xValue < 0) {
-                transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
-            } else {
-                transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
-            }
-
-            _animator.SetBool("Run", true);
+        if (xValue < 0) {
+            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
         } else {
-            _animator.SetBool("Run", false);
+            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
         }
+
+        _animator.SetBool("Run", true);
     }
     
     /// <summary>
-    /// Listening characterAttacks, if this function triggered, than Attack animation will be run.
-    /// See <see cref="CharacterAttack.Attack"/>
+    /// Stops the run animation.
     /// </summary>
-    private void OnAttack() {
+    public void OnStop() {
+        _animator.SetBool("Run", false);
+    }
+    
+    /// <summary>
+    /// Handles character's attack animations.
+    /// See <see cref="CharacterController.Attack"/>
+    /// </summary>
+    public void OnAttack() {
         _animator.SetTrigger("Attack");
     }
 
