@@ -3,22 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class is responsible to manage and handle player's animations behaviours.
+/// This class is responsible to manage and handle character's animations behaviours.
 /// </summary>
-public class PlayerAnimator : MonoBehaviour {
+public class CharacterAnimator : MonoBehaviour {
 
     /// <summary>
     /// Animator component.
     /// </summary>
     private Animator _animator;
     /// <summary>
-    /// PlayerController class reference to be able to read user inputs.
+    /// CharacterController class reference to be able to read user inputs.
     /// </summary>
-    private PlayerController _playerController;
+    private CharacterController _characterController;
     /// <summary>
-    /// PlayerAttack class reference to listen attack event.
+    /// CharacterAttack class reference to listen attack event.
     /// </summary>
-    private PlayerAttack _playerAttack;
+    private CharacterAttack _playerAttack;
 
     /// <summary>
     /// Get component references.
@@ -29,8 +29,8 @@ public class PlayerAnimator : MonoBehaviour {
     /// </remarks>
     private void Start() {
         _animator = GetComponent<Animator>();
-        _playerController = GetComponent<PlayerController>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _characterController = GetComponent<CharacterController>();
+        _playerAttack = GetComponent<CharacterAttack>();
 
         _playerAttack.onAttacking += OnAttack;
     }
@@ -39,8 +39,8 @@ public class PlayerAnimator : MonoBehaviour {
     /// Checking player's has input or not. If so, than handle the RUN animation of player.
     /// </summary>
     private void Update() {
-        if (_playerController.HasInput) {
-            float xValue = _playerController.CurrentDirection.x;
+        if (_characterController.IsMoving) {
+            float xValue = _characterController.CurrentDirection.x;
 
             if (xValue < 0) {
                 transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
@@ -55,8 +55,8 @@ public class PlayerAnimator : MonoBehaviour {
     }
     
     /// <summary>
-    /// Listening playerAttacks, if this function triggered, than Attack animation will be run.
-    /// See <see cref="PlayerAttack.Attack"/>
+    /// Listening characterAttacks, if this function triggered, than Attack animation will be run.
+    /// See <see cref="CharacterAttack.Attack"/>
     /// </summary>
     private void OnAttack() {
         _animator.SetTrigger("Attack");

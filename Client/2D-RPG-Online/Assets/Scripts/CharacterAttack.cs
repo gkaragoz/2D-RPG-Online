@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class is responsible to manage player's attacks.
+/// This class is responsible to manage character's attacks.
 /// </summary>
-public class PlayerAttack : MonoBehaviour {
+public class CharacterAttack : MonoBehaviour {
 
     /// <summary>
     /// Attack Event registers.
@@ -13,29 +13,29 @@ public class PlayerAttack : MonoBehaviour {
     public delegate void AttackEvent();
 
     /// <summary>
-    /// This event called on player goes to attack.
+    /// This event called on character goes to attack.
     /// </summary>
     /// See <see cref="Attack"/>
     public event AttackEvent onAttacking;
 
     /// <summary>
-    /// Player's attack speed. Lower value is quicker attack.
+    /// Character's attack speed. Lower value is quicker attack.
     /// </summary>
     [Header("Initialization")]
     public float attackSpeed = 1f;
 
     /// <summary>
-    /// Player's attackRange on X size.
+    /// Character's attackRange on X size.
     /// </summary>
     public float attackRangeX = 0.35f;
 
     /// <summary>
-    /// Player's attackRange on Y size.
+    /// Character's attackRange on Y size.
     /// </summary>
     public float attackRangeY = 0.35f;
 
     /// <summary>
-    /// A layerMask for detect that particular player can attack to it.
+    /// A layerMask for detect that particular character can attack to it.
     /// </summary>
     public LayerMask attackables;
 
@@ -45,12 +45,12 @@ public class PlayerAttack : MonoBehaviour {
     public Transform attackHitPoint;
 
     /// <summary>
-    /// Is player attacking or not.
+    /// Is character attacking or not.
     /// </summary>
     public bool IsAttacking { get; private set; }
 
     /// <summary>
-    /// Is player be able to attack or not depends on attack speed.
+    /// Is character be able to attack or not depends on attack speed.
     /// </summary>
     public bool CanAttack {
         get {
@@ -99,7 +99,7 @@ public class PlayerAttack : MonoBehaviour {
     }
 
     /// <summary>
-    /// This function shows attack range of player's hitPoint.
+    /// This function shows attack range of character's hitPoint.
     /// </summary>
     private void OnDrawGizmos() {
         if (attackHitPoint != null) {

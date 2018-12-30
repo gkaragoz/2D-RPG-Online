@@ -2,21 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible to manage all inputs of players.
-/// <list type="bullet">
-/// Required Components:
-/// <item>
-/// <term>PlayerMotor</term>
-/// <description>See <see cref="PlayerMotor"/></description>
-/// </item>
-/// <item>
-/// <term>PlayerAttack</term>
-/// <description>See <see cref="PlayerAttack"/></description>
-/// </item>
-/// </list>
-/// </summary>
-[RequireComponent(typeof(PlayerMotor), typeof(PlayerAttack))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
 
     public bool HasInput {
@@ -25,36 +11,36 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public Vector2 CurrentDirection {
-        get {
-            return new Vector2(_xInput, _yInput);
-        }
-    }
-
     [SerializeField]
     [Utils.ReadOnly]
     private float _xInput, _yInput;
-    private PlayerMotor _playerMotor;
-    private PlayerAttack _playerAttack;
+    private CharacterController _characterController;
 
     private void Start() {
-        _playerMotor = GetComponent<PlayerMotor>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     private void FixedUpdate() {
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
 
-        if (HasInput && !_playerAttack.IsAttacking) {
-            _playerMotor.Move(CurrentDirection);
+        if (HasInput) { 
+            Move();
         }
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.Space) && !_playerAttack.IsAttacking && _playerAttack.CanAttack) {
-            _playerAttack.Attack();
+        if (Input.GetKey(KeyCode.Space)) {
+            Attack();
         }
+    }
+
+    public void Attack() {
+        _characterController.Attack();
+    }
+
+    public void Move() {
+        _characterController.Move(new Vector2(_xInput, _yInput));
     }
 
 }
