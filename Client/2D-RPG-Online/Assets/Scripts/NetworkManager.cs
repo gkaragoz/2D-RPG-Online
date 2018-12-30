@@ -34,9 +34,13 @@ public class NetworkManager : MonoBehaviour
     public static ClientData clientinfo;
 
     [SerializeField]
-    private bool _isOffline = false;
+    private string _hostName = "192.168.1.2";
 
-    System.Diagnostics.Stopwatch pingWatch = new System.Diagnostics.Stopwatch();
+    [SerializeField]
+    private int _port = 1337;
+
+    [SerializeField]
+    private bool _isOffline = false;
 
     public bool IsOffline
     {
@@ -59,7 +63,7 @@ public class NetworkManager : MonoBehaviour
             client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
             client.AddEventListener(MSServerEvent.MsPingRequest, OnPingResponse);
 
-            client.Connect("localhost", 1337);
+            client.Connect(_hostName, _port);
 
             clientinfo = new ClientData();
             clientinfo.Guid = Guid.NewGuid().ToString();
@@ -83,7 +87,6 @@ public class NetworkManager : MonoBehaviour
             if (client.IsConnected())
             {
                 ShiftServerData data = new ShiftServerData();
-                pingWatch.Start();
                 client.SendMessage(MSServerEvent.MsPingRequest, null);
                 yield return new WaitForSecondsRealtime(1f);
             }
@@ -106,8 +109,6 @@ public class NetworkManager : MonoBehaviour
     }
     private void OnPingResponse(ShiftServerData obj)
     {
-        Debug.Log("Ping:  " + pingWatch.ElapsedMilliseconds + " ms");
-        pingWatch.Stop();
 
     }
     public void OnConnected(ShiftServerData data)
