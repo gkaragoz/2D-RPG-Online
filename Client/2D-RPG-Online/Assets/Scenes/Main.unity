@@ -526,8 +526,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hostName: 192.168.1.3
-  _port: 1337
-  _isOffline: 1
+  _port: 2000
+  _isOffline: 0
 --- !u!1 &253763532
 GameObject:
   m_ObjectHideFlags: 0

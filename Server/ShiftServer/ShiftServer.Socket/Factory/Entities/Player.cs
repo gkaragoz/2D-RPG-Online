@@ -18,7 +18,8 @@ namespace ShiftServer.Server.Factory.Entities
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
-        public string OwnerClientSid { get; set; }
+        public int OwnerClientId { get; set; }
+        public List<IGameObject> OwnedObjects { get; set; }
 
         public void OnAttack()
         {

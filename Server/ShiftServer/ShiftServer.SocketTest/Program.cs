@@ -16,6 +16,8 @@ namespace ShiftServer.SocketTest
 
         static void Main(string[] args)
         {
+
+
             TestFunctions funcs = new TestFunctions();
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new NetworkClient();
@@ -28,7 +30,7 @@ namespace ShiftServer.SocketTest
             while (true)
             {
                 networkClient.Listen();
-                funcs.PingRequestedTick =  DateTime.UtcNow.Millisecond;
+                funcs.PingRequestedTick = DateTime.UtcNow.Millisecond;
                 networkClient.SendMessage(MSServerEvent.MsPingRequest, null);
                 System.Threading.Thread.Sleep(1000);
             }
@@ -58,7 +60,7 @@ namespace ShiftServer.SocketTest
 
         }
 
-      
+
     }
 
     public class TestFunctions

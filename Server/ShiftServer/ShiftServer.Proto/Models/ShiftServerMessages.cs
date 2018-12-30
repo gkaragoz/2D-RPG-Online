@@ -40,15 +40,15 @@ public static partial class ShiftServerMessagesReflection {
           "GgoLUGxheWVySW5wdXQSCwoDb2lkGAEgASgFKjcKDU1TQmFzZUV2ZW50SWQS",
           "EgoOTVNfUGxheWVyRXZlbnQQABISCg5NU19TZXJ2ZXJFdmVudBABKkgKDU1T",
           "UGxheWVyRXZlbnQSDAoITVNfT01vdmUQABIOCgpNU19PQXR0YWNrEAESDAoI",
-          "TVNfT0RlYWQQAhILCgdNU19PVXNlEAMqzAIKDU1TU2VydmVyRXZlbnQSDgoK",
+          "TVNfT0RlYWQQAhILCgdNU19PVXNlEAMq4AIKDU1TU2VydmVyRXZlbnQSDgoK",
           "TVNfSW52YWxpZBAAEh8KG01TX0dhbWVzZXJ2ZXJTZXNzaW9uUmVxdWVzdBAF",
           "EiMKH01TX0dhbWVzZXJ2ZXJTZXNzaW9uRXN0YWJsaXNoZWQQBhIQCgxNU19O",
           "b1Nlc3Npb24QBxIRCg1NU19EaWFnbm9zdGljEAgSEgoOTVNfSm9pblJlcXVl",
           "c3QQCRIZChVNU19Kb2luUmVxdWVzdFN1Y2Nlc3MQChIYChRNU19Kb2luUmVx",
           "dWVzdEZhaWxlZBALEgwKCE1TX1N0YXRzEA0SFQoRTVNfQ29ubmVjdFJlcXVl",
           "c3QQEhIQCgxNU19Db25uZWN0T0sQExIXChNNU19Db25uZWN0aW9uQ2xvc2Vk",
-          "EBQSEwoPTVNfTm9Db25uZWN0aW9uEBUSEgoOTVNfUGluZ1JlcXVlc3QQFmIG",
-          "cHJvdG8z"));
+          "EBQSEwoPTVNfTm9Db25uZWN0aW9uEBUSEgoOTVNfUGluZ1JlcXVlc3QQFhIS",
+          "Cg5NU19Xb3JsZFVwZGF0ZRAXYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), }, new pbr::GeneratedClrTypeInfo[] {
@@ -142,6 +142,10 @@ public enum MSServerEvent {
   /// Ping Request 
   /// </summary>
   [pbr::OriginalName("MS_PingRequest")] MsPingRequest = 22,
+  /// <summary>
+  /// WorldUpdate
+  /// </summary>
+  [pbr::OriginalName("MS_WorldUpdate")] MsWorldUpdate = 23,
 }
 
 #endregion

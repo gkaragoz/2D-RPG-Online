@@ -19,23 +19,23 @@ namespace ShiftServer.Server.Core
         public ServerProvider(IWorld createdWorld) {
             world = createdWorld;
             dataHandler = new ServerDataHandler();
-
         }
 
-        public void Listen(int tickrate)
+        public void Listen(int tickrate, int port)
         {
             server = new Telepathy.Server();
             server.NoDelay = true;
             server.SendTimeout = 0;
-            server.Start(1337);
-            int timerInterval = TickrateUtil.Set(30);
+            server.Start(port);
+
+            int timerInterval = TickrateUtil.Set(15);
+
+            SetInterval(timerInterval, UpdateWorld);
 
             listenerThread = new Thread(GetMessages);
             listenerThread.IsBackground = true;
             listenerThread.Name = "ShiftServer Listener";
             listenerThread.Start();
-
-            SetInterval(timerInterval, UpdateWorld);
 
         }
 
@@ -64,6 +64,7 @@ namespace ShiftServer.Server.Core
         private void UpdateWorld(object source, ElapsedEventArgs e)
         {
             world.OnWorldUpdate();
+            world.SendWorldState();
         }
 
         private static void SetInterval(int timerInterval, Action<object, ElapsedEventArgs> job)
@@ -163,7 +164,6 @@ namespace ShiftServer.Server.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
-            Console.WriteLine("ping");
             SendMessage(shift.connectionId, MSServerEvent.MsPingRequest, data);
         }
 

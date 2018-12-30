@@ -65,6 +65,8 @@ public class LoginManager : Menu
 
     public void OnJoinSuccess(ShiftServerData data)
     {
+        NetworkManager.client.AddEventListener(MSServerEvent.MsWorldUpdate, NetworkManager.instance.OnWorldUpdate);
+
         Debug.Log("OnJoinSuccess::EVENT::FIRED");
         //gameObject.SetActive(false);
         UIManager.instance.HideSelectClassPanel();
