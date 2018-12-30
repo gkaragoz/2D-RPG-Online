@@ -9,28 +9,66 @@ using ShiftServer.Client;
 
 public class NetworkManager : MonoBehaviour
 {
-    
+    #region Singleton
+
+    /// <summary>
+    /// Instance of this class.
+    /// </summary>
+    public static NetworkManager instance;
+
+    /// <summary>
+    /// Initialize Singleton pattern.
+    /// </summary>
+    void Awake()
+    {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
+    }
+
+    #endregion
     public static NetworkClient client;
     public static ClientData clientinfo;
-    public int pingRequestedTick;
 
+    [SerializeField]
+    private bool _isOffline = false;
+
+    System.Diagnostics.Stopwatch pingWatch = new System.Diagnostics.Stopwatch();
+
+    public bool IsOffline
+    {
+        get
+        {
+            return _isOffline;
+        }
+
+        private set
+        {
+            _isOffline = value;
+        }
+    }
 
     private void Start()
     {
-        client = new NetworkClient();
-        client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
-        client.AddEventListener(MSServerEvent.MsPingRequest, OnPingResponse);
+        if (!IsOffline)
+        {
+            client = new NetworkClient();
+            client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
+            client.AddEventListener(MSServerEvent.MsPingRequest, OnPingResponse);
 
-        client.Connect("localhost", 1337);
+            client.Connect("localhost", 1337);
 
-        clientinfo = new ClientData();
-        clientinfo.Guid = Guid.NewGuid().ToString();
-        clientinfo.Loginname = "Test";
-        clientinfo.MachineId = SystemInfo.deviceUniqueIdentifier;
-        clientinfo.MachineName = SystemInfo.deviceName;
+            clientinfo = new ClientData();
+            clientinfo.Guid = Guid.NewGuid().ToString();
+            clientinfo.Loginname = "Test";
+            clientinfo.MachineId = SystemInfo.deviceUniqueIdentifier;
+            clientinfo.MachineName = SystemInfo.deviceName;
 
-        StartCoroutine(Listener());
-
+            StartCoroutine(Listener());
+        }
     }
 
     private void Update()
@@ -45,7 +83,7 @@ public class NetworkManager : MonoBehaviour
             if (client.IsConnected())
             {
                 ShiftServerData data = new ShiftServerData();
-                pingRequestedTick = DateTime.UtcNow.Millisecond;
+                pingWatch.Start();
                 client.SendMessage(MSServerEvent.MsPingRequest, null);
                 yield return new WaitForSecondsRealtime(1f);
             }
@@ -68,8 +106,9 @@ public class NetworkManager : MonoBehaviour
     }
     private void OnPingResponse(ShiftServerData obj)
     {
-        int pongTick = DateTime.UtcNow.Millisecond;
-        Debug.Log("Ping: " + (pongTick - pingRequestedTick) + " ms");
+        Debug.Log("Ping:  " + pingWatch.ElapsedMilliseconds + " ms");
+        pingWatch.Stop();
+
     }
     public void OnConnected(ShiftServerData data)
     {
@@ -79,9 +118,13 @@ public class NetworkManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        // Always disconnect before quitting
-        if (client.IsConnected())
-            client.Disconnect();
+        if (!IsOffline)
+        {
+            // Always disconnect before quitting
+            if (client.IsConnected())
+                client.Disconnect();
+
+        }
     }
 }
 
