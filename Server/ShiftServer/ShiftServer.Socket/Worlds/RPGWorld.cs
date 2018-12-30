@@ -150,6 +150,18 @@ namespace ShiftServer.Server.Worlds
 
         }
 
-       
+        public void SendWorldState()
+        {
+            var clients = Clients.GetValues();
+            foreach (var client in clients)
+            {
+                if (client.UserSession == null)
+                    continue;
+
+                ShiftServerData data = new ShiftServerData();
+                
+                client.SendPacket(MSServerEvent.MsWorldUpdate, data);
+            }
+        }
     }
 }

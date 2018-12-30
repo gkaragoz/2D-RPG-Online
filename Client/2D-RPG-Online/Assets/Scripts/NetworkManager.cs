@@ -111,6 +111,12 @@ public class NetworkManager : MonoBehaviour
     {
 
     }
+
+    public void OnWorldUpdate(ShiftServerData obj)
+    {
+        Debug.Log("!! WORLD UPDATED !!");
+    }
+
     public void OnConnected(ShiftServerData data)
     {
         StartCoroutine(SendPing());
@@ -124,6 +130,8 @@ public class NetworkManager : MonoBehaviour
             // Always disconnect before quitting
             if (client.IsConnected())
                 client.Disconnect();
+
+            StopAllCoroutines();
 
         }
     }
