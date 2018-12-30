@@ -2,59 +2,58 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible to manage all inputs of players.
-/// <list type="bullet">
-/// Required Components:
-/// <item>
-/// <term>PlayerMotor</term>
-/// <description>See <see cref="PlayerMotor"/></description>
-/// </item>
-/// <item>
-/// <term>PlayerAttack</term>
-/// <description>See <see cref="PlayerAttack"/></description>
-/// </item>
-/// </list>
-/// </summary>
-[RequireComponent(typeof(PlayerMotor), typeof(PlayerAttack))]
+[RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
-
+    
     public bool HasInput {
         get {
-            return (_xInput != 0 || _yInput != 0) ? true : false;
+            return (CurrentInput != Vector2.zero) ? true : false;
         }
     }
 
-    public Vector2 CurrentDirection {
-        get {
-            return new Vector2(_xInput, _yInput);
-        }
-    }
+    public Vector2 CurrentInput { get; private set; }
+    public Vector2 LastInput { get; private set; }
 
     [SerializeField]
     [Utils.ReadOnly]
     private float _xInput, _yInput;
-    private PlayerMotor _playerMotor;
-    private PlayerAttack _playerAttack;
+    private CharacterController _characterController;
 
     private void Start() {
-        _playerMotor = GetComponent<PlayerMotor>();
-        _playerAttack = GetComponent<PlayerAttack>();
+        _characterController = GetComponent<CharacterController>();
     }
 
     private void FixedUpdate() {
+        LastInput = CurrentInput;
+
         _xInput = Input.GetAxisRaw("Horizontal");
         _yInput = Input.GetAxisRaw("Vertical");
 
-        if (HasInput && !_playerAttack.IsAttacking) {
-            _playerMotor.Move(CurrentDirection);
+        CurrentInput = new Vector2(_xInput, _yInput);
+
+        if (HasInput) { 
+            Move();
+        } else {
+            Stop();
         }
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.Space) && !_playerAttack.IsAttacking && _playerAttack.CanAttack) {
-            _playerAttack.Attack();
+        if (Input.GetKey(KeyCode.Space)) {
+            Attack();
         }
+    }
+
+    public void Attack() {
+        _characterController.Attack();
+    }
+
+    public void Move() {
+        _characterController.Move(CurrentInput);
+    }
+
+    public void Stop() {
+        _characterController.Stop();
     }
 
 }

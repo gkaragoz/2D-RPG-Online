@@ -60,21 +60,27 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\CharacterAnimator.cs" />
+    <Compile Include="Assets\Scripts\CharacterAttack.cs" />
+    <Compile Include="Assets\Scripts\CharacterController.cs" />
+    <Compile Include="Assets\Scripts\CharacterMotor.cs" />
+    <Compile Include="Assets\Scripts\CharacterStats.cs" />
+    <Compile Include="Assets\Scripts\CharacterStats_SO.cs" />
     <Compile Include="Assets\Scripts\ClassManager.cs" />
     <Compile Include="Assets\Scripts\Destructable.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShakePresets.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\Utilities\CameraUtilities.cs" />
+    <Compile Include="Assets\Scripts\FadeInOut.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Log.cs" />
     <Compile Include="Assets\Scripts\LoginManager.cs" />
+    <Compile Include="Assets\Scripts\LogManager.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
     <Compile Include="Assets\Scripts\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
-    <Compile Include="Assets\Scripts\PlayerAnimator.cs" />
-    <Compile Include="Assets\Scripts\PlayerAttack.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\PlayerMotor.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Sound\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
