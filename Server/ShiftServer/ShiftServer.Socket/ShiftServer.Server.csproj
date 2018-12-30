@@ -50,16 +50,23 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Auth\Crypto.cs" />
+    <Compile Include="Auth\ShiftClient.cs" />
+    <Compile Include="Core\IClient.cs" />
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Core\IWorld.cs" />
+    <Compile Include="Core\ServerDataHandler.cs" />
+    <Compile Include="Core\ServerEventCallback.cs" />
     <Compile Include="Core\ServerProvider.cs" />
-    <Compile Include="Factory\Entities\GameObject.cs" />
+    <Compile Include="Core\Session.cs" />
+    <Compile Include="Factory\Entities\Player.cs" />
     <Compile Include="Factory\Movement\MotionMaster.cs" />
     <Compile Include="Helper\ConsoleUI.cs" />
     <Compile Include="Helper\TickRate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Worlds\RPGWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

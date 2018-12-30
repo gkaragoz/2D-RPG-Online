@@ -4,12 +4,7 @@
         <name>ShiftServer.Client</name>
     </assembly>
     <members>
-        <member name="T:ShiftServer.Client.Core.EventCallback">
-            <summary>
-            Event object
-            </summary>
-        </member>
-        <member name="M:ShiftServer.Client.Core.Event.Fire(System.Collections.Generic.List{ShiftServer.Client.Core.EventCallback},ShiftServerData)">
+        <member name="M:ShiftServer.Client.Core.Event.Fire(System.Collections.Generic.List{ShiftServer.Proto.Models.EventCallback},ShiftServerData)">
             <summary>
             Invoke client callback functions
             </summary>
@@ -33,11 +28,6 @@
             <summary> 	
             Send message to server using socket connection. 	
             </summary> 	
-        </member>
-        <member name="T:ShiftServer.Client.Core.MsgManager">
-            <summary>
-            Management of server-client messages
-            </summary>
         </member>
         <member name="T:ShiftServer.Client.NetworkClient">
             <summary>

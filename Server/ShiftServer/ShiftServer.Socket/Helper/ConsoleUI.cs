@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Server.Helper
 {
-    public class ConsoleUI
+    public static class ConsoleUI
     {
-        public void RunConsoleUI(ServerProvider serverProvider)
+        public static void Run(ServerProvider serverProvider)
         {
 
 

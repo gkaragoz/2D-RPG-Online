@@ -21,6 +21,8 @@ enum ServerEventId
 	S_NoSession = 7;						// Router -> Server, Router -> Client
 	S_Diagnostic = 8;						// Diagnostic / status message Router -> Client
 	S_JoinRequest = 9;					// Join
+	S_JoinRequestSuccess = 10;			// Join
+	S_JoinRequestFailed= 11;			// Join
 	S_Stats = 13;							// Any -> Any
 	S_ConnectRequest = 18;				// Client->router->server
 	S_ConnectOK = 19;						// Server->router->client.
@@ -47,9 +49,10 @@ message ObjectAction {
 
 message ClientData {
 	string ver = 1;
-	string machine_name = 2;
-	string machine_id = 3;
-	string guid = 4;
+	string loginname = 2;
+	string machine_name = 3;
+	string machine_id = 4;
+	string guid = 5;
 }
 
 message GameObject {

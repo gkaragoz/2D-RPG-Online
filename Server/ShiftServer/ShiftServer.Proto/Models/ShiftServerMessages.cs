@@ -29,28 +29,30 @@ public static partial class ShiftServerMessagesReflection {
           "CgtpbnRlcmFjdGlvbhgFIAEoCzINLk9iamVjdEFjdGlvbiIaCgtTZXNzaW9u",
           "RGF0YRILCgNzaWQYAiABKAkiWgoMT2JqZWN0QWN0aW9uEiIKDWN1cnJlbnRP",
           "YmplY3QYASABKAsyCy5HYW1lT2JqZWN0EiYKEWludGVyYWN0ZWRPYmplY3Rz",
-          "GAIgAygLMgsuR2FtZU9iamVjdCJRCgpDbGllbnREYXRhEgsKA3ZlchgBIAEo",
-          "CRIUCgxtYWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgDIAEoCRIM",
-          "CgRndWlkGAQgASgJIlMKCkdhbWVPYmplY3QSCwoDb2lkGAEgASgFEhsKCHBv",
-          "c2l0aW9uGAQgASgLMgkueFZlY3RvcjMSGwoIcm90YXRpb24YBSABKAsyCS54",
-          "VmVjdG9yMyJuCgtQbGF5ZXJJbnB1dBILCgNvaWQYASABKAUSGAoFc2NhbGUY",
-          "AiABKAsyCS54VmVjdG9yMxIbCghwb3NpdGlvbhgDIAEoCzIJLnhWZWN0b3Iz",
-          "EhsKCHJvdGF0aW9uGAQgASgLMgkueFZlY3RvcjMiKwoIeFZlY3RvcjMSCQoB",
-          "eBgBIAEoAhIJCgF5GAIgASgCEgkKAXoYAyABKAIqrQIKDVNlcnZlckV2ZW50",
-          "SWQSDQoJU19JbnZhbGlkEAASHgoaU19HYW1lc2VydmVyU2Vzc2lvblJlcXVl",
-          "c3QQBRIiCh5TX0dhbWVzZXJ2ZXJTZXNzaW9uRXN0YWJsaXNoZWQQBhIPCgtT",
-          "X05vU2Vzc2lvbhAHEhAKDFNfRGlhZ25vc3RpYxAIEhEKDVNfSm9pblJlcXVl",
-          "c3QQCRILCgdTX1N0YXRzEA0SFAoQU19Db25uZWN0UmVxdWVzdBASEg8KC1Nf",
-          "Q29ubmVjdE9LEBMSFgoSU19Db25uZWN0aW9uQ2xvc2VkEBQSEgoOU19Ob0Nv",
-          "bm5lY3Rpb24QFRILCgdTX09Nb3ZlEBYSDQoJU19PQXR0YWNrEBcSCwoHU19P",
-          "RGVhZBAYEgoKBlNfT1VzZRAZYgZwcm90bzM="));
+          "GAIgAygLMgsuR2FtZU9iamVjdCJkCgpDbGllbnREYXRhEgsKA3ZlchgBIAEo",
+          "CRIRCglsb2dpbm5hbWUYAiABKAkSFAoMbWFjaGluZV9uYW1lGAMgASgJEhIK",
+          "Cm1hY2hpbmVfaWQYBCABKAkSDAoEZ3VpZBgFIAEoCSJTCgpHYW1lT2JqZWN0",
+          "EgsKA29pZBgBIAEoBRIbCghwb3NpdGlvbhgEIAEoCzIJLnhWZWN0b3IzEhsK",
+          "CHJvdGF0aW9uGAUgASgLMgkueFZlY3RvcjMibgoLUGxheWVySW5wdXQSCwoD",
+          "b2lkGAEgASgFEhgKBXNjYWxlGAIgASgLMgkueFZlY3RvcjMSGwoIcG9zaXRp",
+          "b24YAyABKAsyCS54VmVjdG9yMxIbCghyb3RhdGlvbhgEIAEoCzIJLnhWZWN0",
+          "b3IzIisKCHhWZWN0b3IzEgkKAXgYASABKAISCQoBeRgCIAEoAhIJCgF6GAMg",
+          "ASgCKuACCg1TZXJ2ZXJFdmVudElkEg0KCVNfSW52YWxpZBAAEh4KGlNfR2Ft",
+          "ZXNlcnZlclNlc3Npb25SZXF1ZXN0EAUSIgoeU19HYW1lc2VydmVyU2Vzc2lv",
+          "bkVzdGFibGlzaGVkEAYSDwoLU19Ob1Nlc3Npb24QBxIQCgxTX0RpYWdub3N0",
+          "aWMQCBIRCg1TX0pvaW5SZXF1ZXN0EAkSGAoUU19Kb2luUmVxdWVzdFN1Y2Nl",
+          "c3MQChIXChNTX0pvaW5SZXF1ZXN0RmFpbGVkEAsSCwoHU19TdGF0cxANEhQK",
+          "EFNfQ29ubmVjdFJlcXVlc3QQEhIPCgtTX0Nvbm5lY3RPSxATEhYKElNfQ29u",
+          "bmVjdGlvbkNsb3NlZBAUEhIKDlNfTm9Db25uZWN0aW9uEBUSCwoHU19PTW92",
+          "ZRAWEg0KCVNfT0F0dGFjaxAXEgsKB1NfT0RlYWQQGBIKCgZTX09Vc2UQGWIG",
+          "cHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::ServerEventId), }, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Eid", "Session", "ClData", "UpdatedGameObjects", "Interaction" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId", "Guid" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "Loginname", "MachineName", "MachineId", "Guid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::GameObject), global::GameObject.Parser, new[]{ "Oid", "Position", "Rotation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInput), global::PlayerInput.Parser, new[]{ "Oid", "Scale", "Position", "Rotation" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::xVector3), global::xVector3.Parser, new[]{ "X", "Y", "Z" }, null, null, null)
@@ -88,6 +90,14 @@ public enum ServerEventId {
   /// Join
   /// </summary>
   [pbr::OriginalName("S_JoinRequest")] SJoinRequest = 9,
+  /// <summary>
+  /// Join
+  /// </summary>
+  [pbr::OriginalName("S_JoinRequestSuccess")] SJoinRequestSuccess = 10,
+  /// <summary>
+  /// Join
+  /// </summary>
+  [pbr::OriginalName("S_JoinRequestFailed")] SJoinRequestFailed = 11,
   /// <summary>
   /// Any -> Any
   /// </summary>
@@ -696,6 +706,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public ClientData(ClientData other) : this() {
     ver_ = other.ver_;
+    loginname_ = other.loginname_;
     machineName_ = other.machineName_;
     machineId_ = other.machineId_;
     guid_ = other.guid_;
@@ -718,8 +729,19 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
     }
   }
 
+  /// <summary>Field number for the "loginname" field.</summary>
+  public const int LoginnameFieldNumber = 2;
+  private string loginname_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Loginname {
+    get { return loginname_; }
+    set {
+      loginname_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
   /// <summary>Field number for the "machine_name" field.</summary>
-  public const int MachineNameFieldNumber = 2;
+  public const int MachineNameFieldNumber = 3;
   private string machineName_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string MachineName {
@@ -730,7 +752,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
   }
 
   /// <summary>Field number for the "machine_id" field.</summary>
-  public const int MachineIdFieldNumber = 3;
+  public const int MachineIdFieldNumber = 4;
   private string machineId_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string MachineId {
@@ -741,7 +763,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
   }
 
   /// <summary>Field number for the "guid" field.</summary>
-  public const int GuidFieldNumber = 4;
+  public const int GuidFieldNumber = 5;
   private string guid_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Guid {
@@ -765,6 +787,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
       return true;
     }
     if (Ver != other.Ver) return false;
+    if (Loginname != other.Loginname) return false;
     if (MachineName != other.MachineName) return false;
     if (MachineId != other.MachineId) return false;
     if (Guid != other.Guid) return false;
@@ -775,6 +798,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
   public override int GetHashCode() {
     int hash = 1;
     if (Ver.Length != 0) hash ^= Ver.GetHashCode();
+    if (Loginname.Length != 0) hash ^= Loginname.GetHashCode();
     if (MachineName.Length != 0) hash ^= MachineName.GetHashCode();
     if (MachineId.Length != 0) hash ^= MachineId.GetHashCode();
     if (Guid.Length != 0) hash ^= Guid.GetHashCode();
@@ -795,16 +819,20 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
       output.WriteRawTag(10);
       output.WriteString(Ver);
     }
-    if (MachineName.Length != 0) {
+    if (Loginname.Length != 0) {
       output.WriteRawTag(18);
+      output.WriteString(Loginname);
+    }
+    if (MachineName.Length != 0) {
+      output.WriteRawTag(26);
       output.WriteString(MachineName);
     }
     if (MachineId.Length != 0) {
-      output.WriteRawTag(26);
+      output.WriteRawTag(34);
       output.WriteString(MachineId);
     }
     if (Guid.Length != 0) {
-      output.WriteRawTag(34);
+      output.WriteRawTag(42);
       output.WriteString(Guid);
     }
     if (_unknownFields != null) {
@@ -817,6 +845,9 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
     int size = 0;
     if (Ver.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Ver);
+    }
+    if (Loginname.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Loginname);
     }
     if (MachineName.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(MachineName);
@@ -840,6 +871,9 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
     }
     if (other.Ver.Length != 0) {
       Ver = other.Ver;
+    }
+    if (other.Loginname.Length != 0) {
+      Loginname = other.Loginname;
     }
     if (other.MachineName.Length != 0) {
       MachineName = other.MachineName;
@@ -866,14 +900,18 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
           break;
         }
         case 18: {
-          MachineName = input.ReadString();
+          Loginname = input.ReadString();
           break;
         }
         case 26: {
-          MachineId = input.ReadString();
+          MachineName = input.ReadString();
           break;
         }
         case 34: {
+          MachineId = input.ReadString();
+          break;
+        }
+        case 42: {
           Guid = input.ReadString();
           break;
         }

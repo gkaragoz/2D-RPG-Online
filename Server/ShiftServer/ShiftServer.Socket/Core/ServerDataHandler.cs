@@ -1,34 +1,32 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Server.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Proto.Handlers
+namespace ShiftServer.Server.Core
 {
     /// <summary>
     /// Management of server-client messages
     /// </summary>
-    public class DataHandler
+    public class ServerDataHandler
     {
-        public List<EventCallback> events = null;
+        public List<ServerEventCallback> events = null;
 
-        public DataHandler()
+        public ServerDataHandler()
         {
-            events = new List<EventCallback>();
+            events = new List<ServerEventCallback>();
         }
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb)
+        public void HandleMessage(byte[] bb, ShiftClient client)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
 
-            Event.Fire(events, data);
+            ServerEventInvoker.Fire(events, data, client);
         }
     }
-
-   
 }
