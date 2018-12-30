@@ -38,8 +38,29 @@ public class LogManager : Menu {
     private void Start() {
         Application.logMessageReceived += LogCallback;
 
-        AddLog("Press 1 to send test Info message.", Log.Type.Info);
-        AddLog("Press 2 to send test Error message.", Log.Type.Info);
+        AddLog("Press 1 to show Info message.", Log.Type.Info);
+        AddLog("Press 2 to show Error message.", Log.Type.Info);
+        AddLog("Press 3 to show Loot message.", Log.Type.Info);
+        AddLog("Press 4 to show Interact message.", Log.Type.Info);
+        AddLog("Press 5 to show Drop message.", Log.Type.Info);
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            AddLog("Example info log.", Log.Type.Info);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            AddLog("Example error log.", Log.Type.Error);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            AddLog("Example loot log.", Log.Type.Loot);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            AddLog("Example interact log.", Log.Type.Interact);
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            AddLog("Example drop log.", Log.Type.Drop);
+        }
     }
 
     public override void Toggle() {
