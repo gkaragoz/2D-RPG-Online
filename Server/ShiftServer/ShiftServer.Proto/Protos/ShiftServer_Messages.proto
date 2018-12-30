@@ -1,0 +1,91 @@
+﻿syntax = "proto3";
+
+
+message ShiftServerData {
+	MSBaseEventId basevtid = 1;
+	MSServerEvent svevtid = 2;  // Event type
+	MSPlayerEvent plevtid = 3;  // Sub ev type
+	SessionData session = 4; // SessionData
+	ClientData clData = 5; // ClientData
+	repeated sGameObject updatedGameObjects = 6; // GameObjects list
+
+	// interaction message
+	ObjectAction interaction = 7;
+}
+
+/// Control message ID.
+enum MSBaseEventId
+{
+	MS_PlayerEvent = 0;
+	MS_ServerEvent = 1;
+};
+
+/// Control message ID.
+enum MSPlayerEvent
+{
+
+	//Interaction events
+	MS_OMove = 0;
+	MS_OAttack = 1;
+	MS_ODead = 2;
+	MS_OUse = 3;
+
+};
+
+enum MSServerEvent
+{
+	MS_Invalid = 0;						// Reserved
+	MS_GameserverSessionRequest = 5;		// Client -> Router
+	MS_GameserverSessionEstablished = 6;	// Router -> Client
+	MS_NoSession = 7;						// Router -> Server, Router -> Client
+	MS_Diagnostic = 8;						// Diagnostic / status message Router -> Client
+	MS_JoinRequest = 9;					// Join
+	MS_JoinRequestSuccess = 10;			// Join
+	MS_JoinRequestFailed= 11;			// Join
+	MS_Stats = 13;							// Any -> Any
+	MS_ConnectRequest = 18;				// Client->router->server
+	MS_ConnectOK = 19;						// Server->router->client.
+	MS_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
+	MS_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+	MS_PingRequest = 22;					// Ping Request 
+}
+
+message SessionData {
+	string sid = 2;
+}
+
+message ObjectAction {
+	sGameObject currentObject = 1;
+	repeated sGameObject interactedObjects = 2;
+}
+
+message ClientData {
+	string ver = 1;
+	string loginname = 2;
+	string machine_name = 3;
+	string machine_id = 4;
+	string guid = 5;
+}
+
+message sGameObject {
+
+	int32 oid = 1;
+
+	float pos_x = 2;
+	float pos_y = 3;
+	float pos_z = 4;
+
+	float rot_x = 5;
+	float rot_y = 6;
+	float rot_z = 7;
+	
+	float scl_x = 8;
+	float scl_y = 9;
+	float scl_z = 10;
+}
+
+message PlayerInput {
+
+	int32 oid = 1;
+}
+

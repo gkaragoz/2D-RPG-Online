@@ -1,22 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using ShiftServer.Client;
 
-/// <summary>
-/// This class is repsonsible to manage Login, Login as a guest or Join the game events.
-/// </summary>
 public class LoginManager : Menu {
 
     #region Singleton
 
-    /// <summary>
-    /// Instance of this class.
-    /// </summary>
     public static LoginManager instance;
+    private void Start()
+    {
+        NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
+        NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
+    }
 
-    /// <summary>
-    /// Initialize Singleton pattern.
-    /// </summary>
     void Awake() {
         if (instance == null)
             instance = this;
@@ -28,41 +25,54 @@ public class LoginManager : Menu {
 
     #endregion
 
-    /// <summary>
-    /// Login into the game.
-    /// </summary>
-    /// <remarks>
-    /// <para>Checks and gets username & password input fields.</para>
-    /// <para>Sends a request to login with username and password.</para>
-    /// </remarks>
     public void Login() {
-        //TODO Checks and gets username & password input fields.
-        //TODO Sends a request to login with username and password.
+        //Check and get username & password input fields.
+
+        //Send a request to login with username and password. 
+        
     }
 
-    /// <summary>
-    /// Login as a guest into the game.
-    /// </summary>
-    /// <remarks>
-    /// <para>Sends a request to login as a guest.</para>
-    /// </remarks>
     public void LoginAsAGuest() {
         UIManager.instance.HideLoginPanel();
         UIManager.instance.ShowSelectClassPanel();
 
-        //TODO Sends a request to login as a guest.
+        //Send a request to login as a guest.
+
+        //TO-DO: SEND REQUEST TO AUTH SERVER AND GET TOKEN IF SUCCESS
     }
 
-    /// <summary>
-    /// Joining to a random game.
-    /// </summary>
-    /// <remarks>
-    /// <para>Sends a request to join a game.</para>
-    /// </remarks>
     public void JoinGame() {
+
+        //Send a request to join game.
+        this.SendJoinPacket();
+
+
+    }
+ 
+    public void OnJoinSuccess(ShiftServerData data)
+    {
+        Debug.Log("OnJoinSuccess::EVENT::FIRED");
+        //gameObject.SetActive(false);
         UIManager.instance.HideSelectClassPanel();
 
-        //TODO Send a request to join game.
+        ShiftServerData newData = new ShiftServerData();
+        newData.Interaction = new ObjectAction();
+        newData.Interaction.CurrentObject = new sGameObject
+        {
+            PosX = 0,
+        };
+
+        NetworkManager.client.SendMessage(MSPlayerEvent.MsOuse, newData);
     }
 
+    public void OnPlayerObjectUse(ShiftServerData data)
+    {
+        Debug.Log("OnPlayerObjectUse event triggered");
+    }
+    public void SendJoinPacket()
+    {
+        ShiftServerData data = new ShiftServerData();
+        data.ClData = NetworkManager.clientinfo;
+        NetworkManager.client.SendMessage(MSServerEvent.MsJoinRequest, data);
+    }
 }

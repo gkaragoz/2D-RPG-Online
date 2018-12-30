@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ShiftServer.Client</name>
+    </assembly>
+    <members>
+        <member name="T:ShiftServer.Client.Core.ClientDataHandler">
+            <summary>
+            Management of server-client messages
+            </summary>
+            <summary>
+            Management of server-client messages
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.Fire(System.Collections.Generic.List{ShiftServer.Client.Core.PlayerEventCallback},ShiftServerData)">
+            <summary>
+            Invoke Player Events
+            </summary>
+            <param name="events"> Registered event list from AddEventListener</param>
+            <param name="eventId"> Shift server event msg id</param>
+            <param name="data"> Shift server event data</param>
+        </member>
+        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.Fire(System.Collections.Generic.List{ShiftServer.Client.Core.ClientEventCallback},ShiftServerData)">
+            <summary>
+            Invoke client callback functions
+            </summary>
+            <param name="events"> Registered event list from AddEventListener</param>
+            <param name="eventId"> Shift server event msg id</param>
+            <param name="data"> Shift server event data</param>
+        </member>
+        <member name="T:ShiftServer.Client.Core.GameProvider">
+            <summary>
+            Shift Server Core Methods
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.Core.GameProvider.Connect(System.String,System.Int32)">
+            <summary>
+            Connect to tcp socket
+            </summary>
+            <param name="client">client object</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShiftServer.Client.Core.GameProvider.SendMessage(System.Byte[])">
+            <summary> 	
+            Send message to server using socket connection. 	
+            </summary> 	
+        </member>
+        <member name="T:ShiftServer.Client.NetworkClient">
+            <summary>
+            The main <c>network client</c> class.
+            Contains all methods for performing game server functions.
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.#ctor">
+            <summary>
+            Constructor method of game client object
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.Connect(System.String,System.Int32)">
+            <summary>
+            Connect to tcp socket
+            </summary>
+            <param name="client">client object</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.IsConnected">
+            <summary>
+            Connect to tcp socket
+            </summary>
+            <param name="client">client object</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.Listen">
+            <summary>
+            Fixed Update
+            </summary>
+            <param name="client">client object</param>
+            <returns></returns>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.AddEventListener(System.Object,System.Action{ShiftServerData})">
+            <summary>
+            Add event handler function with giving message enum
+            </summary>
+            <param name="eventType">Shift Server event list</param>
+            <param name="listener">Callback function which fired when event triggered</param>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.Disconnect">
+            <summary>
+            Disconnect from server
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.SendMessage(MSServerEvent,ShiftServerData)">
+            <summary>
+            Craft and send data to server
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.NetworkClient.SendMessage(MSPlayerEvent,ShiftServerData)">
+            <summary>
+            Craft and send data to server
+            </summary>
+        </member>
+    </members>
+</doc>

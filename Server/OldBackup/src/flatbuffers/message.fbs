@@ -1,0 +1,62 @@
+namespace SailorIO.Models;
+enum EventTypes : byte { UpdateModel, WorldInfoUpdate, NewPlayer, BuyNewShip, SailShip, LandShip, RemovePlayer, PlayerDisconnect }
+enum SupplyTypes : byte { CRATE1, CRATE2, WOODENBARREL1, WOODENBARREL2 }
+enum ShipTypes : byte { RAFT1 }
+
+struct Vec3 {
+  x:float;
+  y:float;
+  z:float;
+}
+
+struct Input {
+  pos:Vec3;
+  time:int;
+  deltaTime:int;
+  sequenceId:int;
+}
+table Supply {
+  pos:Vec3;
+  supplyId:int;
+  assetId:SupplyTypes;
+  isDeath:bool;
+  isNew:bool;
+}
+
+table Ship {
+  pos:Vec3;
+  viewAngle:float;
+  Id:int;
+  assetType:ShipTypes;
+  captainUserId:int;
+  currentSuppliesCount:int;
+  currentSailorsCount:int;
+  currentHealth:int;
+  slopeSpeed:float;
+  rotationSpeed:float;
+  movementSpeed:float;
+}
+table WorldInfoTable {
+    userSlotId:int;
+    height:int;
+    width:int;
+    length:int;
+    offSetX:int;
+    offSetZ:int;
+    offSetY:int;
+}
+
+table RemovePlayerInfoTable {
+    userSlotId:int;
+}
+
+table UpdateModel {
+  eventType:EventTypes;
+  updatePassTime:short;
+  updateTime:double;
+  supplyCrates:[Supply];
+  shipModels:[Ship];
+  worldInfo:WorldInfoTable;
+  removePlayerInfo:RemovePlayerInfoTable;
+}
+root_type UpdateModel;
