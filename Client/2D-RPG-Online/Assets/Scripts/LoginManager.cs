@@ -3,18 +3,16 @@ using System.Collections.Generic;
 using UnityEngine;
 using ShiftServer.Client;
 
-public class LoginManager : Menu {
+public class LoginManager : Menu
+{
 
     #region Singleton
 
     public static LoginManager instance;
-    private void Start()
-    {
-        NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
-        NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
-    }
+ 
 
-    void Awake() {
+    void Awake()
+    {
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -24,15 +22,25 @@ public class LoginManager : Menu {
     }
 
     #endregion
+    private void Start()
+    {
+        if (!NetworkManager.instance.IsOffline)
+        {
+            NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
+            NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
+        }
 
-    public void Login() {
+    }
+    public void Login()
+    {
         //Check and get username & password input fields.
 
         //Send a request to login with username and password. 
-        
+
     }
 
-    public void LoginAsAGuest() {
+    public void LoginAsAGuest()
+    {
         UIManager.instance.HideLoginPanel();
         UIManager.instance.ShowSelectClassPanel();
 
@@ -41,14 +49,20 @@ public class LoginManager : Menu {
         //TO-DO: SEND REQUEST TO AUTH SERVER AND GET TOKEN IF SUCCESS
     }
 
-    public void JoinGame() {
+    public void JoinGame()
+    {
 
-        //Send a request to join game.
-        this.SendJoinPacket();
-
-
+        //Send a request to join game.    
+        if (NetworkManager.instance.IsOffline)
+        {
+            UIManager.instance.HideSelectClassPanel();
+        }
+        else
+        {
+            this.SendJoinPacket();
+        }
     }
- 
+
     public void OnJoinSuccess(ShiftServerData data)
     {
         Debug.Log("OnJoinSuccess::EVENT::FIRED");

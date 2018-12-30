@@ -16,6 +16,8 @@ namespace ShiftServer.Client.Core
         public Telepathy.Client client = null;
         public Thread listenerThread = null;
         public ClientDataHandler dataHandler = null;
+        string _address = null;
+        int _port;
         public GameProvider()
         {
             dataHandler = new ClientDataHandler();
@@ -30,6 +32,9 @@ namespace ShiftServer.Client.Core
         {
             try
             {
+                _port = port;
+                _address = address;
+
                 // create and connect the client
                 client = new Telepathy.Client();               
                 //this.SetFixedUpdateInterval();
@@ -98,7 +103,8 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-                if (client.Connected)
+                if (client.Connected 
+                    || client == null)
                 {
                     // grab all new messages. do this in your Update loop.
                     Telepathy.Message msg;
@@ -107,13 +113,13 @@ namespace ShiftServer.Client.Core
                         switch (msg.eventType)
                         {
                             case Telepathy.EventType.Connected:
-                                Console.WriteLine("Connected");
+                                Console.WriteLine("Connected To Socket");
                                 break;
                             case Telepathy.EventType.Data:
                                 this.dataHandler.HandleMessage(msg.data);
                                 break;
                             case Telepathy.EventType.Disconnected:
-                                Console.WriteLine("Disconnected");
+                                Console.WriteLine("Disconnected From Socket");
                                 client.Disconnect();
                                 break;
                         }
@@ -121,7 +127,8 @@ namespace ShiftServer.Client.Core
                 }
                 else
                 {
-                    //TO-DO Reconnect 
+                    client.Connect(_address, _port);
+                    TickrateUtil.SafeDelay(5);
                 }
             }
             catch (SocketException socketException)
