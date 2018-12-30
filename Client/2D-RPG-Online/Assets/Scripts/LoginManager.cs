@@ -10,7 +10,6 @@ public class LoginManager : Menu {
     public static LoginManager instance;
     private void Start()
     {
-        NetworkManager.client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
         NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
         NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
     }
@@ -49,11 +48,7 @@ public class LoginManager : Menu {
 
 
     }
-    public void OnConnected(ShiftServerData data)
-    {
-        Debug.Log("Connected To Server");
-    }
-
+ 
     public void OnJoinSuccess(ShiftServerData data)
     {
         Debug.Log("OnJoinSuccess::EVENT::FIRED");

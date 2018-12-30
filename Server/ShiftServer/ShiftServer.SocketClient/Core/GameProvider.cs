@@ -119,6 +119,10 @@ namespace ShiftServer.Client.Core
                         }
                     }
                 }
+                else
+                {
+                    //TO-DO Reconnect 
+                }
             }
             catch (SocketException socketException)
             {

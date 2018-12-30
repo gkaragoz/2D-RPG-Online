@@ -47,6 +47,7 @@ enum MSServerEvent
 	MS_ConnectOK = 19;						// Server->router->client.
 	MS_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
 	MS_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+	MS_PingRequest = 22;					// Ping Request 
 }
 
 message SessionData {

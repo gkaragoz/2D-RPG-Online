@@ -95,10 +95,15 @@ namespace ShiftServer.Client
         /// <summary>
         /// Craft and send data to server
         /// </summary>
-        public void SendMessage(MSServerEvent evt, ShiftServerData data)
+        public void SendMessage(MSServerEvent evt, ShiftServerData data = null)
         {
+            if (data == null)
+                data = new ShiftServerData();
+
             data.Basevtid = MSBaseEventId.MsServerEvent;
             data.Svevtid = evt;
+
+
 
             byte[] bb = data.ToByteArray();
 
@@ -106,12 +111,15 @@ namespace ShiftServer.Client
                 gameProvider.SendMessage(bb);
         }
 
-
+       
         /// <summary>
         /// Craft and send data to server
         /// </summary>
         public void SendMessage(MSPlayerEvent evt, ShiftServerData data)
         {
+            if (data == null)
+                throw new Exception();
+
             data.Basevtid = MSBaseEventId.MsPlayerEvent;
             data.Plevtid = evt;
 

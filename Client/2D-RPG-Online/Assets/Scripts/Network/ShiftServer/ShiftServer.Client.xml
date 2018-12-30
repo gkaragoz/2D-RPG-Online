@@ -4,7 +4,7 @@
         <name>ShiftServer.Client</name>
     </assembly>
     <members>
-        <member name="T:ShiftServer.Client.Handlers.ClientDataHandler">
+        <member name="T:ShiftServer.Client.Core.ClientDataHandler">
             <summary>
             Management of server-client messages
             </summary>

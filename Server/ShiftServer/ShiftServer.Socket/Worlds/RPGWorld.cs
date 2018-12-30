@@ -35,7 +35,6 @@ namespace ShiftServer.Server.Worlds
         {
             GameObjects.Add(shift.connectionId, gameObject);
         }
-
         public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
 
@@ -97,7 +96,6 @@ namespace ShiftServer.Server.Worlds
             shift.SendPacket(MSServerEvent.MsJoinRequestSuccess, newData);
 
         }
-
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
             Console.WriteLine("An object want to move");
