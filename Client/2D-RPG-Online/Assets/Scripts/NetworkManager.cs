@@ -7,39 +7,35 @@ using System.Threading.Tasks;
 using UnityEngine;
 using ShiftServer.Client;
 
-
 public class NetworkManager : MonoBehaviour
 {
     
-    private static NetworkClient networkClient;
+    public static NetworkClient client;
+    public static ClientData clientinfo;
 
 
 
     private void Start()
     {
-        networkClient = new NetworkClient();
-        networkClient.Connect("localhost", 1337);
-        networkClient.AddEventListener(ShiftServerMsgID.ShiftServerConnectOk, OnConnected);
+        client = new NetworkClient();
+        client.Connect("localhost", 1337);
+
+        clientinfo = new ClientData();
+        clientinfo.Guid = Guid.NewGuid().ToString();
+        clientinfo.Loginname = "Test";
+        clientinfo.MachineId = SystemInfo.deviceUniqueIdentifier;
+        clientinfo.MachineName = SystemInfo.deviceName;
 
     }
-
-    private void OnDestroy()
+    private void Update()
     {
-        if (networkClient != null)
-            networkClient.Disconnect();
+        client.Listen();
     }
-
-    private void OnConnected(ShiftServerMsg obj)
+    void OnApplicationQuit()
     {
-        Debug.Log("Connected To Server");
+        // Always disconnect before quitting
+        if (client.IsConnected())
+            client.Disconnect();
     }
-
- 
-    public static void SendMessage(ShiftServerMsg data)
-    {
-        networkClient.SendMessage(data);
-    }
-
-
 }
 

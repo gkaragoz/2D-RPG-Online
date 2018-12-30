@@ -57,20 +57,21 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Core\EventCallback.cs" />
+    <Compile Include="Core\ClientDataHandler.cs" />
+    <Compile Include="Core\ClientEventCallback.cs" />
     <Compile Include="Core\GameProvider.cs" />
     <Compile Include="Data\Entities\Enums.cs" />
     <Compile Include="NetworkClient.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">
       <Project>{ce127e51-41a4-4c6a-9f9b-10954401e692}</Project>
       <Name>ShiftServer.Proto</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

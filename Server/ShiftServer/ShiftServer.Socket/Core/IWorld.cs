@@ -19,6 +19,7 @@ namespace ShiftServer.Server.Core
         void PlayerCreateOnWorld(IGameObject gameObject, ShiftClient client);
         void OnObjectMove(ShiftServerData data, ShiftClient client);
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
+        void OnObjectUse(ShiftServerData data, ShiftClient client);
         void OnWorldUpdate();
     }
 }

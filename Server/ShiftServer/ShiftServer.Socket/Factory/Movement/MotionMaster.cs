@@ -8,7 +8,7 @@ namespace ShiftServer.Server.Factory.Movement
     {
         public static void OnMove(ShiftServerData data)
         {
-            Console.WriteLine("OnMove event triggered::event_id::" + (int)data.Eid);
+            Console.WriteLine("OnMove event triggered::event_id::" + (int)data.Plevtid);
         }
     }
 }

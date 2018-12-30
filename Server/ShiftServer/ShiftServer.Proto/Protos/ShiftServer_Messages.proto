@@ -2,49 +2,60 @@
 
 
 message ShiftServerData {
-	ServerEventId eid = 1;  // Event type
-	SessionData session = 2; // SessionData
-	ClientData clData = 3; // ClientData
-	repeated GameObject updatedGameObjects = 4; // GameObjects list
+	MSBaseEventId basevtid = 1;
+	MSServerEvent svevtid = 2;  // Event type
+	MSPlayerEvent plevtid = 3;  // Sub ev type
+	SessionData session = 4; // SessionData
+	ClientData clData = 5; // ClientData
+	repeated sGameObject updatedGameObjects = 6; // GameObjects list
 
 	// interaction message
-	ObjectAction interaction = 5;
+	ObjectAction interaction = 7;
 }
 
 /// Control message ID.
-enum ServerEventId
+enum MSBaseEventId
+{
+	MS_PlayerEvent = 0;
+	MS_ServerEvent = 1;
+};
+
+/// Control message ID.
+enum MSPlayerEvent
 {
 
-	S_Invalid = 0;						// Reserved
-	S_GameserverSessionRequest = 5;		// Client -> Router
-	S_GameserverSessionEstablished = 6;	// Router -> Client
-	S_NoSession = 7;						// Router -> Server, Router -> Client
-	S_Diagnostic = 8;						// Diagnostic / status message Router -> Client
-	S_JoinRequest = 9;					// Join
-	S_JoinRequestSuccess = 10;			// Join
-	S_JoinRequestFailed= 11;			// Join
-	S_Stats = 13;							// Any -> Any
-	S_ConnectRequest = 18;				// Client->router->server
-	S_ConnectOK = 19;						// Server->router->client.
-	S_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
-	S_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
-
 	//Interaction events
-	S_OMove = 22;
-	S_OAttack = 23;
-	S_ODead = 24;
-	S_OUse = 25;
+	MS_OMove = 0;
+	MS_OAttack = 1;
+	MS_ODead = 2;
+	MS_OUse = 3;
 
 };
 
+enum MSServerEvent
+{
+	MS_Invalid = 0;						// Reserved
+	MS_GameserverSessionRequest = 5;		// Client -> Router
+	MS_GameserverSessionEstablished = 6;	// Router -> Client
+	MS_NoSession = 7;						// Router -> Server, Router -> Client
+	MS_Diagnostic = 8;						// Diagnostic / status message Router -> Client
+	MS_JoinRequest = 9;					// Join
+	MS_JoinRequestSuccess = 10;			// Join
+	MS_JoinRequestFailed= 11;			// Join
+	MS_Stats = 13;							// Any -> Any
+	MS_ConnectRequest = 18;				// Client->router->server
+	MS_ConnectOK = 19;						// Server->router->client.
+	MS_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
+	MS_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+}
 
 message SessionData {
 	string sid = 2;
 }
 
 message ObjectAction {
-	GameObject currentObject = 1;
-	repeated GameObject interactedObjects = 2;
+	sGameObject currentObject = 1;
+	repeated sGameObject interactedObjects = 2;
 }
 
 message ClientData {
@@ -55,25 +66,25 @@ message ClientData {
 	string guid = 5;
 }
 
-message GameObject {
+message sGameObject {
 
 	int32 oid = 1;
-	xVector3 position = 4;
-	xVector3 rotation = 5;
+
+	float pos_x = 2;
+	float pos_y = 3;
+	float pos_z = 4;
+
+	float rot_x = 5;
+	float rot_y = 6;
+	float rot_z = 7;
+	
+	float scl_x = 8;
+	float scl_y = 9;
+	float scl_z = 10;
 }
 
 message PlayerInput {
 
 	int32 oid = 1;
-	xVector3 scale = 2;
-	xVector3 position = 3;
-	xVector3 rotation = 4;
-}
-
-message xVector3 {
-
-	float x = 1;
-	float y = 2;
-	float z = 3;
 }
 

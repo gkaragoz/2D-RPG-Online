@@ -20,10 +20,26 @@ namespace ShiftServer.Server.Auth
             return Client.Connected;
         }
 
-        public bool Send(ShiftServerData data)
+        public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
+           
+            data.Basevtid = MSBaseEventId.MsServerEvent;
+            data.Svevtid = eventType;
             byte[] bb = data.ToByteArray();
+            return Send(bb);
+            
+        }
+        public bool SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        {
 
+            data.Basevtid = MSBaseEventId.MsPlayerEvent;
+            data.Plevtid = eventType;
+            byte[] bb = data.ToByteArray();
+            return Send(bb);
+
+        }
+        private bool Send(byte[] bb)
+        {
             if (this.Client != null)
             {
                 // GetStream() might throw exception if client is disconnected

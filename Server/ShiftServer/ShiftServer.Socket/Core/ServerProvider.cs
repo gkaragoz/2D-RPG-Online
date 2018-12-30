@@ -1,6 +1,5 @@
 ﻿using Google.Protobuf;
-using ShiftServer.Proto.Handlers;
-using ShiftServer.Proto.Models;
+using ShiftServer.Proto.Helper;
 using ShiftServer.Server.Auth;
 using ShiftServer.Server.Helper;
 using System;
@@ -17,6 +16,8 @@ namespace ShiftServer.Server.Core
 
         public ServerProvider(IWorld createdWorld) {
             world = createdWorld;
+            dataHandler = new ServerDataHandler();
+
         }
 
         public void Listen(int tickrate)
@@ -29,16 +30,24 @@ namespace ShiftServer.Server.Core
 
         }
 
-        internal void AddServerEventListener(ServerEventId eventType, Action<ShiftServerData, ShiftClient> listener)
+        internal void AddServerEventListener(MSServerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
         {
-            this.dataHandler.events.Add(new ServerEventCallback
+            this.dataHandler.serverEvents.Add(new ServerEventCallback
+            {
+                CallbackFunc = listener,
+                EventId = eventType
+            });
+        }
+        internal void AddServerEventListener(MSPlayerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
+        {
+            this.dataHandler.playerEvents.Add(new PlayerEventCallback
             {
                 CallbackFunc = listener,
                 EventId = eventType
             });
         }
 
-        
+
         private void GetPlayerPackets(object source, ElapsedEventArgs e)
         {
             this.GetMessages();
@@ -74,7 +83,8 @@ namespace ShiftServer.Server.Core
                         Console.WriteLine(msg.connectionId + " Connected");
 
                         ShiftServerData data = new ShiftServerData();
-                        data.Eid = ServerEventId.SConnectOk;
+                        data.Basevtid = MSBaseEventId.MsServerEvent;
+                        data.Svevtid = MSServerEvent.MsConnectOk;
                         SendDataByConnId(msg.connectionId, data);
                         world.Clients.Add(msg.connectionId, new ShiftClient {
                             connectionId = msg.connectionId,
@@ -89,11 +99,8 @@ namespace ShiftServer.Server.Core
                             dataHandler.HandleMessage(msg.data, shift);
                         break;
                     case Telepathy.EventType.Disconnected:
-                        if (client.Connected)
-                        {
-                            client.Close();
-                            world.Clients.Remove(msg.connectionId);
-                        }
+
+                        world.Clients.Remove(msg.connectionId);
                         Console.WriteLine(msg.connectionId + " Disconnected");
                         break;
                     default:
@@ -109,6 +116,36 @@ namespace ShiftServer.Server.Core
             byte[] bb = data.ToByteArray();
             server.Send(connId, bb);
         }
+
+        /// <summary>
+        /// Craft and send data to server
+        /// </summary>
+        public void SendMessage(int connId, MSServerEvent evt, ShiftServerData data)
+        {
+            data.Basevtid = MSBaseEventId.MsServerEvent;
+            data.Svevtid = evt;
+
+            byte[] bb = data.ToByteArray();
+
+            if (bb.Length > 0)
+                server.Send(connId, bb);
+        }
+
+
+        /// <summary>
+        /// Craft and send data to server
+        /// </summary>
+        public void SendMessage(int connId, MSPlayerEvent evt, ShiftServerData data)
+        {
+            data.Basevtid = MSBaseEventId.MsPlayerEvent;
+            data.Plevtid = evt;
+
+            byte[] bb = data.ToByteArray();
+
+            if (bb.Length > 0)
+                server.Send(connId, bb);
+        }
+
         public int ClientCount()
         {
             return world.Clients.Count;

@@ -16,8 +16,7 @@ namespace ShiftServer.SocketTest
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new NetworkClient();
             networkClient.Connect("localhost", 1337);
-            networkClient.AddEventListener(ServerEventId.SConnectOk, OnConnected);
-
+            networkClient.AddEventListener(MSServerEvent.MsConnectOk, OnConnected);
 
             bool runForever = true;
             while (runForever)
@@ -46,7 +45,7 @@ namespace ShiftServer.SocketTest
       
         public static void OnConnected(ShiftServerData data)
         {
-            Console.WriteLine("OnConnected event triggered::event_id::" + (int)data.Eid);
+            Console.WriteLine("OnConnected event triggered::event_id::" + (int)data.Svevtid);
         }
     }
 }

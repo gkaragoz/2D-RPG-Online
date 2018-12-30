@@ -1,42 +1,46 @@
-﻿using ShiftServer.Server.Auth;
+﻿using ShiftServer.Client.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Client.Core
 {
     /// <summary>
     /// Management of server-client messages
     /// </summary>
-    public class ServerDataHandler
+    /// <summary>
+    /// Management of server-client messages
+    /// </summary>
+    public class ClientDataHandler
     {
-        public List<ServerEventCallback> serverEvents = null;
+        public List<ClientEventCallback> clientEvents = null;
         public List<PlayerEventCallback> playerEvents = null;
 
-        public ServerDataHandler()
+        public ClientDataHandler()
         {
-            serverEvents = new List<ServerEventCallback>();
+            clientEvents = new List<ClientEventCallback>();
             playerEvents = new List<PlayerEventCallback>();
         }
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb, ShiftClient client)
+        public void HandleMessage(byte[] bb)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
             switch (data.Basevtid)
             {
                 case MSBaseEventId.MsPlayerEvent:
-                    ServerEventInvoker.Fire(playerEvents, data, client);
+                    ClientEventInvoker.Fire(playerEvents, data);
                     break;
                 case MSBaseEventId.MsServerEvent:
-                    ServerEventInvoker.Fire(serverEvents, data, client);
+                    ClientEventInvoker.Fire(clientEvents, data);
                     break;
                 default:
-                 
+
                     break;
 
             }

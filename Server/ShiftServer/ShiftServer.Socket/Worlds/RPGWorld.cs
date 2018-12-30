@@ -50,6 +50,9 @@ namespace ShiftServer.Server.Worlds
                 GameObjects.Remove(shift.connectionId);
             }
 
+            if (data.ClData == null)
+                return;
+
             if (data.ClData.Loginname.Length > 20)
             {
                 
@@ -68,30 +71,67 @@ namespace ShiftServer.Server.Worlds
             Console.WriteLine("Player joined to world");
 
             ShiftServerData newData = new ShiftServerData();
-            newData.Eid = ServerEventId.SJoinRequestSuccess;
             newData.Session = new SessionData
             {
                 Sid = player.OwnerClientSid
             };
 
             newData.Interaction = new ObjectAction();
-            newData.Interaction.CurrentObject = new GameObject
+            newData.Interaction.CurrentObject = new sGameObject
             {
                 Oid = player.ObjectId,
-                Position = new xVector3 { X = player.Position.X, Y = player.Position.Y, Z = player.Position.Z },
-                Rotation = new xVector3 { X = player.Rotation.X, Y = player.Rotation.Y, Z = player.Rotation.Z }
+
+                PosX = 0,
+                PosY = 0,
+                PosZ = 0,
+
+                RotX = 0,
+                RotY = 0,
+                RotZ = 0,
+
+                SclX = 0,
+                SclY = 0,
+                SclZ = 0
             };
 
-            shift.Send(newData);
-
+            shift.SendPacket(MSServerEvent.MsJoinRequestSuccess, newData);
 
         }
 
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-            MotionMaster.OnMove(data);
+            Console.WriteLine("An object want to move");
+            //MotionMaster.OnMove(data);
         }
+        public void OnObjectUse(ShiftServerData data, ShiftClient client)
+        {
+            Console.WriteLine("An object want to be used");
+            ShiftServerData newData = new ShiftServerData();
+            newData.Session = new SessionData
+            {
+                Sid = client.UserSession.GetSid()
+            };
 
+            newData.Interaction = new ObjectAction();
+            newData.Interaction.CurrentObject = new sGameObject
+            {
+
+                PosX = 0,
+                PosY = 0,
+                PosZ = 0,
+
+                RotX = 0,
+                RotY = 0,
+                RotZ = 0,
+
+                SclX = 0,
+                SclY = 0,
+                SclZ = 0
+            };
+
+            client.SendPacket(MSPlayerEvent.MsOuse, newData);
+
+        }
         public void OnObjectRemove(ShiftServerData data, ShiftClient shift)
         {
 
@@ -101,5 +141,7 @@ namespace ShiftServer.Server.Worlds
         {
 
         }
+
+       
     }
 }

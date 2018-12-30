@@ -8,6 +8,12 @@ public class LoginManager : Menu {
     #region Singleton
 
     public static LoginManager instance;
+    private void Start()
+    {
+        NetworkManager.client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
+        NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
+        NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
+    }
 
     void Awake() {
         if (instance == null)
@@ -37,12 +43,41 @@ public class LoginManager : Menu {
     }
 
     public void JoinGame() {
-        UIManager.instance.HideSelectClassPanel();
-        //Send a request to join game.
-        //TO-DO: JOIN TO TCP SOCKET
 
+        //Send a request to join game.
+        this.SendJoinPacket();
 
 
     }
+    public void OnConnected(ShiftServerData data)
+    {
+        Debug.Log("Connected To Server");
+    }
 
+    public void OnJoinSuccess(ShiftServerData data)
+    {
+        Debug.Log("OnJoinSuccess::EVENT::FIRED");
+        //gameObject.SetActive(false);
+        UIManager.instance.HideSelectClassPanel();
+
+        ShiftServerData newData = new ShiftServerData();
+        newData.Interaction = new ObjectAction();
+        newData.Interaction.CurrentObject = new sGameObject
+        {
+            PosX = 0,
+        };
+
+        NetworkManager.client.SendMessage(MSPlayerEvent.MsOuse, newData);
+    }
+
+    public void OnPlayerObjectUse(ShiftServerData data)
+    {
+        Debug.Log("OnPlayerObjectUse event triggered");
+    }
+    public void SendJoinPacket()
+    {
+        ShiftServerData data = new ShiftServerData();
+        data.ClData = NetworkManager.clientinfo;
+        NetworkManager.client.SendMessage(MSServerEvent.MsJoinRequest, data);
+    }
 }

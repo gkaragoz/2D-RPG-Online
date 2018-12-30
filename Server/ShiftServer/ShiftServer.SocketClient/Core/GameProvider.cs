@@ -3,8 +3,8 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 using Google.Protobuf;
-using ShiftServer.Proto.Handlers;
-using ShiftServer.Server.Helper;
+using ShiftServer.Client;
+using ShiftServer.Proto.Helper;
 
 namespace ShiftServer.Client.Core
 {
@@ -15,10 +15,10 @@ namespace ShiftServer.Client.Core
     {
         public Telepathy.Client client = null;
         public Thread listenerThread = null;
-        public DataHandler dataHandler = null;
+        public ClientDataHandler dataHandler = null;
         public GameProvider()
         {
-            dataHandler = new DataHandler();
+            dataHandler = new ClientDataHandler();
         }
 
         /// <summary>
@@ -32,7 +32,7 @@ namespace ShiftServer.Client.Core
             {
                 // create and connect the client
                 client = new Telepathy.Client();               
-                this.SetFixedUpdateInterval();
+                //this.SetFixedUpdateInterval();
                 client.Connect(address, port);
             }
             catch (Exception ex)
@@ -80,32 +80,21 @@ namespace ShiftServer.Client.Core
             // send a message to server
             client.Send(bb);
         }
-
-        public byte[] CraftData(ShiftServerData data)
-        {
-            ShiftServerData msg = new ShiftServerData
-            {
-                Eid = data.Eid
-            };
-
-            return msg.ToByteArray();
-        }
-
        
         public void SetFixedUpdateInterval()
         {
             //this timer interval simulate the fixed update in unity. must control on server every time
-            int timerInterval = TickrateUtil.Set(15);
+            //int timerInterval = TickrateUtil.Set(15);
 
-            System.Timers.Timer aTimer = new System.Timers.Timer();
-            aTimer.Elapsed += new ElapsedEventHandler(FixedUpdate);
-            // Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
-            aTimer.Interval = timerInterval;
-            aTimer.Enabled = true;
+            //System.Timers.Timer aTimer = new System.Timers.Timer();
+            //aTimer.Elapsed += new ElapsedEventHandler(FixedUpdate);
+            //// Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
+            //aTimer.Interval = timerInterval;
+            //aTimer.Enabled = true;
 
         }
 
-        public void FixedUpdate(object source, ElapsedEventArgs e)
+        public void FixedUpdate()
         {
             try
             {

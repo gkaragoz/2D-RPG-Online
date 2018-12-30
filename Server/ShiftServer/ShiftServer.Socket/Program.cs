@@ -1,4 +1,3 @@
-using ShiftServer.Proto.Models;
 using ShiftServer.Server.Core;
 using ShiftServer.Server.Factory.Movement;
 using ShiftServer.Server.Helper;
@@ -28,8 +27,8 @@ namespace ShiftServer.Server
             RPGWorld world = new RPGWorld();
 
             serverProvider = new ServerProvider(world);
-            serverProvider.AddServerEventListener(ServerEventId.SJoinRequest, world.OnPlayerJoin);
-            serverProvider.AddServerEventListener(ServerEventId.SOmove, world.OnObjectMove);
+            serverProvider.AddServerEventListener(MSServerEvent.MsJoinRequest, world.OnPlayerJoin);
+            serverProvider.AddServerEventListener(MSPlayerEvent.MsOuse, world.OnObjectUse);
             serverProvider.Listen(tickrate : 15);
             ConsoleUI.Run(serverProvider);
             //Run Server Simulation
