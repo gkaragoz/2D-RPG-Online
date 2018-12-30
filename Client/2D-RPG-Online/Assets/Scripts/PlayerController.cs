@@ -2,6 +2,20 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// This class is responsible to manage all inputs of players.
+/// <list type="bullet">
+/// Required Components:
+/// <item>
+/// <term>PlayerMotor</term>
+/// <description>See <see cref="PlayerMotor"/></description>
+/// </item>
+/// <item>
+/// <term>PlayerAttack</term>
+/// <description>See <see cref="PlayerAttack"/></description>
+/// </item>
+/// </list>
+/// </summary>
 [RequireComponent(typeof(PlayerMotor), typeof(PlayerAttack))]
 public class PlayerController : MonoBehaviour {
 
