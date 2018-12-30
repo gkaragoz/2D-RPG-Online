@@ -10,20 +10,27 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
+using ShiftServer.Server.Core;
+using System.Threading;
 
 namespace ShiftServer.Server.Worlds
 {
     public class RPGWorld : IWorld
     {
+        private string Banner = ">>> RPG WORLD <<< \n";
         Vector3 IWorld.Scale { get; set; }
+
+        ServerDataHandler.ObjectPool<int> pool = new ServerDataHandler.ObjectPool<int>(() => new int());
+
         private SafeDictionary<int, IGameObject> GameObjects { get; set; }
-        private int ObjectCounter { get; set; }
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
+        public int ObjectCounter = 0;
 
         public RPGWorld()
         {
             GameObjects = new SafeDictionary<int, IGameObject>();
             Clients = new SafeDictionary<int, ShiftClient>();
+            Console.WriteLine(Banner);
         }
 
         public void OnObjectAttack(ShiftServerData data, ShiftClient shift)
@@ -31,10 +38,12 @@ namespace ShiftServer.Server.Worlds
 
         }
 
-        public void PlayerCreateOnWorld(IGameObject gameObject, ShiftClient shift)
+        public void OnObjectCreate(IGameObject gameObject)
         {
-            GameObjects.Add(shift.connectionId, gameObject);
+            GameObjects.Add(Interlocked.Increment(ref ObjectCounter), gameObject);
         }
+
+       
         public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
 
@@ -58,7 +67,8 @@ namespace ShiftServer.Server.Worlds
             }
 
             Player player = new Player();
-            player.OwnerClientSid = shift.UserSession.GetSid();
+
+            player.OwnerClientId = shift.connectionId; 
             player.Name = data.ClData.Loginname;
             player.MaxHP = 100;
             player.CurrentHP = 100;
@@ -66,15 +76,15 @@ namespace ShiftServer.Server.Worlds
             player.Rotation = new Vector3(0, 0, 0);
             player.Scale = new Vector3(1, 1, 1);
 
-            this.PlayerCreateOnWorld(player, shift);
+            this.OnObjectCreate(player);
+
             Console.WriteLine("Player joined to world");
 
             ShiftServerData newData = new ShiftServerData();
             newData.Session = new SessionData
             {
-                Sid = player.OwnerClientSid
+                Sid = shift.UserSession.GetSid()
             };
-
             newData.Interaction = new ObjectAction();
             newData.Interaction.CurrentObject = new sGameObject
             {
@@ -130,9 +140,9 @@ namespace ShiftServer.Server.Worlds
             client.SendPacket(MSPlayerEvent.MsOuse, newData);
 
         }
-        public void OnObjectRemove(ShiftServerData data, ShiftClient shift)
+        public void OnObjectDestroy(IGameObject gameObject)
         {
-
+            GameObjects.Remove(gameObject.ObjectId);
         }
 
         public void OnWorldUpdate()
