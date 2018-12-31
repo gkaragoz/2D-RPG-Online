@@ -154,7 +154,7 @@ namespace ShiftServer.Server.Worlds
 
         public void OnWorldUpdate()
         {
-
+            
         }
 
         public void SendWorldState()
