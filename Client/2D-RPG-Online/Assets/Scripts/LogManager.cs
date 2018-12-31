@@ -36,7 +36,12 @@ public class LogManager : Menu {
     [Utils.ReadOnly]
     private List<Log> _allLogs = new List<Log>();
 
+    private const string ON_APP_START_LOG = "<<<<<NEW SESSION>>>>>";
+    private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>\n";
+
     private void Start() {
+        WriteToLogFile(ON_APP_START_LOG);
+
         Application.logMessageReceived += LogCallback;
 
         AddLog("Press TAB to toggle Log Panel.", Log.Type.Info);
@@ -100,10 +105,6 @@ public class LogManager : Menu {
         ShowPanel();
     }
 
-    private void WriteToLogFile(Log log) {
-        LogFile.WriteString(log);
-    }
-
     private void ShowPanel() {
         fadeInOut.FadeIn();
     }
@@ -152,6 +153,18 @@ public class LogManager : Menu {
             default:
                 break;
         }
+    }
+
+    private void WriteToLogFile(Log log) {
+        LogFile.WriteString(log);
+    }
+
+    private void WriteToLogFile(string message) {
+        LogFile.WriteString(message);
+    }
+
+    private void OnApplicationQuit() {
+        WriteToLogFile(ON_APP_QUIT_LOG);
     }
 
 }

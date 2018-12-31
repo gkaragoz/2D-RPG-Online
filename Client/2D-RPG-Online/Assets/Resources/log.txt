@@ -1,54 +1,38 @@
-[13:17:47] [LogFile] WRITE EVENT>> log.txt file not found on path: Assets/Resources/log.txt
-[13:17:47] [LogFile] WRITE EVENT>> log.txt file is creating on path: Assets/Resources/log.txt
-[13:17:47] [LogFile] WRITE EVENT>> log.txt file not found on path: Assets/Resources/log.txt
-[13:17:47] [LogFile] WRITE EVENT>> log.txt file is creating on path: Assets/Resources/log.txt
-[13:17:47] Press TAB to toggle Log Panel.
-[13:17:47] Press 1 to show Info message.
-[13:17:47] Press 2 to show Error message.
-[13:17:47] Press 3 to show Loot message.
-[13:17:47] Press 4 to show Interact message.
-[13:17:47] Press 5 to show Drop message.
-[13:19:25] Press TAB to toggle Log Panel.
-[13:19:25] Press 1 to show Info message.
-[13:19:25] Press 2 to show Error message.
-[13:19:25] Press 3 to show Loot message.
-[13:19:25] Press 4 to show Interact message.
-[13:19:25] Press 5 to show Drop message.
-[13:19:28] Example info log.
-[13:19:29] Example error log.
-[13:19:30] Example info log.
-[13:19:31] Example error log.
-[13:20:45] Press TAB to toggle Log Panel.
-[13:20:45] Press 1 to show Info message.
-[13:20:45] Press 2 to show Error message.
-[13:20:45] Press 3 to show Loot message.
-[13:20:45] Press 4 to show Interact message.
-[13:20:45] Press 5 to show Drop message.
-[13:20:47] Example info log.
-[13:20:47] Example info log.
-[13:20:48] Example info log.
-[13:20:48] Example info log.
-(SessionID-1) [13:26:18] Press TAB to toggle Log Panel.
-(SessionID-1) [13:26:18] Press 1 to show Info message.
-(SessionID-1) [13:26:18] Press 2 to show Error message.
-(SessionID-1) [13:26:18] Press 3 to show Loot message.
-(SessionID-1) [13:26:18] Press 4 to show Interact message.
-(SessionID-1) [13:26:18] Press 5 to show Drop message.
-(SessionID-1) [13:26:25] Press TAB to toggle Log Panel.
-(SessionID-1) [13:26:25] Press 1 to show Info message.
-(SessionID-1) [13:26:25] Press 2 to show Error message.
-(SessionID-1) [13:26:25] Press 3 to show Loot message.
-(SessionID-1) [13:26:25] Press 4 to show Interact message.
-(SessionID-1) [13:26:25] Press 5 to show Drop message.
-(Session-1) [31 December 2018] [13:27:50] Press TAB to toggle Log Panel.
-(Session-1) [31 December 2018] [13:27:50] Press 1 to show Info message.
-(Session-1) [31 December 2018] [13:27:50] Press 2 to show Error message.
-(Session-1) [31 December 2018] [13:27:50] Press 3 to show Loot message.
-(Session-1) [31 December 2018] [13:27:50] Press 4 to show Interact message.
-(Session-1) [31 December 2018] [13:27:50] Press 5 to show Drop message.
-(Session-1) [31/12/2018 13:33:59]Log
-(Session-1) [31/12/2018 13:33:59]Log
-(Session-1) [31/12/2018 13:33:59]Log
-(Session-1) [31/12/2018 13:33:59]Log
-(Session-1) [31/12/2018 13:33:59]Log
-(Session-1) [31/12/2018 13:33:59]Log
+(Session-12) [31/12/2018 13:55:06] <<<<<NEW GAME>>>>>
+(Session-12) [31/12/2018 13:55:06] Press TAB to toggle Log Panel.
+(Session-12) [31/12/2018 13:55:06] Press 1 to show Info message.
+(Session-12) [31/12/2018 13:55:06] Press 2 to show Error message.
+(Session-12) [31/12/2018 13:55:06] Press 3 to show Loot message.
+(Session-12) [31/12/2018 13:55:06] Press 4 to show Interact message.
+(Session-12) [31/12/2018 13:55:06] Press 5 to show Drop message.
+(Session-12) [31/12/2018 13:55:07] <<<<<END GAME>>>>>
+(Session-13) [31/12/2018 13:56:30] <<<<<NEW SESSION>>>>>
+(Session-13) [31/12/2018 13:56:30] Press TAB to toggle Log Panel.
+(Session-13) [31/12/2018 13:56:30] Press 1 to show Info message.
+(Session-13) [31/12/2018 13:56:30] Press 2 to show Error message.
+(Session-13) [31/12/2018 13:56:30] Press 3 to show Loot message.
+(Session-13) [31/12/2018 13:56:30] Press 4 to show Interact message.
+(Session-13) [31/12/2018 13:56:30] Press 5 to show Drop message.
+(Session-13) [31/12/2018 13:56:31] <<<<<END SESSION>>>>>
+
+
+(Session-14) [31/12/2018 13:56:40] <<<<<NEW SESSION>>>>>
+(Session-14) [31/12/2018 13:56:40] Press TAB to toggle Log Panel.
+(Session-14) [31/12/2018 13:56:40] Press 1 to show Info message.
+(Session-14) [31/12/2018 13:56:40] Press 2 to show Error message.
+(Session-14) [31/12/2018 13:56:40] Press 3 to show Loot message.
+(Session-14) [31/12/2018 13:56:40] Press 4 to show Interact message.
+(Session-14) [31/12/2018 13:56:40] Press 5 to show Drop message.
+(Session-14) [31/12/2018 13:56:40] <<<<<END SESSION>>>>>
+
+
+(Session-15) [31/12/2018 13:56:42] <<<<<NEW SESSION>>>>>
+(Session-15) [31/12/2018 13:56:42] Press TAB to toggle Log Panel.
+(Session-15) [31/12/2018 13:56:42] Press 1 to show Info message.
+(Session-15) [31/12/2018 13:56:42] Press 2 to show Error message.
+(Session-15) [31/12/2018 13:56:42] Press 3 to show Loot message.
+(Session-15) [31/12/2018 13:56:42] Press 4 to show Interact message.
+(Session-15) [31/12/2018 13:56:42] Press 5 to show Drop message.
+(Session-15) [31/12/2018 13:56:43] <<<<<END SESSION>>>>>
+
+
