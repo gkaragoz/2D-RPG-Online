@@ -7,8 +7,7 @@
     "dev": "vuepress dev",
     "build": "vuepress build"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "ManaShift",
   "dependencies": {
     "directory-tree": "^2.1.0",
     "markdown-it-decorate": "^1.2.2",

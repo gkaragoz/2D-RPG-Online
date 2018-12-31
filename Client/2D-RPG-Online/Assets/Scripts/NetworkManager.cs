@@ -105,7 +105,7 @@ public class NetworkManager : MonoBehaviour
 
     }
 
-    public void OnWorldUpdate(ShiftServerData obj)
+    public void OnWorldUpdate(ShiftServerData data)
     {
         Debug.Log("!! WORLD UPDATED !!");
     }

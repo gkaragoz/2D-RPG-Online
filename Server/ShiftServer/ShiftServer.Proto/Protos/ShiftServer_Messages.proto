@@ -47,7 +47,7 @@ enum MSServerEvent
 	JoinRequestFailed= 11;			
 	Stats = 13;						
 	ConnectRequest = 18;			
-	ConnectOK = 19;					
+	ConnectOK = 19;			
 	ConnectionClosed = 20;			
 	NoConnection = 21;				
 	PingRequest = 22;				
