@@ -95,7 +95,13 @@ public class LogManager : Menu {
         log.UI.text = string.Format("[{0}] <color={1}>{2}</color>", log.dateTime.ToLongTimeString(), colorStringHEX, log.message);
         _allLogs.Add(log);
 
+        WriteToLogFile("[" + log.dateTime.ToLongTimeString() + "] " + log.message);
+
         ShowPanel();
+    }
+
+    private void WriteToLogFile(string log) {
+        LogFile.WriteString(log);
     }
 
     private void ShowPanel() {

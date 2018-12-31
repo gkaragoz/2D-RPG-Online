@@ -1,0 +1,20 @@
+[13:17:47] [LogFile] WRITE EVENT>> log.txt file not found on path: Assets/Resources/log.txt
+[13:17:47] [LogFile] WRITE EVENT>> log.txt file is creating on path: Assets/Resources/log.txt
+[13:17:47] [LogFile] WRITE EVENT>> log.txt file not found on path: Assets/Resources/log.txt
+[13:17:47] [LogFile] WRITE EVENT>> log.txt file is creating on path: Assets/Resources/log.txt
+[13:17:47] Press TAB to toggle Log Panel.
+[13:17:47] Press 1 to show Info message.
+[13:17:47] Press 2 to show Error message.
+[13:17:47] Press 3 to show Loot message.
+[13:17:47] Press 4 to show Interact message.
+[13:17:47] Press 5 to show Drop message.
+[13:19:25] Press TAB to toggle Log Panel.
+[13:19:25] Press 1 to show Info message.
+[13:19:25] Press 2 to show Error message.
+[13:19:25] Press 3 to show Loot message.
+[13:19:25] Press 4 to show Interact message.
+[13:19:25] Press 5 to show Drop message.
+[13:19:28] Example info log.
+[13:19:29] Example error log.
+[13:19:30] Example info log.
+[13:19:31] Example error log.
