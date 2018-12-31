@@ -18,8 +18,8 @@ message ShiftServerData {
 /// Control message ID.
 enum MSBaseEventId
 {
-	MS_PlayerEvent = 0;
-	MS_ServerEvent = 1;
+	PlayerEvent = 0;
+	ServerEvent = 1;
 };
 
 /// Control message ID.
@@ -37,21 +37,21 @@ enum MSPlayerEvent
 
 enum MSServerEvent
 {
-	MS_Invalid = 0;						// Reserved
-	MS_GameserverSessionRequest = 5;		// Client -> Router
-	MS_GameserverSessionEstablished = 6;	// Router -> Client
-	MS_NoSession = 7;						// Router -> Server, Router -> Client
-	MS_Diagnostic = 8;						// Diagnostic / status message Router -> Client
-	MS_JoinRequest = 9;					// Join
-	MS_JoinRequestSuccess = 10;			// Join
-	MS_JoinRequestFailed= 11;			// Join
-	MS_Stats = 13;							// Any -> Any
-	MS_ConnectRequest = 18;				// Client->router->server
-	MS_ConnectOK = 19;						// Server->router->client.
-	MS_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
-	MS_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
-	MS_PingRequest = 22;					// Ping Request 
-	MS_WorldUpdate = 23;					// WorldUpdate
+	Invalid = 0;						// Reserved
+	GameserverSessionRequest = 5;		// Client -> Router
+	GameserverSessionEstablished = 6;	// Router -> Client
+	NoSession = 7;						// Router -> Server, Router -> Client
+	Diagnostic = 8;						// Diagnostic / status message Router -> Client
+	JoinRequest = 9;					// Join
+	JoinRequestSuccess = 10;			// Join
+	JoinRequestFailed= 11;			// Join
+	Stats = 13;							// Any -> Any
+	ConnectRequest = 18;				// Client->router->server
+	ConnectOK = 19;						// Server->router->client.
+	ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
+	NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
+	PingRequest = 22;					// Ping Request 
+	WorldUpdate = 23;					// WorldUpdate
 }
 
 message SessionData {

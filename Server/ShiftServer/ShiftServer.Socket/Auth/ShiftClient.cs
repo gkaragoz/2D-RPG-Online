@@ -11,6 +11,8 @@ namespace ShiftServer.Server.Auth
 {
     public class ShiftClient : IClient
     {
+        private static readonly log4net.ILog log
+                = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public Session UserSession { get; set; }
         public TcpClient Client { get; set; }
@@ -22,20 +24,34 @@ namespace ShiftServer.Server.Auth
 
         public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
-           
-            data.Basevtid = MSBaseEventId.MsServerEvent;
-            data.Svevtid = eventType;
-            byte[] bb = data.ToByteArray();
-            return Send(bb);
-            
+            try
+            {
+                data.Basevtid = MSBaseEventId.ServerEvent;
+                data.Svevtid = eventType;
+                byte[] bb = data.ToByteArray();
+                return Send(bb);
+            }
+            catch (Exception err)
+            {
+                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
+                return false;
+            }
+                 
         }
         public bool SendPacket(MSPlayerEvent eventType, ShiftServerData data)
         {
-
-            data.Basevtid = MSBaseEventId.MsPlayerEvent;
-            data.Plevtid = eventType;
-            byte[] bb = data.ToByteArray();
-            return Send(bb);
+            try
+            {
+                data.Basevtid = MSBaseEventId.PlayerEvent;
+                data.Plevtid = eventType;
+                byte[] bb = data.ToByteArray();
+                return Send(bb);
+            }
+            catch (Exception err)
+            {
+                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
+                return false;
+            }
 
         }
         private bool Send(byte[] bb)

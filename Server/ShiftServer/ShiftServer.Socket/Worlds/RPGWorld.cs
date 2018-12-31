@@ -16,6 +16,9 @@ namespace ShiftServer.Server.Worlds
 {
     public class RPGWorld : IWorld
     {
+        private static readonly log4net.ILog log
+             = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private string Banner = ">>> RPG WORLD <<< \n";
         Vector3 IWorld.Scale { get; set; }
 
@@ -28,7 +31,7 @@ namespace ShiftServer.Server.Worlds
         {
             GameObjects = new SafeDictionary<string, IGameObject>();
             Clients = new SafeDictionary<int, ShiftClient>();
-            Console.WriteLine(Banner);
+            log.Info(Banner);
         }
 
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)
@@ -43,17 +46,17 @@ namespace ShiftServer.Server.Worlds
 
         }
 
-        public void OnCreatePlayer(ShiftServerData data, ShiftClient client)
+        public void OnCreatePlayer(ShiftServerData data, ShiftClient shift)
         {
             ShiftServerData newData = new ShiftServerData();
             newData.Session = new SessionData
             {
-                Sid = client.UserSession.GetSid()
+                Sid = shift.UserSession.GetSid()
             };
 
             IGameObject result = null;
 
-            var dupePlayer = GameObjects.TryGetValue(client.UserSession.GetSid(), out result);
+            var dupePlayer = GameObjects.TryGetValue(shift.UserSession.GetSid(), out result);
 
             // if already exist in world
             if (result != null)
@@ -78,8 +81,8 @@ namespace ShiftServer.Server.Worlds
             else
             {
                 Player player = new Player();
-                player.OwnerClientId = client.connectionId;
-                player.ObjectId = client.UserSession.GetSid();
+                player.OwnerClientId = shift.connectionId;
+                player.ObjectId = shift.UserSession.GetSid();
                 player.Name = data.ClData.Loginname;
                 player.MaxHP = 100;
                 player.CurrentHP = 100;
@@ -88,7 +91,7 @@ namespace ShiftServer.Server.Worlds
                 player.Scale = new Vector3(1, 1, 1);
 
                 this.OnObjectCreate(player);
-                Console.WriteLine("Player joined to world");
+                log.Info($"[CreatePlayer] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
                 newData.PlayerObject = new PlayerObject
                 {
                     CurrentHp = player.CurrentHP,
@@ -107,32 +110,31 @@ namespace ShiftServer.Server.Worlds
 
 
 
-            client.SendPacket(MSPlayerEvent.OnCreatePlayer, newData);
+            shift.SendPacket(MSPlayerEvent.OnCreatePlayer, newData);
         }
-        public void OnPlayerJoin(ShiftServerData data, ShiftClient client)
+        public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
 
-            client.UserSession.SetSid(data);
+            shift.UserSession.SetSid(data);
             //Checking the client has only one player character under control
 
-            Console.WriteLine("Player joined to world");
+            log.Info($"[PlayerJoin] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
             ShiftServerData newData = new ShiftServerData();
             newData.Session = new SessionData
             {
-                Sid = client.UserSession.GetSid()
+                Sid = shift.UserSession.GetSid()
             };
-            client.SendPacket(MSServerEvent.MsJoinRequestSuccess, newData);
+            shift.SendPacket(MSServerEvent.JoinRequestSuccess, newData);
 
         }
-        public void OnObjectMove(ShiftServerData data, ShiftClient client)
+        public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-            Console.WriteLine("An object want to move");
-            //MotionMaster.OnMove(data);
+            log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
         }
-        public void OnObjectUse(ShiftServerData data, ShiftClient client)
+        public void OnObjectUse(ShiftServerData data, ShiftClient shift)
         {
-            Console.WriteLine("An object want to be used");      
+            log.Debug($"[USE]  Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
         }
         public void OnObjectDestroy(IGameObject gameObject)
@@ -155,7 +157,7 @@ namespace ShiftServer.Server.Worlds
 
                 ShiftServerData data = new ShiftServerData();
 
-                client.SendPacket(MSServerEvent.MsWorldUpdate, data);
+                client.SendPacket(MSServerEvent.WorldUpdate, data);
             }
         }
     }

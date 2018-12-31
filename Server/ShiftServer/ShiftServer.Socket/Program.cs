@@ -2,19 +2,15 @@ using ShiftServer.Server.Core;
 using ShiftServer.Server.Factory.Movement;
 using ShiftServer.Server.Helper;
 using ShiftServer.Server.Worlds;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
+
 
 namespace ShiftServer.Server
 {
     class Program
     {
+        private static readonly log4net.ILog log
+              = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private static ServerProvider serverProvider = null;
         /// <summary>
         /// Main entry of shift server
@@ -27,8 +23,8 @@ namespace ShiftServer.Server
             RPGWorld world = new RPGWorld();
 
             serverProvider = new ServerProvider(world);
-            serverProvider.AddServerEventListener(MSServerEvent.MsPingRequest, serverProvider.OnPing);
-            serverProvider.AddServerEventListener(MSServerEvent.MsJoinRequest, world.OnPlayerJoin);
+            serverProvider.AddServerEventListener(MSServerEvent.PingRequest, serverProvider.OnPing);
+            serverProvider.AddServerEventListener(MSServerEvent.JoinRequest, world.OnPlayerJoin);
             serverProvider.AddServerEventListener(MSPlayerEvent.OnUse, world.OnObjectUse);
             serverProvider.AddServerEventListener(MSPlayerEvent.OnCreatePlayer, world.OnCreatePlayer);
 
@@ -36,10 +32,7 @@ namespace ShiftServer.Server
 
             ConsoleUI.Run(serverProvider);
             //Run Server Simulation
-        }
-     
-      
-
+        } 
 
     }
 }

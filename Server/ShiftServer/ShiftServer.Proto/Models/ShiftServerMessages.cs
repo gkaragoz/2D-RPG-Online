@@ -38,20 +38,19 @@ public static partial class ShiftServerMessagesReflection {
           "GAIgASgCEg0KBXBvc195GAMgASgCEg0KBXBvc196GAQgASgCIm0KDFBsYXll",
           "ck9iamVjdBIdCgdwT2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSHAoGcENs",
           "YXNzGAIgASgOMgwuUGxheWVyQ2xhc3MSEQoJY3VycmVudEhwGAMgASgFEg0K",
-          "BW1heEhwGAQgASgFIhoKC1BsYXllcklucHV0EgsKA29pZBgBIAEoBSo3Cg1N",
-          "U0Jhc2VFdmVudElkEhIKDk1TX1BsYXllckV2ZW50EAASEgoOTVNfU2VydmVy",
-          "RXZlbnQQASpUCg1NU1BsYXllckV2ZW50EhIKDk9uQ3JlYXRlUGxheWVyEAAS",
-          "CgoGT25Nb3ZlEAESDAoIT25BdHRhY2sQAhIKCgZPbkRlYWQQAxIJCgVPblVz",
-          "ZRAEKuACCg1NU1NlcnZlckV2ZW50Eg4KCk1TX0ludmFsaWQQABIfChtNU19H",
-          "YW1lc2VydmVyU2Vzc2lvblJlcXVlc3QQBRIjCh9NU19HYW1lc2VydmVyU2Vz",
-          "c2lvbkVzdGFibGlzaGVkEAYSEAoMTVNfTm9TZXNzaW9uEAcSEQoNTVNfRGlh",
-          "Z25vc3RpYxAIEhIKDk1TX0pvaW5SZXF1ZXN0EAkSGQoVTVNfSm9pblJlcXVl",
-          "c3RTdWNjZXNzEAoSGAoUTVNfSm9pblJlcXVlc3RGYWlsZWQQCxIMCghNU19T",
-          "dGF0cxANEhUKEU1TX0Nvbm5lY3RSZXF1ZXN0EBISEAoMTVNfQ29ubmVjdE9L",
-          "EBMSFwoTTVNfQ29ubmVjdGlvbkNsb3NlZBAUEhMKD01TX05vQ29ubmVjdGlv",
-          "bhAVEhIKDk1TX1BpbmdSZXF1ZXN0EBYSEgoOTVNfV29ybGRVcGRhdGUQFyo8",
-          "CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFn",
-          "ZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
+          "BW1heEhwGAQgASgFIhoKC1BsYXllcklucHV0EgsKA29pZBgBIAEoBSoxCg1N",
+          "U0Jhc2VFdmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQ",
+          "ASpUCg1NU1BsYXllckV2ZW50EhIKDk9uQ3JlYXRlUGxheWVyEAASCgoGT25N",
+          "b3ZlEAESDAoIT25BdHRhY2sQAhIKCgZPbkRlYWQQAxIJCgVPblVzZRAEKrMC",
+          "Cg1NU1NlcnZlckV2ZW50EgsKB0ludmFsaWQQABIcChhHYW1lc2VydmVyU2Vz",
+          "c2lvblJlcXVlc3QQBRIgChxHYW1lc2VydmVyU2Vzc2lvbkVzdGFibGlzaGVk",
+          "EAYSDQoJTm9TZXNzaW9uEAcSDgoKRGlhZ25vc3RpYxAIEg8KC0pvaW5SZXF1",
+          "ZXN0EAkSFgoSSm9pblJlcXVlc3RTdWNjZXNzEAoSFQoRSm9pblJlcXVlc3RG",
+          "YWlsZWQQCxIJCgVTdGF0cxANEhIKDkNvbm5lY3RSZXF1ZXN0EBISDQoJQ29u",
+          "bmVjdE9LEBMSFAoQQ29ubmVjdGlvbkNsb3NlZBAUEhAKDE5vQ29ubmVjdGlv",
+          "bhAVEg8KC1BpbmdSZXF1ZXN0EBYSDwoLV29ybGRVcGRhdGUQFyo8CgtQbGF5",
+          "ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFnZRACEgoK",
+          "BlByaWVzdBADYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -72,8 +71,8 @@ public static partial class ShiftServerMessagesReflection {
 //// Control message ID.
 /// </summary>
 public enum MSBaseEventId {
-  [pbr::OriginalName("MS_PlayerEvent")] MsPlayerEvent = 0,
-  [pbr::OriginalName("MS_ServerEvent")] MsServerEvent = 1,
+  [pbr::OriginalName("PlayerEvent")] PlayerEvent = 0,
+  [pbr::OriginalName("ServerEvent")] ServerEvent = 1,
 }
 
 /// <summary>
@@ -94,63 +93,63 @@ public enum MSServerEvent {
   /// <summary>
   /// Reserved
   /// </summary>
-  [pbr::OriginalName("MS_Invalid")] MsInvalid = 0,
+  [pbr::OriginalName("Invalid")] Invalid = 0,
   /// <summary>
   /// Client -> Router
   /// </summary>
-  [pbr::OriginalName("MS_GameserverSessionRequest")] MsGameserverSessionRequest = 5,
+  [pbr::OriginalName("GameserverSessionRequest")] GameserverSessionRequest = 5,
   /// <summary>
   /// Router -> Client
   /// </summary>
-  [pbr::OriginalName("MS_GameserverSessionEstablished")] MsGameserverSessionEstablished = 6,
+  [pbr::OriginalName("GameserverSessionEstablished")] GameserverSessionEstablished = 6,
   /// <summary>
   /// Router -> Server, Router -> Client
   /// </summary>
-  [pbr::OriginalName("MS_NoSession")] MsNoSession = 7,
+  [pbr::OriginalName("NoSession")] NoSession = 7,
   /// <summary>
   /// Diagnostic / status message Router -> Client
   /// </summary>
-  [pbr::OriginalName("MS_Diagnostic")] MsDiagnostic = 8,
+  [pbr::OriginalName("Diagnostic")] Diagnostic = 8,
   /// <summary>
   /// Join
   /// </summary>
-  [pbr::OriginalName("MS_JoinRequest")] MsJoinRequest = 9,
+  [pbr::OriginalName("JoinRequest")] JoinRequest = 9,
   /// <summary>
   /// Join
   /// </summary>
-  [pbr::OriginalName("MS_JoinRequestSuccess")] MsJoinRequestSuccess = 10,
+  [pbr::OriginalName("JoinRequestSuccess")] JoinRequestSuccess = 10,
   /// <summary>
   /// Join
   /// </summary>
-  [pbr::OriginalName("MS_JoinRequestFailed")] MsJoinRequestFailed = 11,
+  [pbr::OriginalName("JoinRequestFailed")] JoinRequestFailed = 11,
   /// <summary>
   /// Any -> Any
   /// </summary>
-  [pbr::OriginalName("MS_Stats")] MsStats = 13,
+  [pbr::OriginalName("Stats")] Stats = 13,
   /// <summary>
   /// Client->router->server
   /// </summary>
-  [pbr::OriginalName("MS_ConnectRequest")] MsConnectRequest = 18,
+  [pbr::OriginalName("ConnectRequest")] ConnectRequest = 18,
   /// <summary>
   /// Server->router->client.
   /// </summary>
-  [pbr::OriginalName("MS_ConnectOK")] MsConnectOk = 19,
+  [pbr::OriginalName("ConnectOK")] ConnectOk = 19,
   /// <summary>
   /// Server&lt;->router&lt;->client.  A reply is requested to this packet
   /// </summary>
-  [pbr::OriginalName("MS_ConnectionClosed")] MsConnectionClosed = 20,
+  [pbr::OriginalName("ConnectionClosed")] ConnectionClosed = 20,
   /// <summary>
   /// Server&lt;->router&lt;->client.  A reply should never be sent to this packet
   /// </summary>
-  [pbr::OriginalName("MS_NoConnection")] MsNoConnection = 21,
+  [pbr::OriginalName("NoConnection")] NoConnection = 21,
   /// <summary>
   /// Ping Request 
   /// </summary>
-  [pbr::OriginalName("MS_PingRequest")] MsPingRequest = 22,
+  [pbr::OriginalName("PingRequest")] PingRequest = 22,
   /// <summary>
   /// WorldUpdate
   /// </summary>
-  [pbr::OriginalName("MS_WorldUpdate")] MsWorldUpdate = 23,
+  [pbr::OriginalName("WorldUpdate")] WorldUpdate = 23,
 }
 
 public enum PlayerClass {
