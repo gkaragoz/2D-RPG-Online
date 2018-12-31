@@ -118,6 +118,16 @@ namespace ShiftServer.Server.Worlds
             shift.UserSession.SetSid(data);
             //Checking the client has only one player character under control
 
+            //check login data
+            if (data.ClData == null)
+            {
+                ShiftServerData errorData = new ShiftServerData();
+                errorData.ErrorReason = ShiftServerError.WrongCredentials;
+                log.Warn($"[Failed PlayerJoin] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                shift.SendPacket(MSServerEvent.JoinRequestFailed, errorData);
+                return;
+            }
+
             log.Info($"[PlayerJoin] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
             ShiftServerData newData = new ShiftServerData();

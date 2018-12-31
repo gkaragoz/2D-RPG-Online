@@ -22,39 +22,42 @@ public static partial class ShiftServerMessagesReflection {
   static ShiftServerMessagesReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byKkAgoPU2hpZnRTZXJ2ZXJE",
+          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLMAgoPU2hpZnRTZXJ2ZXJE",
           "YXRhEiAKCGJhc2V2dGlkGAEgASgOMg4uTVNCYXNlRXZlbnRJZBIfCgdzdmV2",
           "dGlkGAIgASgOMg4uTVNTZXJ2ZXJFdmVudBIfCgdwbGV2dGlkGAMgASgOMg4u",
           "TVNQbGF5ZXJFdmVudBIdCgdzZXNzaW9uGAQgASgLMgwuU2Vzc2lvbkRhdGES",
           "GwoGY2xEYXRhGAUgASgLMgsuQ2xpZW50RGF0YRIoChJ1cGRhdGVkR2FtZU9i",
           "amVjdHMYBiADKAsyDC5zR2FtZU9iamVjdBIiCgtpbnRlcmFjdGlvbhgHIAEo",
           "CzINLk9iamVjdEFjdGlvbhIjCgxwbGF5ZXJPYmplY3QYCCABKAsyDS5QbGF5",
-          "ZXJPYmplY3QiGgoLU2Vzc2lvbkRhdGESCwoDc2lkGAIgASgJIlwKDE9iamVj",
-          "dEFjdGlvbhIjCg1jdXJyZW50T2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QS",
-          "JwoRaW50ZXJhY3RlZE9iamVjdHMYAiADKAsyDC5zR2FtZU9iamVjdCJkCgpD",
-          "bGllbnREYXRhEgsKA3ZlchgBIAEoCRIRCglsb2dpbm5hbWUYAiABKAkSFAoM",
-          "bWFjaGluZV9uYW1lGAMgASgJEhIKCm1hY2hpbmVfaWQYBCABKAkSDAoEZ3Vp",
-          "ZBgFIAEoCSJICgtzR2FtZU9iamVjdBIMCgRndWlkGAEgASgJEg0KBXBvc194",
-          "GAIgASgCEg0KBXBvc195GAMgASgCEg0KBXBvc196GAQgASgCIm0KDFBsYXll",
-          "ck9iamVjdBIdCgdwT2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSHAoGcENs",
-          "YXNzGAIgASgOMgwuUGxheWVyQ2xhc3MSEQoJY3VycmVudEhwGAMgASgFEg0K",
-          "BW1heEhwGAQgASgFIhoKC1BsYXllcklucHV0EgsKA29pZBgBIAEoBSoxCg1N",
-          "U0Jhc2VFdmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQ",
-          "ASpUCg1NU1BsYXllckV2ZW50EhIKDk9uQ3JlYXRlUGxheWVyEAASCgoGT25N",
-          "b3ZlEAESDAoIT25BdHRhY2sQAhIKCgZPbkRlYWQQAxIJCgVPblVzZRAEKrMC",
-          "Cg1NU1NlcnZlckV2ZW50EgsKB0ludmFsaWQQABIcChhHYW1lc2VydmVyU2Vz",
-          "c2lvblJlcXVlc3QQBRIgChxHYW1lc2VydmVyU2Vzc2lvbkVzdGFibGlzaGVk",
-          "EAYSDQoJTm9TZXNzaW9uEAcSDgoKRGlhZ25vc3RpYxAIEg8KC0pvaW5SZXF1",
-          "ZXN0EAkSFgoSSm9pblJlcXVlc3RTdWNjZXNzEAoSFQoRSm9pblJlcXVlc3RG",
-          "YWlsZWQQCxIJCgVTdGF0cxANEhIKDkNvbm5lY3RSZXF1ZXN0EBISDQoJQ29u",
-          "bmVjdE9LEBMSFAoQQ29ubmVjdGlvbkNsb3NlZBAUEhAKDE5vQ29ubmVjdGlv",
-          "bhAVEg8KC1BpbmdSZXF1ZXN0EBYSDwoLV29ybGRVcGRhdGUQFyo8CgtQbGF5",
-          "ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFnZRACEgoK",
-          "BlByaWVzdBADYgZwcm90bzM="));
+          "ZXJPYmplY3QSJgoLZXJyb3JSZWFzb24YCSABKA4yES5TaGlmdFNlcnZlckVy",
+          "cm9yIhoKC1Nlc3Npb25EYXRhEgsKA3NpZBgCIAEoCSJcCgxPYmplY3RBY3Rp",
+          "b24SIwoNY3VycmVudE9iamVjdBgBIAEoCzIMLnNHYW1lT2JqZWN0EicKEWlu",
+          "dGVyYWN0ZWRPYmplY3RzGAIgAygLMgwuc0dhbWVPYmplY3QiZAoKQ2xpZW50",
+          "RGF0YRILCgN2ZXIYASABKAkSEQoJbG9naW5uYW1lGAIgASgJEhQKDG1hY2hp",
+          "bmVfbmFtZRgDIAEoCRISCgptYWNoaW5lX2lkGAQgASgJEgwKBGd1aWQYBSAB",
+          "KAkiSAoLc0dhbWVPYmplY3QSDAoEZ3VpZBgBIAEoCRINCgVwb3NfeBgCIAEo",
+          "AhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEoAiJtCgxQbGF5ZXJPYmpl",
+          "Y3QSHQoHcE9iamVjdBgBIAEoCzIMLnNHYW1lT2JqZWN0EhwKBnBDbGFzcxgC",
+          "IAEoDjIMLlBsYXllckNsYXNzEhEKCWN1cnJlbnRIcBgDIAEoBRINCgVtYXhI",
+          "cBgEIAEoBSIaCgtQbGF5ZXJJbnB1dBILCgNvaWQYASABKAUqMQoNTVNCYXNl",
+          "RXZlbnRJZBIPCgtQbGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2ZW50EAEqVAoN",
+          "TVNQbGF5ZXJFdmVudBISCg5PbkNyZWF0ZVBsYXllchAAEgoKBk9uTW92ZRAB",
+          "EgwKCE9uQXR0YWNrEAISCgoGT25EZWFkEAMSCQoFT25Vc2UQBCqkAgoNTVNT",
+          "ZXJ2ZXJFdmVudBILCgdJbnZhbGlkEAASHAoYR2FtZXNlcnZlclNlc3Npb25S",
+          "ZXF1ZXN0EAUSIAocR2FtZXNlcnZlclNlc3Npb25Fc3RhYmxpc2hlZBAGEg4K",
+          "CkRpYWdub3N0aWMQCBIPCgtKb2luUmVxdWVzdBAJEhYKEkpvaW5SZXF1ZXN0",
+          "U3VjY2VzcxAKEhUKEUpvaW5SZXF1ZXN0RmFpbGVkEAsSCQoFU3RhdHMQDRIS",
+          "Cg5Db25uZWN0UmVxdWVzdBASEg0KCUNvbm5lY3RPSxATEhQKEENvbm5lY3Rp",
+          "b25DbG9zZWQQFBIQCgxOb0Nvbm5lY3Rpb24QFRIPCgtQaW5nUmVxdWVzdBAW",
+          "Eg8KC1dvcmxkVXBkYXRlEBcqXgoQU2hpZnRTZXJ2ZXJFcnJvchIUChBPbGRD",
+          "bGllbnRWZXJzaW9uEAASDQoJTm9TZXNzaW9uEAESDwoLU29ja2V0QWJ1c2UQ",
+          "AhIUChBXcm9uZ0NyZWRlbnRpYWxzEAMqPAoLUGxheWVyQ2xhc3MSCwoHV2Fy",
+          "cmlvchAAEgoKBkFyY2hlchABEggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJv",
+          "dG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClData", "UpdatedGameObjects", "Interaction", "PlayerObject" }, null, null, null),
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClData", "UpdatedGameObjects", "Interaction", "PlayerObject", "ErrorReason" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "Loginname", "MachineName", "MachineId", "Guid" }, null, null, null),
@@ -90,66 +93,39 @@ public enum MSPlayerEvent {
 }
 
 public enum MSServerEvent {
-  /// <summary>
-  /// Reserved
-  /// </summary>
   [pbr::OriginalName("Invalid")] Invalid = 0,
-  /// <summary>
-  /// Client -> Router
-  /// </summary>
   [pbr::OriginalName("GameserverSessionRequest")] GameserverSessionRequest = 5,
-  /// <summary>
-  /// Router -> Client
-  /// </summary>
   [pbr::OriginalName("GameserverSessionEstablished")] GameserverSessionEstablished = 6,
-  /// <summary>
-  /// Router -> Server, Router -> Client
-  /// </summary>
-  [pbr::OriginalName("NoSession")] NoSession = 7,
-  /// <summary>
-  /// Diagnostic / status message Router -> Client
-  /// </summary>
   [pbr::OriginalName("Diagnostic")] Diagnostic = 8,
-  /// <summary>
-  /// Join
-  /// </summary>
   [pbr::OriginalName("JoinRequest")] JoinRequest = 9,
-  /// <summary>
-  /// Join
-  /// </summary>
   [pbr::OriginalName("JoinRequestSuccess")] JoinRequestSuccess = 10,
-  /// <summary>
-  /// Join
-  /// </summary>
   [pbr::OriginalName("JoinRequestFailed")] JoinRequestFailed = 11,
-  /// <summary>
-  /// Any -> Any
-  /// </summary>
   [pbr::OriginalName("Stats")] Stats = 13,
-  /// <summary>
-  /// Client->router->server
-  /// </summary>
   [pbr::OriginalName("ConnectRequest")] ConnectRequest = 18,
-  /// <summary>
-  /// Server->router->client.
-  /// </summary>
   [pbr::OriginalName("ConnectOK")] ConnectOk = 19,
-  /// <summary>
-  /// Server&lt;->router&lt;->client.  A reply is requested to this packet
-  /// </summary>
   [pbr::OriginalName("ConnectionClosed")] ConnectionClosed = 20,
-  /// <summary>
-  /// Server&lt;->router&lt;->client.  A reply should never be sent to this packet
-  /// </summary>
   [pbr::OriginalName("NoConnection")] NoConnection = 21,
-  /// <summary>
-  /// Ping Request 
-  /// </summary>
   [pbr::OriginalName("PingRequest")] PingRequest = 22,
-  /// <summary>
-  /// WorldUpdate
-  /// </summary>
   [pbr::OriginalName("WorldUpdate")] WorldUpdate = 23,
+}
+
+public enum ShiftServerError {
+  /// <summary>
+  /// Application.version
+  /// </summary>
+  [pbr::OriginalName("OldClientVersion")] OldClientVersion = 0,
+  /// <summary>
+  /// Session
+  /// </summary>
+  [pbr::OriginalName("NoSession")] NoSession = 1,
+  /// <summary>
+  /// Possible dos to client
+  /// </summary>
+  [pbr::OriginalName("SocketAbuse")] SocketAbuse = 2,
+  /// <summary>
+  /// Wrong login credentials
+  /// </summary>
+  [pbr::OriginalName("WrongCredentials")] WrongCredentials = 3,
 }
 
 public enum PlayerClass {
@@ -195,6 +171,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     updatedGameObjects_ = other.updatedGameObjects_.Clone();
     interaction_ = other.interaction_ != null ? other.interaction_.Clone() : null;
     playerObject_ = other.playerObject_ != null ? other.playerObject_.Clone() : null;
+    errorReason_ = other.errorReason_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -308,6 +285,17 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
   }
 
+  /// <summary>Field number for the "errorReason" field.</summary>
+  public const int ErrorReasonFieldNumber = 9;
+  private global::ShiftServerError errorReason_ = 0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::ShiftServerError ErrorReason {
+    get { return errorReason_; }
+    set {
+      errorReason_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ShiftServerData);
@@ -329,6 +317,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if(!updatedGameObjects_.Equals(other.updatedGameObjects_)) return false;
     if (!object.Equals(Interaction, other.Interaction)) return false;
     if (!object.Equals(PlayerObject, other.PlayerObject)) return false;
+    if (ErrorReason != other.ErrorReason) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -343,6 +332,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     hash ^= updatedGameObjects_.GetHashCode();
     if (interaction_ != null) hash ^= Interaction.GetHashCode();
     if (playerObject_ != null) hash ^= PlayerObject.GetHashCode();
+    if (ErrorReason != 0) hash ^= ErrorReason.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -385,6 +375,10 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
       output.WriteRawTag(66);
       output.WriteMessage(PlayerObject);
     }
+    if (ErrorReason != 0) {
+      output.WriteRawTag(72);
+      output.WriteEnum((int) ErrorReason);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -414,6 +408,9 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
     if (playerObject_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerObject);
+    }
+    if (ErrorReason != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) ErrorReason);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -459,6 +456,9 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
         playerObject_ = new global::PlayerObject();
       }
       PlayerObject.MergeFrom(other.PlayerObject);
+    }
+    if (other.ErrorReason != 0) {
+      ErrorReason = other.ErrorReason;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -513,6 +513,10 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
             playerObject_ = new global::PlayerObject();
           }
           input.ReadMessage(playerObject_);
+          break;
+        }
+        case 72: {
+          errorReason_ = (global::ShiftServerError) input.ReadEnum();
           break;
         }
       }

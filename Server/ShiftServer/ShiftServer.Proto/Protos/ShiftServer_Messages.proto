@@ -13,6 +13,7 @@ message ShiftServerData {
 	// interaction message
 	ObjectAction interaction = 7;
 	PlayerObject playerObject = 8;
+	ShiftServerError errorReason = 9;
 }
 
 /// Control message ID.
@@ -37,23 +38,29 @@ enum MSPlayerEvent
 
 enum MSServerEvent
 {
-	Invalid = 0;						// Reserved
-	GameserverSessionRequest = 5;		// Client -> Router
-	GameserverSessionEstablished = 6;	// Router -> Client
-	NoSession = 7;						// Router -> Server, Router -> Client
-	Diagnostic = 8;						// Diagnostic / status message Router -> Client
-	JoinRequest = 9;					// Join
-	JoinRequestSuccess = 10;			// Join
-	JoinRequestFailed= 11;			// Join
-	Stats = 13;							// Any -> Any
-	ConnectRequest = 18;				// Client->router->server
-	ConnectOK = 19;						// Server->router->client.
-	ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
-	NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
-	PingRequest = 22;					// Ping Request 
-	WorldUpdate = 23;					// WorldUpdate
+	Invalid = 0;					
+	GameserverSessionRequest = 5;	
+	GameserverSessionEstablished = 6;
+	Diagnostic = 8;					
+	JoinRequest = 9;				
+	JoinRequestSuccess = 10;		
+	JoinRequestFailed= 11;			
+	Stats = 13;						
+	ConnectRequest = 18;			
+	ConnectOK = 19;					
+	ConnectionClosed = 20;			
+	NoConnection = 21;				
+	PingRequest = 22;				
+	WorldUpdate = 23;				
 }
+enum ShiftServerError
+{
+	OldClientVersion = 0; // Application.version
+	NoSession = 1;		  // Session
+	SocketAbuse = 2;	  // Possible dos to client
+	WrongCredentials = 3; // Wrong login credentials
 
+}
 message SessionData {
 	string sid = 2;
 }
