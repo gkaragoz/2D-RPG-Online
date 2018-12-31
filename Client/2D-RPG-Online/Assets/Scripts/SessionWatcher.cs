@@ -1,5 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
+using UnityEditor;
 using UnityEngine;
 
 /// <summary>
@@ -25,6 +27,8 @@ public class SessionWatcher : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        Init();
     }
 
     #endregion
@@ -44,6 +48,13 @@ public class SessionWatcher : MonoBehaviour {
     [Utils.ReadOnly]
     private int _sessionIDDebug;
 
+    [SerializeField]
+    [Utils.ReadOnly]
+    private const string ON_APP_START_LOG = "<<<<<NEW SESSION>>>>>";
+    [SerializeField]
+    [Utils.ReadOnly]
+    private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>\n";
+
     /// <summary>
     /// Getter of SessionID.
     /// </summary>
@@ -54,75 +65,32 @@ public class SessionWatcher : MonoBehaviour {
     }
 
     /// <summary>
-    /// Increment sessionID just one.
+    /// Session data path string.
     /// </summary>
-    private void Start() {
-        if (IsItSameSystem()) {
-            _session = Instantiate(_session);
+    private const string SESSION_DATA_PATH = "Assets/ScriptableObjects/";
+
+    /// <summary>
+    /// Session data file name.
+    /// </summary>
+    private const string SESSION_DATA_FILE_NAME = "SessionData.asset";
+
+    /// <summary>
+    /// Increment sessionID just one.
+    /// Delete old session data and create new session data.
+    /// See <see cref="ON_APP_START_LOG"/>
+    /// See <see cref="Introduce"/>
+    /// </summary>
+    private void Init() {
+        if (!IsItSameSystem()) {
+            DeleteSessionData();
+
+            _session = CreateSessionData();
         }
 
-        _session.ID++;
+        LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
+        LogManager.instance.AddLog(Introduce(), Log.Type.Info);
 
-        _session.lastDeviceUniqueIdentifier = _session.deviceUniqueIdentifier;
-
-        _session.batteryLevel = SystemInfo.batteryLevel;
-        _session.batteryStatus = SystemInfo.batteryStatus;
-
-        _session.deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
-        _session.deviceModel = SystemInfo.deviceModel;
-        _session.deviceName = SystemInfo.deviceName;
-        _session.deviceType = SystemInfo.deviceType;
-
-        _session.graphicsDeviceID = SystemInfo.graphicsDeviceID;
-        _session.graphicsDeviceName = SystemInfo.graphicsDeviceName;
-        _session.graphicsDeviceType = SystemInfo.graphicsDeviceType;
-        _session.graphicsDeviceVendor = SystemInfo.graphicsDeviceVendor;
-        _session.graphicsDeviceVendorID = SystemInfo.graphicsDeviceVendorID;
-        _session.graphicsDeviceVersion = SystemInfo.graphicsDeviceVersion;
-        _session.graphicsMemorySize = SystemInfo.graphicsMemorySize;
-        _session.graphicsMultiThreaded = SystemInfo.graphicsMultiThreaded;
-        _session.graphicsShaderLevel = SystemInfo.graphicsShaderLevel;
-        _session.graphicsUVStartsAtTop = SystemInfo.graphicsUVStartsAtTop;
-        _session.maxCubemapSize = SystemInfo.maxCubemapSize;
-        _session.maxTextureSize = SystemInfo.maxTextureSize;
-        _session.npotSupport = SystemInfo.npotSupport;
-        _session.operatingSystem = SystemInfo.operatingSystem;
-        _session.operatingSystemFamily = SystemInfo.operatingSystemFamily;
-        _session.processorCount = SystemInfo.processorCount;
-        _session.processorFrequency = SystemInfo.processorFrequency;
-        _session.processorType = SystemInfo.processorType;
-        _session.supportedRenderTargetCount = SystemInfo.supportedRenderTargetCount;
-        _session.supports2DArrayTextures = SystemInfo.supports2DArrayTextures;
-        _session.supports32bitsIndexBuffer = SystemInfo.supports32bitsIndexBuffer;
-        _session.supports3DRenderTextures = SystemInfo.supports3DRenderTextures;
-        _session.supports3DTextures = SystemInfo.supports3DTextures;
-        _session.supportsAccelerometer = SystemInfo.supportsAccelerometer;
-        _session.supportsAsyncCompute = SystemInfo.supportsAsyncCompute;
-        _session.supportsAsyncGPUReadback = SystemInfo.supportsAsyncGPUReadback;
-        _session.supportsAudio = SystemInfo.supportsAudio;
-        _session.supportsComputeShaders = SystemInfo.supportsComputeShaders;
-        _session.supportsCubemapArrayTextures = SystemInfo.supportsCubemapArrayTextures;
-        _session.supportsGPUFence = SystemInfo.supportsGPUFence;
-        _session.supportsGyroscope = SystemInfo.supportsGyroscope;
-        _session.supportsHardwareQuadTopology = SystemInfo.supportsHardwareQuadTopology;
-        _session.supportsImageEffects = SystemInfo.supportsImageEffects;
-        _session.supportsInstancing = SystemInfo.supportsInstancing;
-        _session.supportsLocationService = SystemInfo.supportsLocationService;
-        _session.supportsMipStreaming = SystemInfo.supportsMipStreaming;
-        _session.supportsMotionVectors = SystemInfo.supportsMotionVectors;
-        _session.supportsMultisampleAutoResolve = SystemInfo.supportsMultisampleAutoResolve;
-        _session.supportsMultisampledTextures = SystemInfo.supportsMultisampledTextures;
-        _session.supportsRawShadowDepthSampling = SystemInfo.supportsRawShadowDepthSampling;
-        _session.supportsRenderToCubemap = SystemInfo.supportsRenderToCubemap;
-        _session.supportsShadows = SystemInfo.supportsShadows;
-        _session.supportsSparseTextures = SystemInfo.supportsSparseTextures;
-        _session.supportsTextureWrapMirrorOnce = SystemInfo.supportsTextureWrapMirrorOnce;
-        _session.supportsVibration = SystemInfo.supportsVibration;
-        _session.systemMemorySize = SystemInfo.systemMemorySize;
-        _session.unsupportedIdentifier = SystemInfo.unsupportedIdentifier;
-        _session.usesReversedZBuffer = SystemInfo.usesReversedZBuffer;
-
-        _sessionIDDebug = _session.ID;
+        SetSystemInfos();
     }
     
     /// <summary>
@@ -193,9 +161,120 @@ public class SessionWatcher : MonoBehaviour {
         return message;
     }
 
+    /// <summary>
+    /// Sets system infos to scriptable object.
+    /// </summary>
+    private void SetSystemInfos() {
+        _session.lastDeviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
+
+        _session.ID++;
+        _sessionIDDebug = _session.ID;
+
+        _session.batteryLevel = SystemInfo.batteryLevel;
+        _session.batteryStatus = SystemInfo.batteryStatus;
+
+        _session.deviceUniqueIdentifier = SystemInfo.deviceUniqueIdentifier;
+        _session.deviceModel = SystemInfo.deviceModel;
+        _session.deviceName = SystemInfo.deviceName;
+        _session.deviceType = SystemInfo.deviceType;
+
+        _session.graphicsDeviceID = SystemInfo.graphicsDeviceID;
+        _session.graphicsDeviceName = SystemInfo.graphicsDeviceName;
+        _session.graphicsDeviceType = SystemInfo.graphicsDeviceType;
+        _session.graphicsDeviceVendor = SystemInfo.graphicsDeviceVendor;
+        _session.graphicsDeviceVendorID = SystemInfo.graphicsDeviceVendorID;
+        _session.graphicsDeviceVersion = SystemInfo.graphicsDeviceVersion;
+        _session.graphicsMemorySize = SystemInfo.graphicsMemorySize;
+        _session.graphicsMultiThreaded = SystemInfo.graphicsMultiThreaded;
+        _session.graphicsShaderLevel = SystemInfo.graphicsShaderLevel;
+        _session.graphicsUVStartsAtTop = SystemInfo.graphicsUVStartsAtTop;
+        _session.maxCubemapSize = SystemInfo.maxCubemapSize;
+        _session.maxTextureSize = SystemInfo.maxTextureSize;
+        _session.npotSupport = SystemInfo.npotSupport;
+        _session.operatingSystem = SystemInfo.operatingSystem;
+        _session.operatingSystemFamily = SystemInfo.operatingSystemFamily;
+        _session.processorCount = SystemInfo.processorCount;
+        _session.processorFrequency = SystemInfo.processorFrequency;
+        _session.processorType = SystemInfo.processorType;
+        _session.supportedRenderTargetCount = SystemInfo.supportedRenderTargetCount;
+        _session.supports2DArrayTextures = SystemInfo.supports2DArrayTextures;
+        _session.supports32bitsIndexBuffer = SystemInfo.supports32bitsIndexBuffer;
+        _session.supports3DRenderTextures = SystemInfo.supports3DRenderTextures;
+        _session.supports3DTextures = SystemInfo.supports3DTextures;
+        _session.supportsAccelerometer = SystemInfo.supportsAccelerometer;
+        _session.supportsAsyncCompute = SystemInfo.supportsAsyncCompute;
+        _session.supportsAsyncGPUReadback = SystemInfo.supportsAsyncGPUReadback;
+        _session.supportsAudio = SystemInfo.supportsAudio;
+        _session.supportsComputeShaders = SystemInfo.supportsComputeShaders;
+        _session.supportsCubemapArrayTextures = SystemInfo.supportsCubemapArrayTextures;
+        _session.supportsGPUFence = SystemInfo.supportsGPUFence;
+        _session.supportsGyroscope = SystemInfo.supportsGyroscope;
+        _session.supportsHardwareQuadTopology = SystemInfo.supportsHardwareQuadTopology;
+        _session.supportsImageEffects = SystemInfo.supportsImageEffects;
+        _session.supportsInstancing = SystemInfo.supportsInstancing;
+        _session.supportsLocationService = SystemInfo.supportsLocationService;
+        _session.supportsMipStreaming = SystemInfo.supportsMipStreaming;
+        _session.supportsMotionVectors = SystemInfo.supportsMotionVectors;
+        _session.supportsMultisampleAutoResolve = SystemInfo.supportsMultisampleAutoResolve;
+        _session.supportsMultisampledTextures = SystemInfo.supportsMultisampledTextures;
+        _session.supportsRawShadowDepthSampling = SystemInfo.supportsRawShadowDepthSampling;
+        _session.supportsRenderToCubemap = SystemInfo.supportsRenderToCubemap;
+        _session.supportsShadows = SystemInfo.supportsShadows;
+        _session.supportsSparseTextures = SystemInfo.supportsSparseTextures;
+        _session.supportsTextureWrapMirrorOnce = SystemInfo.supportsTextureWrapMirrorOnce;
+        _session.supportsVibration = SystemInfo.supportsVibration;
+        _session.systemMemorySize = SystemInfo.systemMemorySize;
+        _session.unsupportedIdentifier = SystemInfo.unsupportedIdentifier;
+        _session.usesReversedZBuffer = SystemInfo.usesReversedZBuffer;
+    }
+
+    /// <summary>
+    /// Create new session data.
+    /// </summary>
+    /// <returns></returns>
+    private Session_SO CreateSessionData() {
+        string path = SESSION_DATA_PATH + SESSION_DATA_FILE_NAME;
+
+        Session_SO asset = ScriptableObject.CreateInstance<Session_SO>();
+
+        AssetDatabase.CreateAsset(asset, path);
+        AssetDatabase.SaveAssets();
+
+        Debug.Log("[SessionWatcher] Created new session data on path: " + path);
+
+        return asset;
+    }
+
+    /// <summary>
+    /// Delete if session data exists.
+    /// </summary>
+    private void DeleteSessionData() {
+        string path = SESSION_DATA_PATH + SESSION_DATA_FILE_NAME;
+
+        if (File.Exists(path)) {
+            AssetDatabase.DeleteAsset(path);
+            AssetDatabase.SaveAssets();
+
+            Debug.Log("[SessionWatcher] Deleted session data on path: " + path);
+        }
+    }
+
+    /// <summary>
+    /// Check is the system same as previous session.
+    /// </summary>
+    /// <returns></returns>
     private bool IsItSameSystem() {
         return _session.lastDeviceUniqueIdentifier == SystemInfo.deviceUniqueIdentifier ? true : false;
     }
+
+    /// <summary>
+    /// Say END_SESSION log on application quit.
+    /// See <see cref="ON_APP_QUIT_LOG"/>
+    /// </summary>
+    private void OnApplicationQuit() {
+        LogManager.instance.AddLog(ON_APP_QUIT_LOG, Log.Type.Info);
+    }
+
 }
 
 /// <summary>

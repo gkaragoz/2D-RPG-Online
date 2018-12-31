@@ -1,77 +1,65 @@
-(Session-1) [31/12/2018 14:46:39] 
+(Session-0) [31/12/2018 15:56:26] <<<<<NEW SESSION>>>>>
+(Session-0) [31/12/2018 15:56:26] 
 All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
- batteryLevel: -1
- batteryStatus: Charging
- deviceUniqueIdentifier: 8e34ce8e5f767c32a70c26c8232e75cdaacefe5e
- deviceModel: System Product Name (System manufacturer)
- deviceName: DESKTOP-9IAC3HQ
- deviceType: Desktop
- graphicsDeviceID: 6918
- graphicsDeviceName: NVIDIA GeForce GTX 1080 Ti
- graphicsDeviceType: Direct3D11
- graphicsDeviceVendor: NVIDIA
- graphicsDeviceVendorID: 4318
- graphicsDeviceVersion: Direct3D 11.0 [level 11.1]
- graphicsMemorySize: 11127
- graphicsMultiThreaded: True
- graphicsShaderLevel: 50
- graphicsUVStartsAtTop: True
- maxCubemapSize: 16384
- maxTextureSize: 16384
- npotSupport: Full
- operatingSystem: Windows 10  (10.0.0) 64bit
- operatingSystemFamily: Windows
- processorFrequency: 3696
- processorType: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz
- supportedRenderTargetCount: 8
- supports2DArrayTextures: True
- supports32bitsIndexBuffer: True
- supports3DRenderTextures: True
- supports3DTextures: True
+ batteryLevel: 0
+ batteryStatus: Unknown
+ deviceUniqueIdentifier: 
+ deviceModel: 
+ deviceName: 
+ deviceType: Unknown
+ graphicsDeviceID: 0
+ graphicsDeviceName: 
+ graphicsDeviceType: OpenGL2
+ graphicsDeviceVendor: 
+ graphicsDeviceVendorID: 0
+ graphicsDeviceVersion: 
+ graphicsMemorySize: 0
+ graphicsMultiThreaded: False
+ graphicsShaderLevel: 0
+ graphicsUVStartsAtTop: False
+ maxCubemapSize: 0
+ maxTextureSize: 0
+ npotSupport: None
+ operatingSystem: 
+ operatingSystemFamily: Other
+ processorFrequency: 0
+ processorType: 
+ supportedRenderTargetCount: 0
+ supports2DArrayTextures: False
+ supports32bitsIndexBuffer: False
+ supports3DRenderTextures: False
+ supports3DTextures: False
  supportsAccelerometer: False
  supportsAsyncCompute: False
- supportsAsyncGPUReadback: True
- supportsAudio: True
- supportsComputeShaders: True
- supportsCubemapArrayTextures: True
+ supportsAsyncGPUReadback: False
+ supportsAudio: False
+ supportsComputeShaders: False
+ supportsCubemapArrayTextures: False
  supportsGPUFence: False
  supportsGyroscope: False
  supportsHardwareQuadTopology: False
- supportsImageEffects: True
- supportsInstancing: True
+ supportsImageEffects: False
+ supportsInstancing: False
  supportsLocationService: False
- supportsMipStreaming: True
- supportsMotionVectors: True
+ supportsMipStreaming: False
+ supportsMotionVectors: False
  supportsMultisampleAutoResolve: False
- supportsMultisampledTextures: 1
- supportsRawShadowDepthSampling: True
- supportsRenderToCubemap: True
- supportsMultisampledTextures: 1
- supportsShadows: True
- supportsSparseTextures: True
- supportsTextureWrapMirrorOnce: 1
+ supportsMultisampledTextures: 0
+ supportsRawShadowDepthSampling: False
+ supportsRenderToCubemap: False
+ supportsMultisampledTextures: 0
+ supportsShadows: False
+ supportsSparseTextures: False
+ supportsTextureWrapMirrorOnce: 0
  supportsVibration: False
- systemMemorySize: 16318
- unsupportedIdentifier: n/a
- usesReversedZBuffer: True
-(Session-1) [31/12/2018 14:46:39] <<<<<NEW SESSION>>>>>
-(Session-1) [31/12/2018 14:46:39] Press TAB to toggle Log Panel.
-(Session-1) [31/12/2018 14:46:39] Press 1 to show Info message.
-(Session-1) [31/12/2018 14:46:39] Press 2 to show Error message.
-(Session-1) [31/12/2018 14:46:39] Press 3 to show Loot message.
-(Session-1) [31/12/2018 14:46:39] Press 4 to show Interact message.
-(Session-1) [31/12/2018 14:46:39] Press 5 to show Drop message.
-(Session-1) [31/12/2018 14:46:40] <<<<<END SESSION>>>>>
-
-(Session-2) [31/12/2018 14:46:43] 
-(Session-2) [31/12/2018 14:46:43] <<<<<NEW SESSION>>>>>
-(Session-2) [31/12/2018 14:46:43] Press TAB to toggle Log Panel.
-(Session-2) [31/12/2018 14:46:43] Press 1 to show Info message.
-(Session-2) [31/12/2018 14:46:43] Press 2 to show Error message.
-(Session-2) [31/12/2018 14:46:43] Press 3 to show Loot message.
-(Session-2) [31/12/2018 14:46:43] Press 4 to show Interact message.
-(Session-2) [31/12/2018 14:46:43] Press 5 to show Drop message.
-(Session-2) [31/12/2018 14:46:45] Example info log.
-(Session-2) [31/12/2018 14:46:45] Example error log.
-(Session-2) [31/12/2018 14:46:48] <<<<<END SESSION>>>>>
+ systemMemorySize: 0
+ unsupportedIdentifier: 
+ usesReversedZBuffer: False
+(Session-1) [31/12/2018 15:56:26] Press TAB to toggle Log Panel.
+(Session-1) [31/12/2018 15:56:26] Press 1 to show Info message.
+(Session-1) [31/12/2018 15:56:26] Press 2 to show Error message.
+(Session-1) [31/12/2018 15:56:26] Press 3 to show Loot message.
+(Session-1) [31/12/2018 15:56:26] Press 4 to show Interact message.
+(Session-1) [31/12/2018 15:56:26] Press 5 to show Drop message.
+(Session-1) [31/12/2018 15:56:28] <<<<<END SESSION>>>>>
 
