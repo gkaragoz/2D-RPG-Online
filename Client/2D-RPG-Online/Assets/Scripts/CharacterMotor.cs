@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// This class is responsible to manage player's real movement.
+/// This class is responsible to manage character's real movement.
 /// <list type="bullet">
 /// Required Components:
 /// <item>
@@ -13,13 +13,19 @@ using UnityEngine;
 /// </list>
 /// </summary>
 [RequireComponent(typeof(Rigidbody2D))]
-public class PlayerMotor : MonoBehaviour {
+public class CharacterMotor : MonoBehaviour {
 
     /// <summary>
-    /// Player's movement speed.
+    /// Character's movement speed.
     /// </summary>
     [Header("Initialization")]
     public float speed = 3f;
+
+    public bool IsMoving {
+        get {
+            return _rb2D.velocity.magnitude > 0 ? true : false;
+        }
+    }
 
     /// <summary>
     /// Rigidbody component to handle collisions.

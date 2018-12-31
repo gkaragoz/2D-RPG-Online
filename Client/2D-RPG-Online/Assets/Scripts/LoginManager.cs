@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 using ShiftServer.Client;
+using System;
 
-public class LoginManager : Menu {
+public class LoginManager : Menu
+{
 
     #region Singleton
 
     public static LoginManager instance;
-    private void Start()
-    {
-        NetworkManager.client.AddEventListener(MSServerEvent.MsJoinRequestSuccess, this.OnJoinSuccess);
-        NetworkManager.client.AddEventListener(MSPlayerEvent.MsOuse, this.OnPlayerObjectUse);
-    }
+    public ClientData clientInfo;
+ 
 
-    void Awake() {
+    void Awake()
+    {
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -24,15 +24,32 @@ public class LoginManager : Menu {
     }
 
     #endregion
+    private void Start()
+    {
+        if (!NetworkManager.instance.IsOffline)
+        {
+            NetworkManager.client.AddEventListener(MSServerEvent.JoinRequestSuccess, this.OnJoinSuccess);
+            NetworkManager.client.AddEventListener(MSPlayerEvent.OnCreatePlayer, this.OnPlayerCreate);
 
-    public void Login() {
+            clientInfo = new ClientData();
+            clientInfo.Guid = Guid.NewGuid().ToString();
+            clientInfo.Loginname = "Test";
+            clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
+            clientInfo.MachineName = SystemInfo.deviceName;
+
+        }
+
+    }
+    public void Login()
+    {
         //Check and get username & password input fields.
 
         //Send a request to login with username and password. 
-        
+
     }
 
-    public void LoginAsAGuest() {
+    public void LoginAsAGuest()
+    {
         UIManager.instance.HideLoginPanel();
         UIManager.instance.ShowSelectClassPanel();
 
@@ -41,38 +58,46 @@ public class LoginManager : Menu {
         //TO-DO: SEND REQUEST TO AUTH SERVER AND GET TOKEN IF SUCCESS
     }
 
-    public void JoinGame() {
+    public void JoinGame()
+    {
 
-        //Send a request to join game.
-        this.SendJoinPacket();
-
-
+        //Send a request to join game.    
+        if (NetworkManager.instance.IsOffline)
+        {
+            UIManager.instance.HideSelectClassPanel();
+        }
+        else
+        {
+            this.SendJoinPacket();
+        }
     }
- 
+
     public void OnJoinSuccess(ShiftServerData data)
     {
+        NetworkManager.client.AddEventListener(MSServerEvent.WorldUpdate, NetworkManager.instance.OnWorldUpdate);
+
         Debug.Log("OnJoinSuccess::EVENT::FIRED");
         //gameObject.SetActive(false);
         UIManager.instance.HideSelectClassPanel();
 
-        ShiftServerData newData = new ShiftServerData();
-        newData.Interaction = new ObjectAction();
-        newData.Interaction.CurrentObject = new sGameObject
-        {
-            PosX = 0,
-        };
 
-        NetworkManager.client.SendMessage(MSPlayerEvent.MsOuse, newData);
+        ShiftServerData newData = new ShiftServerData();
+        newData.Session = data.Session;
+
+      
+        newData.ClData = clientInfo;
+
+        NetworkManager.client.SendMessage(MSPlayerEvent.OnCreatePlayer, newData);
     }
 
-    public void OnPlayerObjectUse(ShiftServerData data)
+    public void OnPlayerCreate(ShiftServerData data)
     {
-        Debug.Log("OnPlayerObjectUse event triggered");
+        Debug.Log("OnPlayerCreate event triggered");
     }
     public void SendJoinPacket()
     {
         ShiftServerData data = new ShiftServerData();
-        data.ClData = NetworkManager.clientinfo;
-        NetworkManager.client.SendMessage(MSServerEvent.MsJoinRequest, data);
+        data.ClData = this.clientInfo;
+        NetworkManager.client.SendMessage(MSServerEvent.JoinRequest, data);
     }
 }

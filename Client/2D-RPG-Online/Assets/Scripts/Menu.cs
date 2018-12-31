@@ -22,7 +22,7 @@ public abstract class Menu : MonoBehaviour {
     /// <summary>
     /// If container doesn't set as any object, than container is that panel itself.
     /// </summary>
-    private void Start() {
+    private void Awake() {
         if (container == null) {
             container = this.gameObject;
         }

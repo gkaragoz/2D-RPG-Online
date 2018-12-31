@@ -100,7 +100,7 @@ namespace ShiftServer.Client
             if (data == null)
                 data = new ShiftServerData();
 
-            data.Basevtid = MSBaseEventId.MsServerEvent;
+            data.Basevtid = MSBaseEventId.ServerEvent;
             data.Svevtid = evt;
 
 
@@ -120,7 +120,7 @@ namespace ShiftServer.Client
             if (data == null)
                 throw new Exception();
 
-            data.Basevtid = MSBaseEventId.MsPlayerEvent;
+            data.Basevtid = MSBaseEventId.PlayerEvent;
             data.Plevtid = evt;
 
             byte[] bb = data.ToByteArray();

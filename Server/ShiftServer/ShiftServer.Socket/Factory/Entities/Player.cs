@@ -11,14 +11,15 @@ namespace ShiftServer.Server.Factory.Entities
     class Player : IGameObject
     {
         public string Name { get; set; } = "Gladiator";
-        public int ObjectId { get; set; }
+        public string ObjectId { get; set; }
+        public PlayerClass Class { get; set; }
         public int MaxHP { get; set; } = 100;
         public int CurrentHP { get; set; } = 100;
-
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
-        public string OwnerClientSid { get; set; }
+        public int OwnerClientId { get; set; }
+        public List<IGameObject> OwnedObjects { get; set; }
 
         public void OnAttack()
         {
