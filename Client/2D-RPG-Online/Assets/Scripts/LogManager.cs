@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 /// <summary>
 /// This class is responsible to handle any logs.
@@ -20,18 +22,59 @@ public class LogManager : Menu {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
     }
 
     #endregion
+
+    public delegate void IsLimitedLogCountChanged(bool status);
+    public event IsLimitedLogCountChanged onIsLimitedLogCountChanged;
+
+    public delegate void MaxLogsCountChanged(int count);
+    public event MaxLogsCountChanged onMaxLogsCountChanged;
+
+    [System.Serializable]
+    public class Settings {
+        public Slider sliderMaxLogsCount;
+        public TextMeshProUGUI txtLimitLogsCount;
+        public TextMeshProUGUI txtMaxLogsCountHandle;
+        public Toggle toggleIsLogCountLimited;
+
+        public void Initialize(int count, bool status) {
+            SetSliderMaxLogsCount(count);
+            SetToggleMaxLogsCount(status);
+        }
+
+        public void SetSliderMaxLogsCount(int count) {
+            sliderMaxLogsCount.value = count;
+
+            txtMaxLogsCountHandle.text = count.ToString();
+            txtLimitLogsCount.text = "Limit Logs (" + count + ")";
+        }
+
+        public void SetToggleMaxLogsCount(bool status) {
+            toggleIsLogCountLimited.isOn = status;
+        }
+    }
 
     public GameObject chatContainer;
     public GameObject logTextPrefab;
     public FadeInOut fadeInOut;
 
     [Header("Settings")]
-    public bool isTracing = false;
-    public bool isLogCountLimited = false;
-    public int maxLogsCount = 25;
+    [SerializeField]
+    private Settings _settings;
+
+    [SerializeField]
+    private bool _isTracing = false;
+
+    [SerializeField]
+    private bool _isLimitedLogCount = false;
+
+    [SerializeField]
+    private int _maxLogsCount = 25;
+
     public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
 
     [Header("Debug")]
@@ -46,6 +89,11 @@ public class LogManager : Menu {
     private Queue<Log> _hidedLogs = new Queue<Log>();
 
     private void Start() {
+        onIsLimitedLogCountChanged += _settings.SetToggleMaxLogsCount;
+        onMaxLogsCountChanged += _settings.SetSliderMaxLogsCount;
+
+        _settings.Initialize(_maxLogsCount, _isLimitedLogCount);
+
         Application.logMessageReceived += LogCallback;
 
         AddLog("Press TAB to toggle Log Panel.", Log.Type.Info);
@@ -100,9 +148,25 @@ public class LogManager : Menu {
         ShowPanel();
     }
 
+    public void SetLimitedLog(bool status) {
+        _isLimitedLogCount = status;
+
+        CheckLogLimits();
+
+        onIsLimitedLogCountChanged.Invoke(_isLimitedLogCount);
+    }
+
+    public void SetMaxLogsCount(float count) {
+        _maxLogsCount = (int)count;
+
+        CheckLogLimits();
+
+        onMaxLogsCountChanged.Invoke(_maxLogsCount);
+    }
+
     private void CheckLogLimits() {
-        if (isLogCountLimited) {
-            while (maxLogsCount < _allLogs.Count) {
+        if (_isLimitedLogCount) {
+            while (_maxLogsCount < _allLogs.Count) {
                 Log log = _allLogs.Dequeue();
                 log.Hide();
 
@@ -194,7 +258,7 @@ public class LogManager : Menu {
                                        dateTime,
                                        logMessage);
 
-        if (isTracing) {
+        if (_isTracing) {
             logString += "\n\t[TRACING:\n\t" + tracingString + "]";
         }
 
