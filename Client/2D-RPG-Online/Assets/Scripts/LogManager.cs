@@ -24,12 +24,14 @@ public class LogManager : Menu {
 
     #endregion
 
-    [Header("Initializers")]
     public GameObject chatContainer;
     public GameObject logTextPrefab;
+    public FadeInOut fadeInOut;
+
+    [Header("Settings")]
+    public bool isTracing = false;
     public int maxLogsCount = 25;
     public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
-    public FadeInOut fadeInOut;
 
     [Header("Debug")]
     [SerializeField]
@@ -78,21 +80,23 @@ public class LogManager : Menu {
         }
     }
 
-    public void AddLog(string text, Log.Type logType) {
+    public void AddLog(string message, Log.Type logType) {
         if (_allLogs.Count >= maxLogsCount) {
-            Destroy(_allLogs[0].UI.gameObject);
+            _allLogs[0].DestroyItself();
             _allLogs.Remove(_allLogs[0]);
         }
-
-        Log log = new Log();
-        log.message = text;
 
         string colorStringHEX = "#" + ColorUtility.ToHtmlStringRGBA(GetLogColor(logType));
 
         GameObject textUIObject = Instantiate(logTextPrefab, chatContainer.transform);
-        log.UI = textUIObject.GetComponent<TextMeshProUGUI>();
-        log.dateTime = DateTime.Now;
-        log.UI.text = string.Format("[{0}] <color={1}>{2}</color>", log.dateTime.ToLongTimeString(), colorStringHEX, log.message);
+
+        Log log = new Log(
+            message, 
+            DateTime.Now, 
+            colorStringHEX, 
+            textUIObject.GetComponent<TextMeshProUGUI>(), 
+            logType);
+
         _allLogs.Add(log);
 
         WriteToLogFile(log);
@@ -151,11 +155,23 @@ public class LogManager : Menu {
     }
 
     private void WriteToLogFile(Log log) {
-        LogFile.WriteString(log);
-    }
+        string logString = string.Empty;
 
-    private void WriteToLogFile(string message) {
-        LogFile.WriteString(message);
+        string logMessage = log.GetMessage();
+        string dateTime = log.GetFormattedDateTime();
+        int sessionID = SessionWatcher.instance.SessionID;
+        string tracingString = log.GetTracingString();
+
+        logString = string.Format("[SESSION:{0}][TIME:{1}][LOG-MESSAGE:\t{2}]",
+                                       sessionID,
+                                       dateTime,
+                                       logMessage);
+
+        if (isTracing) {
+            logString += "\n\t[TRACING:\n\t" + tracingString + "]";
+        }
+
+        LogFile.WriteString(logString);
     }
 
 }

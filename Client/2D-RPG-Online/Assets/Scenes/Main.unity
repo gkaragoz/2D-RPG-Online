@@ -2441,6 +2441,8 @@ MonoBehaviour:
   chatContainer: {fileID: 1588753411}
   logTextPrefab: {fileID: 1114688638718040, guid: 773258971ecc1314d893239c9aa577cf,
     type: 2}
+  fadeInOut: {fileID: 341669195}
+  isTracing: 0
   maxLogsCount: 100
   infoColor: {r: 0.8745098, g: 0.9019608, b: 0.9137255, a: 1}
   errorColor: {r: 1, g: 0.3443396, b: 0.34828955, a: 1}
@@ -2448,7 +2450,6 @@ MonoBehaviour:
   interactColor: {r: 0.45490196, g: 0.7254902, b: 1, a: 1}
   dropColor: {r: 0.98039216, g: 0.69411767, b: 0.627451, a: 1}
   expColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
-  fadeInOut: {fileID: 341669195}
   _allLogs: []
 --- !u!4 &1971027716
 Transform:
@@ -2474,7 +2475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e24894c9a0afb734fa4adfa6ad836b0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _session: {fileID: 11400000, guid: 93f0b68037c807640bc1b45171ed0493, type: 2}
+  _session: {fileID: 0}
   _sessionIDDebug: 0
 --- !u!1001 &2055043716
 Prefab:

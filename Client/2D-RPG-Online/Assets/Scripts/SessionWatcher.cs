@@ -33,27 +33,27 @@ public class SessionWatcher : MonoBehaviour {
 
     #endregion
 
+    [Header("Debug")]
     /// <summary>
     /// Session data scriptable object.
     /// </summary>
-    [Header("Initialization")]
     [SerializeField]
+    [Utils.ReadOnly]
     private Session_SO _session;
 
     /// <summary>
     /// To show current session ID on inspector.
     /// </summary>
-    [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
     private int _sessionIDDebug;
 
-    [SerializeField]
-    [Utils.ReadOnly]
+    private bool HasSessionData {
+        get { return File.Exists(FULL_PATH) ? true : false; }
+    }
+
     private const string ON_APP_START_LOG = "<<<<<NEW SESSION>>>>>";
-    [SerializeField]
-    [Utils.ReadOnly]
-    private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>\n";
+    private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>";
 
     /// <summary>
     /// Getter of SessionID.
@@ -75,22 +75,40 @@ public class SessionWatcher : MonoBehaviour {
     private const string SESSION_DATA_FILE_NAME = "SessionData.asset";
 
     /// <summary>
+    /// Session data full path.
+    /// </summary>
+    private const string FULL_PATH = SESSION_DATA_PATH + SESSION_DATA_FILE_NAME;
+
+    /// <summary>
     /// Increment sessionID just one.
     /// Delete old session data and create new session data.
     /// See <see cref="ON_APP_START_LOG"/>
     /// See <see cref="Introduce"/>
     /// </summary>
     private void Init() {
-        if (!IsItSameSystem()) {
-            DeleteSessionData();
+        if (HasSessionData) {
+            if (_session == null) {
+                _session = AssetDatabase.LoadAssetAtPath<Session_SO>(FULL_PATH);
+            }
 
+            LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
+
+            if (IsItSameSystem()) {
+                SetSystemInfos();
+            } else {
+                DeleteSessionData();
+                _session = CreateSessionData();
+                SetSystemInfos();
+                LogManager.instance.AddLog(Introduce(), Log.Type.Info);
+            }
+        } else {
             _session = CreateSessionData();
+
+            LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
+
+            SetSystemInfos();
+            LogManager.instance.AddLog(Introduce(), Log.Type.Info);
         }
-
-        LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
-        LogManager.instance.AddLog(Introduce(), Log.Type.Info);
-
-        SetSystemInfos();
     }
     
     /// <summary>
@@ -100,63 +118,61 @@ public class SessionWatcher : MonoBehaviour {
     public string Introduce() {
         string message = string.Empty;
 
-        if (!IsItSameSystem()) {
-            message += "\nAll informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html";
-            message += "\n batteryLevel: " + _session.batteryLevel;
-            message += "\n batteryStatus: " + _session.batteryStatus;
-            message += "\n deviceUniqueIdentifier: " + _session.deviceUniqueIdentifier;
-            message += "\n deviceModel: " + _session.deviceModel;
-            message += "\n deviceName: " + _session.deviceName;
-            message += "\n deviceType: " + _session.deviceType;
-            message += "\n graphicsDeviceID: " + _session.graphicsDeviceID;
-            message += "\n graphicsDeviceName: " + _session.graphicsDeviceName;
-            message += "\n graphicsDeviceType: " + _session.graphicsDeviceType;
-            message += "\n graphicsDeviceVendor: " + _session.graphicsDeviceVendor;
-            message += "\n graphicsDeviceVendorID: " + _session.graphicsDeviceVendorID;
-            message += "\n graphicsDeviceVersion: " + _session.graphicsDeviceVersion;
-            message += "\n graphicsMemorySize: " + _session.graphicsMemorySize;
-            message += "\n graphicsMultiThreaded: " + _session.graphicsMultiThreaded;
-            message += "\n graphicsShaderLevel: " + _session.graphicsShaderLevel;
-            message += "\n graphicsUVStartsAtTop: " + _session.graphicsUVStartsAtTop;
-            message += "\n maxCubemapSize: " + _session.maxCubemapSize;
-            message += "\n maxTextureSize: " + _session.maxTextureSize;
-            message += "\n npotSupport: " + _session.npotSupport;
-            message += "\n operatingSystem: " + _session.operatingSystem;
-            message += "\n operatingSystemFamily: " + _session.operatingSystemFamily;
-            message += "\n processorFrequency: " + _session.processorFrequency;
-            message += "\n processorType: " + _session.processorType;
-            message += "\n supportedRenderTargetCount: " + _session.supportedRenderTargetCount;
-            message += "\n supports2DArrayTextures: " + _session.supports2DArrayTextures;
-            message += "\n supports32bitsIndexBuffer: " + _session.supports32bitsIndexBuffer;
-            message += "\n supports3DRenderTextures: " + _session.supports3DRenderTextures;
-            message += "\n supports3DTextures: " + _session.supports3DTextures;
-            message += "\n supportsAccelerometer: " + _session.supportsAccelerometer;
-            message += "\n supportsAsyncCompute: " + _session.supportsAsyncCompute;
-            message += "\n supportsAsyncGPUReadback: " + _session.supportsAsyncGPUReadback;
-            message += "\n supportsAudio: " + _session.supportsAudio;
-            message += "\n supportsComputeShaders: " + _session.supportsComputeShaders;
-            message += "\n supportsCubemapArrayTextures: " + _session.supportsCubemapArrayTextures;
-            message += "\n supportsGPUFence: " + _session.supportsGPUFence;
-            message += "\n supportsGyroscope: " + _session.supportsGyroscope;
-            message += "\n supportsHardwareQuadTopology: " + _session.supportsHardwareQuadTopology;
-            message += "\n supportsImageEffects: " + _session.supportsImageEffects;
-            message += "\n supportsInstancing: " + _session.supportsInstancing;
-            message += "\n supportsLocationService: " + _session.supportsLocationService;
-            message += "\n supportsMipStreaming: " + _session.supportsMipStreaming;
-            message += "\n supportsMotionVectors: " + _session.supportsMotionVectors;
-            message += "\n supportsMultisampleAutoResolve: " + _session.supportsMultisampleAutoResolve;
-            message += "\n supportsMultisampledTextures: " + _session.supportsMultisampledTextures;
-            message += "\n supportsRawShadowDepthSampling: " + _session.supportsRawShadowDepthSampling;
-            message += "\n supportsRenderToCubemap: " + _session.supportsRenderToCubemap;
-            message += "\n supportsMultisampledTextures: " + _session.supportsMultisampledTextures;
-            message += "\n supportsShadows: " + _session.supportsShadows;
-            message += "\n supportsSparseTextures: " + _session.supportsSparseTextures;
-            message += "\n supportsTextureWrapMirrorOnce: " + _session.supportsTextureWrapMirrorOnce;
-            message += "\n supportsVibration: " + _session.supportsVibration;
-            message += "\n systemMemorySize: " + _session.systemMemorySize;
-            message += "\n unsupportedIdentifier: " + _session.unsupportedIdentifier;
-            message += "\n usesReversedZBuffer: " + _session.usesReversedZBuffer;
-        }
+        message += "\nAll informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html";
+        message += "\n batteryLevel: " + _session.batteryLevel;
+        message += "\n batteryStatus: " + _session.batteryStatus;
+        message += "\n deviceUniqueIdentifier: " + _session.deviceUniqueIdentifier;
+        message += "\n deviceModel: " + _session.deviceModel;
+        message += "\n deviceName: " + _session.deviceName;
+        message += "\n deviceType: " + _session.deviceType;
+        message += "\n graphicsDeviceID: " + _session.graphicsDeviceID;
+        message += "\n graphicsDeviceName: " + _session.graphicsDeviceName;
+        message += "\n graphicsDeviceType: " + _session.graphicsDeviceType;
+        message += "\n graphicsDeviceVendor: " + _session.graphicsDeviceVendor;
+        message += "\n graphicsDeviceVendorID: " + _session.graphicsDeviceVendorID;
+        message += "\n graphicsDeviceVersion: " + _session.graphicsDeviceVersion;
+        message += "\n graphicsMemorySize: " + _session.graphicsMemorySize;
+        message += "\n graphicsMultiThreaded: " + _session.graphicsMultiThreaded;
+        message += "\n graphicsShaderLevel: " + _session.graphicsShaderLevel;
+        message += "\n graphicsUVStartsAtTop: " + _session.graphicsUVStartsAtTop;
+        message += "\n maxCubemapSize: " + _session.maxCubemapSize;
+        message += "\n maxTextureSize: " + _session.maxTextureSize;
+        message += "\n npotSupport: " + _session.npotSupport;
+        message += "\n operatingSystem: " + _session.operatingSystem;
+        message += "\n operatingSystemFamily: " + _session.operatingSystemFamily;
+        message += "\n processorFrequency: " + _session.processorFrequency;
+        message += "\n processorType: " + _session.processorType;
+        message += "\n supportedRenderTargetCount: " + _session.supportedRenderTargetCount;
+        message += "\n supports2DArrayTextures: " + _session.supports2DArrayTextures;
+        message += "\n supports32bitsIndexBuffer: " + _session.supports32bitsIndexBuffer;
+        message += "\n supports3DRenderTextures: " + _session.supports3DRenderTextures;
+        message += "\n supports3DTextures: " + _session.supports3DTextures;
+        message += "\n supportsAccelerometer: " + _session.supportsAccelerometer;
+        message += "\n supportsAsyncCompute: " + _session.supportsAsyncCompute;
+        message += "\n supportsAsyncGPUReadback: " + _session.supportsAsyncGPUReadback;
+        message += "\n supportsAudio: " + _session.supportsAudio;
+        message += "\n supportsComputeShaders: " + _session.supportsComputeShaders;
+        message += "\n supportsCubemapArrayTextures: " + _session.supportsCubemapArrayTextures;
+        message += "\n supportsGPUFence: " + _session.supportsGPUFence;
+        message += "\n supportsGyroscope: " + _session.supportsGyroscope;
+        message += "\n supportsHardwareQuadTopology: " + _session.supportsHardwareQuadTopology;
+        message += "\n supportsImageEffects: " + _session.supportsImageEffects;
+        message += "\n supportsInstancing: " + _session.supportsInstancing;
+        message += "\n supportsLocationService: " + _session.supportsLocationService;
+        message += "\n supportsMipStreaming: " + _session.supportsMipStreaming;
+        message += "\n supportsMotionVectors: " + _session.supportsMotionVectors;
+        message += "\n supportsMultisampleAutoResolve: " + _session.supportsMultisampleAutoResolve;
+        message += "\n supportsMultisampledTextures: " + _session.supportsMultisampledTextures;
+        message += "\n supportsRawShadowDepthSampling: " + _session.supportsRawShadowDepthSampling;
+        message += "\n supportsRenderToCubemap: " + _session.supportsRenderToCubemap;
+        message += "\n supportsMultisampledTextures: " + _session.supportsMultisampledTextures;
+        message += "\n supportsShadows: " + _session.supportsShadows;
+        message += "\n supportsSparseTextures: " + _session.supportsSparseTextures;
+        message += "\n supportsTextureWrapMirrorOnce: " + _session.supportsTextureWrapMirrorOnce;
+        message += "\n supportsVibration: " + _session.supportsVibration;
+        message += "\n systemMemorySize: " + _session.systemMemorySize;
+        message += "\n unsupportedIdentifier: " + _session.unsupportedIdentifier;
+        message += "\n usesReversedZBuffer: " + _session.usesReversedZBuffer;
 
         return message;
     }
@@ -233,14 +249,12 @@ public class SessionWatcher : MonoBehaviour {
     /// </summary>
     /// <returns></returns>
     private Session_SO CreateSessionData() {
-        string path = SESSION_DATA_PATH + SESSION_DATA_FILE_NAME;
-
         Session_SO asset = ScriptableObject.CreateInstance<Session_SO>();
 
-        AssetDatabase.CreateAsset(asset, path);
+        AssetDatabase.CreateAsset(asset, FULL_PATH);
         AssetDatabase.SaveAssets();
 
-        Debug.Log("[SessionWatcher] Created new session data on path: " + path);
+        Debug.Log("[SessionWatcher] Created new session data on path: " + FULL_PATH);
 
         return asset;
     }
@@ -249,14 +263,10 @@ public class SessionWatcher : MonoBehaviour {
     /// Delete if session data exists.
     /// </summary>
     private void DeleteSessionData() {
-        string path = SESSION_DATA_PATH + SESSION_DATA_FILE_NAME;
+        AssetDatabase.DeleteAsset(FULL_PATH);
+        AssetDatabase.SaveAssets();
 
-        if (File.Exists(path)) {
-            AssetDatabase.DeleteAsset(path);
-            AssetDatabase.SaveAssets();
-
-            Debug.Log("[SessionWatcher] Deleted session data on path: " + path);
-        }
+        Debug.Log("[SessionWatcher] Deleted session data on path : " + FULL_PATH);
     }
 
     /// <summary>
