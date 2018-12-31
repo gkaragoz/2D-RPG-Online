@@ -18,3 +18,37 @@
 [13:19:29] Example error log.
 [13:19:30] Example info log.
 [13:19:31] Example error log.
+[13:20:45] Press TAB to toggle Log Panel.
+[13:20:45] Press 1 to show Info message.
+[13:20:45] Press 2 to show Error message.
+[13:20:45] Press 3 to show Loot message.
+[13:20:45] Press 4 to show Interact message.
+[13:20:45] Press 5 to show Drop message.
+[13:20:47] Example info log.
+[13:20:47] Example info log.
+[13:20:48] Example info log.
+[13:20:48] Example info log.
+(SessionID-1) [13:26:18] Press TAB to toggle Log Panel.
+(SessionID-1) [13:26:18] Press 1 to show Info message.
+(SessionID-1) [13:26:18] Press 2 to show Error message.
+(SessionID-1) [13:26:18] Press 3 to show Loot message.
+(SessionID-1) [13:26:18] Press 4 to show Interact message.
+(SessionID-1) [13:26:18] Press 5 to show Drop message.
+(SessionID-1) [13:26:25] Press TAB to toggle Log Panel.
+(SessionID-1) [13:26:25] Press 1 to show Info message.
+(SessionID-1) [13:26:25] Press 2 to show Error message.
+(SessionID-1) [13:26:25] Press 3 to show Loot message.
+(SessionID-1) [13:26:25] Press 4 to show Interact message.
+(SessionID-1) [13:26:25] Press 5 to show Drop message.
+(Session-1) [31 December 2018] [13:27:50] Press TAB to toggle Log Panel.
+(Session-1) [31 December 2018] [13:27:50] Press 1 to show Info message.
+(Session-1) [31 December 2018] [13:27:50] Press 2 to show Error message.
+(Session-1) [31 December 2018] [13:27:50] Press 3 to show Loot message.
+(Session-1) [31 December 2018] [13:27:50] Press 4 to show Interact message.
+(Session-1) [31 December 2018] [13:27:50] Press 5 to show Drop message.
+(Session-1) [31/12/2018 13:33:59]Log
+(Session-1) [31/12/2018 13:33:59]Log
+(Session-1) [31/12/2018 13:33:59]Log
+(Session-1) [31/12/2018 13:33:59]Log
+(Session-1) [31/12/2018 13:33:59]Log
+(Session-1) [31/12/2018 13:33:59]Log

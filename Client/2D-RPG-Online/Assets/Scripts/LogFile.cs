@@ -6,7 +6,7 @@ public class LogFile {
 
     private const string FILE_NAME = "log.txt";
 
-    public static void WriteString(string log) {
+    public static void WriteString(Log log) {
         string path = "Assets/Resources/" + FILE_NAME;
 
         if (!File.Exists(path)) {
@@ -19,7 +19,7 @@ public class LogFile {
 
         //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(file);
-        writer.WriteLine(log);
+        writer.WriteLine("(Session-" + SessionWatcher.SessionID + ") " + "[" + string.Format("{0:d/M/yyyy HH:mm:ss}", log.dateTime) + "] " +  log);
         writer.Close();
 
         //Re-import the file to update the reference in the editor
