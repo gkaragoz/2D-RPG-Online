@@ -166,19 +166,31 @@ public class LogManager : Menu {
 
     private void CheckLogLimits() {
         if (_isLimitedLogCount) {
-            while (_maxLogsCount < _allLogs.Count) {
-                Log log = _allLogs.Dequeue();
-                log.Hide();
-
-                _hidedLogs.Enqueue(log);
+            if (_maxLogsCount < _allLogs.Count) {
+                HideLogs();
+            } else {
+                ShowLogs();
             }
         } else {
-            for (int ii = 0; ii < _hidedLogs.Count; ii++) {
-                Log log = _hidedLogs.Dequeue();
-                log.Show();
+            ShowLogs();
+        }
+    }
 
-                _allLogs.Enqueue(log);
-            }
+    private void ShowLogs() {
+        for (int ii = 0; ii < _hidedLogs.Count; ii++) {
+            Log log = _hidedLogs.Dequeue();
+            log.Show();
+
+            _allLogs.Enqueue(log);
+        }
+    }
+
+    private void HideLogs() {
+        while (_maxLogsCount < _allLogs.Count) {
+            Log log = _allLogs.Dequeue();
+            log.Hide();
+
+            _hidedLogs.Enqueue(log);
         }
     }
 
