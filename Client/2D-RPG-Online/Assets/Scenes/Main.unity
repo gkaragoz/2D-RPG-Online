@@ -527,7 +527,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hostName: 192.168.1.6
   _port: 2000
-  _isOffline: 0
+  _isOffline: 1
 --- !u!1 &253763532
 GameObject:
   m_ObjectHideFlags: 0
@@ -1065,7 +1065,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 925385206}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.99999994
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
