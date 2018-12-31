@@ -4921,11 +4921,12 @@ MonoBehaviour:
   logTextPrefab: {fileID: 1114688638718040, guid: 773258971ecc1314d893239c9aa577cf,
     type: 2}
   fadeInOut: {fileID: 341669195}
-  _settings:
+  _UISettings:
     sliderMaxLogsCount: {fileID: 1321795931}
     txtLimitLogsCount: {fileID: 1123103881}
     txtMaxLogsCountHandle: {fileID: 1293375733}
     toggleIsLogCountLimited: {fileID: 423179962}
+  _writeLogsToFile: 1
   _isTracing: 0
   _isLimitedLogCount: 1
   _maxLogsCount: 25

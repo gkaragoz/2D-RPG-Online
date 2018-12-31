@@ -35,7 +35,7 @@ public class LogManager : Menu {
     public event MaxLogsCountChanged onMaxLogsCountChanged;
 
     [System.Serializable]
-    public class Settings {
+    public class UISettings {
         public Slider sliderMaxLogsCount;
         public TextMeshProUGUI txtLimitLogsCount;
         public TextMeshProUGUI txtMaxLogsCountHandle;
@@ -62,9 +62,13 @@ public class LogManager : Menu {
     public GameObject logTextPrefab;
     public FadeInOut fadeInOut;
 
+    [Header("UI Initialization")]
+    [SerializeField]
+    private UISettings _UISettings;
+
     [Header("Settings")]
     [SerializeField]
-    private Settings _settings;
+    private bool _writeLogsToFile = false;
 
     [SerializeField]
     private bool _isTracing = false;
@@ -89,10 +93,10 @@ public class LogManager : Menu {
     private Queue<Log> _hidedLogs = new Queue<Log>();
 
     private void Start() {
-        onIsLimitedLogCountChanged += _settings.SetToggleMaxLogsCount;
-        onMaxLogsCountChanged += _settings.SetSliderMaxLogsCount;
+        onIsLimitedLogCountChanged += _UISettings.SetToggleMaxLogsCount;
+        onMaxLogsCountChanged += _UISettings.SetSliderMaxLogsCount;
 
-        _settings.Initialize(_maxLogsCount, _isLimitedLogCount);
+        _UISettings.Initialize(_maxLogsCount, _isLimitedLogCount);
 
         Application.logMessageReceived += LogCallback;
 
@@ -141,7 +145,7 @@ public class LogManager : Menu {
 
         CheckLogLimits();
 
-        if (appendToLogFile) {
+        if (appendToLogFile && _writeLogsToFile) {
             WriteToLogFile(log);
         }
 
