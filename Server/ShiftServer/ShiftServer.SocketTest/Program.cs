@@ -22,8 +22,8 @@ namespace ShiftServer.SocketTest
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new NetworkClient();
             networkClient.Connect("localhost", 1337);
-            networkClient.AddEventListener(MSServerEvent.MsConnectOk, funcs.OnConnected);
-            networkClient.AddEventListener(MSServerEvent.MsPingRequest, funcs.OnPing);
+            networkClient.AddEventListener(MSServerEvent.ConnectOk, funcs.OnConnected);
+            networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
 
 
 
@@ -31,7 +31,7 @@ namespace ShiftServer.SocketTest
             {
                 networkClient.Listen();
                 funcs.PingRequestedTick = DateTime.UtcNow.Millisecond;
-                networkClient.SendMessage(MSServerEvent.MsPingRequest, null);
+                networkClient.SendMessage(MSServerEvent.PingRequest, null);
                 System.Threading.Thread.Sleep(1000);
             }
 

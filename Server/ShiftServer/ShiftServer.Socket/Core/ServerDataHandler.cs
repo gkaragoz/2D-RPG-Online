@@ -13,6 +13,7 @@ namespace ShiftServer.Server.Core
     /// </summary>
     public class ServerDataHandler
     {
+
         public List<ServerEventCallback> serverEvents = null;
         public List<PlayerEventCallback> playerEvents = null;
 
@@ -24,17 +25,17 @@ namespace ShiftServer.Server.Core
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb, ShiftClient client)
+        public void HandleMessage(byte[] bb, ShiftClient client, log4net.ILog log)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
             switch (data.Basevtid)
             {
-                case MSBaseEventId.MsPlayerEvent:
-                    ServerEventInvoker.Fire(playerEvents, data, client);
+                case MSBaseEventId.PlayerEvent:
+                    ServerEventInvoker.Fire(playerEvents, data, client, log);
                     break;
-                case MSBaseEventId.MsServerEvent:
-                    ServerEventInvoker.Fire(serverEvents, data, client);
+                case MSBaseEventId.ServerEvent:
+                    ServerEventInvoker.Fire(serverEvents, data, client, log);
                     break;
                 default:
                  

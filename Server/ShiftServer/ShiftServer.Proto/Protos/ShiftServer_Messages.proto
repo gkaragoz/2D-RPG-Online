@@ -2,6 +2,7 @@
 
 
 message ShiftServerData {
+
 	MSBaseEventId basevtid = 1;
 	MSServerEvent svevtid = 2;  // Event type
 	MSPlayerEvent plevtid = 3;  // Sub ev type
@@ -11,13 +12,15 @@ message ShiftServerData {
 
 	// interaction message
 	ObjectAction interaction = 7;
+	PlayerObject playerObject = 8;
+	ShiftServerError errorReason = 9;
 }
 
 /// Control message ID.
 enum MSBaseEventId
 {
-	MS_PlayerEvent = 0;
-	MS_ServerEvent = 1;
+	PlayerEvent = 0;
+	ServerEvent = 1;
 };
 
 /// Control message ID.
@@ -25,42 +28,51 @@ enum MSPlayerEvent
 {
 
 	//Interaction events
-	MS_OMove = 0;
-	MS_OAttack = 1;
-	MS_ODead = 2;
-	MS_OUse = 3;
+	OnCreatePlayer = 0;
+	OnMove = 1;
+	OnAttack = 2;
+	OnDead = 3;
+	OnUse = 4;
 
 };
 
 enum MSServerEvent
 {
-	MS_Invalid = 0;						// Reserved
-	MS_GameserverSessionRequest = 5;		// Client -> Router
-	MS_GameserverSessionEstablished = 6;	// Router -> Client
-	MS_NoSession = 7;						// Router -> Server, Router -> Client
-	MS_Diagnostic = 8;						// Diagnostic / status message Router -> Client
-	MS_JoinRequest = 9;					// Join
-	MS_JoinRequestSuccess = 10;			// Join
-	MS_JoinRequestFailed= 11;			// Join
-	MS_Stats = 13;							// Any -> Any
-	MS_ConnectRequest = 18;				// Client->router->server
-	MS_ConnectOK = 19;						// Server->router->client.
-	MS_ConnectionClosed = 20;				// Server<->router<->client.  A reply is requested to this packet
-	MS_NoConnection = 21;					// Server<->router<->client.  A reply should never be sent to this packet
-	MS_PingRequest = 22;					// Ping Request 
-	MS_WorldUpdate = 23;					// WorldUpdate
+	Invalid = 0;					
+	GameserverSessionRequest = 5;	
+	GameserverSessionEstablished = 6;
+	Diagnostic = 8;					
+	JoinRequest = 9;				
+	JoinRequestSuccess = 10;		
+	JoinRequestFailed= 11;			
+	Stats = 13;						
+	ConnectRequest = 18;			
+	ConnectOK = 19;					
+	ConnectionClosed = 20;			
+	NoConnection = 21;				
+	PingRequest = 22;				
+	WorldUpdate = 23;				
 }
+enum ShiftServerError
+{
+	OldClientVersion = 0; // Application.version
+	NoSession = 1;		  // Session
+	SocketAbuse = 2;	  // Possible dos to client
+	WrongCredentials = 3; // Wrong login credentials
 
+}
 message SessionData {
 	string sid = 2;
 }
 
 message ObjectAction {
+
 	sGameObject currentObject = 1;
 	repeated sGameObject interactedObjects = 2;
 }
 
 message ClientData {
+
 	string ver = 1;
 	string loginname = 2;
 	string machine_name = 3;
@@ -70,19 +82,29 @@ message ClientData {
 
 message sGameObject {
 
-	int32 oid = 1;
+	string guid = 1;
 
 	float pos_x = 2;
 	float pos_y = 3;
 	float pos_z = 4;
 
-	float rot_x = 5;
-	float rot_y = 6;
-	float rot_z = 7;
-	
-	float scl_x = 8;
-	float scl_y = 9;
-	float scl_z = 10;
+}
+
+message PlayerObject {
+
+	sGameObject pObject = 1;
+	PlayerClass pClass = 2;
+	int32 currentHp = 3;
+	int32 maxHp = 4;
+
+}
+
+enum PlayerClass {
+
+	Warrior = 0;
+	Archer = 1;
+	Mage = 2;
+	Priest = 3;
 }
 
 message PlayerInput {

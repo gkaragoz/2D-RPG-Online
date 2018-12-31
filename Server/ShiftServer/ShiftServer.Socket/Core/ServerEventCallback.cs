@@ -29,18 +29,27 @@ namespace ShiftServer.Server.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient client)
+        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient shift, log4net.ILog log)
         {
-
-            for (int i = 0; i < events.Count; i++)
+            try
             {
-                if (events[i].EventId == data.Plevtid)
+                for (int i = 0; i < events.Count; i++)
                 {
-                    events[i].CallbackFunc.Invoke(data, client);
+                    if (events[i].EventId == data.Plevtid)
+                    {
+                        events[i].CallbackFunc.Invoke(data, shift);
+                    }
+
+
                 }
-
-
             }
+            catch (Exception err)
+            {
+
+                log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                return;
+            }
+          
 
         }
 
@@ -50,17 +59,24 @@ namespace ShiftServer.Server.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<ServerEventCallback> events, ShiftServerData data, ShiftClient client)
+        public static void Fire(List<ServerEventCallback> events, ShiftServerData data, ShiftClient shift, log4net.ILog log)
         {
-
-            for (int i = 0; i < events.Count; i++)
+            try
             {
-                if (events[i].EventId == data.Svevtid)
+                for (int i = 0; i < events.Count; i++)
                 {
-                    events[i].CallbackFunc.Invoke(data, client);
+                    if (events[i].EventId == data.Svevtid)
+                    {
+                        events[i].CallbackFunc.Invoke(data, shift);
+                    }
+
+
                 }
-
-
+            }
+            catch (Exception err)
+            {
+                log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                return;
             }
 
         }

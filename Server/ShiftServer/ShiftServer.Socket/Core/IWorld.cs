@@ -15,6 +15,7 @@ namespace ShiftServer.Server.Core
         Vector3 Scale { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
+        void OnCreatePlayer(ShiftServerData data, ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
         void OnObjectCreate(IGameObject gameObject);
         void OnObjectMove(ShiftServerData data, ShiftClient client);

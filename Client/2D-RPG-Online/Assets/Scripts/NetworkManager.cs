@@ -31,7 +31,6 @@ public class NetworkManager : MonoBehaviour
 
     #endregion
     public static NetworkClient client;
-    public static ClientData clientinfo;
 
     [SerializeField]
     private string _hostName = "192.168.1.2";
@@ -60,16 +59,10 @@ public class NetworkManager : MonoBehaviour
         if (!IsOffline)
         {
             client = new NetworkClient();
-            client.AddEventListener(MSServerEvent.MsConnectOk, this.OnConnected);
-            client.AddEventListener(MSServerEvent.MsPingRequest, OnPingResponse);
+            client.AddEventListener(MSServerEvent.ConnectOk, this.OnConnected);
+            client.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
 
             client.Connect(_hostName, _port);
-
-            clientinfo = new ClientData();
-            clientinfo.Guid = Guid.NewGuid().ToString();
-            clientinfo.Loginname = "Test";
-            clientinfo.MachineId = SystemInfo.deviceUniqueIdentifier;
-            clientinfo.MachineName = SystemInfo.deviceName;
 
             StartCoroutine(Listener());
         }
@@ -87,7 +80,7 @@ public class NetworkManager : MonoBehaviour
             if (client.IsConnected())
             {
                 ShiftServerData data = new ShiftServerData();
-                client.SendMessage(MSServerEvent.MsPingRequest, null);
+                client.SendMessage(MSServerEvent.PingRequest, null);
                 yield return new WaitForSecondsRealtime(1f);
             }
             else

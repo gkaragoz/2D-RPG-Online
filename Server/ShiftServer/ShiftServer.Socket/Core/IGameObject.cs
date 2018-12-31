@@ -12,7 +12,7 @@ namespace ShiftServer.Server.Core
     {
         string Name { get; set; }
         int OwnerClientId { get; set; }
-        int ObjectId { get; set; }
+        string ObjectId { get; set; }
         int MaxHP { get; set; }
         int CurrentHP { get; set; }
         List<IGameObject> OwnedObjects { get; set; }
