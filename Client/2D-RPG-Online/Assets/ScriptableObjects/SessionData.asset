@@ -11,4 +11,59 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: SessionData
   m_EditorClassIdentifier: Assembly-CSharp::Session_SO
-  ID: 0
+  ID: 2
+  lastDeviceUniqueIdentifier: 8e34ce8e5f767c32a70c26c8232e75cdaacefe5e
+  batteryLevel: -1
+  batteryStatus: 1
+  deviceUniqueIdentifier: 8e34ce8e5f767c32a70c26c8232e75cdaacefe5e
+  deviceModel: System Product Name (System manufacturer)
+  deviceName: DESKTOP-9IAC3HQ
+  deviceType: 3
+  graphicsDeviceID: 6918
+  graphicsDeviceName: NVIDIA GeForce GTX 1080 Ti
+  graphicsDeviceType: 2
+  graphicsDeviceVendor: NVIDIA
+  graphicsDeviceVendorID: 4318
+  graphicsDeviceVersion: Direct3D 11.0 [level 11.1]
+  graphicsMemorySize: 11127
+  graphicsMultiThreaded: 1
+  graphicsShaderLevel: 50
+  graphicsUVStartsAtTop: 1
+  maxCubemapSize: 16384
+  maxTextureSize: 16384
+  npotSupport: 2
+  operatingSystem: Windows 10  (10.0.0) 64bit
+  operatingSystemFamily: 2
+  processorCount: 12
+  processorFrequency: 3696
+  processorType: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz
+  supportedRenderTargetCount: 8
+  supports2DArrayTextures: 1
+  supports32bitsIndexBuffer: 1
+  supports3DRenderTextures: 1
+  supports3DTextures: 1
+  supportsAccelerometer: 0
+  supportsAsyncCompute: 0
+  supportsAsyncGPUReadback: 1
+  supportsAudio: 1
+  supportsComputeShaders: 1
+  supportsCubemapArrayTextures: 1
+  supportsGPUFence: 0
+  supportsGyroscope: 0
+  supportsHardwareQuadTopology: 0
+  supportsImageEffects: 1
+  supportsInstancing: 1
+  supportsLocationService: 0
+  supportsMipStreaming: 1
+  supportsMotionVectors: 1
+  supportsMultisampleAutoResolve: 0
+  supportsMultisampledTextures: 1
+  supportsRawShadowDepthSampling: 1
+  supportsRenderToCubemap: 1
+  supportsShadows: 1
+  supportsSparseTextures: 1
+  supportsTextureWrapMirrorOnce: 1
+  supportsVibration: 0
+  systemMemorySize: 16318
+  unsupportedIdentifier: n/a
+  usesReversedZBuffer: 1

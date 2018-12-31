@@ -40,6 +40,7 @@ public class LogManager : Menu {
     private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>\n";
 
     private void Start() {
+        WriteToLogFile(SessionWatcher.instance.Introduce());
         WriteToLogFile(ON_APP_START_LOG);
 
         Application.logMessageReceived += LogCallback;
