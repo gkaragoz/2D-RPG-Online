@@ -5,10 +5,10 @@ using UnityEngine;
 /// <summary>
 /// This class is responsible to hold simple Log data.
 /// </summary>
-[System.Serializable]
-public class Log {
+public class Log : MonoBehaviour {
 
     public enum Type {
+        Empty,
         Info,
         Error,
         Loot,
@@ -17,19 +17,35 @@ public class Log {
         Exp
     }
 
-    private string _message;
-    private DateTime _dateTime;
-    private string _tracingString;
-    private string _colorStringHEX;
-    private TextMeshProUGUI _txtLog;
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
     private Type _logType;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private string _message;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private DateTime _dateTime;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private string _tracingString;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private string _colorStringHEX;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private TextMeshProUGUI _txtLog;
 
-    public Log(string message, DateTime dateTime, string colorStringHEX, TextMeshProUGUI txtLog, Type logType) {
+    private void Start() {
+        _txtLog = GetComponent<TextMeshProUGUI>();
+    }
+
+    public void Init(string message, DateTime dateTime, string colorStringHEX, Type logType) {
         this._message = message;
         this._dateTime = dateTime;
         this._colorStringHEX = colorStringHEX;
         this._tracingString = System.Environment.StackTrace;
-        this._txtLog = txtLog;
         this._logType = logType;
 
         this._txtLog.text = string.Format("[{0}] <color={1}>{2}</color>", 
@@ -51,7 +67,7 @@ public class Log {
     }
 
     public void DestroyItself() {
-        UnityEngine.Object.Destroy(this._txtLog.gameObject);
+        Destroy(this.gameObject);
     }
 
 }

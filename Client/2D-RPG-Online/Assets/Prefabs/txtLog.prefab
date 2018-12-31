@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 224202197043385410}
   - component: {fileID: 222048229132251044}
   - component: {fileID: 114962922897423812}
+  - component: {fileID: 114701133580811492}
   m_Layer: 5
   m_Name: txtLog
   m_TagString: Untagged
@@ -91,6 +92,22 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114701133580811492
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1114688638718040}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cb1b27d06e879654ea581d821bce3c5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _logType: 0
+  _message: 
+  _tracingString: 
+  _colorStringHEX: 
+  _txtLog: {fileID: 114962922897423812}
 --- !u!114 &114962922897423812
 MonoBehaviour:
   m_ObjectHideFlags: 1

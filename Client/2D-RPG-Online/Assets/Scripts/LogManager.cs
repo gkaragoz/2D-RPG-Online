@@ -30,6 +30,7 @@ public class LogManager : Menu {
 
     [Header("Settings")]
     public bool isTracing = false;
+    public bool limitLogsCount = false;
     public int maxLogsCount = 25;
     public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
 
@@ -80,28 +81,38 @@ public class LogManager : Menu {
         }
     }
 
-    public void AddLog(string message, Log.Type logType) {
+    public void AddLog(string message, Log.Type logType, bool appendToLogFile = true) {
+        Log log = CreateLogObject(message, logType);
+        _allLogs.Add(log);
+
+        if (limitLogsCount) {
+            CheckLogLimits();
+        }
+        if (appendToLogFile) {
+            WriteToLogFile(log);
+        }
+
+        ShowPanel();
+    }
+
+    private void CheckLogLimits() {
         if (_allLogs.Count >= maxLogsCount) {
             _allLogs[0].DestroyItself();
             _allLogs.Remove(_allLogs[0]);
         }
+    }
 
+    private Log CreateLogObject(string message, Log.Type logType) {
         string colorStringHEX = "#" + ColorUtility.ToHtmlStringRGBA(GetLogColor(logType));
 
-        GameObject textUIObject = Instantiate(logTextPrefab, chatContainer.transform);
-
-        Log log = new Log(
-            message, 
-            DateTime.Now, 
-            colorStringHEX, 
-            textUIObject.GetComponent<TextMeshProUGUI>(), 
+        Log log = Instantiate(logTextPrefab, chatContainer.transform).GetComponent<Log>();
+        log.Init(
+            message,
+            DateTime.Now,
+            colorStringHEX,
             logType);
 
-        _allLogs.Add(log);
-
-        WriteToLogFile(log);
-
-        ShowPanel();
+        return log;
     }
 
     private void ShowPanel() {

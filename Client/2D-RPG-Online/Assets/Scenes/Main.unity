@@ -2443,6 +2443,7 @@ MonoBehaviour:
     type: 2}
   fadeInOut: {fileID: 341669195}
   isTracing: 0
+  limitLogsCount: 0
   maxLogsCount: 100
   infoColor: {r: 0.8745098, g: 0.9019608, b: 0.9137255, a: 1}
   errorColor: {r: 1, g: 0.3443396, b: 0.34828955, a: 1}
