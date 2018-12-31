@@ -27,10 +27,12 @@ public class FadeInOut : MonoBehaviour {
         get { return _canvasGroup.alpha == 1 ? true : false; }
     }
 
-    private void Start() {
+    private void Awake() {
         _animator = GetComponent<Animator>();
         _canvasGroup = GetComponent<CanvasGroup>();
+    }
 
+    private void Start() {
         if (_animator == null) {
             LogManager.instance.AddLog("[FadeInOut.cs] Animator not found!", Log.Type.Error);
         }

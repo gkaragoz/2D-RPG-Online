@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.UI;
+using UnityEngine.Events;
 
 /// <summary>
 /// This class is responsible to handle any logs.
@@ -20,28 +22,81 @@ public class LogManager : Menu {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
     }
 
     #endregion
 
-    [Header("Initializers")]
+    public delegate void IsLimitedLogCountChanged(bool status);
+    public event IsLimitedLogCountChanged onIsLimitedLogCountChanged;
+
+    public delegate void MaxLogsCountChanged(int count);
+    public event MaxLogsCountChanged onMaxLogsCountChanged;
+
+    [System.Serializable]
+    public class UISettings {
+        public Slider sliderMaxLogsCount;
+        public TextMeshProUGUI txtLimitLogsCount;
+        public TextMeshProUGUI txtMaxLogsCountHandle;
+        public Toggle toggleIsLogCountLimited;
+
+        public void Initialize(int count, bool status) {
+            SetSliderMaxLogsCount(count);
+            SetToggleMaxLogsCount(status);
+        }
+
+        public void SetSliderMaxLogsCount(int count) {
+            sliderMaxLogsCount.value = count;
+
+            txtMaxLogsCountHandle.text = count.ToString();
+            txtLimitLogsCount.text = "Limit Logs (" + count + ")";
+        }
+
+        public void SetToggleMaxLogsCount(bool status) {
+            toggleIsLogCountLimited.isOn = status;
+        }
+    }
+
     public GameObject chatContainer;
     public GameObject logTextPrefab;
-    public int maxLogsCount = 25;
-    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
     public FadeInOut fadeInOut;
+
+    [Header("UI Initialization")]
+    [SerializeField]
+    private UISettings _UISettings;
+
+    [Header("Settings")]
+    [SerializeField]
+    private bool _writeLogsToFile = false;
+
+    [SerializeField]
+    private bool _isTracing = false;
+
+    [SerializeField]
+    private bool _isLimitedLogCount = false;
+
+    [SerializeField]
+    private int _maxLogsCount = 25;
+
+    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
 
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private List<Log> _allLogs = new List<Log>();
-
-    private const string ON_APP_START_LOG = "<<<<<NEW SESSION>>>>>";
-    private const string ON_APP_QUIT_LOG = "<<<<<END SESSION>>>>>\n";
+    private int _lastHidedLogIndex = 0;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Queue<Log> _allLogs = new Queue<Log>();
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Queue<Log> _hidedLogs = new Queue<Log>();
 
     private void Start() {
-        WriteToLogFile(SessionWatcher.instance.Introduce());
-        WriteToLogFile(ON_APP_START_LOG);
+        onIsLimitedLogCountChanged += _UISettings.SetToggleMaxLogsCount;
+        onMaxLogsCountChanged += _UISettings.SetSliderMaxLogsCount;
+
+        _UISettings.Initialize(_maxLogsCount, _isLimitedLogCount);
 
         Application.logMessageReceived += LogCallback;
 
@@ -84,26 +139,76 @@ public class LogManager : Menu {
         }
     }
 
-    public void AddLog(string text, Log.Type logType) {
-        if (_allLogs.Count >= maxLogsCount) {
-            Destroy(_allLogs[0].UI.gameObject);
-            _allLogs.Remove(_allLogs[0]);
+    public void AddLog(string message, Log.Type logType, bool appendToLogFile = true) {
+        Log log = CreateLogObject(message, logType);
+        _allLogs.Enqueue(log);
+
+        CheckLogLimits();
+
+        if (appendToLogFile && _writeLogsToFile) {
+            WriteToLogFile(log);
         }
 
-        Log log = new Log();
-        log.message = text;
+        ShowPanel();
+    }
 
+    public void SetLimitedLog(bool status) {
+        _isLimitedLogCount = status;
+
+        CheckLogLimits();
+
+        onIsLimitedLogCountChanged.Invoke(_isLimitedLogCount);
+    }
+
+    public void SetMaxLogsCount(float count) {
+        _maxLogsCount = (int)count;
+
+        CheckLogLimits();
+
+        onMaxLogsCountChanged.Invoke(_maxLogsCount);
+    }
+
+    private void CheckLogLimits() {
+        if (_isLimitedLogCount) {
+            if (_maxLogsCount < _allLogs.Count) {
+                HideLogs();
+            } else {
+                ShowLogs();
+            }
+        } else {
+            ShowLogs();
+        }
+    }
+
+    private void ShowLogs() {
+        for (int ii = 0; ii < _hidedLogs.Count; ii++) {
+            Log log = _hidedLogs.Dequeue();
+            log.Show();
+
+            _allLogs.Enqueue(log);
+        }
+    }
+
+    private void HideLogs() {
+        while (_maxLogsCount < _allLogs.Count) {
+            Log log = _allLogs.Dequeue();
+            log.Hide();
+
+            _hidedLogs.Enqueue(log);
+        }
+    }
+
+    private Log CreateLogObject(string message, Log.Type logType) {
         string colorStringHEX = "#" + ColorUtility.ToHtmlStringRGBA(GetLogColor(logType));
 
-        GameObject textUIObject = Instantiate(logTextPrefab, chatContainer.transform);
-        log.UI = textUIObject.GetComponent<TextMeshProUGUI>();
-        log.dateTime = DateTime.Now;
-        log.UI.text = string.Format("[{0}] <color={1}>{2}</color>", log.dateTime.ToLongTimeString(), colorStringHEX, log.message);
-        _allLogs.Add(log);
+        Log log = Instantiate(logTextPrefab, chatContainer.transform).GetComponent<Log>();
+        log.Init(
+            message,
+            DateTime.Now,
+            colorStringHEX,
+            logType);
 
-        WriteToLogFile(log);
-
-        ShowPanel();
+        return log;
     }
 
     private void ShowPanel() {
@@ -157,15 +262,23 @@ public class LogManager : Menu {
     }
 
     private void WriteToLogFile(Log log) {
-        LogFile.WriteString(log);
-    }
+        string logString = string.Empty;
 
-    private void WriteToLogFile(string message) {
-        LogFile.WriteString(message);
-    }
+        string logMessage = log.GetMessage();
+        string dateTime = log.GetFormattedDateTime();
+        int sessionID = SessionWatcher.instance.SessionID;
+        string tracingString = log.GetTracingString();
 
-    private void OnApplicationQuit() {
-        WriteToLogFile(ON_APP_QUIT_LOG);
+        logString = string.Format("[SESSION:{0}][TIME:{1}][LOG-MESSAGE:\t{2}]",
+                                       sessionID,
+                                       dateTime,
+                                       logMessage);
+
+        if (_isTracing) {
+            logString += "\n\t[TRACING:\n\t" + tracingString + "]";
+        }
+
+        LogFile.WriteString(logString);
     }
 
 }
