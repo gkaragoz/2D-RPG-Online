@@ -145,12 +145,12 @@ namespace ShiftServer.Server.Core
                             world.Clients.TryGetValue(msg.connectionId, out shift);
 
                             if (client.Connected)
-                                dataHandler.HandleMessage(msg.data, shift);
+                                dataHandler.HandleMessage(msg.data, shift, log);
 
                             break;
                         case Telepathy.EventType.Disconnected:
                             world.Clients.Remove(msg.connectionId);
-                            log.Info($"ClientNO:{msg.connectionId} Disconnected from: " + client.Client.RemoteEndPoint.ToString());
+                            log.Info($"ClientNO: {msg.connectionId} Disconnected");
                             break;
                         default:
                             break;

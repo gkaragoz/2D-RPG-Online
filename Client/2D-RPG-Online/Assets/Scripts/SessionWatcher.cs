@@ -72,7 +72,6 @@ public class SessionWatcher : MonoBehaviour {
         _session.deviceModel = SystemInfo.deviceModel;
         _session.deviceName = SystemInfo.deviceName;
         _session.deviceType = SystemInfo.deviceType;
-
         _session.graphicsDeviceID = SystemInfo.graphicsDeviceID;
         _session.graphicsDeviceName = SystemInfo.graphicsDeviceName;
         _session.graphicsDeviceType = SystemInfo.graphicsDeviceType;

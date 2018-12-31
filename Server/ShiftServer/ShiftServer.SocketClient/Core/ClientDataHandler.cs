@@ -33,10 +33,10 @@ namespace ShiftServer.Client.Core
 
             switch (data.Basevtid)
             {
-                case MSBaseEventId.MsPlayerEvent:
+                case MSBaseEventId.PlayerEvent:
                     ClientEventInvoker.Fire(playerEvents, data);
                     break;
-                case MSBaseEventId.MsServerEvent:
+                case MSBaseEventId.ServerEvent:
                     ClientEventInvoker.Fire(clientEvents, data);
                     break;
                 default:
