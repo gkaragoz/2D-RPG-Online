@@ -2443,15 +2443,15 @@ MonoBehaviour:
     type: 2}
   fadeInOut: {fileID: 341669195}
   isTracing: 0
-  limitLogsCount: 0
-  maxLogsCount: 100
+  isLogCountLimited: 1
+  maxLogsCount: 15
   infoColor: {r: 0.8745098, g: 0.9019608, b: 0.9137255, a: 1}
   errorColor: {r: 1, g: 0.3443396, b: 0.34828955, a: 1}
   lootColor: {r: 0.63529414, g: 0.60784316, b: 0.99607843, a: 1}
   interactColor: {r: 0.45490196, g: 0.7254902, b: 1, a: 1}
   dropColor: {r: 0.98039216, g: 0.69411767, b: 0.627451, a: 1}
   expColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
-  _allLogs: []
+  _lastHidedLogIndex: 0
 --- !u!4 &1971027716
 Transform:
   m_ObjectHideFlags: 0

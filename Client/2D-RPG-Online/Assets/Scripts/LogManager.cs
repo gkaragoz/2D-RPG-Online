@@ -30,14 +30,20 @@ public class LogManager : Menu {
 
     [Header("Settings")]
     public bool isTracing = false;
-    public bool limitLogsCount = false;
+    public bool isLogCountLimited = false;
     public int maxLogsCount = 25;
     public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
 
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private List<Log> _allLogs = new List<Log>();
+    private int _lastHidedLogIndex = 0;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Queue<Log> _allLogs = new Queue<Log>();
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Queue<Log> _hidedLogs = new Queue<Log>();
 
     private void Start() {
         Application.logMessageReceived += LogCallback;
@@ -83,11 +89,10 @@ public class LogManager : Menu {
 
     public void AddLog(string message, Log.Type logType, bool appendToLogFile = true) {
         Log log = CreateLogObject(message, logType);
-        _allLogs.Add(log);
+        _allLogs.Enqueue(log);
 
-        if (limitLogsCount) {
-            CheckLogLimits();
-        }
+        CheckLogLimits();
+
         if (appendToLogFile) {
             WriteToLogFile(log);
         }
@@ -96,9 +101,20 @@ public class LogManager : Menu {
     }
 
     private void CheckLogLimits() {
-        if (_allLogs.Count >= maxLogsCount) {
-            _allLogs[0].DestroyItself();
-            _allLogs.Remove(_allLogs[0]);
+        if (isLogCountLimited) {
+            while (maxLogsCount < _allLogs.Count) {
+                Log log = _allLogs.Dequeue();
+                log.Hide();
+
+                _hidedLogs.Enqueue(log);
+            }
+        } else {
+            for (int ii = 0; ii < _hidedLogs.Count; ii++) {
+                Log log = _hidedLogs.Dequeue();
+                log.Show();
+
+                _allLogs.Enqueue(log);
+            }
         }
     }
 

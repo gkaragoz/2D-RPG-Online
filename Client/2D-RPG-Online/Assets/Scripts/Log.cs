@@ -5,7 +5,7 @@ using UnityEngine;
 /// <summary>
 /// This class is responsible to hold simple Log data.
 /// </summary>
-public class Log : MonoBehaviour {
+public class Log : Menu {
 
     public enum Type {
         Empty,
@@ -64,10 +64,6 @@ public class Log : MonoBehaviour {
 
     public string GetTracingString() {
         return _tracingString;
-    }
-
-    public void DestroyItself() {
-        Destroy(this.gameObject);
     }
 
 }
