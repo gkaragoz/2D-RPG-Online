@@ -70,7 +70,7 @@ public class LoginManager : Menu {
     }
 
     private void Update() {
-        if (NetworkManager.mss.IsConnected()) {
+        if (NetworkManager.mss.IsConnected) {
             _UISettings.ActivateInputFields();
         } else {
             _UISettings.DisableInputFields();
@@ -81,12 +81,11 @@ public class LoginManager : Menu {
         if (_UISettings.IsUsernameValid && _UISettings.IsPasswordValid) {
             LogManager.instance.AddLog(JOIN, Log.Type.Server);
 
-            Account account = new Account();
+            AccountData account = new AccountData();
             account.Username = _UISettings.GetUsername();
             account.Password = _UISettings.GetPassword();
 
             clientInfo = new ClientData();
-            clientInfo.Loginname = "Test";
             clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
             clientInfo.MachineName = SystemInfo.deviceName;
             clientInfo.Ver = "0.1";

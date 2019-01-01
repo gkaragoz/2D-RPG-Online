@@ -85,7 +85,7 @@ public class NetworkManager : MonoBehaviour {
 
     private void OnApplicationQuit() {
         if (!OfflineMode) {
-            if (mss.IsConnected()) {
+            if (mss.IsConnected) {
                 mss.Disconnect();
             }
         }
