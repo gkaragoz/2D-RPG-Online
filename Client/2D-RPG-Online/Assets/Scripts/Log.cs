@@ -14,7 +14,8 @@ public class Log : Menu {
         Loot,
         Interact,
         Drop,
-        Exp
+        Exp,
+        Server
     }
 
     [Header("Debug")]

@@ -79,7 +79,7 @@ public class LogManager : Menu {
     [SerializeField]
     private int _maxLogsCount = 25;
 
-    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
+    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor, serverColor;
 
     [Header("Debug")]
     [SerializeField]
@@ -237,6 +237,9 @@ public class LogManager : Menu {
             break;
             case Log.Type.Drop:
             color = dropColor;
+            break;
+            case Log.Type.Server:
+            color = serverColor;
             break;
         }
 
