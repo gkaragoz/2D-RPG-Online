@@ -24,13 +24,9 @@ namespace ShiftServer.SocketTest
             ConfigData _cfg = new ConfigData();
             _cfg.Host = "127.0.0.1";
             _cfg.Port = 2000;
-
             networkClient.Connect(_cfg);
-
             //networkClient.AddEventListener(MSServerEvent.c, funcs.OnConnected);
             //networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
-
-
 
             while (true)
             {
