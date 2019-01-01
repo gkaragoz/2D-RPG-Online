@@ -25,6 +25,7 @@ namespace ShiftServer.Server.Worlds
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
+        public SafeDictionary<int, IRoom> Rooms { get; set; }
 
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
@@ -82,7 +83,7 @@ namespace ShiftServer.Server.Worlds
                 Player player = new Player();
                 player.OwnerConnectionId = shift.connectionId;
                 player.ObjectId = Interlocked.Increment(ref ObjectCounter);
-                player.Name = data.ClientInfo.Loginname;
+                player.Name = data.Account.Username;
                 player.MaxHP = 100;
                 player.CurrentHP = 100;
                 player.Position = new Vector3(0, 0, 0);

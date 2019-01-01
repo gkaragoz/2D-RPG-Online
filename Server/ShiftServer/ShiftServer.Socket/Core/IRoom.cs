@@ -8,7 +8,7 @@ using Telepathy;
 
 namespace ShiftServer.Server.Core
 {
-    interface IRoom
+    public interface IRoom
     {
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
