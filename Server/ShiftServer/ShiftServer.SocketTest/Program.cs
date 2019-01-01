@@ -6,11 +6,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using ShiftServer.Client;
+using ShiftServer.Client.Data.Entities;
+
 namespace ShiftServer.SocketTest
 {
     class Program
     {
-        private static NetworkClient networkClient = null;
+        private static ManaShiftServer networkClient = null;
         public static int pingRequestedTick;
         public static Thread listenerThread;
 
@@ -20,10 +22,15 @@ namespace ShiftServer.SocketTest
 
             TestFunctions funcs = new TestFunctions();
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
-            networkClient = new NetworkClient();
-            networkClient.Connect("localhost", 1337);
-            networkClient.AddEventListener(MSServerEvent.ConnectOk, funcs.OnConnected);
-            networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
+            networkClient = new ManaShiftServer();
+            ConfigData _cfg = new ConfigData();
+            _cfg.Host = "127.0.0.1";
+            _cfg.Port = 141;
+
+            networkClient.Connect(_cfg);
+
+            //networkClient.AddEventListener(MSServerEvent.c, funcs.OnConnected);
+            //networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
 
 
 

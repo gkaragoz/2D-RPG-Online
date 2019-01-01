@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Server.Auth;
+using ShiftServer.Server.Factory.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,9 +14,12 @@ namespace ShiftServer.Server.Core
     public interface IWorld
     {
         Vector3 Scale { get; set; }
+        SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
+        SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
+        void OnAccountLogin(ShiftServerData data, ShiftClient client);
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
-        void OnCreatePlayer(ShiftServerData data, ShiftClient client);
+        void OnPlayerCreate(ShiftServerData data, ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
         void OnObjectCreate(IGameObject gameObject);
         void OnObjectMove(ShiftServerData data, ShiftClient client);

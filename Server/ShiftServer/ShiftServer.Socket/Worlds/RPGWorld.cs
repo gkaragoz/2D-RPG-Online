@@ -22,15 +22,16 @@ namespace ShiftServer.Server.Worlds
         private string Banner = ">>> RPG WORLD <<< \n";
         Vector3 IWorld.Scale { get; set; }
 
-        private SafeDictionary<string, IGameObject> GameObjects { get; set; }
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
+        public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
+        public SafeDictionary<int, IGameObject> GameObjects { get; set; }
 
         public int ObjectCounter = 0;
 
         public RPGWorld()
         {
-            GameObjects = new SafeDictionary<string, IGameObject>();
             Clients = new SafeDictionary<int, ShiftClient>();
+            SocketIdSessionLookup = new SafeDictionary<string, int>();
             log.Info(Banner);
         }
 
@@ -41,39 +42,36 @@ namespace ShiftServer.Server.Worlds
 
         public void OnObjectCreate(IGameObject gameObject)
         {
-
-            GameObjects.Add(gameObject.ObjectId, gameObject);
-
+            GameObjects.Add(Interlocked.Increment(ref ObjectCounter), gameObject);
         }
 
-        public void OnCreatePlayer(ShiftServerData data, ShiftClient shift)
+        public void OnPlayerCreate(ShiftServerData data, ShiftClient shift)
         {
+            string clientSessionId = shift.UserSession.GetSid();
+
             ShiftServerData newData = new ShiftServerData();
             newData.Session = new SessionData
             {
-                Sid = shift.UserSession.GetSid()
+                Sid = clientSessionId
             };
 
-            IGameObject result = null;
 
-            var dupePlayer = GameObjects.TryGetValue(shift.UserSession.GetSid(), out result);
-
+            List<IGameObject> gameObjectList = GameObjects.GetValues();
+            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
             // if already exist in world
-            if (result != null)
+            if (currentPlayer != null)
             {
-                var playerObj = (Player)result;
-                newData.PlayerObject = new PlayerObject
+                newData.SPlayerObject = new PlayerObject
                 {
-                    PClass = playerObj.Class,
-                    CurrentHp = playerObj.CurrentHP,
-                    MaxHp = playerObj.MaxHP,
+                    PClass = currentPlayer.Class,
+                    CurrentHp = currentPlayer.CurrentHP,
+                    MaxHp = currentPlayer.MaxHP,
                     PObject = new sGameObject
                     {
-                        Guid = playerObj.ObjectId,
-                        
-                        PosX = playerObj.Position.X,
-                        PosY = playerObj.Position.Y,
-                        PosZ = playerObj.Position.Z
+                        Oid = currentPlayer.ObjectId,                      
+                        PosX = currentPlayer.Position.X,
+                        PosY = currentPlayer.Position.Y,
+                        PosZ = currentPlayer.Position.Z
                     }
                 };
 
@@ -81,9 +79,9 @@ namespace ShiftServer.Server.Worlds
             else
             {
                 Player player = new Player();
-                player.OwnerClientId = shift.connectionId;
-                player.ObjectId = shift.UserSession.GetSid();
-                player.Name = data.ClData.Loginname;
+                player.OwnerConnectionId = shift.connectionId;
+                player.ObjectId = Interlocked.Increment(ref ObjectCounter);
+                player.Name = data.ClientInfo.Loginname;
                 player.MaxHP = 100;
                 player.CurrentHP = 100;
                 player.Position = new Vector3(0, 0, 0);
@@ -92,14 +90,15 @@ namespace ShiftServer.Server.Worlds
 
                 this.OnObjectCreate(player);
                 log.Info($"[CreatePlayer] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-                newData.PlayerObject = new PlayerObject
+
+                newData.SPlayerObject = new PlayerObject
                 {
                     CurrentHp = player.CurrentHP,
                     MaxHp = player.MaxHP,
                     PClass = player.Class,
                     PObject = new sGameObject
                     {
-                        Guid = player.ObjectId,
+                        Oid = player.ObjectId,
                         
                         PosX = player.Position.X,
                         PosY = player.Position.Y,
@@ -110,32 +109,12 @@ namespace ShiftServer.Server.Worlds
 
 
 
-            shift.SendPacket(MSPlayerEvent.OnCreatePlayer, newData);
+            shift.SendPacket(MSPlayerEvent.CreatePlayer, newData);
         }
         public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
 
-            shift.UserSession.SetSid(data);
-            //Checking the client has only one player character under control
-
-            //check login data
-            if (data.ClData == null)
-            {
-                ShiftServerData errorData = new ShiftServerData();
-                errorData.ErrorReason = ShiftServerError.WrongCredentials;
-                log.Warn($"[Failed PlayerJoin] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-                shift.SendPacket(MSServerEvent.JoinRequestFailed, errorData);
-                return;
-            }
-
-            log.Info($"[PlayerJoin] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-
-            ShiftServerData newData = new ShiftServerData();
-            newData.Session = new SessionData
-            {
-                Sid = shift.UserSession.GetSid()
-            };
-            shift.SendPacket(MSServerEvent.JoinRequestSuccess, newData);
+          
 
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
@@ -151,24 +130,83 @@ namespace ShiftServer.Server.Worlds
         {
             GameObjects.Remove(gameObject.ObjectId);
         }
-
         public void OnWorldUpdate()
         {
-            
+            IGameObject gObject = null;
+            for (int i = 0; i < ObjectCounter; i++)
+            {
+                GameObjects.TryGetValue(i, out gObject);
+                IGameInput gInput = null;
+                Player pInput = null;
+                for (int kk = 0; kk < gObject.GameInputs.Count; kk++)
+                {
+                    gObject.GameInputs.TryDequeue(out gInput);
+                    //pInput = (PlayerInput)gInput;
+                }
+            }
         }
 
         public void SendWorldState()
         {
-            var clients = Clients.GetValues();
-            foreach (var client in clients)
+            //foreach (var client in clients)
+            //{
+            //    if (client.UserSession == null)
+            //        continue;
+
+            //    ShiftServerData data = new ShiftServerData();
+
+            //    client.SendPacket(MSPlayerEvent.WorldUpdate, data);
+            //}
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <returns>
+        ///
+        /// data.Session;
+        /// data.AccountData;
+        /// </returns>
+        /// <param name="data"></param>
+        /// <param name="shift"></param>
+        public void OnAccountLogin(ShiftServerData data, ShiftClient shift)
+        {
+            if (data.ClientInfo == null)
             {
-                if (client.UserSession == null)
-                    continue;
-
-                ShiftServerData data = new ShiftServerData();
-
-                client.SendPacket(MSServerEvent.WorldUpdate, data);
+                ShiftServerData errorData = new ShiftServerData();
+                errorData.ErrorReason = ShiftServerError.WrongClientData;
+                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                shift.SendPacket(MSServerEvent.LoginFailed, errorData);
+                return;
             }
+
+          
+            //check account
+            string accUsername = data.Account.Username;
+            string accPassword = data.Account.Password;
+            //QUERY TO SOMEWHERE ELSE
+
+            //Checking the client has only one player character under control
+            shift.UserSession.SetSid(data);
+            string sessionId = shift.UserSession.GetSid();
+            data.Session = new SessionData();
+            data.Session.Sid = sessionId;
+            //check login data
+
+            data.Account = null;
+            data.AccountData = new CommonAccountData();
+            data.AccountData.Username = accUsername;
+            data.AccountData.VirtualMoney = 100;
+            data.AccountData.VirtualSpecialMoney = 100;
+            data.RoomData = new RoomData();
+            
+
+
+            shift.SendPacket(MSServerEvent.Login, data);
+
+            SocketIdSessionLookup.Add(sessionId, shift.connectionId);
+            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+
         }
     }
 }

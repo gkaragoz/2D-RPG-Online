@@ -13,12 +13,12 @@ namespace ShiftServer.Server.Core
 
         public void SetSid(ShiftServerData data)
         {
-            if (data.ClData == null)
+            if (data.ClientInfo == null)
                 return;
 
             string guid = Guid.NewGuid().ToString();
-            string machineName = data.ClData.MachineName;
-            string machineID = data.ClData.MachineId;
+            string machineName = data.ClientInfo.MachineName;
+            string machineID = data.ClientInfo.MachineId;
             string salt = guid + machineName + machineID;
             sid = Crypto.MD5Hash(salt);
         }
