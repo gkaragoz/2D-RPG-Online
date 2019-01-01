@@ -174,14 +174,31 @@ namespace ShiftServer.Server.Core
 
                             break;
                         case Telepathy.EventType.Disconnected:
-                            ShiftClient dcedClient = null;
-                            world.Clients.TryGetValue(msg.connectionId, out dcedClient);
-                            if (dcedClient != null)
+                            try
                             {
-                                world.Clients.Remove(dcedClient.connectionId);
-                                world.SocketIdSessionLookup.Remove(dcedClient.UserSession.GetSid());
+                                ShiftClient dcedClient = null;
+                                string userSessionId = string.Empty;
+                                world.Clients.TryGetValue(msg.connectionId, out dcedClient);
+
+                                if (dcedClient.UserSession != null)
+                                {
+                                    userSessionId = dcedClient.UserSession.GetSid();
+                                    if (!string.IsNullOrEmpty(userSessionId))
+                                    {
+                                        world.SocketIdSessionLookup.Remove(userSessionId);
+                                    }
+                                }
+                                if (dcedClient != null)
+                                {
+                                    world.Clients.Remove(dcedClient.connectionId);
+                               
+                                }
+                                log.Info($"ClientNO: {msg.connectionId} Disconnected");
                             }
-                            log.Info($"ClientNO: {msg.connectionId} Disconnected");
+                            catch (Exception err)
+                            {
+                                log.Error($"ClientNO: {msg.connectionId} Exception throwed when trying to disconnect", err);
+                            }
                             break;
                         default:
                             break;
