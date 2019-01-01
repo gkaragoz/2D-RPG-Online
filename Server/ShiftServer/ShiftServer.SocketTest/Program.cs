@@ -13,8 +13,6 @@ namespace ShiftServer.SocketTest
     class Program
     {
         private static ManaShiftServer networkClient = null;
-        public static int pingRequestedTick;
-        public static Thread listenerThread;
 
         static void Main(string[] args)
         {
@@ -25,7 +23,7 @@ namespace ShiftServer.SocketTest
             networkClient = new ManaShiftServer();
             ConfigData _cfg = new ConfigData();
             _cfg.Host = "127.0.0.1";
-            _cfg.Port = 141;
+            _cfg.Port = 2000;
 
             networkClient.Connect(_cfg);
 

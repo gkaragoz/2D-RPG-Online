@@ -179,3 +179,180 @@ All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
  supportsVibration: False
  systemMemorySize: 8112
  unsupportedIdentifier: n/a
+[SESSION:0][TIME:1/1/2019 06:01:48][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	
+All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
+ batteryLevel: 1
+ batteryStatus: Full
+ deviceUniqueIdentifier: b80a85c7b46a316a61332d599060db6045568064
+ deviceModel: ABRA A7 V6.3 (MONSTER)
+ deviceName: DESKTOP-E44FBPI
+ deviceType: Desktop
+ graphicsDeviceID: 5019
+ graphicsDeviceName: NVIDIA GeForce GTX 960M
+ graphicsDeviceType: Direct3D11
+ graphicsDeviceVendor: NVIDIA
+ graphicsDeviceVendorID: 4318
+ graphicsDeviceVersion: Direct3D 11.0 [level 11.0]
+ graphicsMemorySize: 2017
+ graphicsMultiThreaded: True
+ graphicsShaderLevel: 50
+ graphicsUVStartsAtTop: True
+ maxCubemapSize: 16384
+ maxTextureSize: 16384
+ npotSupport: Full
+ operatingSystem: Windows 10  (10.0.0) 64bit
+ operatingSystemFamily: Windows
+ processorFrequency: 2592
+ processorType: Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz
+ supportedRenderTargetCount: 8
+ supports2DArrayTextures: True
+ supports32bitsIndexBuffer: True
+ supports3DRenderTextures: True
+ supports3DTextures: True
+ supportsAccelerometer: False
+ supportsAsyncCompute: False
+ supportsAsyncGPUReadback: True
+ supportsAudio: True
+ supportsComputeShaders: True
+ supportsCubemapArrayTextures: True
+ supportsGPUFence: False
+ supportsGyroscope: False
+ supportsHardwareQuadTopology: False
+ supportsImageEffects: True
+ supportsInstancing: True
+ supportsLocationService: False
+ supportsMipStreaming: True
+ supportsMotionVectors: True
+ supportsMultisampleAutoResolve: False
+ supportsMultisampledTextures: 1
+ supportsRawShadowDepthSampling: True
+ supportsRenderToCubemap: True
+ supportsMultisampledTextures: 1
+ supportsShadows: True
+ supportsSparseTextures: True
+ supportsTextureWrapMirrorOnce: 1
+ supportsVibration: False
+ systemMemorySize: 8112
+ unsupportedIdentifier: n/a
+ usesReversedZBuffer: True]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press TAB to toggle Log Panel.]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press 1 to show Info message.]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press 2 to show Error message.]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press 3 to show Loot message.]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press 4 to show Interact message.]
+[SESSION:1][TIME:1/1/2019 06:01:50][LOG-MESSAGE:	Press 5 to show Drop message.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:53][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:54][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:55][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:56][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:01:56][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:01:56][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:01:56][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:03][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:03][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:03][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:04][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:05][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:06][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:22][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:23][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:24][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:24][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:24][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:28][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:29][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example interact log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example info log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example error log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example loot log.]
+[SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example drop log.]
+[SESSION:1][TIME:1/1/2019 06:04:39][LOG-MESSAGE:	<<<<<END SESSION>>>>>]

@@ -141,25 +141,35 @@ namespace ShiftServer.Server.Core
 
                             world.Clients.TryGetValue(msg.connectionId, out shift);
                             int registeredSocketId = 0;
-                            if (world.SocketIdSessionLookup.TryGetValue(shift.UserSession.GetSid(), out registeredSocketId))
+                            string sessionId = shift.UserSession.GetSid();
+                            if (sessionId != null)
                             {
-                                if (registeredSocketId == msg.connectionId)
+                                if (world.SocketIdSessionLookup.TryGetValue(sessionId, out registeredSocketId))
                                 {
-                                    dataHandler.HandleMessage(msg.data, shift, log);
+                                    if (registeredSocketId == msg.connectionId)
+                                    {
+                                        dataHandler.HandleMessage(msg.data, shift, log);
 
+                                    }
+                                    else
+                                    {
+                                        //possible attack vector
+                                        client.Close();
+                                    }
                                 }
                                 else
                                 {
-                                    //possible attack vector
-                                    client.Close();
+                                    //RESTRICTED
+                                    dataHandler.HandleMessage(msg.data, shift, log);
+
                                 }
                             }
                             else
                             {
-                                //RESTRICTED
                                 dataHandler.HandleMessage(msg.data, shift, log);
 
                             }
+
 
 
                             break;
