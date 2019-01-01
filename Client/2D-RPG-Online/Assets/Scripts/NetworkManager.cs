@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UnityEngine;
+﻿using UnityEngine;
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
+using System;
 
 public class NetworkManager : MonoBehaviour {
     #region Singleton
@@ -33,45 +28,63 @@ public class NetworkManager : MonoBehaviour {
     public static ManaShiftServer mss;
 
     [SerializeField]
-    private string _hostName = "192.168.1.2";
+    private string _hostName = "127.0.0.0";
 
     [SerializeField]
     private int _port = 1337;
 
     [SerializeField]
-    private bool _isOffline = false;
+    private bool _offlineMode = false;
+
+    private ConfigData _cfg;
+
+    private const string CONNECT = "Trying connect to the server... ";
+    private const string ON_CONNECTION_SUCCESS = "Connection success!";
+    private const string ON_CONNECTION_FAILED = "Connection failed!";
+    private const string ON_CONNECTION_LOST = "Connection lost!";
 
     public bool IsOffline {
         get {
-            return _isOffline;
-        }
-
-        private set {
-            _isOffline = value;
+            return _offlineMode;
         }
     }
 
     private void Start() {
         if (!IsOffline) {
             mss = new ManaShiftServer();
-            //mss.AddEventListener(MSServerEvent.Connection, this.OnConnected);
-            //mss.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
+            mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
+            mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
+            mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
 
-            ConfigData cfg = new ConfigData();
-            cfg.Host = _hostName;
-            cfg.Port = _port;
+            _cfg = new ConfigData();
+            _cfg.Host = _hostName;
+            _cfg.Port = _port;
 
-            mss.Connect(cfg);
+            LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
+            mss.Connect(_cfg);
         }
     }
 
     private void Update() {
-        //client.Listen();
+        if (mss != null) {
+            mss.Listen();
+        }
+    }
+
+    private void OnConnectionSuccess(ShiftServerData obj) {
+        LogManager.instance.AddLog(ON_CONNECTION_SUCCESS, Log.Type.Server);
+    }
+
+    private void OnConnectionFailed(ShiftServerData obj) {
+        LogManager.instance.AddLog(ON_CONNECTION_FAILED, Log.Type.Server);
+    }
+
+    private void OnConnectionLost(ShiftServerData obj) {
+        LogManager.instance.AddLog(ON_CONNECTION_LOST, Log.Type.Server);
     }
 
     private void OnApplicationQuit() {
         if (!IsOffline) {
-            // Always disconnect before quitting
             if (mss.IsConnected()) {
                 mss.Disconnect();
             }

@@ -1075,7 +1075,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _hostName: 192.168.1.6
   _port: 2000
-  _isOffline: 1
+  _offlineMode: 0
 --- !u!1 &247381053
 GameObject:
   m_ObjectHideFlags: 0
@@ -10427,6 +10427,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 1563619710}
+  _UISettings:
+    inputFieldUsername: {fileID: 0}
+    inputFieldPassword: {fileID: 0}
 --- !u!4 &1558867905
 Transform:
   m_ObjectHideFlags: 0
@@ -12555,6 +12558,7 @@ MonoBehaviour:
   interactColor: {r: 0.45490196, g: 0.7254902, b: 1, a: 1}
   dropColor: {r: 0.98039216, g: 0.69411767, b: 0.627451, a: 1}
   expColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
+  serverColor: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
   _lastHidedLogIndex: 0
 --- !u!4 &1971027716
 Transform:
