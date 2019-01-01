@@ -104,6 +104,8 @@ public class LoginManager : Menu {
     private void OnLoginSuccess(ShiftServerData data) {
         LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
 
+        this.Hide();
+
         LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
         LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
         LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
