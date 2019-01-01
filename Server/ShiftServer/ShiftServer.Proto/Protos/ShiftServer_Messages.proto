@@ -1,19 +1,24 @@
 ﻿syntax = "proto3";
 
-
 message ShiftServerData {
 
 	MSBaseEventId basevtid = 1;
 	MSServerEvent svevtid = 2;  // Event type
 	MSPlayerEvent plevtid = 3;  // Sub ev type
-	SessionData session = 4; // SessionData
-	ClientData clData = 5; // ClientData
-	repeated sGameObject updatedGameObjects = 6; // GameObjects list
 
-	// interaction message
-	ObjectAction interaction = 7;
-	PlayerObject playerObject = 8;
-	ShiftServerError errorReason = 9;
+	SessionData Session = 4; // SessionData
+	ClientData ClientInfo = 5; // ClientData
+	CommonAccountData AccountData = 6;
+	RoomData RoomData = 7;
+	Account Account = 8;
+
+	repeated sGameObject WorldState = 9; // GameObjects list
+	ObjectAction Interaction = 10;
+
+	PlayerObject sPlayerObject = 11;
+
+	ShiftServerError ErrorReason = 12;
+
 }
 
 /// Control message ID.
@@ -28,41 +33,66 @@ enum MSPlayerEvent
 {
 
 	//Interaction events
-	OnCreatePlayer = 0;
-	OnMove = 1;
-	OnAttack = 2;
-	OnDead = 3;
-	OnUse = 4;
+	WORLD_UPDATE = 0;
+	MOVE = 1;
+	ATTACK = 2;
+	DEAD = 3;
+	USE = 4;
+	CREATE_PLAYER = 5;
 
 };
 
 enum MSServerEvent
 {
-	Invalid = 0;					
-	GameserverSessionRequest = 5;	
-	GameserverSessionEstablished = 6;
-	Diagnostic = 8;					
-	JoinRequest = 9;				
-	JoinRequestSuccess = 10;		
-	JoinRequestFailed= 11;			
-	Stats = 13;						
-	ConnectRequest = 18;			
-	ConnectOK = 19;			
-	ConnectionClosed = 20;			
-	NoConnection = 21;				
-	PingRequest = 22;				
-	WorldUpdate = 23;				
+	LOGIN = 0;	
+	LOGIN_FAILED = 1;
+	PUBLIC_MESSAGE = 2;						
+	ROOM_JOIN = 3;						
+	ROOM_JOIN_FAILED = 4;		
+	CONNECTION = 5;			
+	CONNECTION_FAILED = 6;			
+	CONNECTION_LOST = 7;			
+	PING_REQUEST = 8;				
 }
 enum ShiftServerError
 {
-	OldClientVersion = 0; // Application.version
-	NoSession = 1;		  // Session
-	SocketAbuse = 2;	  // Possible dos to client
-	WrongCredentials = 3; // Wrong login credentials
+	CLIENT_VER_OLD = 0; // Application.version
+	BAD_SESSION = 1;		  // Session
+	WRONG_LOGIN_CREDENTIALS = 2; // Wrong login credentials
+	WRONG_CLIENT_DATA = 3; // Wrong client credentials
+	NO_RESPOND_SERVER = 4; // Connection lost
 
 }
 message SessionData {
 	string sid = 2;
+}
+
+message CommonAccountData {
+	string username = 1;
+	int32 virtualMoney = 2;
+	int32 virtualSpecialMoney = 3;
+}
+
+message RoomData {
+
+	repeated ServerRoom rooms = 1;
+
+}
+
+message ServerRoom {
+
+	int32 roomId = 1;
+	string name = 2;
+	int32 maxUser = 3;
+	int32 currentUser = 4;
+
+}
+
+message Account {
+
+	string username = 1;
+	string password = 2;
+
 }
 
 message ObjectAction {
@@ -77,12 +107,11 @@ message ClientData {
 	string loginname = 2;
 	string machine_name = 3;
 	string machine_id = 4;
-	string guid = 5;
 }
 
 message sGameObject {
 
-	string guid = 1;
+	int32 oid = 1;
 
 	float pos_x = 2;
 	float pos_y = 3;
@@ -90,12 +119,14 @@ message sGameObject {
 
 }
 
+
 message PlayerObject {
 
 	sGameObject pObject = 1;
 	PlayerClass pClass = 2;
 	int32 currentHp = 3;
 	int32 maxHp = 4;
+	repeated PlayerInput playerInputs = 5;
 
 }
 
@@ -108,7 +139,10 @@ enum PlayerClass {
 }
 
 message PlayerInput {
+	
+	float pos_x = 1;
+	float pos_y = 2;
+	float pos_z = 3;
 
-	int32 oid = 1;
 }
 

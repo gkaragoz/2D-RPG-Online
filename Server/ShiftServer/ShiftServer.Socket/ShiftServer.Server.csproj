@@ -57,6 +57,7 @@
     <Compile Include="Auth\ShiftClient.cs" />
     <Compile Include="Core\IClient.cs" />
     <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Core\IGameInput.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Core\IWorld.cs" />
     <Compile Include="Core\ServerDataHandler.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Core\ServerProvider.cs" />
     <Compile Include="Core\Session.cs" />
     <Compile Include="Factory\Entities\Player.cs" />
+    <Compile Include="Factory\Entities\PlayerInput.cs" />
     <Compile Include="Factory\Movement\MotionMaster.cs" />
     <Compile Include="Helper\ConsoleUI.cs" />
     <Compile Include="Helper\TickRate.cs" />
