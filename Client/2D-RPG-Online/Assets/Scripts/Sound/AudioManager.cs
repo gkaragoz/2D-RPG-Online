@@ -31,10 +31,15 @@ public class AudioManager : MonoBehaviour {
 
     #endregion
 
+    [Header("Initialize")]
     /// <summary>
     /// This variable holds all sounds used in the game.
     /// </summary>
     public Sound[] sounds;
+
+    [Header("Settings")]
+    [SerializeField]
+    private bool _playBgMusic = false;
 
     /// <summary>
     /// Initialize, create AudioSource for per sound in the sounds array.
@@ -51,7 +56,9 @@ public class AudioManager : MonoBehaviour {
             sound.source.outputAudioMixerGroup = sound.mixerGroup;
         }
 
-        Play("Desecrated Temple");
+        if (_playBgMusic) {
+           Play("Desecrated Temple");
+        }
     }
 
     /// <summary>

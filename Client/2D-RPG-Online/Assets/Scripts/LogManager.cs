@@ -79,7 +79,7 @@ public class LogManager : Menu {
     [SerializeField]
     private int _maxLogsCount = 25;
 
-    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor;
+    public Color infoColor, errorColor, lootColor, interactColor, dropColor, expColor, serverColor;
 
     [Header("Debug")]
     [SerializeField]
@@ -99,13 +99,6 @@ public class LogManager : Menu {
         _UISettings.Initialize(_maxLogsCount, _isLimitedLogCount);
 
         Application.logMessageReceived += LogCallback;
-
-        AddLog("Press TAB to toggle Log Panel.", Log.Type.Info);
-        AddLog("Press 1 to show Info message.", Log.Type.Info);
-        AddLog("Press 2 to show Error message.", Log.Type.Info);
-        AddLog("Press 3 to show Loot message.", Log.Type.Info);
-        AddLog("Press 4 to show Interact message.", Log.Type.Info);
-        AddLog("Press 5 to show Drop message.", Log.Type.Info);
     }
 
     private void Update() {
@@ -199,7 +192,7 @@ public class LogManager : Menu {
     }
 
     private Log CreateLogObject(string message, Log.Type logType) {
-        string colorStringHEX = "#" + ColorUtility.ToHtmlStringRGBA(GetLogColor(logType));
+        string colorStringHEX = "#" + ColorUtility.ToHtmlStringRGB(GetLogColor(logType));
 
         Log log = Instantiate(logTextPrefab, chatContainer.transform).GetComponent<Log>();
         log.Init(
@@ -237,6 +230,9 @@ public class LogManager : Menu {
             break;
             case Log.Type.Drop:
             color = dropColor;
+            break;
+            case Log.Type.Server:
+            color = serverColor;
             break;
         }
 
