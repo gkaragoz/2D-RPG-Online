@@ -19,6 +19,9 @@ namespace ShiftServer.Client
     {
         private static ManaShiftServer _mss = null;
         private static GameProvider gameProvider = null;
+        public bool IsConnected { get => gameProvider.client.Connected; }
+
+        public bool IsConnecting{ get => gameProvider.client.Connecting; }
 
         /// <summary>
         /// Constructor method of game client object
@@ -37,17 +40,7 @@ namespace ShiftServer.Client
         public void Connect(ConfigData cfg)
         {
             gameProvider.Connect(cfg.Host, cfg.Port);
-        }
-
-        /// <summary>
-        /// Connect to tcp socket
-        /// </summary>
-        /// <param name="client">client object</param>
-        /// <returns></returns>
-        public bool IsConnected()
-        {
-            return gameProvider.IsConnected();
-        }
+        }   
         
         /// <summary>
         /// Get Room List
