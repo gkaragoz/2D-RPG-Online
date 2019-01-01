@@ -87,13 +87,6 @@
             <param name="client">client object</param>
             <returns></returns>
         </member>
-        <member name="M:ShiftServer.Client.ManaShiftServer.IsConnected">
-            <summary>
-            Connect to tcp socket
-            </summary>
-            <param name="client">client object</param>
-            <returns></returns>
-        </member>
         <member name="M:ShiftServer.Client.ManaShiftServer.GetRoomList">
             <summary>
             Get Room List
