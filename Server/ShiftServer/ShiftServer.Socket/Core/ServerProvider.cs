@@ -116,18 +116,15 @@ namespace ShiftServer.Server.Core
                         case Telepathy.EventType.Connected:
                             try
                             {
-
-                                ShiftServerData data = new ShiftServerData();
-                                data.Basevtid = MSBaseEventId.ServerEvent;
-                                data.Svevtid = MSServerEvent.ConnectOk;
-
-                                SendDataByConnId(msg.connectionId, data);
-                                world.Clients.Add(msg.connectionId, new ShiftClient
+                                shift = new ShiftClient
                                 {
                                     connectionId = msg.connectionId,
                                     Client = client,
+                                    IsJoinedToWorld = false,
                                     UserSession = new Session()
-                                });
+                                };
+                                //shift.SendPacket(MSServerEvent.Connection, null);
+                                world.Clients.Add(msg.connectionId, shift);
 
                                 log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
                                 break;
@@ -143,13 +140,37 @@ namespace ShiftServer.Server.Core
                         case Telepathy.EventType.Data:
 
                             world.Clients.TryGetValue(msg.connectionId, out shift);
+                            int registeredSocketId = 0;
+                            if (world.SocketIdSessionLookup.TryGetValue(shift.UserSession.GetSid(), out registeredSocketId))
+                            {
+                                if (registeredSocketId == msg.connectionId)
+                                {
+                                    dataHandler.HandleMessage(msg.data, shift, log);
 
-                            if (client.Connected)
+                                }
+                                else
+                                {
+                                    //possible attack vector
+                                    client.Close();
+                                }
+                            }
+                            else
+                            {
+                                //RESTRICTED
                                 dataHandler.HandleMessage(msg.data, shift, log);
+
+                            }
+
 
                             break;
                         case Telepathy.EventType.Disconnected:
-                            world.Clients.Remove(msg.connectionId);
+                            ShiftClient dcedClient = null;
+                            world.Clients.TryGetValue(msg.connectionId, out dcedClient);
+                            if (dcedClient != null)
+                            {
+                                world.Clients.Remove(dcedClient.connectionId);
+                                world.SocketIdSessionLookup.Remove(dcedClient.UserSession.GetSid());
+                            }
                             log.Info($"ClientNO: {msg.connectionId} Disconnected");
                             break;
                         default:

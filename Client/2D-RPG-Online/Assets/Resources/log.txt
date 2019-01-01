@@ -1,19 +1,144 @@
-[SESSION:2][TIME:31/12/2018 17:46:46][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
-[SESSION:1][TIME:31/12/2018 17:46:47][LOG-MESSAGE:	
+[SESSION:2][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press TAB to toggle Log Panel.]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press 1 to show Info message.]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press 2 to show Error message.]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press 3 to show Loot message.]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press 4 to show Interact message.]
+[SESSION:3][TIME:31/12/2018 12:35:23][LOG-MESSAGE:	Press 5 to show Drop message.]
+[SESSION:3][TIME:31/12/2018 12:35:28][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:28][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:28][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:29][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:30][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:31][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:32][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:33][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:35][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:35][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:35][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:35][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:35][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:36][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:37][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:38][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example drop log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:39][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example error log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:40][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:41][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:42][LOG-MESSAGE:	Example info log.]
+[SESSION:3][TIME:31/12/2018 12:35:42][LOG-MESSAGE:	Example loot log.]
+[SESSION:3][TIME:31/12/2018 12:35:42][LOG-MESSAGE:	Example interact log.]
+[SESSION:3][TIME:31/12/2018 12:35:42][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:3][TIME:31/12/2018 12:36:39][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	
 All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
- batteryLevel: -1
- batteryStatus: Charging
- deviceUniqueIdentifier: 8e34ce8e5f767c32a70c26c8232e75cdaacefe5e
- deviceModel: System Product Name (System manufacturer)
- deviceName: DESKTOP-9IAC3HQ
+ batteryLevel: 1
+ batteryStatus: Full
+ deviceUniqueIdentifier: b80a85c7b46a316a61332d599060db6045568064
+ deviceModel: ABRA A7 V6.3 (MONSTER)
+ deviceName: DESKTOP-E44FBPI
  deviceType: Desktop
- graphicsDeviceID: 6918
- graphicsDeviceName: NVIDIA GeForce GTX 1080 Ti
+ graphicsDeviceID: 5019
+ graphicsDeviceName: NVIDIA GeForce GTX 960M
  graphicsDeviceType: Direct3D11
  graphicsDeviceVendor: NVIDIA
  graphicsDeviceVendorID: 4318
- graphicsDeviceVersion: Direct3D 11.0 [level 11.1]
- graphicsMemorySize: 11127
+ graphicsDeviceVersion: Direct3D 11.0 [level 11.0]
+ graphicsMemorySize: 2017
  graphicsMultiThreaded: True
  graphicsShaderLevel: 50
  graphicsUVStartsAtTop: True
@@ -22,8 +147,8 @@ All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
  npotSupport: Full
  operatingSystem: Windows 10  (10.0.0) 64bit
  operatingSystemFamily: Windows
- processorFrequency: 3696
- processorType: Intel(R) Core(TM) i7-8700K CPU @ 3.70GHz
+ processorFrequency: 2592
+ processorType: Intel(R) Core(TM) i7-6700HQ CPU @ 2.60GHz
  supportedRenderTargetCount: 8
  supports2DArrayTextures: True
  supports32bitsIndexBuffer: True
@@ -52,5 +177,20 @@ All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
  supportsSparseTextures: True
  supportsTextureWrapMirrorOnce: 1
  supportsVibration: False
- systemMemorySize: 16318
+ systemMemorySize: 8112
  unsupportedIdentifier: n/a
+ usesReversedZBuffer: True]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press TAB to toggle Log Panel.]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press 1 to show Info message.]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press 2 to show Error message.]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press 3 to show Loot message.]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press 4 to show Interact message.]
+[SESSION:1][TIME:31/12/2018 12:36:41][LOG-MESSAGE:	Press 5 to show Drop message.]
+[SESSION:1][TIME:31/12/2018 12:36:42][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:1][TIME:31/12/2018 14:36:53][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press TAB to toggle Log Panel.]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press 1 to show Info message.]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press 2 to show Error message.]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press 3 to show Loot message.]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press 4 to show Interact message.]
+[SESSION:2][TIME:31/12/2018 14:36:54][LOG-MESSAGE:	Press 5 to show Drop message.]

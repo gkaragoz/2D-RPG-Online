@@ -24,9 +24,12 @@ namespace ShiftServer.Server
 
             serverProvider = new ServerProvider(world);
             serverProvider.AddServerEventListener(MSServerEvent.PingRequest, serverProvider.OnPing);
-            serverProvider.AddServerEventListener(MSServerEvent.JoinRequest, world.OnPlayerJoin);
-            serverProvider.AddServerEventListener(MSPlayerEvent.OnUse, world.OnObjectUse);
-            serverProvider.AddServerEventListener(MSPlayerEvent.OnCreatePlayer, world.OnCreatePlayer);
+
+            serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
+            serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, world.OnPlayerJoin);
+
+            serverProvider.AddServerEventListener(MSPlayerEvent.Use, world.OnObjectUse);
+            serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, world.OnPlayerCreate);
 
             serverProvider.Listen(tickrate : 15, port : 2000);
 

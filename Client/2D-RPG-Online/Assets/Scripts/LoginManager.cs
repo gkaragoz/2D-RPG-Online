@@ -83,7 +83,7 @@ public class LoginManager : Menu
 
         ShiftServerData newData = new ShiftServerData();
         newData.Session = data.Session;
-
+        
       
         newData.ClData = clientInfo;
 
@@ -92,6 +92,8 @@ public class LoginManager : Menu
 
     public void OnPlayerCreate(ShiftServerData data)
     {
+
+
         Debug.Log("OnPlayerCreate event triggered");
     }
     public void SendJoinPacket()
