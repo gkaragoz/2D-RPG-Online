@@ -62,6 +62,7 @@
     <Compile Include="Core\IPlayerGroup.cs" />
     <Compile Include="Core\IRoom.cs" />
     <Compile Include="Core\IWorld.cs" />
+    <Compile Include="Core\RoomProvider.cs" />
     <Compile Include="Core\ServerDataHandler.cs" />
     <Compile Include="Core\ServerEventCallback.cs" />
     <Compile Include="Core\ServerProvider.cs" />

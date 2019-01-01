@@ -10,7 +10,7 @@ message ShiftServerData {
 	ClientData ClientInfo = 5; // ClientData
 	CommonAccountData AccountData = 6;
 	RoomData RoomData = 7;
-	Account Account = 8;
+	AccountData Account = 8;
 
 	repeated sGameObject WorldState = 9; // GameObjects list
 	ObjectAction Interaction = 10;
@@ -48,11 +48,14 @@ enum MSServerEvent
 	LOGIN_FAILED = 1;
 	PUBLIC_MESSAGE = 2;						
 	ROOM_JOIN = 3;						
-	ROOM_JOIN_FAILED = 4;		
-	CONNECTION = 5;			
-	CONNECTION_FAILED = 6;			
-	CONNECTION_LOST = 7;			
-	PING_REQUEST = 8;				
+	ROOM_CREATE = 4;						
+	ROOM_DELETE = 5;						
+	ROOM_GET_INFO = 6;						
+	ROOM_JOIN_FAILED = 7;		
+	CONNECTION = 8;			
+	CONNECTION_FAILED = 9;			
+	CONNECTION_LOST = 10;			
+	PING_REQUEST = 11;				
 }
 enum ShiftServerError
 {
@@ -88,7 +91,7 @@ message ServerRoom {
 
 }
 
-message Account {
+message AccountData {
 
 	string username = 1;
 	string password = 2;
@@ -104,9 +107,8 @@ message ObjectAction {
 message ClientData {
 
 	string ver = 1;
-	string loginname = 2;
-	string machine_name = 3;
-	string machine_id = 4;
+	string machine_name = 2;
+	string machine_id = 3;
 }
 
 message sGameObject {

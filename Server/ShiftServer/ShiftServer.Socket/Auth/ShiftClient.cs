@@ -59,7 +59,6 @@ namespace ShiftServer.Server.Auth
         {
             if (this.Client != null)
             {
-                // GetStream() might throw exception if client is disconnected
                 try
                 {
                     NetworkStream stream = Client.GetStream();

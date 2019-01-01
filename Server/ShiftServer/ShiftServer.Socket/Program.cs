@@ -23,6 +23,7 @@ namespace ShiftServer.Server
             RPGWorld world = new RPGWorld();
 
             serverProvider = new ServerProvider(world);
+
             serverProvider.AddServerEventListener(MSServerEvent.PingRequest, serverProvider.OnPing);
 
             serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
