@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using UnityEngine;
 using ShiftServer.Client;
+using ShiftServer.Client.Data.Entities;
 
 public class NetworkManager : MonoBehaviour
 {
@@ -30,7 +31,8 @@ public class NetworkManager : MonoBehaviour
     }
 
     #endregion
-    public static NetworkClient client;
+    public static ManaShiftServer client;
+    private ConfigData _cfg;
 
     [SerializeField]
     private string _hostName = "192.168.1.2";
@@ -58,11 +60,15 @@ public class NetworkManager : MonoBehaviour
     {
         if (!IsOffline)
         {
-            client = new NetworkClient();
-            client.AddEventListener(MSServerEvent.ConnectOk, this.OnConnected);
+            client = new ManaShiftServer();
+            client.AddEventListener(MSServerEvent.Connection, this.OnConnected);
             client.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
 
-            client.Connect(_hostName, _port);
+            _cfg = new ConfigData();
+            _cfg.Host = "192.168.1.2";          //hostInput.text;
+            _cfg.Port = 1337;                    //Convert.ToInt32(portInput.text);
+
+            client.Connect(_cfg);
 
             StartCoroutine(Listener());
         }

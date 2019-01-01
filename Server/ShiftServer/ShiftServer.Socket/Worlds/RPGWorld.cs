@@ -27,6 +27,7 @@ namespace ShiftServer.Server.Worlds
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
 
         public int ObjectCounter = 0;
+        public int PlayerCounter = 0;
 
         public RPGWorld()
         {
@@ -37,7 +38,11 @@ namespace ShiftServer.Server.Worlds
 
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)
         {
-            
+            log.Debug($"[ATTACK] Remote:{client.Client.Client.RemoteEndPoint.ToString()} ClientNo:{client.connectionId}");
+
+            string clientSessionId = client.UserSession.GetSid();
+            if (clientSessionId == null)
+                return;
         }
 
         public void OnObjectCreate(IGameObject gameObject)
@@ -48,20 +53,15 @@ namespace ShiftServer.Server.Worlds
         public void OnPlayerCreate(ShiftServerData data, ShiftClient shift)
         {
             string clientSessionId = shift.UserSession.GetSid();
-
-            ShiftServerData newData = new ShiftServerData();
-            newData.Session = new SessionData
-            {
-                Sid = clientSessionId
-            };
-
+            if (clientSessionId == null)
+                return;
 
             List<IGameObject> gameObjectList = GameObjects.GetValues();
             Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
             // if already exist in world
             if (currentPlayer != null)
             {
-                newData.SPlayerObject = new PlayerObject
+                data.SPlayerObject = new PlayerObject
                 {
                     PClass = currentPlayer.Class,
                     CurrentHp = currentPlayer.CurrentHP,
@@ -74,6 +74,7 @@ namespace ShiftServer.Server.Worlds
                         PosZ = currentPlayer.Position.Z
                     }
                 };
+                
 
             }
             else
@@ -91,7 +92,7 @@ namespace ShiftServer.Server.Worlds
                 this.OnObjectCreate(player);
                 log.Info($"[CreatePlayer] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
-                newData.SPlayerObject = new PlayerObject
+                data.SPlayerObject = new PlayerObject
                 {
                     CurrentHp = player.CurrentHP,
                     MaxHp = player.MaxHP,
@@ -99,7 +100,7 @@ namespace ShiftServer.Server.Worlds
                     PObject = new sGameObject
                     {
                         Oid = player.ObjectId,
-                        
+
                         PosX = player.Position.X,
                         PosY = player.Position.Y,
                         PosZ = player.Position.Z,
@@ -109,20 +110,29 @@ namespace ShiftServer.Server.Worlds
 
 
 
-            shift.SendPacket(MSPlayerEvent.CreatePlayer, newData);
+            shift.SendPacket(MSPlayerEvent.CreatePlayer, data);
         }
         public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
+            string sessionId = shift.UserSession.GetSid();
+            if (sessionId == null)
+                return;
 
-          
+
 
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
+            string clientSessionId = shift.UserSession.GetSid();
+            if (clientSessionId == null)
+                return;
             log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
         }
         public void OnObjectUse(ShiftServerData data, ShiftClient shift)
         {
+            string clientSessionId = shift.UserSession.GetSid();
+            if (clientSessionId == null)
+                return;
             log.Debug($"[USE]  Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
         }
@@ -137,7 +147,7 @@ namespace ShiftServer.Server.Worlds
             {
                 GameObjects.TryGetValue(i, out gObject);
                 IGameInput gInput = null;
-                Player pInput = null;
+                PlayerInput pInput = null;
                 for (int kk = 0; kk < gObject.GameInputs.Count; kk++)
                 {
                     gObject.GameInputs.TryDequeue(out gInput);
@@ -148,15 +158,17 @@ namespace ShiftServer.Server.Worlds
 
         public void SendWorldState()
         {
-            //foreach (var client in clients)
-            //{
-            //    if (client.UserSession == null)
-            //        continue;
+            List<ShiftClient> clientList = Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSession == null)
+                    continue;
 
-            //    ShiftServerData data = new ShiftServerData();
+                ShiftServerData data = new ShiftServerData();
 
-            //    client.SendPacket(MSPlayerEvent.WorldUpdate, data);
-            //}
+                clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
+            }
+  
         }
 
         /// <summary>
@@ -198,6 +210,8 @@ namespace ShiftServer.Server.Worlds
             data.AccountData.Username = accUsername;
             data.AccountData.VirtualMoney = 100;
             data.AccountData.VirtualSpecialMoney = 100;
+
+            //room data
             data.RoomData = new RoomData();
             
 

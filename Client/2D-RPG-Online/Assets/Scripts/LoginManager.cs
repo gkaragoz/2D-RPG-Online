@@ -28,11 +28,10 @@ public class LoginManager : Menu
     {
         if (!NetworkManager.instance.IsOffline)
         {
-            NetworkManager.client.AddEventListener(MSServerEvent.JoinRequestSuccess, this.OnJoinSuccess);
-            NetworkManager.client.AddEventListener(MSPlayerEvent.OnCreatePlayer, this.OnPlayerCreate);
+            NetworkManager.client.AddEventListener(MSServerEvent.RoomJoin, this.OnJoinSuccess);
+            NetworkManager.client.AddEventListener(MSPlayerEvent.CreatePlayer, this.OnPlayerCreate);
 
             clientInfo = new ClientData();
-            clientInfo.Guid = Guid.NewGuid().ToString();
             clientInfo.Loginname = "Test";
             clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
             clientInfo.MachineName = SystemInfo.deviceName;
@@ -74,7 +73,7 @@ public class LoginManager : Menu
 
     public void OnJoinSuccess(ShiftServerData data)
     {
-        NetworkManager.client.AddEventListener(MSServerEvent.WorldUpdate, NetworkManager.instance.OnWorldUpdate);
+        NetworkManager.client.AddEventListener(MSPlayerEvent.WorldUpdate, NetworkManager.instance.OnWorldUpdate);
 
         Debug.Log("OnJoinSuccess::EVENT::FIRED");
         //gameObject.SetActive(false);
@@ -85,9 +84,9 @@ public class LoginManager : Menu
         newData.Session = data.Session;
         
       
-        newData.ClData = clientInfo;
+        newData.ClientInfo = clientInfo;
 
-        NetworkManager.client.SendMessage(MSPlayerEvent.OnCreatePlayer, newData);
+        NetworkManager.client.SendMessage(MSPlayerEvent.CreatePlayer, newData);
     }
 
     public void OnPlayerCreate(ShiftServerData data)
@@ -99,7 +98,7 @@ public class LoginManager : Menu
     public void SendJoinPacket()
     {
         ShiftServerData data = new ShiftServerData();
-        data.ClData = this.clientInfo;
-        NetworkManager.client.SendMessage(MSServerEvent.JoinRequest, data);
+        data.ClientInfo = this.clientInfo;
+        NetworkManager.client.SendMessage(MSServerEvent.RoomJoin, data);
     }
 }

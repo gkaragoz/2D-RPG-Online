@@ -59,6 +59,8 @@
     <Compile Include="Core\ICommand.cs" />
     <Compile Include="Core\IGameInput.cs" />
     <Compile Include="Core\IGameObject.cs" />
+    <Compile Include="Core\IPlayerGroup.cs" />
+    <Compile Include="Core\IRoom.cs" />
     <Compile Include="Core\IWorld.cs" />
     <Compile Include="Core\ServerDataHandler.cs" />
     <Compile Include="Core\ServerEventCallback.cs" />
@@ -90,6 +92,7 @@
     <Folder Include="Factory\AI\" />
     <Folder Include="Factory\Combat\" />
     <Folder Include="Factory\Loot\" />
+    <Folder Include="Rooms\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
