@@ -43,14 +43,14 @@ public class NetworkManager : MonoBehaviour {
     private const string ON_CONNECTION_FAILED = "Connection failed!";
     private const string ON_CONNECTION_LOST = "Connection lost!";
 
-    public bool IsOffline {
+    public bool OfflineMode {
         get {
             return _offlineMode;
         }
     }
 
     private void Start() {
-        if (!IsOffline) {
+        if (!OfflineMode) {
             mss = new ManaShiftServer();
             mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
             mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
@@ -71,20 +71,20 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
-    private void OnConnectionSuccess(ShiftServerData obj) {
+    private void OnConnectionSuccess(ShiftServerData data) {
         LogManager.instance.AddLog(ON_CONNECTION_SUCCESS, Log.Type.Server);
     }
 
-    private void OnConnectionFailed(ShiftServerData obj) {
+    private void OnConnectionFailed(ShiftServerData data) {
         LogManager.instance.AddLog(ON_CONNECTION_FAILED, Log.Type.Server);
     }
 
-    private void OnConnectionLost(ShiftServerData obj) {
+    private void OnConnectionLost(ShiftServerData data) {
         LogManager.instance.AddLog(ON_CONNECTION_LOST, Log.Type.Server);
     }
 
     private void OnApplicationQuit() {
-        if (!IsOffline) {
+        if (!OfflineMode) {
             if (mss.IsConnected()) {
                 mss.Disconnect();
             }
