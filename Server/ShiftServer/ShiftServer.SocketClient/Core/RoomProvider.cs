@@ -25,7 +25,7 @@ namespace ShiftServer.Client.Core
                 {
                     if (RoomList[kk].Id == data.RoomData.Rooms[i].RoomId)
                     {
-                        UpdateRoom(kk, data.RoomData.Rooms[kk]);
+                        UpdateRoom(kk, data.RoomData.Rooms[i]);
                         isNew = false;
                         break;
                     }
