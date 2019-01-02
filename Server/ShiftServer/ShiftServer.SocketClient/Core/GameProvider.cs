@@ -40,7 +40,7 @@ namespace ShiftServer.Client.Core
                 //this.SetFixedUpdateInterval();
                 client.Connect(address, port);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionFailed, ShiftServerError.NoRespondServer);
             }
