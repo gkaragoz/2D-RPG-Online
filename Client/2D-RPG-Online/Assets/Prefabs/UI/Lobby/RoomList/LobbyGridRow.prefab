@@ -40,7 +40,7 @@ GameObject:
   - component: {fileID: 222387361074406120}
   - component: {fileID: 114218469667983752}
   m_Layer: 5
-  m_Name: txtTitle
+  m_Name: txtPlayersCount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -101,8 +101,9 @@ GameObject:
   m_Component:
   - component: {fileID: 224502748720951030}
   - component: {fileID: 114285856050171430}
+  - component: {fileID: 114323389695131884}
   m_Layer: 5
-  m_Name: SingleRow
+  m_Name: LobbyGridRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +152,7 @@ GameObject:
   - component: {fileID: 222251664991091542}
   - component: {fileID: 114974472100662816}
   m_Layer: 5
-  m_Name: txtTitle
+  m_Name: txtRoomID
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -235,7 +236,7 @@ GameObject:
   - component: {fileID: 222194603209709530}
   - component: {fileID: 114604638237694232}
   m_Layer: 5
-  m_Name: txtTitle
+  m_Name: txtRoomName
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -251,7 +252,7 @@ GameObject:
   - component: {fileID: 224681613380125098}
   - component: {fileID: 114585394484976360}
   m_Layer: 5
-  m_Name: Toggle
+  m_Name: togglePrivate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -543,6 +544,23 @@ MonoBehaviour:
         m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!114 &114323389695131884
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1396460821335932}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf4de4aa5e1f15d429e21d736df48a60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _txtRoomID: {fileID: 114974472100662816}
+  _txtRoomName: {fileID: 114604638237694232}
+  _txtPlayersCount: {fileID: 114218469667983752}
+  _togglePrivate: {fileID: 114585394484976360}
+  _btnJoin: {fileID: 114941103532724492}
+  _btnWatch: {fileID: 114313254997661490}
 --- !u!114 &114575466485727808
 MonoBehaviour:
   m_ObjectHideFlags: 1
