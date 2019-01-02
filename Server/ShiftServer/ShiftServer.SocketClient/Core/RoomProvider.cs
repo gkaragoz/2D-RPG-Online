@@ -25,7 +25,7 @@ namespace ShiftServer.Client.Core
                     bool isNew = true;
                     for (int kk = 0; kk < RoomList.Count; kk++)
                     {
-                        if (RoomList[kk].Id == data.RoomData.Rooms[i].RoomId)
+                        if (RoomList[kk].Id == data.RoomData.Rooms[i].Id)
                         {
                             UpdateRoom(kk, data.RoomData.Rooms[i]);
                             isNew = false;
@@ -36,10 +36,10 @@ namespace ShiftServer.Client.Core
                     if (isNew)
                     {
                         Room room = new Room();
-                        room.CurrentUser = data.RoomData.Rooms[i].CurrentUser;
-                        room.MaxUser = data.RoomData.Rooms[i].MaxUser;
+                        room.CurrentUser = data.RoomData.Rooms[i].CurrentUserCount;
+                        room.MaxUser = data.RoomData.Rooms[i].MaxUserCount;
                         room.Name = data.RoomData.Rooms[i].Name;
-                        room.Id = data.RoomData.Rooms[i].RoomId;
+                        room.Id = data.RoomData.Rooms[i].Id;
 
                         AddRoom(room);
                     }
@@ -55,8 +55,8 @@ namespace ShiftServer.Client.Core
         }
         private void UpdateRoom(int key, ServerRoom room)
         {
-            RoomList[key].CurrentUser = room.CurrentUser;
-            RoomList[key].MaxUser = room.MaxUser;
+            RoomList[key].CurrentUser = room.CurrentUserCount;
+            RoomList[key].MaxUser = room.MaxUserCount;
             RoomList[key].Name = room.Name;
         }
     }

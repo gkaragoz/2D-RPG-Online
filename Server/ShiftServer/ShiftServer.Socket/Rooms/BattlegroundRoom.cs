@@ -1,4 +1,5 @@
-﻿using ShiftServer.Server.Auth;
+﻿using Google.Protobuf.WellKnownTypes;
+using ShiftServer.Server.Auth;
 using ShiftServer.Server.Core;
 using System;
 using System.Collections.Generic;
@@ -17,6 +18,10 @@ namespace ShiftServer.Server.Rooms
         public int MaxUser { get; set; }
         public string Name { get; set; }
         public string Guid { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime UpdateDate { get; set; }
+        public bool IsPrivate { get; set; }
+
         public BattlegroundRoom()
         {
             Clients = new SafeDictionary<int, ShiftClient>();

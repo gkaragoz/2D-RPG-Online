@@ -88,15 +88,17 @@ message RoomData {
 	ServerRoom CreatedRoom = 1;
 	ServerRoom JoinedRoom = 2;
 	repeated ServerRoom rooms = 3;
-
 }
 
 message ServerRoom {
 
-	string roomId = 1;
-	string name = 2;
-	int32 maxUser = 3;
-	int32 currentUser = 4;
+	string Id = 1;
+	string createdTime = 2;
+	string updatedTime = 3;
+	bool isPrivate = 4;
+	string name = 5;
+	int32 maxUserCount = 6;
+	int32 currentUserCount = 7;
 
 }
 

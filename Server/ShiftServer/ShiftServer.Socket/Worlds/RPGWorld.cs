@@ -11,6 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
 using System.Threading;
+using ShiftServer.Proto.Helper;
 
 namespace ShiftServer.Server.Worlds
 {
@@ -223,10 +224,13 @@ namespace ShiftServer.Server.Worlds
             {
                 data.RoomData.Rooms.Add(new ServerRoom
                 {
-                    CurrentUser = room.SocketIdSessionLookup.Count,
-                    MaxUser = room.MaxUser,
+                    CurrentUserCount = room.SocketIdSessionLookup.Count,
+                    MaxUserCount = room.MaxUser,
+                    IsPrivate = room.IsPrivate,
+                    CreatedTime = room.CreatedDate.ToRelativeTime(),
+                    UpdatedTime = room.UpdateDate.ToRelativeTime(),
                     Name = room.Name,
-                    RoomId = room.Guid
+                    Id = room.Guid
                 });
             }
 

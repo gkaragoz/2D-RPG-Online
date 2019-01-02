@@ -37,35 +37,36 @@ public static partial class ShiftServerMessagesReflection {
           "b25leRgCIAEoBRIbChN2aXJ0dWFsU3BlY2lhbE1vbmV5GAMgASgFImkKCFJv",
           "b21EYXRhEiAKC0NyZWF0ZWRSb29tGAEgASgLMgsuU2VydmVyUm9vbRIfCgpK",
           "b2luZWRSb29tGAIgASgLMgsuU2VydmVyUm9vbRIaCgVyb29tcxgDIAMoCzIL",
-          "LlNlcnZlclJvb20iUAoKU2VydmVyUm9vbRIOCgZyb29tSWQYASABKAkSDAoE",
-          "bmFtZRgCIAEoCRIPCgdtYXhVc2VyGAMgASgFEhMKC2N1cnJlbnRVc2VyGAQg",
-          "ASgFIjEKC0FjY291bnREYXRhEhAKCHVzZXJuYW1lGAEgASgJEhAKCHBhc3N3",
-          "b3JkGAIgASgJIlwKDE9iamVjdEFjdGlvbhIjCg1jdXJyZW50T2JqZWN0GAEg",
-          "ASgLMgwuc0dhbWVPYmplY3QSJwoRaW50ZXJhY3RlZE9iamVjdHMYAiADKAsy",
-          "DC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3ZlchgBIAEoCRIUCgxt",
-          "YWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgDIAEoCSJHCgtzR2Ft",
-          "ZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kY",
-          "AyABKAISDQoFcG9zX3oYBCABKAIikQEKDFBsYXllck9iamVjdBIdCgdwT2Jq",
-          "ZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSHAoGcENsYXNzGAIgASgOMgwuUGxh",
-          "eWVyQ2xhc3MSEQoJY3VycmVudEhwGAMgASgFEg0KBW1heEhwGAQgASgFEiIK",
-          "DHBsYXllcklucHV0cxgFIAMoCzIMLlBsYXllcklucHV0IjoKC1BsYXllcklu",
-          "cHV0Eg0KBXBvc194GAEgASgCEg0KBXBvc195GAIgASgCEg0KBXBvc196GAMg",
-          "ASgCKjEKDU1TQmFzZUV2ZW50SWQSDwoLUGxheWVyRXZlbnQQABIPCgtTZXJ2",
-          "ZXJFdmVudBABKl0KDU1TUGxheWVyRXZlbnQSEAoMV09STERfVVBEQVRFEAAS",
-          "CAoETU9WRRABEgoKBkFUVEFDSxACEggKBERFQUQQAxIHCgNVU0UQBBIRCg1D",
-          "UkVBVEVfUExBWUVSEAUqkAIKDU1TU2VydmVyRXZlbnQSCQoFTE9HSU4QABIQ",
-          "CgxMT0dJTl9GQUlMRUQQARISCg5QVUJMSUNfTUVTU0FHRRACEg0KCVJPT01f",
-          "Sk9JThADEg8KC1JPT01fQ1JFQVRFEAQSDwoLUk9PTV9ERUxFVEUQBRIRCg1S",
-          "T09NX0dFVF9JTkZPEAYSFAoQUk9PTV9KT0lOX0ZBSUxFRBAHEhMKD1JPT01f",
-          "R0FNRV9TVEFSVBAIEhEKDUxPQkJZX1JFRlJFU0gQCRIOCgpDT05ORUNUSU9O",
-          "EAoSFQoRQ09OTkVDVElPTl9GQUlMRUQQCxITCg9DT05ORUNUSU9OX0xPU1QQ",
-          "DBIQCgxQSU5HX1JFUVVFU1QQDSqCAQoQU2hpZnRTZXJ2ZXJFcnJvchISCg5D",
-          "TElFTlRfVkVSX09MRBAAEg8KC0JBRF9TRVNTSU9OEAESGwoXV1JPTkdfTE9H",
-          "SU5fQ1JFREVOVElBTFMQAhIVChFXUk9OR19DTElFTlRfREFUQRADEhUKEU5P",
-          "X1JFU1BPTkRfU0VSVkVSEAQqNQoNU2hpZnRSb29tVHlwZRIJCgVMT0JCWRAA",
-          "EgcKA01NTxABEhAKDEFDVElPTkJBVFRMRRACKjwKC1BsYXllckNsYXNzEgsK",
-          "B1dhcnJpb3IQABIKCgZBcmNoZXIQARIICgRNYWdlEAISCgoGUHJpZXN0EANi",
-          "BnByb3RvMw=="));
+          "LlNlcnZlclJvb20ikwEKClNlcnZlclJvb20SCgoCSWQYASABKAkSEwoLY3Jl",
+          "YXRlZFRpbWUYAiABKAkSEwoLdXBkYXRlZFRpbWUYAyABKAkSEQoJaXNQcml2",
+          "YXRlGAQgASgIEgwKBG5hbWUYBSABKAkSFAoMbWF4VXNlckNvdW50GAYgASgF",
+          "EhgKEGN1cnJlbnRVc2VyQ291bnQYByABKAUiMQoLQWNjb3VudERhdGESEAoI",
+          "dXNlcm5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiXAoMT2JqZWN0QWN0",
+          "aW9uEiMKDWN1cnJlbnRPYmplY3QYASABKAsyDC5zR2FtZU9iamVjdBInChFp",
+          "bnRlcmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNHYW1lT2JqZWN0IkMKCkNsaWVu",
+          "dERhdGESCwoDdmVyGAEgASgJEhQKDG1hY2hpbmVfbmFtZRgCIAEoCRISCgpt",
+          "YWNoaW5lX2lkGAMgASgJIkcKC3NHYW1lT2JqZWN0EgsKA29pZBgBIAEoBRIN",
+          "CgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEoAiKR",
+          "AQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QYASABKAsyDC5zR2FtZU9iamVj",
+          "dBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50SHAY",
+          "AyABKAUSDQoFbWF4SHAYBCABKAUSIgoMcGxheWVySW5wdXRzGAUgAygLMgwu",
+          "UGxheWVySW5wdXQiOgoLUGxheWVySW5wdXQSDQoFcG9zX3gYASABKAISDQoF",
+          "cG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAIqMQoNTVNCYXNlRXZlbnRJZBIP",
+          "CgtQbGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2ZW50EAEqXQoNTVNQbGF5ZXJF",
+          "dmVudBIQCgxXT1JMRF9VUERBVEUQABIICgRNT1ZFEAESCgoGQVRUQUNLEAIS",
+          "CAoEREVBRBADEgcKA1VTRRAEEhEKDUNSRUFURV9QTEFZRVIQBSqQAgoNTVNT",
+          "ZXJ2ZXJFdmVudBIJCgVMT0dJThAAEhAKDExPR0lOX0ZBSUxFRBABEhIKDlBV",
+          "QkxJQ19NRVNTQUdFEAISDQoJUk9PTV9KT0lOEAMSDwoLUk9PTV9DUkVBVEUQ",
+          "BBIPCgtST09NX0RFTEVURRAFEhEKDVJPT01fR0VUX0lORk8QBhIUChBST09N",
+          "X0pPSU5fRkFJTEVEEAcSEwoPUk9PTV9HQU1FX1NUQVJUEAgSEQoNTE9CQllf",
+          "UkVGUkVTSBAJEg4KCkNPTk5FQ1RJT04QChIVChFDT05ORUNUSU9OX0ZBSUxF",
+          "RBALEhMKD0NPTk5FQ1RJT05fTE9TVBAMEhAKDFBJTkdfUkVRVUVTVBANKoIB",
+          "ChBTaGlmdFNlcnZlckVycm9yEhIKDkNMSUVOVF9WRVJfT0xEEAASDwoLQkFE",
+          "X1NFU1NJT04QARIbChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxACEhUKEVdS",
+          "T05HX0NMSUVOVF9EQVRBEAMSFQoRTk9fUkVTUE9ORF9TRVJWRVIQBCo1Cg1T",
+          "aGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1PEAESEAoMQUNUSU9OQkFU",
+          "VExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2FycmlvchAAEgoKBkFyY2hlchAB",
+          "EggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -73,7 +74,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "CreatedRoom", "JoinedRoom", "Rooms" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ServerRoom), global::ServerRoom.Parser, new[]{ "RoomId", "Name", "MaxUser", "CurrentUser" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ServerRoom), global::ServerRoom.Parser, new[]{ "Id", "CreatedTime", "UpdatedTime", "IsPrivate", "Name", "MaxUserCount", "CurrentUserCount" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::AccountData), global::AccountData.Parser, new[]{ "Username", "Password" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
@@ -1179,10 +1180,13 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public ServerRoom(ServerRoom other) : this() {
-    roomId_ = other.roomId_;
+    id_ = other.id_;
+    createdTime_ = other.createdTime_;
+    updatedTime_ = other.updatedTime_;
+    isPrivate_ = other.isPrivate_;
     name_ = other.name_;
-    maxUser_ = other.maxUser_;
-    currentUser_ = other.currentUser_;
+    maxUserCount_ = other.maxUserCount_;
+    currentUserCount_ = other.currentUserCount_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1191,19 +1195,52 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     return new ServerRoom(this);
   }
 
-  /// <summary>Field number for the "roomId" field.</summary>
-  public const int RoomIdFieldNumber = 1;
-  private string roomId_ = "";
+  /// <summary>Field number for the "Id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private string id_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string RoomId {
-    get { return roomId_; }
+  public string Id {
+    get { return id_; }
     set {
-      roomId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      id_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "createdTime" field.</summary>
+  public const int CreatedTimeFieldNumber = 2;
+  private string createdTime_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string CreatedTime {
+    get { return createdTime_; }
+    set {
+      createdTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "updatedTime" field.</summary>
+  public const int UpdatedTimeFieldNumber = 3;
+  private string updatedTime_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string UpdatedTime {
+    get { return updatedTime_; }
+    set {
+      updatedTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "isPrivate" field.</summary>
+  public const int IsPrivateFieldNumber = 4;
+  private bool isPrivate_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool IsPrivate {
+    get { return isPrivate_; }
+    set {
+      isPrivate_ = value;
     }
   }
 
   /// <summary>Field number for the "name" field.</summary>
-  public const int NameFieldNumber = 2;
+  public const int NameFieldNumber = 5;
   private string name_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Name {
@@ -1213,25 +1250,25 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     }
   }
 
-  /// <summary>Field number for the "maxUser" field.</summary>
-  public const int MaxUserFieldNumber = 3;
-  private int maxUser_;
+  /// <summary>Field number for the "maxUserCount" field.</summary>
+  public const int MaxUserCountFieldNumber = 6;
+  private int maxUserCount_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int MaxUser {
-    get { return maxUser_; }
+  public int MaxUserCount {
+    get { return maxUserCount_; }
     set {
-      maxUser_ = value;
+      maxUserCount_ = value;
     }
   }
 
-  /// <summary>Field number for the "currentUser" field.</summary>
-  public const int CurrentUserFieldNumber = 4;
-  private int currentUser_;
+  /// <summary>Field number for the "currentUserCount" field.</summary>
+  public const int CurrentUserCountFieldNumber = 7;
+  private int currentUserCount_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public int CurrentUser {
-    get { return currentUser_; }
+  public int CurrentUserCount {
+    get { return currentUserCount_; }
     set {
-      currentUser_ = value;
+      currentUserCount_ = value;
     }
   }
 
@@ -1248,20 +1285,26 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     if (ReferenceEquals(other, this)) {
       return true;
     }
-    if (RoomId != other.RoomId) return false;
+    if (Id != other.Id) return false;
+    if (CreatedTime != other.CreatedTime) return false;
+    if (UpdatedTime != other.UpdatedTime) return false;
+    if (IsPrivate != other.IsPrivate) return false;
     if (Name != other.Name) return false;
-    if (MaxUser != other.MaxUser) return false;
-    if (CurrentUser != other.CurrentUser) return false;
+    if (MaxUserCount != other.MaxUserCount) return false;
+    if (CurrentUserCount != other.CurrentUserCount) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
-    if (RoomId.Length != 0) hash ^= RoomId.GetHashCode();
+    if (Id.Length != 0) hash ^= Id.GetHashCode();
+    if (CreatedTime.Length != 0) hash ^= CreatedTime.GetHashCode();
+    if (UpdatedTime.Length != 0) hash ^= UpdatedTime.GetHashCode();
+    if (IsPrivate != false) hash ^= IsPrivate.GetHashCode();
     if (Name.Length != 0) hash ^= Name.GetHashCode();
-    if (MaxUser != 0) hash ^= MaxUser.GetHashCode();
-    if (CurrentUser != 0) hash ^= CurrentUser.GetHashCode();
+    if (MaxUserCount != 0) hash ^= MaxUserCount.GetHashCode();
+    if (CurrentUserCount != 0) hash ^= CurrentUserCount.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1275,21 +1318,33 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (RoomId.Length != 0) {
+    if (Id.Length != 0) {
       output.WriteRawTag(10);
-      output.WriteString(RoomId);
+      output.WriteString(Id);
+    }
+    if (CreatedTime.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(CreatedTime);
+    }
+    if (UpdatedTime.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(UpdatedTime);
+    }
+    if (IsPrivate != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(IsPrivate);
     }
     if (Name.Length != 0) {
-      output.WriteRawTag(18);
+      output.WriteRawTag(42);
       output.WriteString(Name);
     }
-    if (MaxUser != 0) {
-      output.WriteRawTag(24);
-      output.WriteInt32(MaxUser);
+    if (MaxUserCount != 0) {
+      output.WriteRawTag(48);
+      output.WriteInt32(MaxUserCount);
     }
-    if (CurrentUser != 0) {
-      output.WriteRawTag(32);
-      output.WriteInt32(CurrentUser);
+    if (CurrentUserCount != 0) {
+      output.WriteRawTag(56);
+      output.WriteInt32(CurrentUserCount);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1299,17 +1354,26 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
-    if (RoomId.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(RoomId);
+    if (Id.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
+    }
+    if (CreatedTime.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(CreatedTime);
+    }
+    if (UpdatedTime.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(UpdatedTime);
+    }
+    if (IsPrivate != false) {
+      size += 1 + 1;
     }
     if (Name.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
     }
-    if (MaxUser != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUser);
+    if (MaxUserCount != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxUserCount);
     }
-    if (CurrentUser != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurrentUser);
+    if (CurrentUserCount != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurrentUserCount);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1322,17 +1386,26 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     if (other == null) {
       return;
     }
-    if (other.RoomId.Length != 0) {
-      RoomId = other.RoomId;
+    if (other.Id.Length != 0) {
+      Id = other.Id;
+    }
+    if (other.CreatedTime.Length != 0) {
+      CreatedTime = other.CreatedTime;
+    }
+    if (other.UpdatedTime.Length != 0) {
+      UpdatedTime = other.UpdatedTime;
+    }
+    if (other.IsPrivate != false) {
+      IsPrivate = other.IsPrivate;
     }
     if (other.Name.Length != 0) {
       Name = other.Name;
     }
-    if (other.MaxUser != 0) {
-      MaxUser = other.MaxUser;
+    if (other.MaxUserCount != 0) {
+      MaxUserCount = other.MaxUserCount;
     }
-    if (other.CurrentUser != 0) {
-      CurrentUser = other.CurrentUser;
+    if (other.CurrentUserCount != 0) {
+      CurrentUserCount = other.CurrentUserCount;
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -1346,19 +1419,31 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 10: {
-          RoomId = input.ReadString();
+          Id = input.ReadString();
           break;
         }
         case 18: {
-          Name = input.ReadString();
+          CreatedTime = input.ReadString();
           break;
         }
-        case 24: {
-          MaxUser = input.ReadInt32();
+        case 26: {
+          UpdatedTime = input.ReadString();
           break;
         }
         case 32: {
-          CurrentUser = input.ReadInt32();
+          IsPrivate = input.ReadBool();
+          break;
+        }
+        case 42: {
+          Name = input.ReadString();
+          break;
+        }
+        case 48: {
+          MaxUserCount = input.ReadInt32();
+          break;
+        }
+        case 56: {
+          CurrentUserCount = input.ReadInt32();
           break;
         }
       }
