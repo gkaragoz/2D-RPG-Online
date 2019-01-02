@@ -38,6 +38,7 @@ namespace ShiftServer.Server
 
             //serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, world.OnRom);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, _roomProvider.OnRoomJoin);
             _serverProvider.AddServerEventListener(MSServerEvent.LobbyRefresh, _roomProvider.OnLobbyRefresh);
 

@@ -21,6 +21,7 @@ namespace ShiftServer.Server.Rooms
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public bool IsPrivate { get; set; }
+        public int CreatedUserId { get; set; }
 
         public BattlegroundRoom()
         {
