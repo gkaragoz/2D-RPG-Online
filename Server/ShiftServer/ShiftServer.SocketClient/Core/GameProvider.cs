@@ -36,13 +36,13 @@ namespace ShiftServer.Client.Core
                 _address = address;
 
                 // create and connect the client
-                client = new Telepathy.Client();               
+                client = new Telepathy.Client();
                 //this.SetFixedUpdateInterval();
                 client.Connect(address, port);
             }
             catch (Exception ex)
             {
-                Console.WriteLine("Exception: " + ex);
+                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionFailed, ShiftServerError.NoRespondServer);
             }
             finally
             {
@@ -66,10 +66,11 @@ namespace ShiftServer.Client.Core
                 // disconnect from the server when we are done
                 client.Disconnect();
             }
-            catch (Exception)
+            catch (Exception err)
             {
 
-                throw;
+                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
+                return;
             }
         }
 
@@ -85,7 +86,7 @@ namespace ShiftServer.Client.Core
             // send a message to server
             client.Send(bb);
         }
-       
+
         public void SetFixedUpdateInterval()
         {
             //this timer interval simulate the fixed update in unity. must control on server every time
@@ -103,7 +104,7 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-                if (client.Connected 
+                if (client.Connected
                     || client == null)
                 {
                     // grab all new messages. do this in your Update loop.
@@ -114,12 +115,14 @@ namespace ShiftServer.Client.Core
                         {
                             case Telepathy.EventType.Connected:
                                 Console.WriteLine("Connected To Socket");
+                                this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
                                 break;
                             case Telepathy.EventType.Data:
                                 this.dataHandler.HandleMessage(msg.data);
                                 break;
                             case Telepathy.EventType.Disconnected:
                                 Console.WriteLine("Disconnected From Socket");
+                                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
                                 client.Disconnect();
                                 break;
                         }
@@ -133,6 +136,7 @@ namespace ShiftServer.Client.Core
             }
             catch (SocketException socketException)
             {
+                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
                 Console.WriteLine("Socket exception: " + socketException);
             }
         }

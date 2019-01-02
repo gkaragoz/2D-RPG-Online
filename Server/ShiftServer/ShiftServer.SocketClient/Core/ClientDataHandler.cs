@@ -19,8 +19,11 @@ namespace ShiftServer.Client.Core
         public List<ClientEventCallback> clientEvents = null;
         public List<PlayerEventCallback> playerEvents = null;
 
+        public RoomProvider roomProvider = null;
+
         public ClientDataHandler()
         {
+            roomProvider = new RoomProvider();
             clientEvents = new List<ClientEventCallback>();
             playerEvents = new List<PlayerEventCallback>();
         }
@@ -37,6 +40,19 @@ namespace ShiftServer.Client.Core
                     ClientEventInvoker.Fire(playerEvents, data);
                     break;
                 case MSBaseEventId.ServerEvent:
+                    switch (data.Svevtid)
+                    {
+                        case MSServerEvent.Login:
+                            roomProvider.AddOrUpdate(data);
+                            break;
+                        case MSServerEvent.RoomJoin:
+                            break;
+                        case MSServerEvent.Connection:
+                            break;
+                        default:
+                            break;
+                    }
+
                     ClientEventInvoker.Fire(clientEvents, data);
                     break;
                 default:
@@ -44,6 +60,17 @@ namespace ShiftServer.Client.Core
                     break;
 
             }
+        }
+
+        public void HandleServerFailure(MSServerEvent evt, ShiftServerError err)
+        {
+            ClientEventInvoker.FireServerFailed(clientEvents, evt, err);
+
+        }
+        public void HandleServerSuccess(MSServerEvent evt)
+        {
+            ClientEventInvoker.FireSuccess(clientEvents, evt);
+
         }
     }
 }

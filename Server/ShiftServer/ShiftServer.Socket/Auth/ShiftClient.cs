@@ -17,6 +17,7 @@ namespace ShiftServer.Server.Auth
         public Session UserSession { get; set; }
         public TcpClient Client { get; set; }
         public int connectionId { get; set; }
+        public bool IsJoinedToWorld { get; set; }
         public bool IsConnected()
         {
             return Client.Connected;
@@ -58,7 +59,6 @@ namespace ShiftServer.Server.Auth
         {
             if (this.Client != null)
             {
-                // GetStream() might throw exception if client is disconnected
                 try
                 {
                     NetworkStream stream = Client.GetStream();

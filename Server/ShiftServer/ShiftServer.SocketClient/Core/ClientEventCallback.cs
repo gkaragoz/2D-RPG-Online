@@ -45,6 +45,7 @@ namespace ShiftServer.Client.Core
 
         }
 
+
         /// <summary>
         /// Invoke client callback functions
         /// </summary>
@@ -58,6 +59,72 @@ namespace ShiftServer.Client.Core
             {
                 if (events[i].EventId == data.Svevtid)
                 {
+                    events[i].CallbackFunc.Invoke(data);
+                }
+
+
+            }
+
+        }
+
+        /// <summary>
+        /// Only client side self interaction between library and client
+        /// </summary>
+        /// <param name="events"> Registered event list from AddEventListener</param>
+        /// <param name="eventId"> Shift server event msg id</param>
+        /// <param name="data"> Shift server event data</param>
+        public static void FireServerFailed(List<ClientEventCallback> events, MSServerEvent evt, ShiftServerError error )
+        {
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i].EventId == evt)
+                {
+                    ShiftServerData data = new ShiftServerData();
+                    data.Basevtid = MSBaseEventId.ServerEvent;
+                    data.Svevtid = evt;
+                    data.ErrorReason = error;
+                    events[i].CallbackFunc.Invoke(data);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Only client side self interaction between library and client
+        /// </summary>
+        /// <param name="events"> Registered event list from AddEventListener</param>
+        /// <param name="eventId"> Shift server event msg id</param>
+        /// <param name="data"> Shift server event data</param>
+        public static void FireSuccess(List<ClientEventCallback> events, MSServerEvent evt)
+        {
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i].EventId == evt)
+                {
+                    ShiftServerData data = new ShiftServerData();
+                    data.Basevtid = MSBaseEventId.ServerEvent;
+                    data.Svevtid = evt;
+                    events[i].CallbackFunc.Invoke(data);
+                }
+            }
+        }
+        
+        /// <summary>
+        /// Only client side self interaction between library and client
+        /// </summary>
+        /// <param name="events"> Registered event list from AddEventListener</param>
+        /// <param name="eventId"> Shift server event msg id</param>
+        /// <param name="data"> Shift server event data</param>
+        public static void FirePlayerFailed(List<PlayerEventCallback> events, MSPlayerEvent evt, ShiftServerError error)
+        {
+
+            for (int i = 0; i < events.Count; i++)
+            {
+                if (events[i].EventId == evt)
+                {
+                    ShiftServerData data = new ShiftServerData();
+                    data.Basevtid = MSBaseEventId.ServerEvent;
+                    data.Plevtid = evt;
+                    data.ErrorReason = error;
                     events[i].CallbackFunc.Invoke(data);
                 }
 

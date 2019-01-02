@@ -14,7 +14,8 @@ public class Log : Menu {
         Loot,
         Interact,
         Drop,
-        Exp
+        Exp,
+        Server
     }
 
     [Header("Debug")]
@@ -48,9 +49,18 @@ public class Log : Menu {
         this._tracingString = System.Environment.StackTrace;
         this._logType = logType;
 
-        this._txtLog.text = string.Format("[{0}] <color={1}>{2}</color>", 
+        string _title = string.Empty;
+
+        switch (logType) {
+            case Type.Server:
+                _title = "[SERVER]";
+                break;
+        }
+
+        this._txtLog.text = string.Format("[{1}] <color={0}>{2}</color> {3}",
+                            colorStringHEX,
                             this._dateTime.ToLongTimeString(), 
-                            colorStringHEX, 
+                            _title,
                             this._message);
     }
 

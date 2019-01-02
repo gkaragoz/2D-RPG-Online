@@ -5,21 +5,23 @@ using System.Linq;
 using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
+using Telepathy;
 
 namespace ShiftServer.Server.Factory.Entities
 {
-    class Player : IGameObject
+    public class Player : IGameObject
     {
         public string Name { get; set; } = "Gladiator";
-        public string ObjectId { get; set; }
+        public int ObjectId { get; set; }
         public PlayerClass Class { get; set; }
         public int MaxHP { get; set; } = 100;
         public int CurrentHP { get; set; } = 100;
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
-        public int OwnerClientId { get; set; }
+        public int OwnerConnectionId { get; set; }
         public List<IGameObject> OwnedObjects { get; set; }
+        public SafeQueue<IGameInput> GameInputs { get; set; }
 
         public void OnAttack()
         {
