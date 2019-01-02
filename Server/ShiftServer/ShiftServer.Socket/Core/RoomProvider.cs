@@ -41,11 +41,8 @@ namespace ShiftServer.Server.Core
 
             }
 
-            if (data.AccountData != null)
-            {
-                newRoom.Clients.Add(shift.connectionId, shift);
-                newRoom.SocketIdSessionLookup.Add(data.Session.Sid, shift.connectionId);
-            }
+
+          
 
             _sp.world.Rooms.Add(newRoom.Guid, newRoom);
 
@@ -53,7 +50,33 @@ namespace ShiftServer.Server.Core
         }
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
+            IRoom result = null;
+
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
+            if (data.RoomData.JoinedRoom != null)
+            {
+
+             
+
+                _sp.world.Rooms.TryGetValue(data.RoomData.JoinedRoom.Id, out result);
+
+                if (result != null)
+                {
+                    result.Clients.Add(shift.connectionId, shift);
+                    result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                }
+                else
+                {
+                    ShiftServerData oData = new ShiftServerData();
+                    oData.ErrorReason = ShiftServerError.RoomNotFound;
+                    _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoinFailed, oData);
+                    return;
+                }
+
+
+
+            }
+
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoin, data);
         }
 
