@@ -18,6 +18,11 @@ namespace ShiftServer.Server.Core
         public RoomProvider(ServerProvider mainServerProvider) {
             _sp = mainServerProvider;
         }
+        public void CreateRoom(IRoom room)
+        {
+            room.Guid = Guid.NewGuid().ToString();
+            _sp.world.Rooms.Add(room.Guid, room);
+        }
 
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {

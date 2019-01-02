@@ -67,6 +67,12 @@ enum ShiftServerError
 	NO_RESPOND_SERVER = 4; // Connection lost
 
 }
+enum ShiftRoomType
+{
+	LOBBY = 0; 
+	MMO = 1;
+	ACTIONBATTLE = 2;
+}
 message SessionData {
 	string sid = 2;
 }
@@ -86,7 +92,7 @@ message RoomData {
 
 message ServerRoom {
 
-	int32 roomId = 1;
+	string roomId = 1;
 	string name = 2;
 	int32 maxUser = 3;
 	int32 currentUser = 4;
