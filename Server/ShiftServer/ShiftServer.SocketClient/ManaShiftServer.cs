@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Client.Core;
 using ShiftServer.Client.Data.Entities;
+using ShiftServer.Proto.Helper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -65,6 +66,8 @@ namespace ShiftServer.Client
         /// </summary>
         public List<Room> GetRoomList()
         {
+            this.SendMessage(MSServerEvent.LobbyRefresh);
+            TickrateUtil.SafeDelay(500);
             return gameProvider.dataHandler.roomProvider.RoomList;
         }
         /// <summary>

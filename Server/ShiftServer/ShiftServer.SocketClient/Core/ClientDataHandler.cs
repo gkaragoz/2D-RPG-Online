@@ -68,12 +68,10 @@ namespace ShiftServer.Client.Core
         public void HandleServerFailure(MSServerEvent evt, ShiftServerError err)
         {
             ClientEventInvoker.FireServerFailed(clientEvents, evt, err);
-
         }
         public void HandleServerSuccess(MSServerEvent evt)
         {
             ClientEventInvoker.FireSuccess(clientEvents, evt);
-
         }
     }
 }
