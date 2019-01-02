@@ -35,6 +35,7 @@ namespace ShiftServer.Client
         {
             _mss = this;
             gameProvider = new GameProvider();
+            _stopwatch = new Stopwatch();
         }
 
         /// <summary>
@@ -53,6 +54,7 @@ namespace ShiftServer.Client
             _stopwatch.Stop();
             _currentPingValue = _stopwatch.Elapsed.Milliseconds;
         }
+
         private void SendPingRequest()
         {
             _stopwatch = new Stopwatch();
