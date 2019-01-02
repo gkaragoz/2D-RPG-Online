@@ -59,6 +59,8 @@ public class LobbyManager : Menu {
         ShiftServerData data = new ShiftServerData();
         
         RoomData roomData = new RoomData();
+        roomData.CreatedRoom = new ServerRoom();
+
         roomData.CreatedRoom.Name = "Odanın adını Feriha koydum.";
         roomData.CreatedRoom.CreatedTime = DateTime.Now.ToString();
         roomData.CreatedRoom.IsPrivate = false;
@@ -75,31 +77,38 @@ public class LobbyManager : Menu {
         for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
             string roomID = data.RoomData.Rooms[ii].Id;
             string roomName = data.RoomData.Rooms[ii].Name;
-            int currentUsersCount = data.RoomData.Rooms[ii].CurrentUserCount == 0 ? 0 : data.RoomData.Rooms[ii].CurrentUserCount;
+            int currentUsersCount = data.RoomData.Rooms[ii].CurrentUserCount;
             int maxUsersCount = data.RoomData.Rooms[ii].MaxUserCount;
             bool isPrivate = data.RoomData.Rooms[ii].IsPrivate;
 
-            for (int jj = 0; jj < _lobbyRowsList.Count; jj++) {
-                if (roomID == _lobbyRowsList[ii].RoomID) {
-                    UpdateLobbyRow(
-                        _lobbyRowsList[ii],
-                        roomID,
-                        roomName,
-                        currentUsersCount,
-                        maxUsersCount,
-                        isPrivate
-                        );
-                }
+            if (IsLobbyRowExists(roomID)) {
+                UpdateLobbyRow(
+                    _lobbyRowsList[ii],
+                    roomID,
+                    roomName,
+                    currentUsersCount,
+                    maxUsersCount,
+                    isPrivate
+                    );
+            } else {
+                CreateLobbyRow(
+                    roomID, 
+                    roomName, 
+                    currentUsersCount, 
+                    maxUsersCount, 
+                    isPrivate
+                    );
             }
-
-            CreateLobbyRow(
-                roomID, 
-                roomName, 
-                currentUsersCount, 
-                maxUsersCount, 
-                isPrivate
-                );
         }
+    }
+
+    private bool IsLobbyRowExists(string roomID) {
+        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
+            if (roomID == _lobbyRowsList[ii].RoomID) {
+                return true;
+            }
+        }
+        return false;
     }
 
     private void RefreshLobby() {
@@ -137,6 +146,20 @@ public class LobbyManager : Menu {
 
     private void OnRoomCreated(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
+
+        string roomID = data.RoomData.CreatedRoom.Id;
+        string roomName = data.RoomData.CreatedRoom.Name;
+        int currentUsersCount = data.RoomData.CreatedRoom.CurrentUserCount;
+        int maxUsersCount = data.RoomData.CreatedRoom.MaxUserCount;
+        bool isPrivate = data.RoomData.CreatedRoom.IsPrivate;
+
+        CreateLobbyRow(
+            roomID,
+            roomName,
+            currentUsersCount,
+            maxUsersCount,
+            isPrivate
+            );
     }
 
     private void OnRoomDeleted(ShiftServerData data) {
