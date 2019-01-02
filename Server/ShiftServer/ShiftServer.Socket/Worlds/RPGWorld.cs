@@ -25,7 +25,8 @@ namespace ShiftServer.Server.Worlds
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
-        public SafeDictionary<int, IRoom> Rooms { get; set; }
+        public SafeDictionary<string, IRoom> Rooms { get; set; }
+        public SafeDictionary<string, Thread> RoomGameThreadList { get; set; }
 
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;

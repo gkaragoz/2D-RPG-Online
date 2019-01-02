@@ -22,11 +22,19 @@ namespace ShiftServer.Server.Core
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate");
-            _sp.SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
+
+            _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
         }
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
+
+            _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoin, data);
+        }
+
+        public void OnRoomGameStart(ShiftServerData data, ShiftClient shift)
+        {
+            log.Info($"ClientNO: {shift.connectionId} ------> RoomGameStart");
             _sp.SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
         }
 

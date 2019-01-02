@@ -52,10 +52,11 @@ enum MSServerEvent
 	ROOM_DELETE = 5;						
 	ROOM_GET_INFO = 6;						
 	ROOM_JOIN_FAILED = 7;		
-	CONNECTION = 8;			
-	CONNECTION_FAILED = 9;			
-	CONNECTION_LOST = 10;			
-	PING_REQUEST = 11;				
+	ROOM_GAME_START = 8;		
+	CONNECTION = 9;			
+	CONNECTION_FAILED = 10;			
+	CONNECTION_LOST = 11;			
+	PING_REQUEST = 12;				
 }
 enum ShiftServerError
 {

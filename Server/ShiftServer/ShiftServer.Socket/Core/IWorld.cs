@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Numerics;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Telepathy;
 
@@ -17,6 +18,8 @@ namespace ShiftServer.Server.Core
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
+        SafeDictionary<string, IRoom> Rooms { get; set; }
+        SafeDictionary<string, Thread> RoomGameThreadList { get; set; }
         void OnAccountLogin(ShiftServerData data, ShiftClient client);
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
