@@ -12,6 +12,6 @@ namespace ShiftServer.Server.Core
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         void OnInvite(IGameObject gameObject);
         void OnKick(IGameObject gameObject);
-        List<IGameObject> OnGetList();
+        List<IGameObject> GetGameObjectList();
     }
 }

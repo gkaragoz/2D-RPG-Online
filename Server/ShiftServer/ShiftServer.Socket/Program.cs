@@ -11,7 +11,8 @@ namespace ShiftServer.Server
         private static readonly log4net.ILog log
               = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static ServerProvider serverProvider = null;
+        private static ServerProvider _serverProvider = null;
+        private static RoomProvider _roomProvider = null;
         /// <summary>
         /// Main entry of shift server
         /// </summary>
@@ -22,19 +23,23 @@ namespace ShiftServer.Server
 
             RPGWorld world = new RPGWorld();
 
-            serverProvider = new ServerProvider(world);
+            _serverProvider = new ServerProvider(world);
+            _roomProvider = new RoomProvider(_serverProvider);
 
-            serverProvider.AddServerEventListener(MSServerEvent.PingRequest, serverProvider.OnPing);
+            _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
 
-            serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
-            serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, world.OnPlayerJoin);
+            _serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
 
-            serverProvider.AddServerEventListener(MSPlayerEvent.Use, world.OnObjectUse);
-            serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, world.OnPlayerCreate);
+            //serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, world.OnRom);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, _roomProvider.OnRoomJoin);
 
-            serverProvider.Listen(tickrate : 15, port : 2000);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, world.OnObjectUse);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, world.OnPlayerCreate);
 
-            ConsoleUI.Run(serverProvider);
+            _serverProvider.Listen(tickrate : 75, port : 2000);
+
+            ConsoleUI.Run(_serverProvider);
             //Run Server Simulation
         } 
 

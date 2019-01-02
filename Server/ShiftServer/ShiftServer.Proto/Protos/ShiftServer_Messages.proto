@@ -77,8 +77,9 @@ message CommonAccountData {
 }
 
 message RoomData {
-
-	repeated ServerRoom rooms = 1;
+	ServerRoom CreatedRoom = 1;
+	ServerRoom JoinedRoom = 2;
+	repeated ServerRoom rooms = 3;
 
 }
 

@@ -21,7 +21,8 @@ namespace ShiftServer.Server.Core
         void OnObjectMove(ShiftServerData data, ShiftClient client);
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
         void OnObjectUse(ShiftServerData data, ShiftClient client);
-        void OnWorldUpdate();
-        void SendWorldState();
+        void OnGameStart(ShiftServerData data, ShiftClient client);
+        void OnRoomUpdate();
+        void SendRoomState();
     }
 }

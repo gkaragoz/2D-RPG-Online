@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ShiftServer.Server.Auth;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,10 +12,23 @@ namespace ShiftServer.Server.Core
         private static readonly log4net.ILog log
                   = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static IRoom room = null;
         public ServerDataHandler dataHandler = null;
+        private ServerProvider _sp = null;
 
+        public RoomProvider(ServerProvider mainServerProvider) {
+            _sp = mainServerProvider;
+        }
 
-        public RoomProvider(IRoom room) { }
+        public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
+        {
+            log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate");
+            _sp.SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
+        }
+        public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
+        {
+            log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
+            _sp.SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
+        }
+
     }
 }

@@ -248,6 +248,7 @@ namespace ShiftServer.Server.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
+            log.Info($"ClientNO: {shift.connectionId} ------> Ping");
             SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
         }
 
