@@ -13,6 +13,7 @@ namespace ShiftServer.Server.Core
     {
         string Name { get; set; }
         string Guid { get; set; }
+        int CreatedUserId { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         bool IsPrivate { get; set; }

@@ -68,6 +68,7 @@ enum ShiftServerError
 	WRONG_LOGIN_CREDENTIALS = 4; // Wrong login credentials
 	WRONG_CLIENT_DATA = 5; // Wrong client credentials
 	NO_RESPOND_SERVER = 6; // Connection lost
+	ROOM_AUTH_PROBLEM = 7; // Occurs
 
 }
 enum ShiftRoomType
@@ -89,7 +90,8 @@ message CommonAccountData {
 message RoomData {
 	ServerRoom CreatedRoom = 1;
 	ServerRoom JoinedRoom = 2;
-	repeated ServerRoom rooms = 3;
+	ServerRoom DeletedRoom = 3;
+	repeated ServerRoom rooms = 4;
 }
 
 message ServerRoom {
