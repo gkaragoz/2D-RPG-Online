@@ -8,8 +8,6 @@ public class LoginManager : Menu {
     #region Singleton
 
     public static LoginManager instance;
-    public ClientData clientInfo;
-
 
     void Awake() {
         if (instance == null)
@@ -85,7 +83,7 @@ public class LoginManager : Menu {
             account.Username = _UISettings.GetUsername();
             account.Password = _UISettings.GetPassword();
 
-            clientInfo = new ClientData();
+            ClientData clientInfo = new ClientData();
             clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
             clientInfo.MachineName = SystemInfo.deviceName;
             clientInfo.Ver = "0.1";
