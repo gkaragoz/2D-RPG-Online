@@ -60,13 +60,14 @@ public static partial class ShiftServerMessagesReflection {
           "BBIPCgtST09NX0RFTEVURRAFEhEKDVJPT01fR0VUX0lORk8QBhIUChBST09N",
           "X0pPSU5fRkFJTEVEEAcSEwoPUk9PTV9HQU1FX1NUQVJUEAgSEQoNTE9CQllf",
           "UkVGUkVTSBAJEg4KCkNPTk5FQ1RJT04QChIVChFDT05ORUNUSU9OX0ZBSUxF",
-          "RBALEhMKD0NPTk5FQ1RJT05fTE9TVBAMEhAKDFBJTkdfUkVRVUVTVBANKoIB",
+          "RBALEhMKD0NPTk5FQ1RJT05fTE9TVBAMEhAKDFBJTkdfUkVRVUVTVBANKpYB",
           "ChBTaGlmdFNlcnZlckVycm9yEhIKDkNMSUVOVF9WRVJfT0xEEAASDwoLQkFE",
-          "X1NFU1NJT04QARIbChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxACEhUKEVdS",
-          "T05HX0NMSUVOVF9EQVRBEAMSFQoRTk9fUkVTUE9ORF9TRVJWRVIQBCo1Cg1T",
-          "aGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1PEAESEAoMQUNUSU9OQkFU",
-          "VExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2FycmlvchAAEgoKBkFyY2hlchAB",
-          "EggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJvdG8z"));
+          "X1NFU1NJT04QARISCg5ST09NX05PVF9GT1VORBACEhsKF1dST05HX0xPR0lO",
+          "X0NSRURFTlRJQUxTEAMSFQoRV1JPTkdfQ0xJRU5UX0RBVEEQBBIVChFOT19S",
+          "RVNQT05EX1NFUlZFUhAFKjUKDVNoaWZ0Um9vbVR5cGUSCQoFTE9CQlkQABIH",
+          "CgNNTU8QARIQCgxBQ1RJT05CQVRUTEUQAio8CgtQbGF5ZXJDbGFzcxILCgdX",
+          "YXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFnZRACEgoKBlByaWVzdBADYgZw",
+          "cm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -136,18 +137,19 @@ public enum ShiftServerError {
   /// Session
   /// </summary>
   [pbr::OriginalName("BAD_SESSION")] BadSession = 1,
+  [pbr::OriginalName("ROOM_NOT_FOUND")] RoomNotFound = 2,
   /// <summary>
   /// Wrong login credentials
   /// </summary>
-  [pbr::OriginalName("WRONG_LOGIN_CREDENTIALS")] WrongLoginCredentials = 2,
+  [pbr::OriginalName("WRONG_LOGIN_CREDENTIALS")] WrongLoginCredentials = 3,
   /// <summary>
   /// Wrong client credentials
   /// </summary>
-  [pbr::OriginalName("WRONG_CLIENT_DATA")] WrongClientData = 3,
+  [pbr::OriginalName("WRONG_CLIENT_DATA")] WrongClientData = 4,
   /// <summary>
   /// Connection lost
   /// </summary>
-  [pbr::OriginalName("NO_RESPOND_SERVER")] NoRespondServer = 4,
+  [pbr::OriginalName("NO_RESPOND_SERVER")] NoRespondServer = 5,
 }
 
 public enum ShiftRoomType {
