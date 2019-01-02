@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -114,8 +115,8 @@ public class LobbyManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new ServerRoom();
-        roomData.JoinedRoom.Id = _lobbyRowsList[UnityEngine.Random.Range(0, _lobbyRowsList.Count)].RoomID;
+        roomData.DeletedRoom = new ServerRoom();
+        roomData.DeletedRoom.Id = _lobbyRowsList[UnityEngine.Random.Range(0, _lobbyRowsList.Count)].RoomID;
 
         data.RoomData = roomData;
 
@@ -217,7 +218,8 @@ public class LobbyManager : Menu {
         LogManager.instance.AddLog("OnRoomDeleted: " + data, Log.Type.Server);
 
         if (!attack) {
-            _lobbyRowsList.Remove(data.RoomData.DeletedRoom.Id);
+            LobbyRow deletedRow = _lobbyRowsList.Where(row => row.RoomID == data.RoomData.DeletedRoom.Id).FirstOrDefault();
+            _lobbyRowsList.Remove(deletedRow);
         }
     }
 
