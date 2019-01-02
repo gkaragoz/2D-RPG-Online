@@ -30,23 +30,32 @@ namespace ShiftServer.Server.Core
         {
 
             BattlegroundRoom newRoom = new BattlegroundRoom();
-            log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate");
-            if (data.RoomData.CreatedRoom != null)
+            if (!shift.IsJoinedToRoom)
             {
-                newRoom.Guid = Guid.NewGuid().ToString();
-                newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
-                newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
-                newRoom.CreatedDate = DateTime.UtcNow;
-                newRoom.UpdateDate = DateTime.UtcNow;
+                if (data.RoomData.CreatedRoom != null)
+                {
+                    log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate" + data.RoomData.CreatedRoom.Name);
+
+                    newRoom.Guid = Guid.NewGuid().ToString();
+                    data.RoomData.CreatedRoom.Id = Guid.NewGuid().ToString();
+                    newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
+                    newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
+                    newRoom.CreatedDate = DateTime.UtcNow;
+                    newRoom.UpdateDate = DateTime.UtcNow;
+
+                }
+                _sp.world.Rooms.Add(newRoom.Guid, newRoom);
+                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
+                shift.IsJoinedToRoom = true;
+            }
+            else
+            {
+                ShiftServerData oData = new ShiftServerData();
+                oData.ErrorReason = ShiftServerError.RoomNotFound;
+                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoinFailed, oData);
 
             }
 
-
-          
-
-            _sp.world.Rooms.Add(newRoom.Guid, newRoom);
-
-            _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
         }
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
@@ -54,10 +63,7 @@ namespace ShiftServer.Server.Core
 
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
             if (data.RoomData.JoinedRoom != null)
-            {
-
-             
-
+            { 
                 _sp.world.Rooms.TryGetValue(data.RoomData.JoinedRoom.Id, out result);
 
                 if (result != null)
@@ -68,7 +74,7 @@ namespace ShiftServer.Server.Core
                 else
                 {
                     ShiftServerData oData = new ShiftServerData();
-                    oData.ErrorReason = ShiftServerError.RoomNotFound;
+                    oData.ErrorReason = ShiftServerError.AlreadyInRoom;
                     _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoinFailed, oData);
                     return;
                 }

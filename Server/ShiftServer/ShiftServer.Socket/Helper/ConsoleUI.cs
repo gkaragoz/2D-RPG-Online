@@ -17,7 +17,7 @@ namespace ShiftServer.Server.Helper
 
             while (runForever)
             {
-                Console.Write("Command [q cls count]: ");
+                Console.Write("Command [q cls count roomlist]: ");
 
                 string userInput = Console.ReadLine();
                 if (String.IsNullOrEmpty(userInput)) continue;
@@ -36,6 +36,13 @@ namespace ShiftServer.Server.Helper
                     case "count":
                         int count = serverProvider.ClientCount();
                         Console.WriteLine("Total user : " + count);
+                        break;
+                    case "roomlist":
+                        var roomList = serverProvider.world.Rooms.GetValues();
+                        foreach (var room in roomList)
+                        {
+                            Console.WriteLine(string.Format("Room Name: {0} , User: {1}/{2}", room.Name, room.SocketIdSessionLookup.Count, room.MaxUser));
+                        }
                         break;
 
                 }
