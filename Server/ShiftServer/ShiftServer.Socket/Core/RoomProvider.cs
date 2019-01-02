@@ -27,13 +27,11 @@ namespace ShiftServer.Server.Core
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate");
-
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
         }
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
-
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoin, data);
         }
 
@@ -43,5 +41,23 @@ namespace ShiftServer.Server.Core
             _sp.SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
         }
 
+        public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
+        {
+            log.Info($"ClientNO: {shift.connectionId} ------> LobbyRefresh");
+            //room data
+            data.RoomData = new RoomData();
+            List<IRoom> svRooms = _sp.world.Rooms.GetValues();
+            foreach (var room in svRooms)
+            {
+                data.RoomData.Rooms.Add(new ServerRoom
+                {
+                    CurrentUser = room.SocketIdSessionLookup.Count,
+                    MaxUser = room.MaxUser,
+                    Name = room.Name,
+                    RoomId = room.Guid
+                });
+            }
+            _sp.SendMessage(shift.connectionId, MSServerEvent.LobbyRefresh, data);
+        }
     }
 }

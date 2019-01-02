@@ -224,7 +224,7 @@ namespace ShiftServer.Server.Worlds
                 data.RoomData.Rooms.Add(new ServerRoom
                 {
                     CurrentUser = room.SocketIdSessionLookup.Count,
-                    MaxUser = room.GameObjects.Count,
+                    MaxUser = room.MaxUser,
                     Name = room.Name,
                     RoomId = room.Guid
                 });
