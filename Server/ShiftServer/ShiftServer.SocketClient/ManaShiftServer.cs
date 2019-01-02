@@ -4,6 +4,7 @@ using ShiftServer.Client.Data.Entities;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -23,6 +24,9 @@ namespace ShiftServer.Client
 
         public bool IsConnecting{ get => gameProvider.client.Connecting; }
 
+        private Stopwatch _stopwatch;
+        private long _currentPingValue;
+
         /// <summary>
         /// Constructor method of game client object
         /// </summary>
@@ -40,8 +44,22 @@ namespace ShiftServer.Client
         public void Connect(ConfigData cfg)
         {
             gameProvider.Connect(cfg.Host, cfg.Port);
-        }   
-        
+            this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
+        }
+
+        private void OnPingResponse(ShiftServerData data)
+        {
+            _stopwatch.Stop();
+            _currentPingValue = _stopwatch.Elapsed.Milliseconds;
+        }
+        private void SendPingRequest()
+        {
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+
+            this.SendMessage(MSServerEvent.PingRequest);
+        }
+
         /// <summary>
         /// Get Room List
         /// </summary>

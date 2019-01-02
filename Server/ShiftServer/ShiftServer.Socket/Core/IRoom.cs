@@ -10,10 +10,12 @@ namespace ShiftServer.Server.Core
 {
     public interface IRoom
     {
+        string Name { get; set; }
+        string Guid { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
-        void OnAccountLogin(ShiftServerData data, ShiftClient client);
+        int MaxUser { get; set; }
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
@@ -21,7 +23,8 @@ namespace ShiftServer.Server.Core
         void OnObjectMove(ShiftServerData data, ShiftClient client);
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
         void OnObjectUse(ShiftServerData data, ShiftClient client);
-        void OnWorldUpdate();
-        void SendWorldState();
+        void OnGameStart(ShiftServerData data, ShiftClient client);
+        void OnRoomUpdate();
+        void SendRoomState();
     }
 }

@@ -15,7 +15,7 @@ namespace ShiftServer.Server.Core
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static Telepathy.Server server = null;
-        private static IWorld world = null;
+        public IWorld world = null;
         public ServerDataHandler dataHandler = null;
         public Thread listenerThread = null;
 
@@ -248,6 +248,7 @@ namespace ShiftServer.Server.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
+            log.Info($"ClientNO: {shift.connectionId} ------> Ping");
             SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
         }
 

@@ -25,7 +25,8 @@ namespace ShiftServer.Server.Worlds
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
-        public SafeDictionary<int, IRoom> Rooms { get; set; }
+        public SafeDictionary<string, IRoom> Rooms { get; set; }
+        public SafeDictionary<string, Thread> RoomGameThreadList { get; set; }
 
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
@@ -34,6 +35,9 @@ namespace ShiftServer.Server.Worlds
         {
             Clients = new SafeDictionary<int, ShiftClient>();
             SocketIdSessionLookup = new SafeDictionary<string, int>();
+            GameObjects = new SafeDictionary<int, IGameObject>();
+            Rooms = new SafeDictionary<string, IRoom>();
+            RoomGameThreadList = new SafeDictionary<string, Thread>();
             log.Info(Banner);
         }
 
@@ -214,7 +218,17 @@ namespace ShiftServer.Server.Worlds
 
             //room data
             data.RoomData = new RoomData();
-            
+            List<IRoom> svRooms = Rooms.GetValues();
+            foreach (var room in svRooms)
+            {
+                data.RoomData.Rooms.Add(new ServerRoom
+                {
+                    CurrentUser = room.SocketIdSessionLookup.Count,
+                    MaxUser = room.GameObjects.Count,
+                    Name = room.Name,
+                    RoomId = room.Guid
+                });
+            }
 
 
             shift.SendPacket(MSServerEvent.Login, data);

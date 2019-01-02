@@ -52,10 +52,11 @@ enum MSServerEvent
 	ROOM_DELETE = 5;						
 	ROOM_GET_INFO = 6;						
 	ROOM_JOIN_FAILED = 7;		
-	CONNECTION = 8;			
-	CONNECTION_FAILED = 9;			
-	CONNECTION_LOST = 10;			
-	PING_REQUEST = 11;				
+	ROOM_GAME_START = 8;		
+	CONNECTION = 9;			
+	CONNECTION_FAILED = 10;			
+	CONNECTION_LOST = 11;			
+	PING_REQUEST = 12;				
 }
 enum ShiftServerError
 {
@@ -65,6 +66,12 @@ enum ShiftServerError
 	WRONG_CLIENT_DATA = 3; // Wrong client credentials
 	NO_RESPOND_SERVER = 4; // Connection lost
 
+}
+enum ShiftRoomType
+{
+	LOBBY = 0; 
+	MMO = 1;
+	ACTIONBATTLE = 2;
 }
 message SessionData {
 	string sid = 2;
@@ -77,14 +84,15 @@ message CommonAccountData {
 }
 
 message RoomData {
-
-	repeated ServerRoom rooms = 1;
+	ServerRoom CreatedRoom = 1;
+	ServerRoom JoinedRoom = 2;
+	repeated ServerRoom rooms = 3;
 
 }
 
 message ServerRoom {
 
-	int32 roomId = 1;
+	string roomId = 1;
 	string name = 2;
 	int32 maxUser = 3;
 	int32 currentUser = 4;
