@@ -14,35 +14,39 @@ namespace ShiftServer.Client.Core
 
         public RoomProvider()
         {
-
+            RoomList = new List<Room>();
         }
         public void AddOrUpdate(ShiftServerData data)
         {
-            for (int i = 0; i < data.RoomData.Rooms.Count; i++)
+            if (data.RoomData.Rooms != null)
             {
-                bool isNew = true;
-                for (int kk = 0; kk < RoomList.Count; kk++)
+                for (int i = 0; i < data.RoomData.Rooms.Count; i++)
                 {
-                    if (RoomList[kk].Id == data.RoomData.Rooms[i].RoomId)
+                    bool isNew = true;
+                    for (int kk = 0; kk < RoomList.Count; kk++)
                     {
-                        UpdateRoom(kk, data.RoomData.Rooms[i]);
-                        isNew = false;
-                        break;
+                        if (RoomList[kk].Id == data.RoomData.Rooms[i].RoomId)
+                        {
+                            UpdateRoom(kk, data.RoomData.Rooms[i]);
+                            isNew = false;
+                            break;
+                        }
                     }
+
+                    if (isNew)
+                    {
+                        Room room = new Room();
+                        room.CurrentUser = data.RoomData.Rooms[i].CurrentUser;
+                        room.MaxUser = data.RoomData.Rooms[i].MaxUser;
+                        room.Name = data.RoomData.Rooms[i].Name;
+                        room.Id = data.RoomData.Rooms[i].RoomId;
+
+                        AddRoom(room);
+                    }
+
                 }
-
-                if (isNew)
-                {
-                    Room room = new Room();
-                    room.CurrentUser = data.RoomData.Rooms[i].CurrentUser;
-                    room.MaxUser = data.RoomData.Rooms[i].MaxUser;
-                    room.Name = data.RoomData.Rooms[i].Name;
-                    room.Id = data.RoomData.Rooms[i].RoomId;
-
-                    AddRoom(room);
-                }
-
             }
+        
         }
 
         private void AddRoom(Room room)
