@@ -102,6 +102,8 @@ public class LoginManager : Menu {
         LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
 
         this.Hide();
+        LobbyManager.instance.Initialize();
+        LobbyManager.instance.Show();
 
         LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
         LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);

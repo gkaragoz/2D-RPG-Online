@@ -38,7 +38,7 @@ public class LobbyManager : Menu {
     [Utils.ReadOnly]
     private List<LobbyGridRow> _lobbyRows = new List<LobbyGridRow>();
 
-    private void Start() {
+    public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
@@ -53,16 +53,12 @@ public class LobbyManager : Menu {
         _UISettings.btnRefreshLobby.onClick.AddListener(RefreshLobby);
     }
 
-    public void InitializeLobbyGrid() {
+    public void FillUpLobbyGridRows() {
 
     }
 
     public void RefreshLobby() {
-        NetworkManager.mss.SendMessage(MSServerEvent.LobbyRefresh);
-    }
-
-    public void GetRoomList() {
-
+        NetworkManager.mss.GetRoomList();
     }
 
     public void CreateLobbyRow() {
@@ -74,7 +70,7 @@ public class LobbyManager : Menu {
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
-        InitializeLobbyGrid();
+        FillUpLobbyGridRows();
     }
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
