@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 114285856050171430}
   - component: {fileID: 114323389695131884}
   m_Layer: 5
-  m_Name: LobbyGridRow
+  m_Name: LobbyRow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 222251664991091542}
   - component: {fileID: 114974472100662816}
   m_Layer: 5
-  m_Name: txtRoomID
+  m_Name: txtRoomNumber
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -555,12 +555,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4de4aa5e1f15d429e21d736df48a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _txtRoomID: {fileID: 114974472100662816}
+  _txtRowNumber: {fileID: 114974472100662816}
   _txtRoomName: {fileID: 114604638237694232}
   _txtPlayersCount: {fileID: 114218469667983752}
   _togglePrivate: {fileID: 114585394484976360}
   _btnJoin: {fileID: 114941103532724492}
   _btnWatch: {fileID: 114313254997661490}
+  _rowNumber: 
+  _roomID: 
+  _roomName: 
+  _currentUsersCount: 0
+  _maxUsersCount: 0
+  _isPrivate: 0
 --- !u!114 &114575466485727808
 MonoBehaviour:
   m_ObjectHideFlags: 1

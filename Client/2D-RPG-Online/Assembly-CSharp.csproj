@@ -74,8 +74,8 @@
     <Compile Include="Assets\Scripts\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\FadeInOut.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\LobbyGridRow.cs" />
     <Compile Include="Assets\Scripts\LobbyManager.cs" />
+    <Compile Include="Assets\Scripts\LobbyRow.cs" />
     <Compile Include="Assets\Scripts\Log.cs" />
     <Compile Include="Assets\Scripts\LogFile.cs" />
     <Compile Include="Assets\Scripts\LoginManager.cs" />

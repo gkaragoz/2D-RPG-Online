@@ -31,12 +31,14 @@ public class LobbyManager : Menu {
     [SerializeField]
     private UISettings _UISettings;
     [SerializeField]
-    private LobbyGridRow _lobbyGridRowPrefab;
+    private LobbyRow _lobbyRowPrefab;
+    [SerializeField]
+    private RectTransform _gridContainer;
 
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private List<LobbyGridRow> _lobbyRows = new List<LobbyGridRow>();
+    private List<LobbyRow> _lobbyRowsList = new List<LobbyRow>();
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
@@ -53,24 +55,66 @@ public class LobbyManager : Menu {
         _UISettings.btnRefreshLobby.onClick.AddListener(RefreshLobby);
     }
 
-    public void FillUpLobbyGridRows() {
-
-    }
-
-    public void RefreshLobby() {
-        NetworkManager.mss.GetRoomList();
-    }
-
-    public void CreateLobbyRow() {
-
-    }
-
     public void CreateRoom() {
 
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
-        FillUpLobbyGridRows();
+        LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
+
+        for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
+            string roomID = "";//data.RoomData.Rooms[ii].Id;
+            string roomName = data.RoomData.Rooms[ii].Name;
+            int currentUsersCount = data.RoomData.Rooms[ii].CurrentUser;
+            int maxUsersCount = data.RoomData.Rooms[ii].MaxUser;
+            bool isPrivate = true;//data.RoomData.Rooms[ii].IsPrivate;
+
+            for (int jj = 0; jj < _lobbyRowsList.Count; jj++) {
+                if (roomID == _lobbyRowsList[ii].RoomID) {
+                    UpdateLobbyRow(
+                        _lobbyRowsList[ii],
+                        roomID,
+                        roomName,
+                        currentUsersCount,
+                        maxUsersCount,
+                        isPrivate
+                        );
+                }
+            }
+
+            CreateLobbyRow(
+                roomID, 
+                roomName, 
+                currentUsersCount, 
+                maxUsersCount, 
+                isPrivate
+                );
+        }
+    }
+
+    private void RefreshLobby() {
+        NetworkManager.mss.GetRoomList();
+    }
+
+    private void CreateLobbyRow(string roomID, string roomName, int currentUsersCount, int maxUsersCount, bool isPrivate) {
+        LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
+
+        //lobbyRow.RoomName = GetRowNumber();
+        lobbyRow.RoomID = roomID;
+        lobbyRow.RoomName = roomName;
+        lobbyRow.CurrentUsersCount = currentUsersCount;
+        lobbyRow.MaxUsersCount = maxUsersCount;
+        lobbyRow.IsPrivate = isPrivate;
+
+        _lobbyRowsList.Add(lobbyRow);
+    }
+
+    private void UpdateLobbyRow(LobbyRow lobbyRow, string roomID, string roomName, int currentUsersCount, int maxUsersCount, bool isPrivate) {
+        lobbyRow.RoomID = roomID;
+        lobbyRow.RoomName = roomName;
+        lobbyRow.CurrentUsersCount = currentUsersCount;
+        lobbyRow.MaxUsersCount = maxUsersCount;
+        lobbyRow.IsPrivate = isPrivate;
     }
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
