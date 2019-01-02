@@ -34,6 +34,7 @@ public class LobbyManager : Menu {
     private LobbyRow _lobbyRowPrefab;
     [SerializeField]
     private RectTransform _gridContainer;
+    public bool attack = false;
 
     [Header("Debug")]
     [SerializeField]
@@ -55,7 +56,21 @@ public class LobbyManager : Menu {
         _UISettings.btnRefreshLobby.onClick.AddListener(RefreshLobby);
     }
 
-    public void CreateRoom() {
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            JoinRoom();
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            DeleteRoom();
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            JoinRandomRoom();
+        }
+    }
+
+    private void CreateRoom() {
         ShiftServerData data = new ShiftServerData();
         
         RoomData roomData = new RoomData();
@@ -69,6 +84,42 @@ public class LobbyManager : Menu {
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
+    }
+
+    private void JoinRoom() {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new ServerRoom();
+        roomData.JoinedRoom.Id = "88114c18-8afd-4f93-9fe6-d4ee7da96563";
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
+    }
+
+    private void JoinRandomRoom() {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new ServerRoom();
+        roomData.JoinedRoom.Id = _lobbyRowsList[UnityEngine.Random.Range(0, _lobbyRowsList.Count)].RoomID;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
+    }
+
+    private void DeleteRoom() {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new ServerRoom();
+        roomData.JoinedRoom.Id = _lobbyRowsList[UnityEngine.Random.Range(0, _lobbyRowsList.Count)].RoomID;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomDelete, data);
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
@@ -164,6 +215,10 @@ public class LobbyManager : Menu {
 
     private void OnRoomDeleted(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomDeleted: " + data, Log.Type.Server);
+
+        if (!attack) {
+            _lobbyRowsList.Remove(data.RoomData.DeletedRoom.Id);
+        }
     }
 
     private void OnRoomGetInfo(ShiftServerData data) {
