@@ -18,6 +18,7 @@ namespace ShiftServer.Server.Auth
         public TcpClient Client { get; set; }
         public int connectionId { get; set; }
         public bool IsJoinedToWorld { get; set; }
+        public bool IsJoinedToRoom { get; set; }
         public bool IsConnected()
         {
             return Client.Connected;

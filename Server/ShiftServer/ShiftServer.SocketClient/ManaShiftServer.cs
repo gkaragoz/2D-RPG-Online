@@ -129,7 +129,6 @@ namespace ShiftServer.Client
             data.Svevtid = evt;
 
 
-
             byte[] bb = data.ToByteArray();
 
             if (bb.Length > 0)

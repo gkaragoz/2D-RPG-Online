@@ -64,9 +64,10 @@ enum ShiftServerError
 	CLIENT_VER_OLD = 0; // Application.version
 	BAD_SESSION = 1;		  // Session
 	ROOM_NOT_FOUND = 2;		
-	WRONG_LOGIN_CREDENTIALS = 3; // Wrong login credentials
-	WRONG_CLIENT_DATA = 4; // Wrong client credentials
-	NO_RESPOND_SERVER = 5; // Connection lost
+	ALREADY_IN_ROOM = 3;		
+	WRONG_LOGIN_CREDENTIALS = 4; // Wrong login credentials
+	WRONG_CLIENT_DATA = 5; // Wrong client credentials
+	NO_RESPOND_SERVER = 6; // Connection lost
 
 }
 enum ShiftRoomType
