@@ -356,3 +356,222 @@ All informations on https://docs.unity3d.com/ScriptReference/SystemInfo.html
 [SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example loot log.]
 [SESSION:1][TIME:1/1/2019 06:02:30][LOG-MESSAGE:	Example drop log.]
 [SESSION:1][TIME:1/1/2019 06:04:39][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:4][TIME:2/1/2019 03:34:00][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:5][TIME:2/1/2019 03:34:00][LOG-MESSAGE:	Trying connect to the server... 192.168.1.6:2000]
+[SESSION:5][TIME:2/1/2019 03:34:00][LOG-MESSAGE:	Connection success!]
+[SESSION:5][TIME:2/1/2019 03:34:04][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:5][TIME:2/1/2019 03:35:54][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:55][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+PingStatus.Update () (at Assets/Scripts/PingStatus.cs:37)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+LoginManager.Update () (at Assets/Scripts/LoginManager.cs:73)
+]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	LogType: Exception]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	Condition: NullReferenceException: Object reference not set to an instance of an object]
+[SESSION:6][TIME:2/1/2019 03:35:56][LOG-MESSAGE:	StackTrace: ShiftServer.Client.ManaShiftServer.get_IsConnected () (at <a869ce471aca4e7698c610bba0387f59>:0)
+NetworkManager.OnApplicationQuit () (at Assets/Scripts/NetworkManager.cs:87)
+]
+[SESSION:6][TIME:2/1/2019 03:36:23][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:7][TIME:2/1/2019 03:36:23][LOG-MESSAGE:	Connection success!]
+[SESSION:7][TIME:2/1/2019 03:37:17][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:7][TIME:2/1/2019 03:39:27][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:8][TIME:2/1/2019 03:39:27][LOG-MESSAGE:	Connection success!]
+[SESSION:8][TIME:2/1/2019 03:39:59][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:8][TIME:2/1/2019 03:40:21][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:9][TIME:2/1/2019 03:40:21][LOG-MESSAGE:	Connection success!]
+[SESSION:9][TIME:2/1/2019 03:40:25][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:9][TIME:2/1/2019 03:41:43][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:10][TIME:2/1/2019 03:41:43][LOG-MESSAGE:	Connection success!]
+[SESSION:10][TIME:2/1/2019 03:41:56][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:10][TIME:2/1/2019 03:43:10][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:11][TIME:2/1/2019 03:43:10][LOG-MESSAGE:	Connection success!]
+[SESSION:11][TIME:2/1/2019 03:43:46][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:11][TIME:2/1/2019 03:43:51][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:12][TIME:2/1/2019 03:43:51][LOG-MESSAGE:	Connection success!]
+[SESSION:12][TIME:2/1/2019 03:44:29][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:12][TIME:2/1/2019 03:46:09][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:13][TIME:2/1/2019 03:46:15][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:13][TIME:2/1/2019 03:53:36][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:14][TIME:2/1/2019 03:53:42][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:14][TIME:2/1/2019 03:54:11][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:15][TIME:2/1/2019 03:54:11][LOG-MESSAGE:	Connection success!]
+[SESSION:15][TIME:2/1/2019 03:54:25][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
+[SESSION:15][TIME:2/1/2019 03:54:45][LOG-MESSAGE:	<<<<<NEW SESSION>>>>>]
+[SESSION:16][TIME:2/1/2019 03:54:45][LOG-MESSAGE:	Connection success!]
+[SESSION:16][TIME:2/1/2019 03:55:19][LOG-MESSAGE:	<<<<<END SESSION>>>>>]
