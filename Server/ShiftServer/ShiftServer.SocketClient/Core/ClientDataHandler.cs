@@ -45,6 +45,9 @@ namespace ShiftServer.Client.Core
                         case MSServerEvent.Login:
                             roomProvider.AddOrUpdate(data);
                             break;
+                        case MSServerEvent.LobbyRefresh:
+                            roomProvider.AddOrUpdate(data);
+                            break;
                         case MSServerEvent.RoomJoin:
                             break;
                         case MSServerEvent.Connection:
