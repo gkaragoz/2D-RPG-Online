@@ -4,27 +4,7 @@ using ShiftServer.Client.Data.Entities;
 using System;
 
 public class NetworkManager : MonoBehaviour {
-    #region Singleton
-
-    /// <summary>
-    /// Instance of this class.
-    /// </summary>
-    public static NetworkManager instance;
-
-    /// <summary>
-    /// Initialize Singleton pattern.
-    /// </summary>
-    void Awake() {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-
-        DontDestroyOnLoad(instance);
-    }
-
-    #endregion
-
+    
     public static ManaShiftServer mss;
 
     [SerializeField]
@@ -49,7 +29,26 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
-    private void Start() {
+    /// <summary>
+    /// Instance of this class.
+    /// </summary>
+    public static NetworkManager instance;
+
+    /// <summary>
+    /// Initialize Singleton pattern.
+    /// </summary>
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
+
+        InitNetwork();
+    }
+
+    private void InitNetwork() {
         if (!OfflineMode) {
             mss = new ManaShiftServer();
             mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
@@ -60,7 +59,7 @@ public class NetworkManager : MonoBehaviour {
             _cfg.Host = _hostName;
             _cfg.Port = _port;
 
-            LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
+            //LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
             mss.Connect(_cfg);
         }
     }
