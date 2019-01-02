@@ -56,18 +56,28 @@ public class LobbyManager : Menu {
     }
 
     public void CreateRoom() {
+        ShiftServerData data = new ShiftServerData();
+        
+        RoomData roomData = new RoomData();
+        roomData.CreatedRoom.Name = "Odanın adını Feriha koydum.";
+        roomData.CreatedRoom.CreatedTime = DateTime.Now.ToString();
+        roomData.CreatedRoom.IsPrivate = false;
+        roomData.CreatedRoom.MaxUserCount = 5;
 
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
         LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
 
         for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
-            string roomID = "";//data.RoomData.Rooms[ii].Id;
+            string roomID = data.RoomData.Rooms[ii].Id;
             string roomName = data.RoomData.Rooms[ii].Name;
-            int currentUsersCount = data.RoomData.Rooms[ii].CurrentUser;
-            int maxUsersCount = data.RoomData.Rooms[ii].MaxUser;
-            bool isPrivate = true;//data.RoomData.Rooms[ii].IsPrivate;
+            int currentUsersCount = data.RoomData.Rooms[ii].CurrentUserCount == 0 ? 0 : data.RoomData.Rooms[ii].CurrentUserCount;
+            int maxUsersCount = data.RoomData.Rooms[ii].MaxUserCount;
+            bool isPrivate = data.RoomData.Rooms[ii].IsPrivate;
 
             for (int jj = 0; jj < _lobbyRowsList.Count; jj++) {
                 if (roomID == _lobbyRowsList[ii].RoomID) {
