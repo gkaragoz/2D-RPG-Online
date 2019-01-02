@@ -1,4 +1,5 @@
-﻿using ShiftServer.Server.Auth;
+﻿using Google.Protobuf.WellKnownTypes;
+using ShiftServer.Server.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,6 +13,9 @@ namespace ShiftServer.Server.Core
     {
         string Name { get; set; }
         string Guid { get; set; }
+        DateTime CreatedDate { get; set; }
+        DateTime UpdateDate { get; set; }
+        bool IsPrivate { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }

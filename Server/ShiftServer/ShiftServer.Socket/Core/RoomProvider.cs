@@ -1,4 +1,6 @@
-﻿using ShiftServer.Server.Auth;
+﻿using ShiftServer.Proto.Helper;
+using ShiftServer.Server.Auth;
+using ShiftServer.Server.Rooms;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,7 +28,27 @@ namespace ShiftServer.Server.Core
 
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
+
+            BattlegroundRoom newRoom = new BattlegroundRoom();
             log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate");
+            if (data.RoomData.CreatedRoom != null)
+            {
+                newRoom.Guid = Guid.NewGuid().ToString();
+                newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
+                newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
+                newRoom.CreatedDate = DateTime.UtcNow;
+                newRoom.UpdateDate = DateTime.UtcNow;
+
+            }
+
+            if (data.AccountData != null)
+            {
+                newRoom.Clients.Add(shift.connectionId, shift);
+                newRoom.SocketIdSessionLookup.Add(data.Session.Sid, shift.connectionId);
+            }
+
+            _sp.world.Rooms.Add(newRoom.Guid, newRoom);
+
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
         }
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
@@ -44,6 +66,7 @@ namespace ShiftServer.Server.Core
         public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> LobbyRefresh");
+            DateTime now = DateTime.UtcNow;
             //room data
             data.RoomData = new RoomData();
             List<IRoom> svRooms = _sp.world.Rooms.GetValues();
@@ -51,10 +74,13 @@ namespace ShiftServer.Server.Core
             {
                 data.RoomData.Rooms.Add(new ServerRoom
                 {
-                    CurrentUser = room.SocketIdSessionLookup.Count,
-                    MaxUser = room.MaxUser,
+                    IsPrivate = room.IsPrivate,
+                    CurrentUserCount = room.SocketIdSessionLookup.Count,
+                    MaxUserCount = room.MaxUser,
+                    UpdatedTime = room.UpdateDate.ToRelativeTime(),
+                    CreatedTime = room.CreatedDate.ToRelativeTime(),
                     Name = room.Name,
-                    RoomId = room.Guid
+                    Id = room.Guid
                 });
             }
             _sp.SendMessage(shift.connectionId, MSServerEvent.LobbyRefresh, data);
