@@ -33,14 +33,16 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
 
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetPlayers, OnRoomGetPlayers);
+
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreate, OnRoomCreated);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreateFailed, OnRoomCreateFailed);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDelete, OnRoomDeleted);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDeleteFailed, OnRoomDeleteFailed);
 
-        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerJoined, OnRoomGetInfo);
-        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerLeaved, OnRoomGetInfo);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerJoined, OnRoomPlayerJoined);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerLeft, OnRoomPlayerLeft);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
@@ -124,6 +126,10 @@ public class RoomManager : Menu {
         LogManager.instance.AddLog("OnRoomJoinFailed: " + data, Log.Type.Server);
     }
 
+    private void OnRoomGetPlayers(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomGetPlayers: " + data, Log.Type.Server);
+    }
+
     private void OnRoomCreated(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
 
@@ -147,8 +153,12 @@ public class RoomManager : Menu {
         LogManager.instance.AddLog("OnRoomDeleteFailed: " + data, Log.Type.Server);
     }
 
-    private void OnRoomGetInfo(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomGetInfo: " + data, Log.Type.Server);
+    private void OnRoomPlayerJoined(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomPlayerJoined: " + data, Log.Type.Server);
+    }
+
+    private void OnRoomPlayerLeft(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomPlayerLeft: " + data, Log.Type.Server);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
