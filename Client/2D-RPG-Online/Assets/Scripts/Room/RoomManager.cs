@@ -39,7 +39,8 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDelete, OnRoomDeleted);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDeleteFailed, OnRoomDeleteFailed);
 
-        NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetInfo, OnRoomGetInfo);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerJoined, OnRoomGetInfo);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerLeaved, OnRoomGetInfo);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
@@ -52,7 +53,7 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.CreatedRoom = new ServerRoom();
+        roomData.CreatedRoom = new MSSRoom();
 
         roomData.CreatedRoom.Name = "Odanın adını Feriha koydum.";
         roomData.CreatedRoom.IsPrivate = false;
@@ -72,7 +73,7 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new ServerRoom();
+        roomData.JoinedRoom = new MSSRoom();
         roomData.JoinedRoom.Id = id;
 
         data.RoomData = roomData;
@@ -88,7 +89,7 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.LeavedRoom = new ServerRoom();
+        roomData.LeavedRoom = new MSSRoom();
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave);
     }
@@ -97,7 +98,7 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.DeletedRoom = new ServerRoom();
+        roomData.DeletedRoom = new MSSRoom();
         roomData.DeletedRoom.Id = NetworkManager.mss.JoinedRoom.Id;
 
         data.RoomData = roomData;
@@ -126,9 +127,9 @@ public class RoomManager : Menu {
     private void OnRoomCreated(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
 
-        ServerRoom serverRoom = data.RoomData.CreatedRoom;
+        MSSRoom MSSRoom = data.RoomData.CreatedRoom;
 
-        LobbyManager.instance.CreateLobbyRow(serverRoom);
+        LobbyManager.instance.CreateLobbyRow(MSSRoom);
 
         LobbyManager.instance.Hide();
         this.Show();
