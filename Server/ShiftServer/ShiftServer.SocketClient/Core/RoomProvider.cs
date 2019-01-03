@@ -10,9 +10,9 @@ namespace ShiftServer.Client.Core
     public class RoomProvider
     {
         private List<Room> _roomList;
-        private ServerRoom _joinedRoom;
+        private MSSRoom _joinedRoom;
         public List<Room> RoomList { get => _roomList; private set => _roomList = value; }
-        public ServerRoom JoinedRoom { get => _joinedRoom; private set => _joinedRoom = value; }
+        public MSSRoom JoinedRoom { get => _joinedRoom; private set => _joinedRoom = value; }
 
         public RoomProvider()
         {
@@ -80,7 +80,7 @@ namespace ShiftServer.Client.Core
         {
             return room.IsPrivate || room.IsFull || room.IsOwner ? false : true;
         }
-        private void UpdateRoom(int key, ServerRoom room)
+        private void UpdateRoom(int key, MSSRoom room)
         {
             RoomList[key].CurrentUser = room.CurrentUserCount;
             RoomList[key].MaxUser = room.MaxUserCount;

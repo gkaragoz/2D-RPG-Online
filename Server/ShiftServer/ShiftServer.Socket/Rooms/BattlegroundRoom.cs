@@ -24,6 +24,7 @@ namespace ShiftServer.Server.Rooms
         public int CreatedUserId { get; set; }
         public int ServerLeaderId { get; set; }
         public int DisposeInMilliseconds { get; set; }
+        public int MaxConnId { get; set; }
 
         public BattlegroundRoom()
         {
@@ -32,6 +33,7 @@ namespace ShiftServer.Server.Rooms
             GameObjects = new SafeDictionary<int, IGameObject>();
             Id = Guid.NewGuid().ToString();
             DisposeInMilliseconds = 10000;
+            MaxConnId = 0;
         }
         public void OnGameStart(ShiftServerData data, ShiftClient client)
         {
@@ -64,14 +66,37 @@ namespace ShiftServer.Server.Rooms
 
         public void OnPlayerJoin(ShiftServerData data, ShiftClient client)
         {
+
         }
 
-        public void OnRoomUpdate()
+        public void BroadcastToRoom(ShiftClient currentClient, MSSRoomPlayerState state)
         {
+            RoomPlayerInfo pInfo = new RoomPlayerInfo();
+            pInfo.State = state;
+            pInfo.Username = currentClient.UserName;
+            pInfo.Id = currentClient.connectionId;
+
+            ShiftServerData data = new ShiftServerData();
+            data.RoomData = new RoomData();
+            data.RoomData.PlayerInfo = pInfo;
+
+            List<ShiftClient> clientList = this.Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSession == null)
+                    continue;
+               
+                clientList[i].SendPacket(MSServerEvent.RoomGetInfo, data);
+            }
         }
 
         public void SendRoomState()
         {
+        }
+
+        public void OnRoomUpdate()
+        {
+
         }
     }
 }
