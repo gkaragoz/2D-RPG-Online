@@ -63,6 +63,11 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
     }
 
+    public void ReturnRoom(string id) {
+        LobbyManager.instance.Hide();
+        this.Show();
+    }
+
     public void JoinRoom(string id) {
         ShiftServerData data = new ShiftServerData();
 
@@ -101,6 +106,8 @@ public class RoomManager : Menu {
     }
 
     public void GoToLobby() {
+        LobbyManager.instance.RefreshLobby(false);
+
         this.Hide();
         LobbyManager.instance.Show();
     }

@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class LobbyRow : MonoBehaviour {
@@ -17,6 +13,8 @@ public class LobbyRow : MonoBehaviour {
     private TextMeshProUGUI _txtPlayersCount;
     [SerializeField]
     private Toggle _togglePrivate;
+    [SerializeField]
+    private Button _btnReturn;
     [SerializeField]
     private Button _btnJoin;
     [SerializeField]
@@ -41,14 +39,22 @@ public class LobbyRow : MonoBehaviour {
         }
     }
 
-    public void Initialize(string rowNumber, ServerRoom serverRoom) {
+    public void Initialize(int rowNumber, ServerRoom serverRoom) {
         this._serverRoom = serverRoom;
+        this._rowNumber = rowNumber;
+    }
 
-        SetRowNumber(rowNumber);
+    public void UpdateUI(string joinedRoomID) {
+        SetRowNumber();
         SetRoomName();
         SetUserCount();
         SetPrivateToggle();
-        SetActionButtonsInteractions();
+
+        SetActionButtonsInteractions(joinedRoomID);
+    }
+
+    public void SetReturnButtonOnClickAction(LobbyManager.ReturnDelegate returnDelegate) {
+        _btnReturn.onClick.AddListener(() => returnDelegate(_serverRoom.Id));
     }
 
     public void SetJoinButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
@@ -59,17 +65,24 @@ public class LobbyRow : MonoBehaviour {
         _btnWatch.onClick.AddListener(() => watchDelegate(_serverRoom.Id));
     }
 
-    private void SetActionButtonsInteractions() {
-        if (_serverRoom.IsOwner) {
+    private void SetActionButtonsInteractions(string joinedRoomID) {
+        if (joinedRoomID == GetRoomID || _serverRoom.IsOwner) {
+            ActivateReturnButtonInteraction();
             DeactivateJoinButtonInteraction();
             DeactivateWatchButtonInteraction();
         } else if (IsAvailableToJoin) {
+            DeactivateReturnButtonInteraction();
             ActivateJoinButtonInteraction();
             ActivateWatchButtonInteraction();
-        } else {
-            DeactivateJoinButtonInteraction();
-            DeactivateWatchButtonInteraction();
         }
+    }
+
+    private void ActivateReturnButtonInteraction() {
+        _btnReturn.interactable = true;
+    }
+
+    private void DeactivateReturnButtonInteraction() {
+        _btnReturn.interactable = false;
     }
 
     private void ActivateJoinButtonInteraction() {
@@ -88,8 +101,8 @@ public class LobbyRow : MonoBehaviour {
         _btnWatch.interactable = false;
     }
 
-    private void SetRowNumber(string rowNumber) {
-        _txtRowNumber.text = rowNumber;
+    private void SetRowNumber() {
+        _txtRowNumber.text = _rowNumber.ToString();
     }
 
     private void SetRoomName() {
