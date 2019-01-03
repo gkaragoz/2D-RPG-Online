@@ -84,35 +84,35 @@ public class LobbyManager : Menu {
             NetworkManager.mss.GetRoomList();
         } else {
             for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-                _lobbyRowsList[ii].UpdateUI(NetworkManager.mss.JoinedRoom.Id);
+                _lobbyRowsList[ii].UpdateUI();
             }
         }
     }
 
-    public void CreateLobbyRow(ServerRoom serverRoom) {
+    public void CreateLobbyRow(MSSRoom MSSRoom) {
         LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
 
-        lobbyRow.Initialize(1, serverRoom);
+        lobbyRow.Initialize(1, MSSRoom);
         lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
         lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
 
         _lobbyRowsList.Add(lobbyRow);
     }
 
-    public void UpdateLobbyRow(LobbyRow lobbyRow, ServerRoom serverRoom) {
-        lobbyRow.Initialize(1, serverRoom);
+    public void UpdateLobbyRow(LobbyRow lobbyRow, MSSRoom MSSRoom) {
+        lobbyRow.Initialize(1, MSSRoom);
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
         LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
 
         for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
-            ServerRoom serverRoom = data.RoomData.Rooms[ii];
+            MSSRoom MSSRoom = data.RoomData.Rooms[ii];
 
-            if (IsLobbyRowExists(serverRoom.Id)) {
-                UpdateLobbyRow(_lobbyRowsList[ii], serverRoom);
+            if (IsLobbyRowExists(MSSRoom.Id)) {
+                UpdateLobbyRow(_lobbyRowsList[ii], MSSRoom);
             } else {
-                CreateLobbyRow(serverRoom);
+                CreateLobbyRow(MSSRoom);
             }
         }
     }
