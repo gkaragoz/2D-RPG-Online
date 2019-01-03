@@ -17,20 +17,25 @@ namespace ShiftServer.Server.Rooms
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public int MaxUser { get; set; }
         public string Name { get; set; }
-        public string Guid { get; set; }
+        public string Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public bool IsPrivate { get; set; }
         public int CreatedUserId { get; set; }
+        public int ServerLeaderId { get; set; }
+        public int DisposeInMilliseconds { get; set; }
 
         public BattlegroundRoom()
         {
             Clients = new SafeDictionary<int, ShiftClient>();
             SocketIdSessionLookup = new SafeDictionary<string, int>();
             GameObjects = new SafeDictionary<int, IGameObject>();
+            Id = Guid.NewGuid().ToString();
+            DisposeInMilliseconds = 10000;
         }
         public void OnGameStart(ShiftServerData data, ShiftClient client)
         {
+
         }
 
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)

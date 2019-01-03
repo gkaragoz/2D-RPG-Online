@@ -12,8 +12,10 @@ namespace ShiftServer.Server.Core
     public interface IRoom
     {
         string Name { get; set; }
-        string Guid { get; set; }
+        string Id { get; set; }
         int CreatedUserId { get; set; }
+        int ServerLeaderId { get; set; }
+        int DisposeInMilliseconds { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         bool IsPrivate { get; set; }

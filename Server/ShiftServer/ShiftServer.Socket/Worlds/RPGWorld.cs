@@ -230,7 +230,7 @@ namespace ShiftServer.Server.Worlds
                     CreatedTime = room.CreatedDate.ToRelativeTime(),
                     UpdatedTime = room.UpdateDate.ToRelativeTime(),
                     Name = room.Name,
-                    Id = room.Guid
+                    Id = room.Id
                 });
             }
 
