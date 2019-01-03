@@ -48,6 +48,7 @@ public class LobbyManager : Menu {
     [SerializeField]
     [Utils.ReadOnly]
     private List<LobbyRow> _lobbyRowsList = new List<LobbyRow>();
+    private string _joinedRoomId;
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
@@ -59,6 +60,8 @@ public class LobbyManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDelete, OnRoomDeleted);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDeleteFailed, OnRoomDeleteFailed);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetInfo, OnRoomGetInfo);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
 
         RefreshLobby();
 
@@ -67,6 +70,34 @@ public class LobbyManager : Menu {
 
         onJoinButtonClicked = JoinRoom;
         onWatchButtonClicked = WatchRoom;
+    }
+
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (_joinedRoomId != string.Empty) {
+                LeaveRoom(_joinedRoomId);
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.UpArrow)) {
+            LeaveRoom("");
+        }
+
+        if (Input.GetKeyDown(KeyCode.DownArrow)) {
+            LeaveRoom("AptalSaptalRoomID");
+        }
+    }
+
+    private void LeaveRoom(string id) {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new ServerRoom();
+        roomData.JoinedRoom.Id = _joinedRoomId;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave, data);
     }
 
     private void CreateRoom() {
@@ -183,6 +214,8 @@ public class LobbyManager : Menu {
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
+        _joinedRoomId = data.RoomData.JoinedRoom.Id;
+
         this.Hide();
         RoomManager.instance.Show();
     }
@@ -231,6 +264,16 @@ public class LobbyManager : Menu {
 
     private void OnRoomGetInfo(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomGetInfo: " + data, Log.Type.Server);
+    }
+
+    private void OnRoomLeaveSuccess(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
+
+        _joinedRoomId = string.Empty;
+    }
+
+    private void OnRoomLeaveFailed(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomLeaveFailed: " + data, Log.Type.Server);
     }
 
 }
