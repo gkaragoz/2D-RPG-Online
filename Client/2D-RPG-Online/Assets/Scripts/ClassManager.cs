@@ -1,5 +1,7 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 
 /// <summary>
@@ -27,5 +29,39 @@ public class ClassManager : Menu {
     }
 
     #endregion
+
+    public enum Classes {
+        Warrior,
+        Archer,
+        Mage,
+        Priest
+    }
+
+    [Serializable]
+    public class CharacterClassVisualization {
+        public string className;
+        public Sprite classSprite;
+        public AnimatorController classAnimatorController;
+        public Color classFrameColor;
+        public Sprite classIcon;
+    }
+
+    [SerializeField]
+    private CharacterClassVisualization[] _characterClassVisualization;
+
+    public CharacterClassVisualization GetCharacterClassVisualize(Classes characterClass) {
+        switch (characterClass) {
+            case Classes.Warrior:
+                return _characterClassVisualization[0];
+            case Classes.Archer:
+                return _characterClassVisualization[1];
+            case Classes.Mage:
+                return _characterClassVisualization[2];
+            case Classes.Priest:
+                return _characterClassVisualization[3];
+            default:
+                return null;
+        }
+    }
 
 }
