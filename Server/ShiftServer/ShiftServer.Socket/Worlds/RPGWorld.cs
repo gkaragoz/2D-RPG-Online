@@ -236,7 +236,7 @@ namespace ShiftServer.Server.Worlds
 
 
             shift.SendPacket(MSServerEvent.Login, data);
-
+            shift.UserName = data.AccountData.Username;
             SocketIdSessionLookup.Add(sessionId, shift.connectionId);
             log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 

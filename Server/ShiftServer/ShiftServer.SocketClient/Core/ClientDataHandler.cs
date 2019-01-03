@@ -49,6 +49,14 @@ namespace ShiftServer.Client.Core
                             roomProvider.AddOrUpdate(data);
                             break;
                         case MSServerEvent.RoomJoin:
+                            roomProvider.SetCurrentJoinedRoom(data);
+                            roomProvider.AddOrUpdate(data);
+                            break;
+                        case MSServerEvent.RoomLeave:
+                            roomProvider.DisposeRoom(data);
+                            break;
+                        case MSServerEvent.RoomDelete:
+                            roomProvider.DisposeRoom(data);
                             break;
                         case MSServerEvent.Connection:
                             break;

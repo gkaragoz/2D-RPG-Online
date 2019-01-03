@@ -71,9 +71,10 @@ enum ShiftServerError
 	ROOM_NOT_FOUND = 2;		
 	ALREADY_IN_ROOM = 3;		
 	WRONG_LOGIN_CREDENTIALS = 4; // Wrong login credentials
-	WRONG_CLIENT_DATA = 5; // Wrong client credentials
-	NO_RESPOND_SERVER = 6; // Connection lost
-	ROOM_AUTH_PROBLEM = 7; // Occurs
+	WRONG_CLIENT_DATA = 5; 
+	NO_RESPOND_SERVER = 6; 
+	ROOM_AUTH_PROBLEM = 7; 
+	NOT_IN_ANY_ROOM = 8; 
 
 }
 enum ShiftRoomType
