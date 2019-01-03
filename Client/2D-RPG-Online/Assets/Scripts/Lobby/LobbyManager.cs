@@ -74,30 +74,17 @@ public class LobbyManager : Menu {
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if (_joinedRoomId != string.Empty) {
-                LeaveRoom(_joinedRoomId);
-            }
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            LeaveRoom("");
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            LeaveRoom("AptalSaptalRoomID");
+            LeaveRoom();
         }
     }
 
-    private void LeaveRoom(string id) {
+    private void LeaveRoom() {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new ServerRoom();
-        roomData.JoinedRoom.Id = _joinedRoomId;
+        roomData.LeavedRoom = new ServerRoom();
 
-        data.RoomData = roomData;
-
-        NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave, data);
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave);
     }
 
     private void CreateRoom() {
@@ -241,6 +228,8 @@ public class LobbyManager : Menu {
             isPrivate
             );
 
+        _joinedRoomId = data.RoomData.CreatedRoom.Id;
+
         this.Hide();
         RoomManager.instance.Show();
     }
@@ -270,6 +259,9 @@ public class LobbyManager : Menu {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
 
         _joinedRoomId = string.Empty;
+
+        RoomManager.instance.Hide();
+        this.Show();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
