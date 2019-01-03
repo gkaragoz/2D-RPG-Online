@@ -203,8 +203,8 @@ namespace ShiftServer.Server.Core
                     IsOwner = room.ServerLeaderId == shift.connectionId,
                     CurrentUserCount = room.SocketIdSessionLookup.Count,
                     MaxUserCount = room.MaxUser,
-                    UpdatedTime = room.UpdateDate.ToRelativeTime(),
-                    CreatedTime = room.CreatedDate.ToRelativeTime(),
+                    UpdatedTime = room.UpdateDate.Ticks,
+                    CreatedTime = room.CreatedDate.Ticks,
                     Name = room.Name,
                     Id = room.Id
                 });

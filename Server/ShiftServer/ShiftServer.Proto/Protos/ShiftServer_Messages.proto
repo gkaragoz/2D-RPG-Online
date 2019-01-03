@@ -104,8 +104,8 @@ message RoomData {
 message ServerRoom {
 
 	string Id = 1;
-	string createdTime = 2;
-	string updatedTime = 3;
+	int64 createdTime = 2;
+	int64 updatedTime = 3;
 	bool isPrivate = 4;
 	bool isOwner = 5;
 	string name = 6;
