@@ -23,8 +23,7 @@ namespace ShiftServer.Server.Core
         }
         public void CreateRoom(IRoom room)
         {
-            room.Guid = Guid.NewGuid().ToString();
-            _sp.world.Rooms.Add(room.Guid, room);
+            _sp.world.Rooms.Add(room.Id, room);
         }
 
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
@@ -37,33 +36,45 @@ namespace ShiftServer.Server.Core
                 {
                     log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate" + data.RoomData.CreatedRoom.Name);
 
-                    newRoom.Guid = Guid.NewGuid().ToString();
-                    data.RoomData.CreatedRoom.Id = Guid.NewGuid().ToString();
+                    data.RoomData.CreatedRoom.Id = newRoom.Id;
                     newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
                     newRoom.CreatedUserId = shift.connectionId;
                     newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
                     newRoom.CreatedDate = DateTime.UtcNow;
                     newRoom.UpdateDate = DateTime.UtcNow;
+                    shift.JoinedRoomId = newRoom.Id;
+                    newRoom.ServerLeaderId = shift.connectionId;
+                    newRoom.Clients.Add(shift.connectionId, shift);
+                    newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
 
                 }
-                _sp.world.Rooms.Add(newRoom.Guid, newRoom);
-                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreate, data);
+                _sp.world.Rooms.Add(newRoom.Id, newRoom);
+                shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
             }
             else
             {
                 ShiftServerData oData = new ShiftServerData();
-                oData.ErrorReason = ShiftServerError.RoomNotFound;
-                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreateFailed, oData);
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.AlreadyInRoom);
+                oData.ErrorReason = ShiftServerError.AlreadyInRoom;
+                shift.SendPacket(MSServerEvent.RoomCreateFailed, oData);
 
             }
 
         }
+
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
             IRoom result = null;
-
+            IRoom prevRoom = null;
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
+            if (shift.IsJoinedToRoom)
+            {
+                _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
+                prevRoom.Clients.Remove(shift.connectionId);
+                prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
+            }
+
             if (data.RoomData.JoinedRoom != null)
             {
                 _sp.world.Rooms.TryGetValue(data.RoomData.JoinedRoom.Id, out result);
@@ -72,13 +83,15 @@ namespace ShiftServer.Server.Core
                 {
                     result.Clients.Add(shift.connectionId, shift);
                     result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                    shift.JoinedRoomId = result.Id;
                     shift.IsJoinedToRoom = true;
                 }
                 else
                 {
                     ShiftServerData oData = new ShiftServerData();
+                    log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.AlreadyInRoom);
                     oData.ErrorReason = ShiftServerError.AlreadyInRoom;
-                    _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoinFailed, oData);
+                    shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                     return;
                 }
 
@@ -87,6 +100,33 @@ namespace ShiftServer.Server.Core
             }
 
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoin, data);
+        }
+        public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
+        {
+            IRoom result = null;
+            IRoom prevRoom = null;
+            log.Info($"ClientNO: {shift.connectionId} ------> RoomLeave");
+            if (shift.IsJoinedToRoom)
+            {
+                _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
+                prevRoom.Clients.Remove(shift.connectionId);
+                prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
+
+                ShiftServerData leavedRoom = new ShiftServerData();
+
+                leavedRoom.RoomData = new RoomData();
+                leavedRoom.RoomData.LeavedRoom = new ServerRoom();
+                leavedRoom.RoomData.LeavedRoom.Id = prevRoom.Id;
+                shift.SendPacket(MSServerEvent.RoomLeave, data);
+
+            }
+            else
+            {
+                ShiftServerData err = new ShiftServerData();
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomNotFound);
+                err.ErrorReason = ShiftServerError.RoomNotFound;
+                shift.SendPacket(MSServerEvent.RoomLeaveFailed, err);
+            }
         }
 
         public void OnRoomGameStart(ShiftServerData data, ShiftClient shift)
@@ -115,7 +155,8 @@ namespace ShiftServer.Server.Core
                     {
                         ShiftServerData errData = new ShiftServerData();
                         errData.ErrorReason = ShiftServerError.RoomAuthProblem;
-                        _sp.SendMessage(shift.connectionId, MSServerEvent.RoomDeleteFailed, errData);
+                        log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem.ToString());
+                        shift.SendPacket(MSServerEvent.RoomDeleteFailed, errData);
                         return;
                     }
                 }
@@ -127,14 +168,14 @@ namespace ShiftServer.Server.Core
                 ShiftServerData newData = new ShiftServerData();
                 newData.RoomData = new RoomData();
                 newData.RoomData.DeletedRoom = new ServerRoom();
-                newData.RoomData.DeletedRoom.Id = room.Guid;
-                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomDelete, newData);
+                newData.RoomData.DeletedRoom.Id = room.Id;
+                shift.SendPacket(MSServerEvent.RoomDelete, newData);
             }
             else
             {
-
+                log.Error($"ClientNO: {shift.connectionId} ------> Room Delete error");
             }
-       
+
         }
 
         public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
@@ -154,10 +195,10 @@ namespace ShiftServer.Server.Core
                     UpdatedTime = room.UpdateDate.ToRelativeTime(),
                     CreatedTime = room.CreatedDate.ToRelativeTime(),
                     Name = room.Name,
-                    Id = room.Guid
+                    Id = room.Id
                 });
             }
-            _sp.SendMessage(shift.connectionId, MSServerEvent.LobbyRefresh, data);
+            shift.SendPacket(MSServerEvent.LobbyRefresh, data);
         }
     }
 }

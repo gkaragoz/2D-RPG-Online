@@ -32,6 +32,7 @@ enum MSBaseEventId
 enum MSPlayerEvent
 {
 
+
 	//Interaction events
 	WORLD_UPDATE = 0;
 	MOVE = 1;
@@ -48,18 +49,20 @@ enum MSServerEvent
 	LOGIN_FAILED = 1;
 	PUBLIC_MESSAGE = 2;						
 	ROOM_JOIN = 3;						
-	ROOM_CREATE = 4;						
-	ROOM_DELETE = 5;						
-	ROOM_GET_INFO = 6;						
-	ROOM_JOIN_FAILED = 7;		
-	ROOM_CREATE_FAILED = 8;		
-	ROOM_DELETE_FAILED = 9;		
-	ROOM_GAME_START = 11;		
-	LOBBY_REFRESH = 12;		
-	CONNECTION = 13;			
-	CONNECTION_FAILED = 14;			
-	CONNECTION_LOST = 15;			
-	PING_REQUEST = 16;				
+	ROOM_LEAVE = 4;						
+	ROOM_LEAVE_FAILED = 5;						
+	ROOM_CREATE = 6;						
+	ROOM_DELETE = 7;						
+	ROOM_GET_INFO = 8;						
+	ROOM_JOIN_FAILED = 9;		
+	ROOM_CREATE_FAILED = 10;		
+	ROOM_DELETE_FAILED = 11;		
+	ROOM_GAME_START = 12;		
+	LOBBY_REFRESH = 13;		
+	CONNECTION = 14;			
+	CONNECTION_FAILED = 15;			
+	CONNECTION_LOST = 16;			
+	PING_REQUEST = 17;				
 }
 enum ShiftServerError
 {
@@ -93,7 +96,8 @@ message RoomData {
 	ServerRoom CreatedRoom = 1;
 	ServerRoom JoinedRoom = 2;
 	ServerRoom DeletedRoom = 3;
-	repeated ServerRoom rooms = 4;
+	ServerRoom LeavedRoom = 4;
+	repeated ServerRoom rooms = 5;
 }
 
 message ServerRoom {

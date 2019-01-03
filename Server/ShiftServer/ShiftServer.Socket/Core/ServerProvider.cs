@@ -3,6 +3,7 @@ using ShiftServer.Proto.Helper;
 using ShiftServer.Server.Auth;
 using ShiftServer.Server.Helper;
 using System;
+using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
@@ -178,13 +179,33 @@ namespace ShiftServer.Server.Core
                             {
                                 ShiftClient dcedClient = null;
                                 string userSessionId = string.Empty;
+                                List<ShiftClient> clientList = world.Clients.GetValues();
                                 world.Clients.TryGetValue(msg.connectionId, out dcedClient);
 
-                                if (dcedClient.UserSession != null)
+                                if (dcedClient.UserSession != null && dcedClient != null)
                                 {
                                     userSessionId = dcedClient.UserSession.GetSid();
                                     if (!string.IsNullOrEmpty(userSessionId))
                                     {
+                                        IRoom room = null;
+                                        if (!string.IsNullOrEmpty(dcedClient.JoinedRoomId))
+                                        {
+                                            world.Rooms.TryGetValue(dcedClient.JoinedRoomId, out room);
+
+                                            if (room != null)
+                                            {
+                                                if(room.SocketIdSessionLookup.Count == 1) 
+                                                {
+                                                    // make some other ppl to leader
+                                                    room.DisposeInMilliseconds = 50;
+                                                }
+                                                dcedClient.IsJoinedToRoom = false;
+                                                dcedClient.JoinedRoomId = null;
+                                                room.Clients.Remove(dcedClient.connectionId);
+                                                room.SocketIdSessionLookup.Remove(dcedClient.UserSession.GetSid());
+                                            }
+
+                                        }
                                         world.SocketIdSessionLookup.Remove(userSessionId);
                                     }
                                 }
@@ -197,6 +218,9 @@ namespace ShiftServer.Server.Core
                             }
                             catch (Exception err)
                             {
+                                ShiftServerData errorData = new ShiftServerData();
+                                errorData.ErrorReason = ShiftServerError.BadSession;
+                                this.SendMessage(msg.connectionId, MSServerEvent.ConnectionLost, errorData);
                                 log.Error($"ClientNO: {msg.connectionId} Exception throwed when trying to disconnect", err);
                             }
                             break;
