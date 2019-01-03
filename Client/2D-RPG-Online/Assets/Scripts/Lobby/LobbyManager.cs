@@ -180,6 +180,9 @@ public class LobbyManager : Menu {
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
+
+        this.Hide();
+        RoomManager.instance.Show();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
@@ -202,6 +205,9 @@ public class LobbyManager : Menu {
             maxUsersCount,
             isPrivate
             );
+
+        this.Hide();
+        RoomManager.instance.Show();
     }
 
     private void OnRoomDeleted(ShiftServerData data) {
