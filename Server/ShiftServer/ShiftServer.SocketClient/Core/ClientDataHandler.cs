@@ -43,7 +43,7 @@ namespace ShiftServer.Client.Core
                     switch (data.Svevtid)
                     {
                         case MSServerEvent.Login:
-                            roomProvider.AddOrUpdate(data);
+                            //roomProvider.AddOrUpdate(data);
                             break;
                         case MSServerEvent.LobbyRefresh:
                             roomProvider.AddOrUpdate(data);

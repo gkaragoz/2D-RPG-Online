@@ -39,8 +39,8 @@ public static partial class ShiftServerMessagesReflection {
           "Sm9pbmVkUm9vbRgCIAEoCzILLlNlcnZlclJvb20SIAoLRGVsZXRlZFJvb20Y",
           "AyABKAsyCy5TZXJ2ZXJSb29tEh8KCkxlYXZlZFJvb20YBCABKAsyCy5TZXJ2",
           "ZXJSb29tEhoKBXJvb21zGAUgAygLMgsuU2VydmVyUm9vbSKkAQoKU2VydmVy",
-          "Um9vbRIKCgJJZBgBIAEoCRITCgtjcmVhdGVkVGltZRgCIAEoCRITCgt1cGRh",
-          "dGVkVGltZRgDIAEoCRIRCglpc1ByaXZhdGUYBCABKAgSDwoHaXNPd25lchgF",
+          "Um9vbRIKCgJJZBgBIAEoCRITCgtjcmVhdGVkVGltZRgCIAEoAxITCgt1cGRh",
+          "dGVkVGltZRgDIAEoAxIRCglpc1ByaXZhdGUYBCABKAgSDwoHaXNPd25lchgF",
           "IAEoCBIMCgRuYW1lGAYgASgJEhQKDG1heFVzZXJDb3VudBgHIAEoBRIYChBj",
           "dXJyZW50VXNlckNvdW50GAggASgFIjEKC0FjY291bnREYXRhEhAKCHVzZXJu",
           "YW1lGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIlwKDE9iamVjdEFjdGlvbhIj",
@@ -1285,23 +1285,23 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
 
   /// <summary>Field number for the "createdTime" field.</summary>
   public const int CreatedTimeFieldNumber = 2;
-  private string createdTime_ = "";
+  private long createdTime_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string CreatedTime {
+  public long CreatedTime {
     get { return createdTime_; }
     set {
-      createdTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      createdTime_ = value;
     }
   }
 
   /// <summary>Field number for the "updatedTime" field.</summary>
   public const int UpdatedTimeFieldNumber = 3;
-  private string updatedTime_ = "";
+  private long updatedTime_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public string UpdatedTime {
+  public long UpdatedTime {
     get { return updatedTime_; }
     set {
-      updatedTime_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+      updatedTime_ = value;
     }
   }
 
@@ -1388,8 +1388,8 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
   public override int GetHashCode() {
     int hash = 1;
     if (Id.Length != 0) hash ^= Id.GetHashCode();
-    if (CreatedTime.Length != 0) hash ^= CreatedTime.GetHashCode();
-    if (UpdatedTime.Length != 0) hash ^= UpdatedTime.GetHashCode();
+    if (CreatedTime != 0L) hash ^= CreatedTime.GetHashCode();
+    if (UpdatedTime != 0L) hash ^= UpdatedTime.GetHashCode();
     if (IsPrivate != false) hash ^= IsPrivate.GetHashCode();
     if (IsOwner != false) hash ^= IsOwner.GetHashCode();
     if (Name.Length != 0) hash ^= Name.GetHashCode();
@@ -1412,13 +1412,13 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
       output.WriteRawTag(10);
       output.WriteString(Id);
     }
-    if (CreatedTime.Length != 0) {
-      output.WriteRawTag(18);
-      output.WriteString(CreatedTime);
+    if (CreatedTime != 0L) {
+      output.WriteRawTag(16);
+      output.WriteInt64(CreatedTime);
     }
-    if (UpdatedTime.Length != 0) {
-      output.WriteRawTag(26);
-      output.WriteString(UpdatedTime);
+    if (UpdatedTime != 0L) {
+      output.WriteRawTag(24);
+      output.WriteInt64(UpdatedTime);
     }
     if (IsPrivate != false) {
       output.WriteRawTag(32);
@@ -1451,11 +1451,11 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     if (Id.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Id);
     }
-    if (CreatedTime.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(CreatedTime);
+    if (CreatedTime != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(CreatedTime);
     }
-    if (UpdatedTime.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(UpdatedTime);
+    if (UpdatedTime != 0L) {
+      size += 1 + pb::CodedOutputStream.ComputeInt64Size(UpdatedTime);
     }
     if (IsPrivate != false) {
       size += 1 + 1;
@@ -1486,10 +1486,10 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
     if (other.Id.Length != 0) {
       Id = other.Id;
     }
-    if (other.CreatedTime.Length != 0) {
+    if (other.CreatedTime != 0L) {
       CreatedTime = other.CreatedTime;
     }
-    if (other.UpdatedTime.Length != 0) {
+    if (other.UpdatedTime != 0L) {
       UpdatedTime = other.UpdatedTime;
     }
     if (other.IsPrivate != false) {
@@ -1522,12 +1522,12 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
           Id = input.ReadString();
           break;
         }
-        case 18: {
-          CreatedTime = input.ReadString();
+        case 16: {
+          CreatedTime = input.ReadInt64();
           break;
         }
-        case 26: {
-          UpdatedTime = input.ReadString();
+        case 24: {
+          UpdatedTime = input.ReadInt64();
           break;
         }
         case 32: {
