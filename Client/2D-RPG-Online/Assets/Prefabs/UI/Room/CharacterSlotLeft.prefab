@@ -212,7 +212,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!95 &95103929958899698
 Animator:
   serializedVersion: 3
@@ -623,6 +623,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c62e0e230686754892c7d9b74633d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _UISettings:
+    imgFrame: {fileID: 114008096926785824}
+    imgCharacter: {fileID: 114300342272606444}
+    imgClassIcon: {fileID: 114724188473029434}
+    isReady: {fileID: 114261243033413996}
+    imgLeader: {fileID: 114360751511230914}
+    txtPlayerName: {fileID: 114329707987169994}
+    txtCharacterName: {fileID: 114262324543930350}
 --- !u!114 &114724188473029434
 MonoBehaviour:
   m_ObjectHideFlags: 1
