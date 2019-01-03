@@ -54,7 +54,7 @@ namespace ShiftServer.Server.Core
             {
                 ShiftServerData oData = new ShiftServerData();
                 oData.ErrorReason = ShiftServerError.RoomNotFound;
-                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoinFailed, oData);
+                _sp.SendMessage(shift.connectionId, MSServerEvent.RoomCreateFailed, oData);
 
             }
 
@@ -115,7 +115,7 @@ namespace ShiftServer.Server.Core
                     {
                         ShiftServerData errData = new ShiftServerData();
                         errData.ErrorReason = ShiftServerError.RoomAuthProblem;
-                        _sp.SendMessage(shift.connectionId, MSServerEvent.RoomDelete, errData);
+                        _sp.SendMessage(shift.connectionId, MSServerEvent.RoomDeleteFailed, errData);
                         return;
                     }
                 }
@@ -129,6 +129,10 @@ namespace ShiftServer.Server.Core
                 newData.RoomData.DeletedRoom = new ServerRoom();
                 newData.RoomData.DeletedRoom.Id = room.Guid;
                 _sp.SendMessage(shift.connectionId, MSServerEvent.RoomDelete, newData);
+            }
+            else
+            {
+
             }
        
         }
