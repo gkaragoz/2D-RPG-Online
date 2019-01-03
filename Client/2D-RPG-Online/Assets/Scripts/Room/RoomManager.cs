@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,7 +28,21 @@ public class RoomManager : Menu {
     }
 
     [SerializeField]
+    private RoomClientSlot _roomLeftClientSlotPrefab;
+    [SerializeField]
+    private RoomClientSlot _roomRightClientSlotPrefab;
+    [SerializeField]
+    private RectTransform _leftSlotParent;
+    [SerializeField]
+    private RectTransform _rightSlotParent;
+    [SerializeField]
     private UISettings _UISettings;
+
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private List<RoomClientSlot> _roomLeftClientSlotsList = new List<RoomClientSlot>();
+    private List<RoomClientSlot> _roomRightClientSlotsList = new List<RoomClientSlot>();
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
@@ -57,7 +72,7 @@ public class RoomManager : Menu {
         RoomData roomData = new RoomData();
         roomData.CreatedRoom = new MSSRoom();
 
-        roomData.CreatedRoom.Name = "Odanın adını Feriha koydum.";
+        roomData.CreatedRoom.Name = Guid.NewGuid().ToString().Substring(0, 10);
         roomData.CreatedRoom.IsPrivate = false;
         roomData.CreatedRoom.MaxUserCount = 5;
 
@@ -115,6 +130,27 @@ public class RoomManager : Menu {
         LobbyManager.instance.Show();
     }
 
+    private void CreateRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
+        RoomClientSlot roomClientSlot = Instantiate(_roomLeftClientSlotPrefab, _leftSlotParent);
+        roomClientSlot.Initialize(roomPlayerInfo);
+
+        _roomLeftClientSlotsList.Add(roomClientSlot);
+    }
+
+    private void UpdateRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
+        string username = roomPlayerInfo.Username;
+
+        _roomLeftClientSlotsList.Find(slot => slot.Username == username).Initialize(roomPlayerInfo);
+    }
+
+    private void RemoveRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
+        string username = roomPlayerInfo.Username;
+
+        RoomClientSlot roomClientSlot = _roomLeftClientSlotsList.Find(slot => slot.Username == username);
+        _roomLeftClientSlotsList.Remove(roomClientSlot);
+        roomClientSlot.Destroy();
+    }
+
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
@@ -128,6 +164,16 @@ public class RoomManager : Menu {
 
     private void OnRoomGetPlayers(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomGetPlayers: " + data, Log.Type.Server);
+
+        for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
+            RoomPlayerInfo roomPlayerInfo = data.RoomData.PlayerList[ii];
+
+            if (IsRoomPlayerExists(roomPlayerInfo.Username)) {
+                CreateRoomClientSlot(roomPlayerInfo);
+            } else {
+                UpdateRoomClientSlot(roomPlayerInfo);
+            }
+        }
     }
 
     private void OnRoomCreated(ShiftServerData data) {
@@ -136,6 +182,11 @@ public class RoomManager : Menu {
         MSSRoom MSSRoom = data.RoomData.CreatedRoom;
 
         LobbyManager.instance.CreateLobbyRow(MSSRoom);
+
+        RoomPlayerInfo roomPlayerInfo = new RoomPlayerInfo();
+        roomPlayerInfo.Username = "USERNAMEI MSS VERCEK";
+
+        CreateRoomClientSlot(roomPlayerInfo);
 
         LobbyManager.instance.Hide();
         this.Show();
@@ -155,21 +206,34 @@ public class RoomManager : Menu {
 
     private void OnRoomPlayerJoined(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomPlayerJoined: " + data, Log.Type.Server);
+
+        CreateRoomClientSlot(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomPlayerLeft: " + data, Log.Type.Server);
+
+        RemoveRoomClientSlot(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
 
-        RoomManager.instance.Hide();
-        this.Show();
+        this.Hide();
+        LobbyManager.instance.Show();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveFailed: " + data, Log.Type.Server);
+    }
+
+    private bool IsRoomPlayerExists(string username) {
+        for (int ii = 0; ii < _roomLeftClientSlotsList.Count; ii++) {
+            if (username == _roomLeftClientSlotsList[ii].Username) {
+                return true;
+            }
+        }
+        return false;
     }
 
 }

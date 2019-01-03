@@ -11,13 +11,20 @@ public class RoomClientSlot : MonoBehaviour {
         public Image imgFrame;
         public Image imgCharacter;
         public Image imgClassIcon;
-        public AnimatorController animatorController;
         public Toggle toggleIsReady;
         public Image imgLeader;
         public TextMeshProUGUI txtPlayerName;
         public TextMeshProUGUI txtCharacterName;
 
-        public void Initialize(ClassManager.Classes characterClass) {
+        [Header("Debug")]
+        [SerializeField]
+        [Utils.ReadOnly]
+        private AnimatorController _animatorController;
+
+        public void Initialize(RoomPlayerInfo roomPlayerInfo) {
+        }
+
+        public void SetCharacterClassVisualize(ClassManager.Classes characterClass) {
             ClassManager.CharacterClassVisualization characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(characterClass);
 
             SetImgFrameColor(characterClassVisualization.classFrameColor);
@@ -27,15 +34,21 @@ public class RoomClientSlot : MonoBehaviour {
             SetTxtCharacterName(characterClassVisualization.className);
         }
 
-        public void SetToggleIsReady(bool isReady) {
+        public void UpdateUI(RoomPlayerInfo roomPlayerInfo) {
+            SetToggleIsReady(true);
+            SetImgLeader(true);
+            SetTxtPlayerName(roomPlayerInfo.Username);
+        }
+
+        private void SetToggleIsReady(bool isReady) {
             toggleIsReady.isOn = isReady;
         }
 
-        public void SetImgLeader(bool isLeader) {
+        private void SetImgLeader(bool isLeader) {
             imgLeader.enabled = isLeader;
         }
 
-        public void SetTxtPlayerName(string playerName) {
+        private void SetTxtPlayerName(string playerName) {
             txtPlayerName.text = playerName;
         }
 
@@ -48,7 +61,7 @@ public class RoomClientSlot : MonoBehaviour {
         }
 
         private void SetAnimatorController(AnimatorController characterAnimator) {
-            animatorController = characterAnimator;
+            _animatorController = characterAnimator;
         }
 
         private void SetImgClassIcon(Sprite sprite) {
@@ -64,29 +77,15 @@ public class RoomClientSlot : MonoBehaviour {
     [SerializeField]
     private UISettings _UISettings;
 
-    [Header("Debug")]
-    [SerializeField]
-    [Utils.ReadOnly]
-    private int _slotIndex;
+    public string Username {
+        get {
+            return _roomPlayerInfo.Username;
+        }
+    }
+
     [SerializeField]
     [Utils.ReadOnly]
     private ClassManager.Classes _classEnum;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private bool _isReady;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private string _playerName;
-
-    public int SlotIndex {
-        get {
-            return _slotIndex;
-        }
-
-        set {
-            _slotIndex = value;
-        }
-    }
 
     public ClassManager.Classes ClassEnum {
         get {
@@ -96,31 +95,21 @@ public class RoomClientSlot : MonoBehaviour {
         set {
             _classEnum = value;
 
-            _UISettings.Initialize(ClassEnum);
+            _UISettings.SetCharacterClassVisualize(ClassEnum);
         }
     }
 
-    public bool IsReady {
-        get {
-            return _isReady;
-        }
+    private RoomPlayerInfo _roomPlayerInfo;
 
-        set {
-            _isReady = value;
+    public void Initialize(RoomPlayerInfo roomPlayerInfo) {
+        this._roomPlayerInfo = roomPlayerInfo;
 
-            _UISettings.SetToggleIsReady(IsReady);
-        }
+        _UISettings.Initialize(_roomPlayerInfo);
+        _UISettings.UpdateUI(_roomPlayerInfo);
     }
 
-    public string PlayerName {
-        get {
-            return _playerName;
-        }
-
-        set {
-            _playerName = value;
-
-            _UISettings.SetTxtPlayerName(PlayerName);
-        }
+    public void Destroy() {
+        Destroy(this.gameObject);
     }
+
 }
