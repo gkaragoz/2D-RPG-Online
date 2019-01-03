@@ -54,7 +54,7 @@ enum MSServerEvent
 	ROOM_LEAVE_FAILED = 5;						
 	ROOM_CREATE = 6;						
 	ROOM_DELETE = 7;						
-	ROOM_PLAYER_LEAVED = 8;						
+	ROOM_PLAYER_LEFT = 8;						
 	ROOM_PLAYER_JOINED = 9;						
 	ROOM_JOIN_FAILED = 10;		
 	ROOM_CREATE_FAILED = 11;		
