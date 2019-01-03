@@ -120,6 +120,14 @@ public class LobbyRow : MonoBehaviour {
         _btnWatch.onClick.AddListener(() => watchDelegate(RoomID));
     }
 
+    public void ActivateJoinButtonInteraction() {
+        _btnJoin.interactable = true;
+    }
+
+    public void DeactivateJoinButtonInteraction() {
+        _btnJoin.interactable = false;
+    }
+
     private void SetRoomNumber() {
         _txtRowNumber.text = RowNumber;
     }

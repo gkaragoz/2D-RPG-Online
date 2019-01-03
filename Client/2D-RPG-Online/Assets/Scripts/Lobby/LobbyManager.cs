@@ -48,7 +48,6 @@ public class LobbyManager : Menu {
     [SerializeField]
     [Utils.ReadOnly]
     private List<LobbyRow> _lobbyRowsList = new List<LobbyRow>();
-    private string _joinedRoomId;
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
@@ -75,6 +74,14 @@ public class LobbyManager : Menu {
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Space)) {
             LeaveRoom();
+        }
+    }
+
+    private void HandleJoinButtonsInteractions() {
+        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
+            LobbyRow lobbyRow = _lobbyRowsList[ii];
+
+            //if (NetworkManager.mss.)
         }
     }
 
@@ -201,10 +208,10 @@ public class LobbyManager : Menu {
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
-        _joinedRoomId = data.RoomData.JoinedRoom.Id;
-
         this.Hide();
         RoomManager.instance.Show();
+
+        HandleJoinButtonsInteractions();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
@@ -228,10 +235,10 @@ public class LobbyManager : Menu {
             isPrivate
             );
 
-        _joinedRoomId = data.RoomData.CreatedRoom.Id;
-
         this.Hide();
         RoomManager.instance.Show();
+
+        HandleJoinButtonsInteractions();
     }
 
     private void OnRoomCreateFailed(ShiftServerData data) {
@@ -257,8 +264,6 @@ public class LobbyManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
-
-        _joinedRoomId = string.Empty;
 
         RoomManager.instance.Hide();
         this.Show();
