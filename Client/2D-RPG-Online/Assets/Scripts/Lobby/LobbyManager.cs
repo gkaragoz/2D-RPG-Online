@@ -55,7 +55,9 @@ public class LobbyManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreate, OnRoomCreated);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreateFailed, OnRoomCreateFailed);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomDelete, OnRoomDeleted);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomDeleteFailed, OnRoomDeleteFailed);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetInfo, OnRoomGetInfo);
 
         RefreshLobby();
@@ -210,6 +212,10 @@ public class LobbyManager : Menu {
         RoomManager.instance.Show();
     }
 
+    private void OnRoomCreateFailed(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomCreateFailed: " + data, Log.Type.Server);
+    }
+
     private void OnRoomDeleted(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomDeleted: " + data, Log.Type.Server);
 
@@ -217,6 +223,10 @@ public class LobbyManager : Menu {
             LobbyRow deletedRow = _lobbyRowsList.Where(row => row.RoomID == data.RoomData.DeletedRoom.Id).FirstOrDefault();
             _lobbyRowsList.Remove(deletedRow);
         }
+    }
+
+    private void OnRoomDeleteFailed(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomDeleteFailed: " + data, Log.Type.Server);
     }
 
     private void OnRoomGetInfo(ShiftServerData data) {
