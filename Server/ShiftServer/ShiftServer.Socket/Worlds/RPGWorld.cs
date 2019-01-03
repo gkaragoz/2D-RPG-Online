@@ -217,23 +217,6 @@ namespace ShiftServer.Server.Worlds
             data.AccountData.VirtualMoney = 100;
             data.AccountData.VirtualSpecialMoney = 100;
 
-            //room data
-            data.RoomData = new RoomData();
-            List<IRoom> svRooms = Rooms.GetValues();
-            foreach (var room in svRooms)
-            {
-                data.RoomData.Rooms.Add(new ServerRoom
-                {
-                    CurrentUserCount = room.SocketIdSessionLookup.Count,
-                    MaxUserCount = room.MaxUser,
-                    IsPrivate = room.IsPrivate,
-                    CreatedTime = room.CreatedDate.ToRelativeTime(),
-                    UpdatedTime = room.UpdateDate.ToRelativeTime(),
-                    Name = room.Name,
-                    Id = room.Id
-                });
-            }
-
 
             shift.SendPacket(MSServerEvent.Login, data);
             shift.UserName = data.AccountData.Username;
