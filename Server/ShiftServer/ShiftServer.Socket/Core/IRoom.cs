@@ -14,6 +14,7 @@ namespace ShiftServer.Server.Core
         string Name { get; set; }
         string Id { get; set; }
         int CreatedUserId { get; set; }
+        int MaxConnId { get; set; }
         int ServerLeaderId { get; set; }
         int DisposeInMilliseconds { get; set; }
         DateTime CreatedDate { get; set; }
@@ -31,6 +32,7 @@ namespace ShiftServer.Server.Core
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
         void OnObjectUse(ShiftServerData data, ShiftClient client);
         void OnGameStart(ShiftServerData data, ShiftClient client);
+        void BroadcastToRoom(ShiftClient currentClient, MSSRoomPlayerState state);
         void OnRoomUpdate();
         void SendRoomState();
     }

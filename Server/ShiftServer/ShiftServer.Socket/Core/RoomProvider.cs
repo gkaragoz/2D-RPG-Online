@@ -38,6 +38,7 @@ namespace ShiftServer.Server.Core
 
                     data.RoomData.CreatedRoom.Id = newRoom.Id;
                     newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
+
                     newRoom.CreatedUserId = shift.connectionId;
                     newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
                     newRoom.CreatedDate = DateTime.UtcNow;
@@ -46,10 +47,16 @@ namespace ShiftServer.Server.Core
                     newRoom.ServerLeaderId = shift.connectionId;
                     newRoom.Clients.Add(shift.connectionId, shift);
                     newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+
                 }
+
+                data.RoomData.CreatedRoom.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
+                newRoom.MaxConnId = shift.connectionId;
                 _sp.world.Rooms.Add(newRoom.Id, newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
+                
+                newRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Join);
             }
             else
             {
@@ -61,7 +68,6 @@ namespace ShiftServer.Server.Core
             }
 
         }
-
         public void OnRoomJoin(ShiftServerData data, ShiftClient shift)
         {
             IRoom result = null;
@@ -81,8 +87,10 @@ namespace ShiftServer.Server.Core
 
                 prevRoom.Clients.Remove(shift.connectionId);
                 prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
+                prevRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Leaved);
+
             }
-         
+
 
             if (data.RoomData.JoinedRoom != null)
             {
@@ -94,6 +102,9 @@ namespace ShiftServer.Server.Core
                     result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
                     shift.JoinedRoomId = result.Id;
                     shift.IsJoinedToRoom = true;
+                    result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
+                    result.BroadcastToRoom(shift, MSSRoomPlayerState.Join);
+
                 }
                 else
                 {
@@ -124,9 +135,11 @@ namespace ShiftServer.Server.Core
                 ShiftServerData leavedRoom = new ShiftServerData();
 
                 leavedRoom.RoomData = new RoomData();
-                leavedRoom.RoomData.LeavedRoom = new ServerRoom();
+                leavedRoom.RoomData.LeavedRoom = new MSSRoom();
                 leavedRoom.RoomData.LeavedRoom.Id = prevRoom.Id;
                 shift.SendPacket(MSServerEvent.RoomLeave, data);
+                prevRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Leaved);
+
 
             }
             else
@@ -137,7 +150,6 @@ namespace ShiftServer.Server.Core
                 shift.SendPacket(MSServerEvent.RoomLeaveFailed, err);
             }
         }
-
         public void OnRoomGameStart(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomGameStart");
@@ -156,9 +168,31 @@ namespace ShiftServer.Server.Core
                 {
                     if (room.CreatedUserId == shift.connectionId)
                     {
-                        _sp.world.Rooms.Remove(data.RoomData.DeletedRoom.Id);
+         
+                        if (room.SocketIdSessionLookup.Count > 1)
+                        {
+                            //_sp.world.Rooms.Remove(data.RoomData.DeletedRoom.Id);
+                            for (int i = 0; i < room.MaxConnId; i++)
+                            {
+                                ShiftClient roomUser = null;
+                                room.Clients.TryGetValue(i, out roomUser);
+
+                                if (roomUser != null)
+                                {
+                                    room.ServerLeaderId = roomUser.connectionId;
+                                }
+                            }
+                      
+                        }
+                        else
+                        {
+
+                            _sp.world.Rooms.Remove(data.RoomData.DeletedRoom.Id);
+                          
+                        }
                         shift.IsJoinedToRoom = false;
                         isSuccess = true;
+
                     }
                     else
                     {
@@ -176,7 +210,7 @@ namespace ShiftServer.Server.Core
             {
                 ShiftServerData newData = new ShiftServerData();
                 newData.RoomData = new RoomData();
-                newData.RoomData.DeletedRoom = new ServerRoom();
+                newData.RoomData.DeletedRoom = new MSSRoom();
                 newData.RoomData.DeletedRoom.Id = room.Id;
                 shift.SendPacket(MSServerEvent.RoomDelete, newData);
             }
@@ -186,7 +220,6 @@ namespace ShiftServer.Server.Core
             }
 
         }
-
         public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> LobbyRefresh");
@@ -197,7 +230,7 @@ namespace ShiftServer.Server.Core
             foreach (var room in svRooms)
             {
                 int currentUserCount = room.SocketIdSessionLookup.Count;
-                data.RoomData.Rooms.Add(new ServerRoom
+                data.RoomData.Rooms.Add(new MSSRoom
                 {
                     IsPrivate = room.IsPrivate,
                     IsOwner = room.ServerLeaderId == shift.connectionId,

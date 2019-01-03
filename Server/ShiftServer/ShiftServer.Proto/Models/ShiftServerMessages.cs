@@ -34,53 +34,58 @@ public static partial class ShiftServerMessagesReflection {
           "CzINLlBsYXllck9iamVjdBImCgtFcnJvclJlYXNvbhgMIAEoDjIRLlNoaWZ0",
           "U2VydmVyRXJyb3IiGgoLU2Vzc2lvbkRhdGESCwoDc2lkGAIgASgJIlgKEUNv",
           "bW1vbkFjY291bnREYXRhEhAKCHVzZXJuYW1lGAEgASgJEhQKDHZpcnR1YWxN",
-          "b25leRgCIAEoBRIbChN2aXJ0dWFsU3BlY2lhbE1vbmV5GAMgASgFIqwBCghS",
-          "b29tRGF0YRIgCgtDcmVhdGVkUm9vbRgBIAEoCzILLlNlcnZlclJvb20SHwoK",
-          "Sm9pbmVkUm9vbRgCIAEoCzILLlNlcnZlclJvb20SIAoLRGVsZXRlZFJvb20Y",
-          "AyABKAsyCy5TZXJ2ZXJSb29tEh8KCkxlYXZlZFJvb20YBCABKAsyCy5TZXJ2",
-          "ZXJSb29tEhoKBXJvb21zGAUgAygLMgsuU2VydmVyUm9vbSKkAQoKU2VydmVy",
-          "Um9vbRIKCgJJZBgBIAEoCRITCgtjcmVhdGVkVGltZRgCIAEoAxITCgt1cGRh",
-          "dGVkVGltZRgDIAEoAxIRCglpc1ByaXZhdGUYBCABKAgSDwoHaXNPd25lchgF",
-          "IAEoCBIMCgRuYW1lGAYgASgJEhQKDG1heFVzZXJDb3VudBgHIAEoBRIYChBj",
-          "dXJyZW50VXNlckNvdW50GAggASgFIjEKC0FjY291bnREYXRhEhAKCHVzZXJu",
-          "YW1lGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIlwKDE9iamVjdEFjdGlvbhIj",
-          "Cg1jdXJyZW50T2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSJwoRaW50ZXJh",
-          "Y3RlZE9iamVjdHMYAiADKAsyDC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRh",
-          "EgsKA3ZlchgBIAEoCRIUCgxtYWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGlu",
-          "ZV9pZBgDIAEoCSJHCgtzR2FtZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9z",
-          "X3gYAiABKAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIikQEKDFBs",
-          "YXllck9iamVjdBIdCgdwT2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSHAoG",
-          "cENsYXNzGAIgASgOMgwuUGxheWVyQ2xhc3MSEQoJY3VycmVudEhwGAMgASgF",
-          "Eg0KBW1heEhwGAQgASgFEiIKDHBsYXllcklucHV0cxgFIAMoCzIMLlBsYXll",
-          "cklucHV0IjoKC1BsYXllcklucHV0Eg0KBXBvc194GAEgASgCEg0KBXBvc195",
-          "GAIgASgCEg0KBXBvc196GAMgASgCKjEKDU1TQmFzZUV2ZW50SWQSDwoLUGxh",
-          "eWVyRXZlbnQQABIPCgtTZXJ2ZXJFdmVudBABKl0KDU1TUGxheWVyRXZlbnQS",
-          "EAoMV09STERfVVBEQVRFEAASCAoETU9WRRABEgoKBkFUVEFDSxACEggKBERF",
-          "QUQQAxIHCgNVU0UQBBIRCg1DUkVBVEVfUExBWUVSEAUq5wIKDU1TU2VydmVy",
-          "RXZlbnQSCQoFTE9HSU4QABIQCgxMT0dJTl9GQUlMRUQQARISCg5QVUJMSUNf",
-          "TUVTU0FHRRACEg0KCVJPT01fSk9JThADEg4KClJPT01fTEVBVkUQBBIVChFS",
-          "T09NX0xFQVZFX0ZBSUxFRBAFEg8KC1JPT01fQ1JFQVRFEAYSDwoLUk9PTV9E",
-          "RUxFVEUQBxIRCg1ST09NX0dFVF9JTkZPEAgSFAoQUk9PTV9KT0lOX0ZBSUxF",
-          "RBAJEhYKElJPT01fQ1JFQVRFX0ZBSUxFRBAKEhYKElJPT01fREVMRVRFX0ZB",
-          "SUxFRBALEhMKD1JPT01fR0FNRV9TVEFSVBAMEhEKDUxPQkJZX1JFRlJFU0gQ",
-          "DRIOCgpDT05ORUNUSU9OEA4SFQoRQ09OTkVDVElPTl9GQUlMRUQQDxITCg9D",
-          "T05ORUNUSU9OX0xPU1QQEBIQCgxQSU5HX1JFUVVFU1QQESrXAQoQU2hpZnRT",
-          "ZXJ2ZXJFcnJvchISCg5DTElFTlRfVkVSX09MRBAAEg8KC0JBRF9TRVNTSU9O",
-          "EAESEgoOUk9PTV9OT1RfRk9VTkQQAhITCg9BTFJFQURZX0lOX1JPT00QAxIb",
-          "ChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxAEEhUKEVdST05HX0NMSUVOVF9E",
-          "QVRBEAUSFQoRTk9fUkVTUE9ORF9TRVJWRVIQBhIVChFST09NX0FVVEhfUFJP",
-          "QkxFTRAHEhMKD05PVF9JTl9BTllfUk9PTRAIKjUKDVNoaWZ0Um9vbVR5cGUS",
-          "CQoFTE9CQlkQABIHCgNNTU8QARIQCgxBQ1RJT05CQVRUTEUQAio8CgtQbGF5",
-          "ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFnZRACEgoK",
-          "BlByaWVzdBADYgZwcm90bzM="));
+          "b25leRgCIAEoBRIbChN2aXJ0dWFsU3BlY2lhbE1vbmV5GAMgASgFIsIBCghS",
+          "b29tRGF0YRIdCgtDcmVhdGVkUm9vbRgBIAEoCzIILk1TU1Jvb20SHAoKSm9p",
+          "bmVkUm9vbRgCIAEoCzIILk1TU1Jvb20SHQoLRGVsZXRlZFJvb20YAyABKAsy",
+          "CC5NU1NSb29tEhwKCkxlYXZlZFJvb20YBCABKAsyCC5NU1NSb29tEiMKClBs",
+          "YXllckluZm8YBSABKAsyDy5Sb29tUGxheWVySW5mbxIXCgVyb29tcxgGIAMo",
+          "CzIILk1TU1Jvb20ioQEKB01TU1Jvb20SCgoCSWQYASABKAkSEwoLY3JlYXRl",
+          "ZFRpbWUYAiABKAMSEwoLdXBkYXRlZFRpbWUYAyABKAMSEQoJaXNQcml2YXRl",
+          "GAQgASgIEg8KB2lzT3duZXIYBSABKAgSDAoEbmFtZRgGIAEoCRIUCgxtYXhV",
+          "c2VyQ291bnQYByABKAUSGAoQY3VycmVudFVzZXJDb3VudBgIIAEoBSJSCg5S",
+          "b29tUGxheWVySW5mbxIKCgJJZBgBIAEoBRIQCghVc2VybmFtZRgCIAEoCRIi",
+          "CgVTdGF0ZRgDIAEoDjITLk1TU1Jvb21QbGF5ZXJTdGF0ZSIxCgtBY2NvdW50",
+          "RGF0YRIQCgh1c2VybmFtZRgBIAEoCRIQCghwYXNzd29yZBgCIAEoCSJcCgxP",
+          "YmplY3RBY3Rpb24SIwoNY3VycmVudE9iamVjdBgBIAEoCzIMLnNHYW1lT2Jq",
+          "ZWN0EicKEWludGVyYWN0ZWRPYmplY3RzGAIgAygLMgwuc0dhbWVPYmplY3Qi",
+          "QwoKQ2xpZW50RGF0YRILCgN2ZXIYASABKAkSFAoMbWFjaGluZV9uYW1lGAIg",
+          "ASgJEhIKCm1hY2hpbmVfaWQYAyABKAkiRwoLc0dhbWVPYmplY3QSCwoDb2lk",
+          "GAEgASgFEg0KBXBvc194GAIgASgCEg0KBXBvc195GAMgASgCEg0KBXBvc196",
+          "GAQgASgCIpEBCgxQbGF5ZXJPYmplY3QSHQoHcE9iamVjdBgBIAEoCzIMLnNH",
+          "YW1lT2JqZWN0EhwKBnBDbGFzcxgCIAEoDjIMLlBsYXllckNsYXNzEhEKCWN1",
+          "cnJlbnRIcBgDIAEoBRINCgVtYXhIcBgEIAEoBRIiCgxwbGF5ZXJJbnB1dHMY",
+          "BSADKAsyDC5QbGF5ZXJJbnB1dCI6CgtQbGF5ZXJJbnB1dBINCgVwb3NfeBgB",
+          "IAEoAhINCgVwb3NfeRgCIAEoAhINCgVwb3NfehgDIAEoAioxCg1NU0Jhc2VF",
+          "dmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQASpdCg1N",
+          "U1BsYXllckV2ZW50EhAKDFdPUkxEX1VQREFURRAAEggKBE1PVkUQARIKCgZB",
+          "VFRBQ0sQAhIICgRERUFEEAMSBwoDVVNFEAQSEQoNQ1JFQVRFX1BMQVlFUhAF",
+          "KucCCg1NU1NlcnZlckV2ZW50EgkKBUxPR0lOEAASEAoMTE9HSU5fRkFJTEVE",
+          "EAESEgoOUFVCTElDX01FU1NBR0UQAhINCglST09NX0pPSU4QAxIOCgpST09N",
+          "X0xFQVZFEAQSFQoRUk9PTV9MRUFWRV9GQUlMRUQQBRIPCgtST09NX0NSRUFU",
+          "RRAGEg8KC1JPT01fREVMRVRFEAcSEQoNUk9PTV9HRVRfSU5GTxAIEhQKEFJP",
+          "T01fSk9JTl9GQUlMRUQQCRIWChJST09NX0NSRUFURV9GQUlMRUQQChIWChJS",
+          "T09NX0RFTEVURV9GQUlMRUQQCxITCg9ST09NX0dBTUVfU1RBUlQQDBIRCg1M",
+          "T0JCWV9SRUZSRVNIEA0SDgoKQ09OTkVDVElPThAOEhUKEUNPTk5FQ1RJT05f",
+          "RkFJTEVEEA8SEwoPQ09OTkVDVElPTl9MT1NUEBASEAoMUElOR19SRVFVRVNU",
+          "EBEq1wEKEFNoaWZ0U2VydmVyRXJyb3ISEgoOQ0xJRU5UX1ZFUl9PTEQQABIP",
+          "CgtCQURfU0VTU0lPThABEhIKDlJPT01fTk9UX0ZPVU5EEAISEwoPQUxSRUFE",
+          "WV9JTl9ST09NEAMSGwoXV1JPTkdfTE9HSU5fQ1JFREVOVElBTFMQBBIVChFX",
+          "Uk9OR19DTElFTlRfREFUQRAFEhUKEU5PX1JFU1BPTkRfU0VSVkVSEAYSFQoR",
+          "Uk9PTV9BVVRIX1BST0JMRU0QBxITCg9OT1RfSU5fQU5ZX1JPT00QCCo1Cg1T",
+          "aGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1PEAESEAoMQUNUSU9OQkFU",
+          "VExFEAIqVAoSTVNTUm9vbVBsYXllclN0YXRlEggKBEpPSU4QABIKCgZLSUNL",
+          "RUQQARIKCgZCQU5ORUQQAhIKCgZMRUFWRUQQAxIQCgxESVNDT05ORUNURUQQ",
+          "BCo8CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoE",
+          "TWFnZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::MSSRoomPlayerState), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
           new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "WorldState", "Interaction", "SPlayerObject", "ErrorReason" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "CreatedRoom", "JoinedRoom", "DeletedRoom", "LeavedRoom", "Rooms" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::ServerRoom), global::ServerRoom.Parser, new[]{ "Id", "CreatedTime", "UpdatedTime", "IsPrivate", "IsOwner", "Name", "MaxUserCount", "CurrentUserCount" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "CreatedRoom", "JoinedRoom", "DeletedRoom", "LeavedRoom", "PlayerInfo", "Rooms" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MSSRoom), global::MSSRoom.Parser, new[]{ "Id", "CreatedTime", "UpdatedTime", "IsPrivate", "IsOwner", "Name", "MaxUserCount", "CurrentUserCount" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RoomPlayerInfo), global::RoomPlayerInfo.Parser, new[]{ "Id", "Username", "State" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::AccountData), global::AccountData.Parser, new[]{ "Username", "Password" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
@@ -162,6 +167,14 @@ public enum ShiftRoomType {
   [pbr::OriginalName("LOBBY")] Lobby = 0,
   [pbr::OriginalName("MMO")] Mmo = 1,
   [pbr::OriginalName("ACTIONBATTLE")] Actionbattle = 2,
+}
+
+public enum MSSRoomPlayerState {
+  [pbr::OriginalName("JOIN")] Join = 0,
+  [pbr::OriginalName("KICKED")] Kicked = 1,
+  [pbr::OriginalName("BANNED")] Banned = 2,
+  [pbr::OriginalName("LEAVED")] Leaved = 3,
+  [pbr::OriginalName("DISCONNECTED")] Disconnected = 4,
 }
 
 public enum PlayerClass {
@@ -1003,6 +1016,7 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
     joinedRoom_ = other.joinedRoom_ != null ? other.joinedRoom_.Clone() : null;
     deletedRoom_ = other.deletedRoom_ != null ? other.deletedRoom_.Clone() : null;
     leavedRoom_ = other.leavedRoom_ != null ? other.leavedRoom_.Clone() : null;
+    playerInfo_ = other.playerInfo_ != null ? other.playerInfo_.Clone() : null;
     rooms_ = other.rooms_.Clone();
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -1014,9 +1028,9 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
   /// <summary>Field number for the "CreatedRoom" field.</summary>
   public const int CreatedRoomFieldNumber = 1;
-  private global::ServerRoom createdRoom_;
+  private global::MSSRoom createdRoom_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::ServerRoom CreatedRoom {
+  public global::MSSRoom CreatedRoom {
     get { return createdRoom_; }
     set {
       createdRoom_ = value;
@@ -1025,9 +1039,9 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
   /// <summary>Field number for the "JoinedRoom" field.</summary>
   public const int JoinedRoomFieldNumber = 2;
-  private global::ServerRoom joinedRoom_;
+  private global::MSSRoom joinedRoom_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::ServerRoom JoinedRoom {
+  public global::MSSRoom JoinedRoom {
     get { return joinedRoom_; }
     set {
       joinedRoom_ = value;
@@ -1036,9 +1050,9 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
   /// <summary>Field number for the "DeletedRoom" field.</summary>
   public const int DeletedRoomFieldNumber = 3;
-  private global::ServerRoom deletedRoom_;
+  private global::MSSRoom deletedRoom_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::ServerRoom DeletedRoom {
+  public global::MSSRoom DeletedRoom {
     get { return deletedRoom_; }
     set {
       deletedRoom_ = value;
@@ -1047,22 +1061,33 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
   /// <summary>Field number for the "LeavedRoom" field.</summary>
   public const int LeavedRoomFieldNumber = 4;
-  private global::ServerRoom leavedRoom_;
+  private global::MSSRoom leavedRoom_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::ServerRoom LeavedRoom {
+  public global::MSSRoom LeavedRoom {
     get { return leavedRoom_; }
     set {
       leavedRoom_ = value;
     }
   }
 
-  /// <summary>Field number for the "rooms" field.</summary>
-  public const int RoomsFieldNumber = 5;
-  private static readonly pb::FieldCodec<global::ServerRoom> _repeated_rooms_codec
-      = pb::FieldCodec.ForMessage(42, global::ServerRoom.Parser);
-  private readonly pbc::RepeatedField<global::ServerRoom> rooms_ = new pbc::RepeatedField<global::ServerRoom>();
+  /// <summary>Field number for the "PlayerInfo" field.</summary>
+  public const int PlayerInfoFieldNumber = 5;
+  private global::RoomPlayerInfo playerInfo_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<global::ServerRoom> Rooms {
+  public global::RoomPlayerInfo PlayerInfo {
+    get { return playerInfo_; }
+    set {
+      playerInfo_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rooms" field.</summary>
+  public const int RoomsFieldNumber = 6;
+  private static readonly pb::FieldCodec<global::MSSRoom> _repeated_rooms_codec
+      = pb::FieldCodec.ForMessage(50, global::MSSRoom.Parser);
+  private readonly pbc::RepeatedField<global::MSSRoom> rooms_ = new pbc::RepeatedField<global::MSSRoom>();
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public pbc::RepeatedField<global::MSSRoom> Rooms {
     get { return rooms_; }
   }
 
@@ -1083,6 +1108,7 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
     if (!object.Equals(JoinedRoom, other.JoinedRoom)) return false;
     if (!object.Equals(DeletedRoom, other.DeletedRoom)) return false;
     if (!object.Equals(LeavedRoom, other.LeavedRoom)) return false;
+    if (!object.Equals(PlayerInfo, other.PlayerInfo)) return false;
     if(!rooms_.Equals(other.rooms_)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -1094,6 +1120,7 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
     if (joinedRoom_ != null) hash ^= JoinedRoom.GetHashCode();
     if (deletedRoom_ != null) hash ^= DeletedRoom.GetHashCode();
     if (leavedRoom_ != null) hash ^= LeavedRoom.GetHashCode();
+    if (playerInfo_ != null) hash ^= PlayerInfo.GetHashCode();
     hash ^= rooms_.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -1124,6 +1151,10 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
       output.WriteRawTag(34);
       output.WriteMessage(LeavedRoom);
     }
+    if (playerInfo_ != null) {
+      output.WriteRawTag(42);
+      output.WriteMessage(PlayerInfo);
+    }
     rooms_.WriteTo(output, _repeated_rooms_codec);
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1145,6 +1176,9 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
     if (leavedRoom_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(LeavedRoom);
     }
+    if (playerInfo_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInfo);
+    }
     size += rooms_.CalculateSize(_repeated_rooms_codec);
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1159,27 +1193,33 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
     }
     if (other.createdRoom_ != null) {
       if (createdRoom_ == null) {
-        createdRoom_ = new global::ServerRoom();
+        createdRoom_ = new global::MSSRoom();
       }
       CreatedRoom.MergeFrom(other.CreatedRoom);
     }
     if (other.joinedRoom_ != null) {
       if (joinedRoom_ == null) {
-        joinedRoom_ = new global::ServerRoom();
+        joinedRoom_ = new global::MSSRoom();
       }
       JoinedRoom.MergeFrom(other.JoinedRoom);
     }
     if (other.deletedRoom_ != null) {
       if (deletedRoom_ == null) {
-        deletedRoom_ = new global::ServerRoom();
+        deletedRoom_ = new global::MSSRoom();
       }
       DeletedRoom.MergeFrom(other.DeletedRoom);
     }
     if (other.leavedRoom_ != null) {
       if (leavedRoom_ == null) {
-        leavedRoom_ = new global::ServerRoom();
+        leavedRoom_ = new global::MSSRoom();
       }
       LeavedRoom.MergeFrom(other.LeavedRoom);
+    }
+    if (other.playerInfo_ != null) {
+      if (playerInfo_ == null) {
+        playerInfo_ = new global::RoomPlayerInfo();
+      }
+      PlayerInfo.MergeFrom(other.PlayerInfo);
     }
     rooms_.Add(other.rooms_);
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
@@ -1195,33 +1235,40 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
           break;
         case 10: {
           if (createdRoom_ == null) {
-            createdRoom_ = new global::ServerRoom();
+            createdRoom_ = new global::MSSRoom();
           }
           input.ReadMessage(createdRoom_);
           break;
         }
         case 18: {
           if (joinedRoom_ == null) {
-            joinedRoom_ = new global::ServerRoom();
+            joinedRoom_ = new global::MSSRoom();
           }
           input.ReadMessage(joinedRoom_);
           break;
         }
         case 26: {
           if (deletedRoom_ == null) {
-            deletedRoom_ = new global::ServerRoom();
+            deletedRoom_ = new global::MSSRoom();
           }
           input.ReadMessage(deletedRoom_);
           break;
         }
         case 34: {
           if (leavedRoom_ == null) {
-            leavedRoom_ = new global::ServerRoom();
+            leavedRoom_ = new global::MSSRoom();
           }
           input.ReadMessage(leavedRoom_);
           break;
         }
         case 42: {
+          if (playerInfo_ == null) {
+            playerInfo_ = new global::RoomPlayerInfo();
+          }
+          input.ReadMessage(playerInfo_);
+          break;
+        }
+        case 50: {
           rooms_.AddEntriesFrom(input, _repeated_rooms_codec);
           break;
         }
@@ -1231,11 +1278,11 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
 }
 
-public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
-  private static readonly pb::MessageParser<ServerRoom> _parser = new pb::MessageParser<ServerRoom>(() => new ServerRoom());
+public sealed partial class MSSRoom : pb::IMessage<MSSRoom> {
+  private static readonly pb::MessageParser<MSSRoom> _parser = new pb::MessageParser<MSSRoom>(() => new MSSRoom());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<ServerRoom> Parser { get { return _parser; } }
+  public static pb::MessageParser<MSSRoom> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
@@ -1248,14 +1295,14 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public ServerRoom() {
+  public MSSRoom() {
     OnConstruction();
   }
 
   partial void OnConstruction();
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public ServerRoom(ServerRoom other) : this() {
+  public MSSRoom(MSSRoom other) : this() {
     id_ = other.id_;
     createdTime_ = other.createdTime_;
     updatedTime_ = other.updatedTime_;
@@ -1268,8 +1315,8 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public ServerRoom Clone() {
-    return new ServerRoom(this);
+  public MSSRoom Clone() {
+    return new MSSRoom(this);
   }
 
   /// <summary>Field number for the "Id" field.</summary>
@@ -1362,11 +1409,11 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
-    return Equals(other as ServerRoom);
+    return Equals(other as MSSRoom);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(ServerRoom other) {
+  public bool Equals(MSSRoom other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -1479,7 +1526,7 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(ServerRoom other) {
+  public void MergeFrom(MSSRoom other) {
     if (other == null) {
       return;
     }
@@ -1556,6 +1603,191 @@ public sealed partial class ServerRoom : pb::IMessage<ServerRoom> {
 
 }
 
+public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
+  private static readonly pb::MessageParser<RoomPlayerInfo> _parser = new pb::MessageParser<RoomPlayerInfo>(() => new RoomPlayerInfo());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<RoomPlayerInfo> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[5]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RoomPlayerInfo() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RoomPlayerInfo(RoomPlayerInfo other) : this() {
+    id_ = other.id_;
+    username_ = other.username_;
+    state_ = other.state_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public RoomPlayerInfo Clone() {
+    return new RoomPlayerInfo(this);
+  }
+
+  /// <summary>Field number for the "Id" field.</summary>
+  public const int IdFieldNumber = 1;
+  private int id_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int Id {
+    get { return id_; }
+    set {
+      id_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "Username" field.</summary>
+  public const int UsernameFieldNumber = 2;
+  private string username_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string Username {
+    get { return username_; }
+    set {
+      username_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "State" field.</summary>
+  public const int StateFieldNumber = 3;
+  private global::MSSRoomPlayerState state_ = 0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::MSSRoomPlayerState State {
+    get { return state_; }
+    set {
+      state_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as RoomPlayerInfo);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(RoomPlayerInfo other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Id != other.Id) return false;
+    if (Username != other.Username) return false;
+    if (State != other.State) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Id != 0) hash ^= Id.GetHashCode();
+    if (Username.Length != 0) hash ^= Username.GetHashCode();
+    if (State != 0) hash ^= State.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Id != 0) {
+      output.WriteRawTag(8);
+      output.WriteInt32(Id);
+    }
+    if (Username.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(Username);
+    }
+    if (State != 0) {
+      output.WriteRawTag(24);
+      output.WriteEnum((int) State);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Id != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Id);
+    }
+    if (Username.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
+    }
+    if (State != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) State);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(RoomPlayerInfo other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Id != 0) {
+      Id = other.Id;
+    }
+    if (other.Username.Length != 0) {
+      Username = other.Username;
+    }
+    if (other.State != 0) {
+      State = other.State;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          Id = input.ReadInt32();
+          break;
+        }
+        case 18: {
+          Username = input.ReadString();
+          break;
+        }
+        case 24: {
+          state_ = (global::MSSRoomPlayerState) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class AccountData : pb::IMessage<AccountData> {
   private static readonly pb::MessageParser<AccountData> _parser = new pb::MessageParser<AccountData>(() => new AccountData());
   private pb::UnknownFieldSet _unknownFields;
@@ -1564,7 +1796,7 @@ public sealed partial class AccountData : pb::IMessage<AccountData> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[5]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1721,7 +1953,7 @@ public sealed partial class ObjectAction : pb::IMessage<ObjectAction> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[6]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1876,7 +2108,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[7]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2061,7 +2293,7 @@ public sealed partial class sGameObject : pb::IMessage<sGameObject> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[8]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2274,7 +2506,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[9]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2513,7 +2745,7 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[10]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[11]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]

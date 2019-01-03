@@ -94,14 +94,15 @@ message CommonAccountData {
 }
 
 message RoomData {
-	ServerRoom CreatedRoom = 1;
-	ServerRoom JoinedRoom = 2;
-	ServerRoom DeletedRoom = 3;
-	ServerRoom LeavedRoom = 4;
-	repeated ServerRoom rooms = 5;
+	MSSRoom CreatedRoom = 1;
+	MSSRoom JoinedRoom = 2;
+	MSSRoom DeletedRoom = 3;
+	MSSRoom LeavedRoom = 4;
+	RoomPlayerInfo PlayerInfo = 5;
+	repeated MSSRoom rooms = 6;
 }
 
-message ServerRoom {
+message MSSRoom {
 
 	string Id = 1;
 	int64 createdTime = 2;
@@ -111,6 +112,21 @@ message ServerRoom {
 	string name = 6;
 	int32 maxUserCount = 7;
 	int32 currentUserCount = 8;
+
+}
+enum MSSRoomPlayerState
+{
+	JOIN = 0;
+	KICKED = 1;
+	BANNED = 2;
+	LEAVED = 3;
+	DISCONNECTED = 4;
+}
+message RoomPlayerInfo {
+
+	int32 Id = 1;
+	string Username = 2;
+	MSSRoomPlayerState State = 3;
 
 }
 
