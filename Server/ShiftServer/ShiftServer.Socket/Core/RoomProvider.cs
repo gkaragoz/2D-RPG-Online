@@ -46,7 +46,6 @@ namespace ShiftServer.Server.Core
                     newRoom.ServerLeaderId = shift.connectionId;
                     newRoom.Clients.Add(shift.connectionId, shift);
                     newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
-
                 }
                 _sp.world.Rooms.Add(newRoom.Id, newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
@@ -197,9 +196,11 @@ namespace ShiftServer.Server.Core
             List<IRoom> svRooms = _sp.world.Rooms.GetValues();
             foreach (var room in svRooms)
             {
+                int currentUserCount = room.SocketIdSessionLookup.Count;
                 data.RoomData.Rooms.Add(new ServerRoom
                 {
                     IsPrivate = room.IsPrivate,
+                    IsOwner = room.ServerLeaderId == shift.connectionId,
                     CurrentUserCount = room.SocketIdSessionLookup.Count,
                     MaxUserCount = room.MaxUser,
                     UpdatedTime = room.UpdateDate.ToRelativeTime(),

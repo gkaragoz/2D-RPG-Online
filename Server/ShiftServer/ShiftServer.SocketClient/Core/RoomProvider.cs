@@ -42,13 +42,15 @@ namespace ShiftServer.Client.Core
                         room.MaxUser = data.RoomData.Rooms[i].MaxUserCount;
                         room.Name = data.RoomData.Rooms[i].Name;
                         room.Id = data.RoomData.Rooms[i].Id;
+                        room.IsOwner = data.RoomData.Rooms[i].IsOwner;
+                        room.IsAvailable = IsRoomAvailableToJoin(room);
 
                         AddRoom(room);
                     }
 
                 }
             }
-        
+
         }
         public void SetCurrentJoinedRoom(ShiftServerData data)
         {
@@ -71,13 +73,20 @@ namespace ShiftServer.Client.Core
 
         private void AddRoom(Room room)
         {
+            room.IsAvailable = IsRoomAvailableToJoin(room);
             RoomList.Add(room);
+        }
+        private bool IsRoomAvailableToJoin(Room room)
+        {
+            return room.IsPrivate || room.IsFull || room.IsOwner ? false : true;
         }
         private void UpdateRoom(int key, ServerRoom room)
         {
             RoomList[key].CurrentUser = room.CurrentUserCount;
             RoomList[key].MaxUser = room.MaxUserCount;
             RoomList[key].Name = room.Name;
+            RoomList[key].IsOwner = room.IsOwner;
+            RoomList[key].IsAvailable = IsRoomAvailableToJoin(RoomList[key]);
         }
     }
 
@@ -85,7 +94,18 @@ namespace ShiftServer.Client.Core
     {
         public string Id { get; set; }
         public string Name { get; set; }
+        public bool IsAvailable { get; set; }
+        public bool IsPrivate { get; set; }
+        public bool IsOwner { get; set; }
         public int MaxUser { get; set; }
         public int CurrentUser { get; set; }
+        public bool IsFull
+        {
+            get
+            {
+                return CurrentUser >= MaxUser;
+            }
+        }
+
     }
 }
