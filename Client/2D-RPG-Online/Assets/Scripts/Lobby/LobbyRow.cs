@@ -34,6 +34,15 @@ public class LobbyRow : MonoBehaviour {
     private string _roomName;
     [SerializeField]
     [Utils.ReadOnly]
+    private bool _isOwner;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private long _createdTime;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private long _updatedTime;
+    [SerializeField]
+    [Utils.ReadOnly]
     private int _currentUsersCount;
     [SerializeField]
     [Utils.ReadOnly]
@@ -76,6 +85,38 @@ public class LobbyRow : MonoBehaviour {
         }
     }
 
+    public bool IsOwner {
+        get {
+            return _isOwner;
+        }
+
+        set {
+            _isOwner = value;
+
+            SetActionButtonsInteractions();
+        }
+    }
+
+    public long CreatedTime {
+        get {
+            return _createdTime;
+        }
+
+        set {
+            _createdTime = value;
+        }
+    }
+
+    public long UpdatedTime {
+        get {
+            return _updatedTime;
+        }
+
+        set {
+            _updatedTime = value;
+        }
+    }
+
     public int CurrentUsersCount {
         get {
             return _currentUsersCount;
@@ -85,6 +126,7 @@ public class LobbyRow : MonoBehaviour {
             _currentUsersCount = value;
 
             SetUsersCount();
+            SetActionButtonsInteractions();
         }
     }
 
@@ -97,6 +139,7 @@ public class LobbyRow : MonoBehaviour {
             _maxUsersCount = value;
 
             SetUsersCount();
+            SetActionButtonsInteractions();
         }
     }
 
@@ -109,6 +152,13 @@ public class LobbyRow : MonoBehaviour {
             _isPrivate = value;
 
             SetPrivateToggle();
+            SetActionButtonsInteractions();
+        }
+    }
+
+    public bool IsAvailableToJoin {
+        get {
+            return CurrentUsersCount <= MaxUsersCount && !IsPrivate ? true : false;
         }
     }
 
@@ -120,12 +170,33 @@ public class LobbyRow : MonoBehaviour {
         _btnWatch.onClick.AddListener(() => watchDelegate(RoomID));
     }
 
-    public void ActivateJoinButtonInteraction() {
+    private void SetActionButtonsInteractions() {
+        if (IsOwner) {
+            DeactivateJoinButtonInteraction();
+            DeactivateWatchButtonInteraction();
+        } else if (IsAvailableToJoin) {
+            ActivateJoinButtonInteraction();
+            ActivateWatchButtonInteraction();
+        } else {
+            DeactivateJoinButtonInteraction();
+            DeactivateWatchButtonInteraction();
+        }
+    }
+
+    private void ActivateJoinButtonInteraction() {
         _btnJoin.interactable = true;
     }
 
-    public void DeactivateJoinButtonInteraction() {
+    private void DeactivateJoinButtonInteraction() {
         _btnJoin.interactable = false;
+    }
+
+    private void ActivateWatchButtonInteraction() {
+        _btnWatch.interactable = true;
+    }
+
+    private void DeactivateWatchButtonInteraction() {
+        _btnWatch.interactable = false;
     }
 
     private void SetRoomNumber() {

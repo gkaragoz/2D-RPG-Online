@@ -77,14 +77,6 @@ public class LobbyManager : Menu {
         }
     }
 
-    private void HandleJoinButtonsInteractions() {
-        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-            LobbyRow lobbyRow = _lobbyRowsList[ii];
-
-            //if (NetworkManager.mss.)
-        }
-    }
-
     private void LeaveRoom() {
         ShiftServerData data = new ShiftServerData();
 
@@ -147,12 +139,18 @@ public class LobbyManager : Menu {
             int currentUsersCount = data.RoomData.Rooms[ii].CurrentUserCount;
             int maxUsersCount = data.RoomData.Rooms[ii].MaxUserCount;
             bool isPrivate = data.RoomData.Rooms[ii].IsPrivate;
+            bool isOwner = data.RoomData.Rooms[ii].IsOwner;
+            long createdTime = data.RoomData.Rooms[ii].CreatedTime;
+            long updatedTime = data.RoomData.Rooms[ii].UpdatedTime;
 
             if (IsLobbyRowExists(roomID)) {
                 UpdateLobbyRow(
                     _lobbyRowsList[ii],
                     roomID,
                     roomName,
+                    isOwner,
+                    createdTime,
+                    updatedTime,
                     currentUsersCount,
                     maxUsersCount,
                     isPrivate
@@ -160,7 +158,10 @@ public class LobbyManager : Menu {
             } else {
                 CreateLobbyRow(
                     roomID, 
-                    roomName, 
+                    roomName,
+                    isOwner,
+                    createdTime,
+                    updatedTime,
                     currentUsersCount, 
                     maxUsersCount, 
                     isPrivate
@@ -182,12 +183,15 @@ public class LobbyManager : Menu {
         NetworkManager.mss.GetRoomList();
     }
 
-    private void CreateLobbyRow(string roomID, string roomName, int currentUsersCount, int maxUsersCount, bool isPrivate) {
+    private void CreateLobbyRow(string roomID, string roomName, bool isOwner, long createdTime, long updatedTime, int currentUsersCount, int maxUsersCount, bool isPrivate) {
         LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
 
         //lobbyRow.RoomName = GetRowNumber();
         lobbyRow.RoomID = roomID;
         lobbyRow.RoomName = roomName;
+        lobbyRow.IsOwner = isOwner;
+        lobbyRow.CreatedTime = createdTime;
+        lobbyRow.UpdatedTime = updatedTime;
         lobbyRow.CurrentUsersCount = currentUsersCount;
         lobbyRow.MaxUsersCount = maxUsersCount;
         lobbyRow.IsPrivate = isPrivate;
@@ -197,9 +201,12 @@ public class LobbyManager : Menu {
         _lobbyRowsList.Add(lobbyRow);
     }
 
-    private void UpdateLobbyRow(LobbyRow lobbyRow, string roomID, string roomName, int currentUsersCount, int maxUsersCount, bool isPrivate) {
+    private void UpdateLobbyRow(LobbyRow lobbyRow, string roomID, string roomName, bool isOwner, long createdTime, long updatedTime, int currentUsersCount, int maxUsersCount, bool isPrivate) {
         lobbyRow.RoomID = roomID;
         lobbyRow.RoomName = roomName;
+        lobbyRow.IsOwner = isOwner;
+        lobbyRow.CreatedTime = createdTime;
+        lobbyRow.UpdatedTime = updatedTime;
         lobbyRow.CurrentUsersCount = currentUsersCount;
         lobbyRow.MaxUsersCount = maxUsersCount;
         lobbyRow.IsPrivate = isPrivate;
@@ -210,8 +217,6 @@ public class LobbyManager : Menu {
 
         this.Hide();
         RoomManager.instance.Show();
-
-        HandleJoinButtonsInteractions();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
@@ -237,8 +242,6 @@ public class LobbyManager : Menu {
 
         this.Hide();
         RoomManager.instance.Show();
-
-        HandleJoinButtonsInteractions();
     }
 
     private void OnRoomCreateFailed(ShiftServerData data) {
