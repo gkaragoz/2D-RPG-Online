@@ -71,9 +71,19 @@ namespace ShiftServer.Server.Core
             if (shift.IsJoinedToRoom)
             {
                 _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
+                if (shift.JoinedRoomId == prevRoom.Id)
+                {
+                    ShiftServerData oData = new ShiftServerData();
+                    log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.AlreadyInRoom);
+                    oData.ErrorReason = ShiftServerError.AlreadyInRoom;
+                    shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
+                    return;
+                }
+
                 prevRoom.Clients.Remove(shift.connectionId);
                 prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
             }
+         
 
             if (data.RoomData.JoinedRoom != null)
             {
@@ -103,7 +113,6 @@ namespace ShiftServer.Server.Core
         }
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
-            IRoom result = null;
             IRoom prevRoom = null;
             log.Info($"ClientNO: {shift.connectionId} ------> RoomLeave");
             if (shift.IsJoinedToRoom)
@@ -111,7 +120,8 @@ namespace ShiftServer.Server.Core
                 _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
                 prevRoom.Clients.Remove(shift.connectionId);
                 prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
-
+                shift.IsJoinedToRoom = false;
+                shift.JoinedRoomId = null;
                 ShiftServerData leavedRoom = new ShiftServerData();
 
                 leavedRoom.RoomData = new RoomData();
@@ -124,7 +134,7 @@ namespace ShiftServer.Server.Core
             {
                 ShiftServerData err = new ShiftServerData();
                 log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomNotFound);
-                err.ErrorReason = ShiftServerError.RoomNotFound;
+                err.ErrorReason = ShiftServerError.NotInAnyRoom;
                 shift.SendPacket(MSServerEvent.RoomLeaveFailed, err);
             }
         }

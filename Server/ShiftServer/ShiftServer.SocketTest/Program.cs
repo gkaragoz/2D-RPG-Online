@@ -27,7 +27,6 @@ namespace ShiftServer.SocketTest
             networkClient.Connect(_cfg);
             //networkClient.AddEventListener(MSServerEvent.c, funcs.OnConnected);
             //networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
-
             while (true)
             {
                 networkClient.Listen();

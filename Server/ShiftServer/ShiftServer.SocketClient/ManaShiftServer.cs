@@ -22,8 +22,8 @@ namespace ShiftServer.Client
         private static ManaShiftServer _mss = null;
         private static GameProvider gameProvider = null;
         public bool IsConnected { get => gameProvider.client.Connected; }
-
-        public bool IsConnecting{ get => gameProvider.client.Connecting; }
+        public bool IsConnecting { get => gameProvider.client.Connecting; }
+        public ServerRoom JoinedRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom; }
 
         private Stopwatch _stopwatch;
         private long _currentPingValue;
