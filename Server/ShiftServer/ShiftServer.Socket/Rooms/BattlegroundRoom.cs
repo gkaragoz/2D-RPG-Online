@@ -69,10 +69,9 @@ namespace ShiftServer.Server.Rooms
 
         }
 
-        public void BroadcastToRoom(ShiftClient currentClient, MSSRoomPlayerState state)
+        public void BroadcastToRoom(ShiftClient currentClient, MSServerEvent evt)
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
-            pInfo.State = state;
             pInfo.Username = currentClient.UserName;
             pInfo.Id = currentClient.connectionId;
 
@@ -86,7 +85,7 @@ namespace ShiftServer.Server.Rooms
                 if (clientList[i].UserSession == null)
                     continue;
                
-                clientList[i].SendPacket(MSServerEvent.RoomGetInfo, data);
+                clientList[i].SendPacket(evt, data);
             }
         }
 

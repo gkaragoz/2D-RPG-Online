@@ -32,7 +32,7 @@ namespace ShiftServer.Server.Core
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
         void OnObjectUse(ShiftServerData data, ShiftClient client);
         void OnGameStart(ShiftServerData data, ShiftClient client);
-        void BroadcastToRoom(ShiftClient currentClient, MSSRoomPlayerState state);
+        void BroadcastToRoom(ShiftClient currentClient, MSServerEvent state);
         void OnRoomUpdate();
         void SendRoomState();
     }
