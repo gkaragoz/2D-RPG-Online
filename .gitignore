@@ -18,3 +18,8 @@ obj/
 *.apk
 Assets/Plugins/Android/gpgs-plugin-support-0.9.42/
 Server/ShiftServer/packages/
+Server/ShiftServer/ShiftServer.Proto/bin/
+Server/ShiftServer/ShiftServer.Socket/bin/
+Server/ShiftServer/ShiftServer.SocketTest/bin/
+Server/ShiftServer/ShiftServer.SocketClient/bin/Debug/
+Server/ShiftServer/ShiftServer.SocketClient/bin/Release/
