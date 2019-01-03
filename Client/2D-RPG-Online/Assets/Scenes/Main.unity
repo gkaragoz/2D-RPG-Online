@@ -1075,7 +1075,6 @@ MonoBehaviour:
   _lobbyRowPrefab: {fileID: 114323389695131884, guid: 2b41839b545ccd74a9d8e3e5589e5e25,
     type: 2}
   _gridContainer: {fileID: 618539873}
-  attack: 0
   _lobbyRowsList: []
 --- !u!224 &112515992
 RectTransform:
@@ -9641,6 +9640,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 13925743}
+  _UISettings:
+    btnGoToLobby: {fileID: 1023784960}
+    btnLeaveRoom: {fileID: 1686874562}
 --- !u!1 &811589066
 GameObject:
   m_ObjectHideFlags: 0
@@ -11822,7 +11824,7 @@ GameObject:
   - component: {fileID: 1023784961}
   - component: {fileID: 1023784960}
   m_Layer: 5
-  m_Name: btnLobby
+  m_Name: btnGoToLobby
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11841,7 +11843,7 @@ RectTransform:
   m_Children:
   - {fileID: 1315613724}
   m_Father: {fileID: 1667776978}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
@@ -11887,29 +11889,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1023784961}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 802713049}
-        m_MethodName: Hide
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 110491366}
-        m_MethodName: Show
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!114 &1023784961
@@ -21179,8 +21159,8 @@ RectTransform:
   m_Children:
   - {fileID: 1673078748}
   - {fileID: 826286960}
-  - {fileID: 1686874561}
   - {fileID: 1023784959}
+  - {fileID: 1686874561}
   - {fileID: 988048467}
   - {fileID: 1520111974}
   - {fileID: 832813841}
@@ -21406,7 +21386,7 @@ RectTransform:
   m_Children:
   - {fileID: 1424012137}
   m_Father: {fileID: 1667776978}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}

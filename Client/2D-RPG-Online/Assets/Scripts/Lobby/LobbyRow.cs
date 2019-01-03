@@ -25,153 +25,42 @@ public class LobbyRow : MonoBehaviour {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private string _rowNumber;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private string _roomID;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private string _roomName;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private bool _isOwner;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private long _createdTime;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private long _updatedTime;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private int _currentUsersCount;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private int _maxUsersCount;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private bool _isPrivate;
+    private int _rowNumber;
 
-    public string RowNumber {
+    private ServerRoom _serverRoom;
+
+    public string GetRoomID {
         get {
-            return _rowNumber;
-        }
-
-        set {
-            _rowNumber = value;
-
-            SetRoomNumber();
-        }
-    }
-
-    public string RoomID {
-        get {
-            return _roomID;
-        }
-
-        set {
-            _roomID = value;
-        }
-    }
-
-    public string RoomName {
-        get {
-            return _roomName;
-        }
-
-        set {
-            _roomName = value;
-
-            SetRoomName();
-        }
-    }
-
-    public bool IsOwner {
-        get {
-            return _isOwner;
-        }
-
-        set {
-            _isOwner = value;
-
-            SetActionButtonsInteractions();
-        }
-    }
-
-    public long CreatedTime {
-        get {
-            return _createdTime;
-        }
-
-        set {
-            _createdTime = value;
-        }
-    }
-
-    public long UpdatedTime {
-        get {
-            return _updatedTime;
-        }
-
-        set {
-            _updatedTime = value;
-        }
-    }
-
-    public int CurrentUsersCount {
-        get {
-            return _currentUsersCount;
-        }
-
-        set {
-            _currentUsersCount = value;
-
-            SetUsersCount();
-            SetActionButtonsInteractions();
-        }
-    }
-
-    public int MaxUsersCount {
-        get {
-            return _maxUsersCount;
-        }
-
-        set {
-            _maxUsersCount = value;
-
-            SetUsersCount();
-            SetActionButtonsInteractions();
-        }
-    }
-
-    public bool IsPrivate {
-        get {
-            return _isPrivate;
-        }
-
-        set {
-            _isPrivate = value;
-
-            SetPrivateToggle();
-            SetActionButtonsInteractions();
+            return _serverRoom.Id;
         }
     }
 
     public bool IsAvailableToJoin {
         get {
-            return CurrentUsersCount <= MaxUsersCount && !IsPrivate ? true : false;
+            return _serverRoom.CurrentUserCount <= _serverRoom.MaxUserCount && !_serverRoom.IsPrivate ? true : false;
         }
     }
 
+    public void Initialize(string rowNumber, ServerRoom serverRoom) {
+        this._serverRoom = serverRoom;
+
+        SetRowNumber(rowNumber);
+        SetRoomName();
+        SetUserCount();
+        SetPrivateToggle();
+        SetActionButtonsInteractions();
+    }
+
     public void SetJoinButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
-        _btnJoin.onClick.AddListener(() => joinDelegate(RoomID));
+        _btnJoin.onClick.AddListener(() => joinDelegate(_serverRoom.Id));
     }
 
     public void SetWatchButtonOnClickAction(LobbyManager.WatchDelegate watchDelegate) {
-        _btnWatch.onClick.AddListener(() => watchDelegate(RoomID));
+        _btnWatch.onClick.AddListener(() => watchDelegate(_serverRoom.Id));
     }
 
     private void SetActionButtonsInteractions() {
-        if (IsOwner) {
+        if (_serverRoom.IsOwner) {
             DeactivateJoinButtonInteraction();
             DeactivateWatchButtonInteraction();
         } else if (IsAvailableToJoin) {
@@ -199,20 +88,20 @@ public class LobbyRow : MonoBehaviour {
         _btnWatch.interactable = false;
     }
 
-    private void SetRoomNumber() {
-        _txtRowNumber.text = RowNumber;
+    private void SetRowNumber(string rowNumber) {
+        _txtRowNumber.text = rowNumber;
     }
 
     private void SetRoomName() {
-        _txtRoomName.text = RoomName;
+        _txtRoomName.text = _serverRoom.Name;
     }
 
-    private void SetUsersCount() {
-        _txtPlayersCount.text = CurrentUsersCount + "/" + MaxUsersCount;
+    private void SetUserCount() {
+        _txtPlayersCount.text = _serverRoom.CurrentUserCount + "/" + _serverRoom.MaxUserCount;
     }
 
     private void SetPrivateToggle() {
-        _togglePrivate.isOn = IsPrivate;
+        _togglePrivate.isOn = _serverRoom.IsPrivate;
     }
 
 }

@@ -106,13 +106,12 @@ public class LoginManager : Menu {
 
         this.Hide();
         LobbyManager.instance.Initialize();
+        RoomManager.instance.Initialize();
         LobbyManager.instance.Show();
 
         LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
         LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
         LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-
-        LogManager.instance.AddLog("Active rooms count on server is " + data.RoomData.Rooms.Count, Log.Type.Server);
 
         LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
 
