@@ -8,6 +8,9 @@ public class RoomClientSlot : MonoBehaviour {
 
     [Serializable]
     public class UISettings {
+        public GameObject emptySlotPrefab;
+        public GameObject filledSlotPrefab;
+
         public Image imgFrame;
         public Image imgCharacter;
         public Image imgClassIcon;
@@ -21,7 +24,34 @@ public class RoomClientSlot : MonoBehaviour {
         [Utils.ReadOnly]
         private AnimatorController _animatorController;
 
-        public void SetCharacterClassVisualize(ClassManager.Classes characterClass) {
+        public void UpdateUI(RoomPlayerInfo roomPlayerInfo, bool fill) {
+            SetCharacterClassVisualize(ClassManager.Classes.Warrior);
+            SetToggleIsReady(true);
+            SetImgLeader(true);
+            SetTxtPlayerName(roomPlayerInfo.Username);
+
+            if (fill) {
+                ActivateFilledSlotPrefab();
+            } else {
+                ClearUI();
+            }
+        }
+
+        public void ClearUI() {
+            ActivateEmptySlotPrefab();
+        }
+
+        private void ActivateEmptySlotPrefab() {
+            filledSlotPrefab.SetActive(false);
+            emptySlotPrefab.SetActive(true);
+        }
+        
+        private void ActivateFilledSlotPrefab() {
+            emptySlotPrefab.SetActive(false);
+            filledSlotPrefab.SetActive(true);
+        }
+
+        private void SetCharacterClassVisualize(ClassManager.Classes characterClass) {
             ClassManager.CharacterClassVisualization characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(characterClass);
 
             SetImgFrameColor(characterClassVisualization.classFrameColor);
@@ -29,12 +59,6 @@ public class RoomClientSlot : MonoBehaviour {
             SetAnimatorController(characterClassVisualization.classAnimatorController);
             SetImgCharacter(characterClassVisualization.classIcon);
             SetTxtCharacterName(characterClassVisualization.className);
-        }
-
-        public void UpdateUI(RoomPlayerInfo roomPlayerInfo) {
-            SetToggleIsReady(true);
-            SetImgLeader(true);
-            SetTxtPlayerName(roomPlayerInfo.Username);
         }
 
         private void SetToggleIsReady(bool isReady) {
@@ -47,6 +71,10 @@ public class RoomClientSlot : MonoBehaviour {
 
         private void SetTxtPlayerName(string playerName) {
             txtPlayerName.text = playerName;
+        }
+
+        private void SetTxtCharacterName(string name) {
+            txtPlayerName.text = name;
         }
 
         private void SetImgFrameColor(Color color) {
@@ -65,9 +93,6 @@ public class RoomClientSlot : MonoBehaviour {
             imgClassIcon.sprite = sprite;
         }
 
-        private void SetTxtCharacterName(string name) {
-            txtPlayerName.text = name;
-        }
     }
 
     [Header("Initialization")]
@@ -80,32 +105,38 @@ public class RoomClientSlot : MonoBehaviour {
         }
     }
 
-    [SerializeField]
-    [Utils.ReadOnly]
-    private ClassManager.Classes _classEnum;
-
-    public ClassManager.Classes ClassEnum {
+    public bool IsFilledSlot {
         get {
-            return _classEnum;
+            return _roomPlayerInfo == null ? false : true;
+        }
+    }
+
+    public RoomManager.Team Team {
+        get {
+            return _team;
         }
 
         set {
-            _classEnum = value;
-
-            _UISettings.SetCharacterClassVisualize(ClassEnum);
+            _team = value;
         }
     }
 
+    [SerializeField]
+    private RoomManager.Team _team;
+   
     private RoomPlayerInfo _roomPlayerInfo;
 
-    public void Initialize(RoomPlayerInfo roomPlayerInfo) {
+    public void Initialize(RoomPlayerInfo roomPlayerInfo, RoomManager.Team team) {
         this._roomPlayerInfo = roomPlayerInfo;
+        this.Team = team;
 
-        _UISettings.UpdateUI(_roomPlayerInfo);
+        _UISettings.UpdateUI(_roomPlayerInfo, IsFilledSlot);
     }
 
-    public void Destroy() {
-        Destroy(this.gameObject);
+    public void Clear() {
+        this._roomPlayerInfo = null;
+
+        _UISettings.ClearUI();
     }
 
 }

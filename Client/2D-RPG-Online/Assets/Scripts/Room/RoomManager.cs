@@ -22,6 +22,11 @@ public class RoomManager : Menu {
 
     #endregion
 
+    public enum Team {
+        Red,
+        Blue
+    }
+
     [System.Serializable]
     public class UISettings {
         public Button btnGoToLobby;
@@ -34,21 +39,16 @@ public class RoomManager : Menu {
     }
 
     [SerializeField]
-    private RoomClientSlot _roomLeftClientSlotPrefab;
+    private List<RoomClientSlot> _roomLeftClientSlotsList = new List<RoomClientSlot>();
     [SerializeField]
-    private RoomClientSlot _roomRightClientSlotPrefab;
-    [SerializeField]
-    private RectTransform _leftSlotParent;
-    [SerializeField]
-    private RectTransform _rightSlotParent;
+    private List<RoomClientSlot> _roomRightClientSlotsList = new List<RoomClientSlot>();
     [SerializeField]
     private UISettings _UISettings;
 
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private List<RoomClientSlot> _roomLeftClientSlotsList = new List<RoomClientSlot>();
-    private List<RoomClientSlot> _roomRightClientSlotsList = new List<RoomClientSlot>();
+    private short _teamSelector = -1;
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
@@ -136,25 +136,59 @@ public class RoomManager : Menu {
         LobbyManager.instance.Show();
     }
 
-    private void CreateRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
-        RoomClientSlot roomClientSlot = Instantiate(_roomLeftClientSlotPrefab, _leftSlotParent);
-        roomClientSlot.Initialize(roomPlayerInfo);
+    private RoomClientSlot GetAvailableRoomClientSlot(bool left) {
+        if (left) {
+            for (int ii = 0; ii < _roomLeftClientSlotsList.Count; ii++) {
+                if (!_roomLeftClientSlotsList[ii].IsFilledSlot) {
+                    return _roomLeftClientSlotsList[ii];
+                }
+            }
+        } else {
+            for (int ii = 0; ii < _roomRightClientSlotsList.Count; ii++) {
+                if (!_roomRightClientSlotsList[ii].IsFilledSlot) {
+                    return _roomRightClientSlotsList[ii];
+                }
+            }
+        }
 
-        _roomLeftClientSlotsList.Add(roomClientSlot);
+        return null;
+    }
+
+    private RoomClientSlot FindRoomClientSlot(string username) {
+        return _roomLeftClientSlotsList.Find(slot => slot.Username == username) == null
+            ?
+            _roomRightClientSlotsList.Find(slot => slot.Username == username)
+            :
+            _roomLeftClientSlotsList.Find(slot => slot.Username == username);
+    }
+
+    private void PlaceRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
+        //Get this info from roomPlayerInfo
+        Team team;
+
+        int random = UnityEngine.Random.Range(0, 1);
+        if (random == 1) {
+            team = Team.Blue;
+        } else {
+            team = Team.Red;
+        }
+
+        switch (team) {
+            case Team.Red:
+                GetAvailableRoomClientSlot(true).Initialize(roomPlayerInfo, team);
+                break;
+            case Team.Blue:
+                GetAvailableRoomClientSlot(false).Initialize(roomPlayerInfo, team);
+                break;
+        }
     }
 
     private void UpdateRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
-        string username = roomPlayerInfo.Username;
-
-        _roomLeftClientSlotsList.Find(slot => slot.Username == username).Initialize(roomPlayerInfo);
+        FindRoomClientSlot(roomPlayerInfo.Username).Initialize(roomPlayerInfo, Team.Red);
     }
 
-    private void RemoveRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
-        string username = roomPlayerInfo.Username;
-
-        RoomClientSlot roomClientSlot = _roomLeftClientSlotsList.Find(slot => slot.Username == username);
-        _roomLeftClientSlotsList.Remove(roomClientSlot);
-        roomClientSlot.Destroy();
+    private void ClearRoomClientSlot(RoomPlayerInfo roomPlayerInfo) {
+        FindRoomClientSlot(roomPlayerInfo.Username).Clear();
     }
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
@@ -175,7 +209,7 @@ public class RoomManager : Menu {
             RoomPlayerInfo roomPlayerInfo = data.RoomData.PlayerList[ii];
 
             if (IsRoomPlayerExists(roomPlayerInfo.Username)) {
-                CreateRoomClientSlot(roomPlayerInfo);
+                PlaceRoomClientSlot(roomPlayerInfo);
             } else {
                 UpdateRoomClientSlot(roomPlayerInfo);
             }
@@ -191,9 +225,9 @@ public class RoomManager : Menu {
         _UISettings.SetTxtRoomName(MSSRoom.Name);
 
         RoomPlayerInfo roomPlayerInfo = new RoomPlayerInfo();
-        roomPlayerInfo.Username = "USERNAMEI MSS VERCEK";
+        roomPlayerInfo.Username = "USERNAME_MSS";
 
-        CreateRoomClientSlot(roomPlayerInfo);
+        PlaceRoomClientSlot(roomPlayerInfo);
 
         LobbyManager.instance.Hide();
         this.Show();
@@ -214,13 +248,13 @@ public class RoomManager : Menu {
     private void OnRoomPlayerJoined(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomPlayerJoined: " + data, Log.Type.Server);
 
-        CreateRoomClientSlot(data.RoomData.PlayerInfo);
+        PlaceRoomClientSlot(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomPlayerLeft: " + data, Log.Type.Server);
 
-        RemoveRoomClientSlot(data.RoomData.PlayerInfo);
+        ClearRoomClientSlot(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
