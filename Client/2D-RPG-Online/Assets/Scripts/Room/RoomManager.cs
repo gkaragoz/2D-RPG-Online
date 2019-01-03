@@ -219,8 +219,7 @@ public class RoomManager : Menu {
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
 
-        this.Hide();
-        LobbyManager.instance.Show();
+        GoToLobby();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
