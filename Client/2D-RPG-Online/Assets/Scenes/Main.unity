@@ -11698,7 +11698,7 @@ GameObject:
   - component: {fileID: 1022732530}
   - component: {fileID: 1022732529}
   m_Layer: 5
-  m_Name: btnJoin
+  m_Name: btnLogin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -18999,6 +18999,7 @@ MonoBehaviour:
   _UISettings:
     inputFieldUsername: {fileID: 204333126}
     inputFieldPassword: {fileID: 1909626718}
+    btnLogin: {fileID: 1022732529}
 --- !u!4 &1558867905
 Transform:
   m_ObjectHideFlags: 0
@@ -24888,7 +24889,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_text: Join
+  m_text: Login
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 72179b31a84ede9488943748755e60cd, type: 2}
   m_sharedMaterial: {fileID: 21364062978270340, guid: 72179b31a84ede9488943748755e60cd,
@@ -24957,7 +24958,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1947502636}
-    characterCount: 4
+    characterCount: 5
     spriteCount: 0
     spaceCount: 0
     wordCount: 1

@@ -24,6 +24,7 @@ public class LoginManager : Menu {
     public class UISettings {
         public TMP_InputField inputFieldUsername;
         public TMP_InputField inputFieldPassword;
+        public Button btnLogin;
 
         public bool IsUsernameValid {
             get { return inputFieldUsername.text != string.Empty ? true : false; }
@@ -41,14 +42,16 @@ public class LoginManager : Menu {
             return inputFieldPassword.text;
         }
 
-        public void ActivateInputFields() {
+        public void ActivateLoginUIs() {
             inputFieldUsername.interactable = true;
             inputFieldPassword.interactable = true;
+            btnLogin.interactable = true;
         }
 
-        public void DisableInputFields() {
+        public void DeactivateLoginUIS() {
             inputFieldUsername.interactable = false;
             inputFieldPassword.interactable = false;
+            btnLogin.interactable = false;
         }
     }
 
@@ -69,9 +72,9 @@ public class LoginManager : Menu {
 
     private void Update() {
         if (NetworkManager.mss.IsConnected) {
-            _UISettings.ActivateInputFields();
+            _UISettings.ActivateLoginUIs();
         } else {
-            _UISettings.DisableInputFields();
+            _UISettings.DeactivateLoginUIS();
         }
     }
 
