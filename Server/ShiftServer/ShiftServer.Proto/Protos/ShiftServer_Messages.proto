@@ -59,13 +59,14 @@ enum MSServerEvent
 	ROOM_JOIN_FAILED = 10;		
 	ROOM_CREATE_FAILED = 11;		
 	ROOM_DELETE_FAILED = 12;		
-	ROOM_GAME_START = 13;		
+	ROOM_GET_PLAYERS = 13;		
+	ROOM_GAME_START = 14;		
 
-	LOBBY_REFRESH = 14;		
-	CONNECTION = 15;			
-	CONNECTION_FAILED = 16;			
-	CONNECTION_LOST = 17;			
-	PING_REQUEST = 18;				
+	LOBBY_REFRESH = 15;		
+	CONNECTION = 16;			
+	CONNECTION_FAILED = 17;			
+	CONNECTION_LOST = 18;			
+	PING_REQUEST = 19;				
 }
 
 enum ShiftServerError
@@ -103,7 +104,8 @@ message RoomData {
 	MSSRoom DeletedRoom = 3;
 	MSSRoom LeavedRoom = 4;
 	RoomPlayerInfo PlayerInfo = 5;
-	repeated MSSRoom rooms = 6;
+	repeated RoomPlayerInfo PlayerList = 6;
+	repeated MSSRoom rooms = 7;
 }
 
 message MSSRoom {
@@ -118,20 +120,8 @@ message MSSRoom {
 	int32 currentUserCount = 8;
 
 }
-enum MSSRoomPlayerState
-{
-	JOIN = 0;
-	KICKED = 1;
-	BANNED = 2;
-	LEAVED = 3;
-	DISCONNECTED = 4;
-}
 message RoomPlayerInfo {
-
-	int32 Id = 1;
 	string Username = 2;
-	MSSRoomPlayerState State = 3;
-
 }
 
 message AccountData {

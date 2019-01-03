@@ -12,7 +12,7 @@ using Telepathy;
 
 namespace ShiftServer.Server.Core
 {
-    public interface IWorld
+    public interface IZone
     {
         Vector3 Scale { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }

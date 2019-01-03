@@ -16,11 +16,11 @@ namespace ShiftServer.Server.Core
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private static Telepathy.Server server = null;
-        public IWorld world = null;
+        public IZone world = null;
         public ServerDataHandler dataHandler = null;
         public Thread listenerThread = null;
 
-        public ServerProvider(IWorld createdWorld)
+        public ServerProvider(IZone createdWorld)
         {
             world = createdWorld;
             dataHandler = new ServerDataHandler();

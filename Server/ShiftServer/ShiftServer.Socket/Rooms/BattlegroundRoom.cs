@@ -35,9 +35,9 @@ namespace ShiftServer.Server.Rooms
             DisposeInMilliseconds = 10000;
             MaxConnId = 0;
         }
+
         public void OnGameStart(ShiftServerData data, ShiftClient client)
         {
-
         }
 
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)
@@ -66,14 +66,12 @@ namespace ShiftServer.Server.Rooms
 
         public void OnPlayerJoin(ShiftServerData data, ShiftClient client)
         {
-
         }
 
         public void BroadcastToRoom(ShiftClient currentClient, MSServerEvent evt)
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
             pInfo.Username = currentClient.UserName;
-            pInfo.Id = currentClient.connectionId;
 
             ShiftServerData data = new ShiftServerData();
             data.RoomData = new RoomData();

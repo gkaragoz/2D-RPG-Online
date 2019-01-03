@@ -14,7 +14,6 @@ namespace ShiftServer.Server.Core
         private static readonly log4net.ILog log
                   = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ServerDataHandler dataHandler = null;
         private ServerProvider _sp = null;
 
         public RoomProvider(ServerProvider mainServerProvider)
@@ -25,7 +24,6 @@ namespace ShiftServer.Server.Core
         {
             _sp.world.Rooms.Add(room.Id, room);
         }
-
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
 
@@ -91,7 +89,6 @@ namespace ShiftServer.Server.Core
 
             }
 
-
             if (data.RoomData.JoinedRoom != null)
             {
                 _sp.world.Rooms.TryGetValue(data.RoomData.JoinedRoom.Id, out result);
@@ -105,6 +102,22 @@ namespace ShiftServer.Server.Core
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
                     result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
 
+                    ShiftServerData listData = new ShiftServerData();
+                    listData.RoomData = new RoomData();
+                    ShiftClient cl = null;
+                    for (int i = 0; i < result.MaxConnId; i++)
+                    {
+                        result.Clients.TryGetValue(i, out cl);
+                        if (cl != null)
+                        {
+                            RoomPlayerInfo pInfo = new RoomPlayerInfo();
+                            pInfo.Username = cl.UserName;
+                            listData.RoomData.PlayerList.Add(pInfo);
+                        }
+                    }
+
+                    shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
+
                 }
                 else
                 {
@@ -114,13 +127,17 @@ namespace ShiftServer.Server.Core
                     shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                     return;
                 }
-
-
-
             }
-
-            _sp.SendMessage(shift.connectionId, MSServerEvent.RoomJoin, data);
+            else
+            {
+                ShiftServerData oData = new ShiftServerData();
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomNotFound);
+                oData.ErrorReason = ShiftServerError.RoomNotFound;
+                shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
+                return;
+            }    
         }
+
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
             IRoom prevRoom = null;

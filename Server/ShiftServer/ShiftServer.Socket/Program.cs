@@ -14,6 +14,7 @@ namespace ShiftServer.Server
 
         private static ServerProvider _serverProvider = null;
         private static RoomProvider _roomProvider = null;
+        private static GroupProvider _groupProvider = null;
         /// <summary>
         /// Main entry of shift server
         /// </summary>
@@ -22,10 +23,10 @@ namespace ShiftServer.Server
         {
 
 
-            RPGWorld world = new RPGWorld();
-
-            _serverProvider = new ServerProvider(world);
+            Zone zone = new Zone();
+            _serverProvider = new ServerProvider(zone);
             _roomProvider = new RoomProvider(_serverProvider);
+            _groupProvider = new GroupProvider(_roomProvider);
 
             BattlegroundRoom bgRoom = new BattlegroundRoom();
             bgRoom.Name = "MANASHIFT BattleRoyale #1 ( OFFICIAL )";
@@ -34,17 +35,16 @@ namespace ShiftServer.Server
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
 
-            _serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
+            _serverProvider.AddServerEventListener(MSServerEvent.Login, zone.OnAccountLogin);
 
             _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, _roomProvider.OnRoomJoin);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomLeave, _roomProvider.OnRoomLeave);
-
             _serverProvider.AddServerEventListener(MSServerEvent.LobbyRefresh, _roomProvider.OnLobbyRefresh);
 
-            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, world.OnObjectUse);
-            _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, world.OnPlayerCreate);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 
             _serverProvider.Listen(tickrate : 75, port : 2000);
 

@@ -23,6 +23,7 @@ namespace ShiftServer.Server.Core
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
+
         int MaxUser { get; set; }
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
