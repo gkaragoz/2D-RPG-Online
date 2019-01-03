@@ -21,9 +21,6 @@ public class RoomClientSlot : MonoBehaviour {
         [Utils.ReadOnly]
         private AnimatorController _animatorController;
 
-        public void Initialize(RoomPlayerInfo roomPlayerInfo) {
-        }
-
         public void SetCharacterClassVisualize(ClassManager.Classes characterClass) {
             ClassManager.CharacterClassVisualization characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(characterClass);
 
@@ -104,7 +101,6 @@ public class RoomClientSlot : MonoBehaviour {
     public void Initialize(RoomPlayerInfo roomPlayerInfo) {
         this._roomPlayerInfo = roomPlayerInfo;
 
-        _UISettings.Initialize(_roomPlayerInfo);
         _UISettings.UpdateUI(_roomPlayerInfo);
     }
 
