@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -25,6 +26,11 @@ public class RoomManager : Menu {
     public class UISettings {
         public Button btnGoToLobby;
         public Button btnLeaveRoom;
+        public TextMeshProUGUI txtRoomName;
+
+        public void SetTxtRoomName(string name) {
+            txtRoomName.text = name;
+        }
     }
 
     [SerializeField]
@@ -182,6 +188,7 @@ public class RoomManager : Menu {
         MSSRoom MSSRoom = data.RoomData.CreatedRoom;
 
         LobbyManager.instance.CreateLobbyRow(MSSRoom);
+        _UISettings.SetTxtRoomName(MSSRoom.Name);
 
         RoomPlayerInfo roomPlayerInfo = new RoomPlayerInfo();
         roomPlayerInfo.Username = "USERNAMEI MSS VERCEK";
