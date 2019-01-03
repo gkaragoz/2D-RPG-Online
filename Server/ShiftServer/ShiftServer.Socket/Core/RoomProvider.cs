@@ -56,7 +56,7 @@ namespace ShiftServer.Server.Core
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
                 
-                newRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Join);
+                newRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
             }
             else
             {
@@ -87,7 +87,7 @@ namespace ShiftServer.Server.Core
 
                 prevRoom.Clients.Remove(shift.connectionId);
                 prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
-                prevRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Leaved);
+                prevRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerLeaved);
 
             }
 
@@ -103,7 +103,7 @@ namespace ShiftServer.Server.Core
                     shift.JoinedRoomId = result.Id;
                     shift.IsJoinedToRoom = true;
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
-                    result.BroadcastToRoom(shift, MSSRoomPlayerState.Join);
+                    result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
 
                 }
                 else
@@ -138,7 +138,7 @@ namespace ShiftServer.Server.Core
                 leavedRoom.RoomData.LeavedRoom = new MSSRoom();
                 leavedRoom.RoomData.LeavedRoom.Id = prevRoom.Id;
                 shift.SendPacket(MSServerEvent.RoomLeave, data);
-                prevRoom.BroadcastToRoom(shift, MSSRoomPlayerState.Leaved);
+                prevRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerLeaved);
 
 
             }
