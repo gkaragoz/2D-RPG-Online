@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -111,12 +112,12 @@ public class LobbyRow : MonoBehaviour {
         }
     }
 
-    public void SetJoinButtonOnClickAction(UnityAction action) {
-        _btnJoin.onClick.AddListener(action);
+    public void SetJoinButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
+        _btnJoin.onClick.AddListener(() => joinDelegate(RoomID));
     }
 
-    public void SetWatchButtonOnClickAction(UnityAction action) {
-        _btnWatch.onClick.AddListener(action);
+    public void SetWatchButtonOnClickAction(LobbyManager.WatchDelegate watchDelegate) {
+        _btnWatch.onClick.AddListener(() => watchDelegate(RoomID));
     }
 
     private void SetRoomNumber() {

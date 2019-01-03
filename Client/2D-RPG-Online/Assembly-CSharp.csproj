@@ -60,12 +60,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\CharacterAnimator.cs" />
-    <Compile Include="Assets\Scripts\CharacterAttack.cs" />
-    <Compile Include="Assets\Scripts\CharacterController.cs" />
-    <Compile Include="Assets\Scripts\CharacterMotor.cs" />
-    <Compile Include="Assets\Scripts\CharacterStats.cs" />
-    <Compile Include="Assets\Scripts\CharacterStats_SO.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterAttack.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterMotor.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterStats.cs" />
+    <Compile Include="Assets\Scripts\Character\CharacterStats_SO.cs" />
     <Compile Include="Assets\Scripts\ClassManager.cs" />
     <Compile Include="Assets\Scripts\Destructable.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShakeInstance.cs" />
@@ -74,20 +74,23 @@
     <Compile Include="Assets\Scripts\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\FadeInOut.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
-    <Compile Include="Assets\Scripts\LobbyManager.cs" />
-    <Compile Include="Assets\Scripts\LobbyRow.cs" />
-    <Compile Include="Assets\Scripts\Log.cs" />
-    <Compile Include="Assets\Scripts\LogFile.cs" />
-    <Compile Include="Assets\Scripts\LoginManager.cs" />
-    <Compile Include="Assets\Scripts\LogManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\LobbyManager.cs" />
+    <Compile Include="Assets\Scripts\Lobby\LobbyRow.cs" />
+    <Compile Include="Assets\Scripts\Log\Log.cs" />
+    <Compile Include="Assets\Scripts\Log\LogFile.cs" />
+    <Compile Include="Assets\Scripts\Log\LogManager.cs" />
     <Compile Include="Assets\Scripts\Menu.cs" />
-    <Compile Include="Assets\Scripts\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
+    <Compile Include="Assets\Scripts\Network\PingStatus.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
-    <Compile Include="Assets\Scripts\PingStatus.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
-    <Compile Include="Assets\Scripts\Session_SO.cs" />
-    <Compile Include="Assets\Scripts\SessionWatcher.cs" />
+    <Compile Include="Assets\Scripts\Room\Room.cs" />
+    <Compile Include="Assets\Scripts\Room\RoomClientSlot.cs" />
+    <Compile Include="Assets\Scripts\Room\RoomManager.cs" />
+    <Compile Include="Assets\Scripts\Session\Session_SO.cs" />
+    <Compile Include="Assets\Scripts\Session\SessionWatcher.cs" />
     <Compile Include="Assets\Scripts\Sound\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />

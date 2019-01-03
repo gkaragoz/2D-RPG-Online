@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class LobbyManager : Menu {
@@ -21,6 +22,12 @@ public class LobbyManager : Menu {
     }
 
     #endregion
+
+    public delegate void JoinDelegate(string id);
+    public JoinDelegate onJoinButtonClicked;
+
+    public delegate void WatchDelegate(string id);
+    public WatchDelegate onWatchButtonClicked;
 
     [System.Serializable]
     public class UISettings {
@@ -55,20 +62,9 @@ public class LobbyManager : Menu {
 
         _UISettings.btnCreateRoom.onClick.AddListener(CreateRoom);
         _UISettings.btnRefreshLobby.onClick.AddListener(RefreshLobby);
-    }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            JoinRoom();
-        }
-
-        if (Input.GetKeyDown(KeyCode.UpArrow)) {
-            DeleteRoom();
-        }
-
-        if (Input.GetKeyDown(KeyCode.DownArrow)) {
-            JoinRandomRoom();
-        }
+        onJoinButtonClicked = JoinRoom;
+        onWatchButtonClicked = WatchRoom;
     }
 
     private void CreateRoom() {
@@ -87,28 +83,20 @@ public class LobbyManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
     }
 
-    private void JoinRoom() {
+    private void JoinRoom(string id) {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
         roomData.JoinedRoom = new ServerRoom();
-        roomData.JoinedRoom.Id = "88114c18-8afd-4f93-9fe6-d4ee7da96563";
+        roomData.JoinedRoom.Id = id;
 
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
     }
 
-    private void JoinRandomRoom() {
-        ShiftServerData data = new ShiftServerData();
+    private void WatchRoom(string id) {
 
-        RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new ServerRoom();
-        roomData.JoinedRoom.Id = _lobbyRowsList[UnityEngine.Random.Range(0, _lobbyRowsList.Count)].RoomID;
-
-        data.RoomData = roomData;
-
-        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
     }
 
     private void DeleteRoom() {
@@ -176,6 +164,8 @@ public class LobbyManager : Menu {
         lobbyRow.CurrentUsersCount = currentUsersCount;
         lobbyRow.MaxUsersCount = maxUsersCount;
         lobbyRow.IsPrivate = isPrivate;
+        lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
+        lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
 
         _lobbyRowsList.Add(lobbyRow);
     }

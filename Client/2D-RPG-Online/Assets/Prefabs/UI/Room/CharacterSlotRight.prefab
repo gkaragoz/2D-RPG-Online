@@ -121,6 +121,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 224848559886796722}
+  - component: {fileID: 114752121307986866}
   m_Layer: 5
   m_Name: CharacterSlotRight
   m_TagString: Untagged
@@ -551,6 +552,17 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114752121307986866
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1531406481436344}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2c62e0e230686754892c7d9b74633d22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114760949091435324
 MonoBehaviour:
   m_ObjectHideFlags: 1
