@@ -2002,26 +2002,18 @@ MonoBehaviour:
   _characterClassVisualization:
   - className: Warrior
     classSprite: {fileID: 21300000, guid: dd3aa135597b72945a6056743f6366f5, type: 3}
-    classAnimatorController: {fileID: 9100000, guid: fac47ddf39ad6ef4e9f39ef423ae47ff,
-      type: 2}
     classFrameColor: {r: 0.88235295, g: 0.4392157, b: 0.33333334, a: 1}
     classIcon: {fileID: 21300000, guid: 611db1ee53a13804eb9d641ca95310a0, type: 3}
   - className: Archer
     classSprite: {fileID: 21300000, guid: dd3aa135597b72945a6056743f6366f5, type: 3}
-    classAnimatorController: {fileID: 9100000, guid: fac47ddf39ad6ef4e9f39ef423ae47ff,
-      type: 2}
     classFrameColor: {r: 0, g: 0.72156864, b: 0.5803922, a: 1}
     classIcon: {fileID: 21300000, guid: b7bd1407b0e3e4d41aacbaeaa7de673b, type: 3}
   - className: Mage
     classSprite: {fileID: 21300000, guid: dd3aa135597b72945a6056743f6366f5, type: 3}
-    classAnimatorController: {fileID: 9100000, guid: fac47ddf39ad6ef4e9f39ef423ae47ff,
-      type: 2}
     classFrameColor: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
     classIcon: {fileID: 21300000, guid: 6cc8d06274bd36a469880902ade4614a, type: 3}
   - className: Priest
     classSprite: {fileID: 21300000, guid: dd3aa135597b72945a6056743f6366f5, type: 3}
-    classAnimatorController: {fileID: 9100000, guid: fac47ddf39ad6ef4e9f39ef423ae47ff,
-      type: 2}
     classFrameColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
     classIcon: {fileID: 21300000, guid: 36c1b33b908f303439668cd9d0c2ff1b, type: 3}
 --- !u!4 &143441349
@@ -7954,7 +7946,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 925385207}
   m_HandleRect: {fileID: 925385206}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19737,7 +19729,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1588753413
