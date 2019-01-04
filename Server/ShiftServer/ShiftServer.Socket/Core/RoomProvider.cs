@@ -53,8 +53,7 @@ namespace ShiftServer.Server.Core
                 _sp.world.Rooms.Add(newRoom.Id, newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
-                
-                newRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
+                //newRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
             }
             else
             {
@@ -105,18 +104,24 @@ namespace ShiftServer.Server.Core
                     ShiftServerData listData = new ShiftServerData();
                     listData.RoomData = new RoomData();
                     ShiftClient cl = null;
-                    for (int i = 0; i < result.MaxConnId; i++)
+
+
+                    for (int i = 0; i <= result.MaxConnId; i++)
                     {
                         result.Clients.TryGetValue(i, out cl);
                         if (cl != null)
                         {
+                            if (cl.connectionId == shift.connectionId)
+                                continue;
+
                             RoomPlayerInfo pInfo = new RoomPlayerInfo();
                             pInfo.Username = cl.UserName;
                             listData.RoomData.PlayerList.Add(pInfo);
                         }
                     }
+                    if (result.SocketIdSessionLookup.Count > 1)
+                        shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
 
-                    shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
                     shift.SendPacket(MSServerEvent.RoomJoin, data);
 
                 }
@@ -136,7 +141,7 @@ namespace ShiftServer.Server.Core
                 oData.ErrorReason = ShiftServerError.RoomNotFound;
                 shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                 return;
-            }    
+            }
         }
 
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
@@ -186,7 +191,7 @@ namespace ShiftServer.Server.Core
                 {
                     if (room.CreatedUserId == shift.connectionId)
                     {
-         
+
                         if (room.SocketIdSessionLookup.Count > 1)
                         {
                             //_sp.world.Rooms.Remove(data.RoomData.DeletedRoom.Id);
@@ -200,13 +205,13 @@ namespace ShiftServer.Server.Core
                                     room.ServerLeaderId = roomUser.connectionId;
                                 }
                             }
-                      
+
                         }
                         else
                         {
 
                             _sp.world.Rooms.Remove(data.RoomData.DeletedRoom.Id);
-                          
+
                         }
                         shift.IsJoinedToRoom = false;
                         isSuccess = true;

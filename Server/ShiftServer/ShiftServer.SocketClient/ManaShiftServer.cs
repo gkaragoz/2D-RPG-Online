@@ -25,6 +25,7 @@ namespace ShiftServer.Client
         public bool IsConnecting { get => gameProvider.client.Connecting; }
         public bool HasPlayerRoom { get => this.JoinedRoom == null ? false : true; }
         public MSSRoom JoinedRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom; }
+        public CommonAccountData AccountData { get => gameProvider.dataHandler.accountData; }
 
         private Stopwatch _stopwatch;
         private long _currentPingValue;
