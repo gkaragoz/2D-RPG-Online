@@ -1,117 +1,111 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class RoomClientSlot : MonoBehaviour {
 
-    [Serializable]
-    public class UISettings {
-        public GameObject emptySlotPrefab;
-        public GameObject filledSlotPrefab;
-
-        public Image imgFrame;
-        public Image imgCharacter;
-        public Image imgClassIcon;
-        public Toggle toggleIsReady;
-        public Image imgLeader;
-        public TextMeshProUGUI txtPlayerName;
-        public TextMeshProUGUI txtCharacterName;
-
-        public void UpdateUI(string username, bool fill) {
-            SetCharacterClassVisualize(ClassManager.Classes.Warrior);
-            SetToggleIsReady(true);
-            SetImgLeader(true);
-            SetTxtPlayerName(username);
-
-            if (fill) {
-                ActivateFilledSlotPrefab();
-            } else {
-                ClearUI();
-            }
-        }
-
-        public void ClearUI() {
-            ActivateEmptySlotPrefab();
-        }
-
-        private void ActivateEmptySlotPrefab() {
-            filledSlotPrefab.SetActive(false);
-            emptySlotPrefab.SetActive(true);
-        }
-        
-        private void ActivateFilledSlotPrefab() {
-            emptySlotPrefab.SetActive(false);
-            filledSlotPrefab.SetActive(true);
-        }
-
-        private void SetCharacterClassVisualize(ClassManager.Classes characterClass) {
-            ClassManager.CharacterClassVisualization characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(characterClass);
-
-            SetImgFrameColor(characterClassVisualization.classFrameColor);
-            SetImgCharacter(characterClassVisualization.classSprite);
-            SetImgCharacter(characterClassVisualization.classIcon);
-            SetTxtCharacterName(characterClassVisualization.className);
-        }
-
-        private void SetToggleIsReady(bool isReady) {
-            toggleIsReady.isOn = isReady;
-        }
-
-        private void SetImgLeader(bool isLeader) {
-            imgLeader.enabled = isLeader;
-        }
-
-        private void SetTxtPlayerName(string playerName) {
-            txtPlayerName.text = playerName;
-        }
-
-        private void SetTxtCharacterName(string name) {
-            txtPlayerName.text = name;
-        }
-
-        private void SetImgFrameColor(Color color) {
-            imgFrame.color = color;
-        }
-
-        private void SetImgCharacter(Sprite sprite) {
-            imgCharacter.sprite = sprite;
-        }
-
-        private void SetImgClassIcon(Sprite sprite) {
-            imgClassIcon.sprite = sprite;
-        }
-
-    }
-
     [Header("Initialization")]
     [SerializeField]
-    private UISettings _UISettings;
+    private GameObject _emptySlotPrefab;
+    [SerializeField]
+    private GameObject _filledSlotPrefab;
+
+    [SerializeField]
+    private Image _imgFrame;
+    [SerializeField]
+    private Image _imgCharacter;
+    [SerializeField]
+    private Image _imgClassIcon;
+    [SerializeField]
+    private Toggle _toggleIsReady;
+    [SerializeField]
+    private Image _imgLeader;
+    [SerializeField]
+    private TextMeshProUGUI _txtPlayerName;
+    [SerializeField]
+    private TextMeshProUGUI _txtCharacterName;
 
     public string Username {
         get {
-            return _roomPlayerInfo.Username;
+            return _playerInfo.Username;
         }
     }
 
     public bool IsFilledSlot {
         get {
-            return _roomPlayerInfo == null ? false : true;
+            return _playerInfo == null ? false : true;
         }
     }
 
-    private RoomPlayerInfo _roomPlayerInfo;
+    private ClassManager.CharacterClassVisualization _characterClassVisualization;
 
-    public void Initialize(RoomPlayerInfo roomPlayerInfo) {
-        this._roomPlayerInfo = roomPlayerInfo;
+    private RoomPlayerInfo _playerInfo;
 
-        _UISettings.UpdateUI(Username, IsFilledSlot);
+    public void UpdateUI(RoomPlayerInfo playerInfo) {
+        this._playerInfo = playerInfo;
+        this._characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(ClassManager.Classes.Warrior);
+
+        SetCharacterClassVisualize();
+        SetToggleIsReady();
+        SetImgLeader();
+        SetTxtPlayerName();
+
+        if (IsFilledSlot) {
+            ActivateFilledSlotPrefab();
+        } else {
+            Clear();
+        }
     }
 
     public void Clear() {
-        this._roomPlayerInfo = null;
+        this._playerInfo = null;
 
-        _UISettings.ClearUI();
+        ActivateEmptySlotPrefab();
+    }
+
+    private void ActivateEmptySlotPrefab() {
+        _filledSlotPrefab.SetActive(false);
+        _emptySlotPrefab.SetActive(true);
+    }
+
+    private void ActivateFilledSlotPrefab() {
+        _emptySlotPrefab.SetActive(false);
+        _filledSlotPrefab.SetActive(true);
+    }
+
+    private void SetCharacterClassVisualize() {
+        SetImgFrameColor();
+        SetImgCharacter();
+        SetImgClassIcon();
+        SetTxtCharacterName();
+    }
+
+    private void SetToggleIsReady() {
+        _toggleIsReady.isOn = true;
+    }
+
+    private void SetImgLeader() {
+        _imgLeader.enabled = true;
+    }
+
+    private void SetTxtPlayerName() {
+        _txtPlayerName.text = Username;
+    }
+
+    private void SetTxtCharacterName() {
+        _txtPlayerName.text = _characterClassVisualization.className;
+    }
+
+    private void SetImgFrameColor() {
+        _imgFrame.color = _characterClassVisualization.classFrameColor;
+    }
+
+    private void SetImgCharacter() {
+        _imgCharacter.sprite = _characterClassVisualization.classSprite;
+    }
+
+    private void SetImgClassIcon() {
+        _imgClassIcon.sprite = _characterClassVisualization.classIcon;
     }
 
 }

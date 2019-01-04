@@ -45,22 +45,43 @@ public class LobbyRow : MonoBehaviour {
             SetRoomName(mssRoom.Name);
             SetUserCount(mssRoom.CurrentUserCount, mssRoom.MaxUserCount);
             SetPrivateToggle(mssRoom.IsPrivate);
+            ToggleActionButtonsVisibility(mssRoom);
         }
 
-        private void ActivateReturnButtonInteraction() {
-            BtnReturn.interactable = true;
+        private void ToggleActionButtonsVisibility(MSSRoom mssRoom) {
+            if (NetworkManager.mss.HasPlayerRoom) {
+                if (IsJoinedRoom(mssRoom.Id)) {
+                    ShowReturnButton(mssRoom);
+                }
+            } else {
+                ShowJoinButton(mssRoom);
+            }
         }
 
-        private void DeactivateReturnButtonInteraction() {
-            BtnReturn.interactable = false;
+        private void SetJoinButtonVisibility(MSSRoom mssRoom) {
+            if (NetworkManager.mss.HasPlayerRoom) {
+                if (!IsJoinedRoom(mssRoom.Id) && IsAvailableToJoin(mssRoom)) {
+                    BtnJoin.gameObject.SetActive(true);
+                } else {
+                    BtnJoin.gameObject.SetActive(false);
+                }
+            } else if (IsAvailableToJoin(mssRoom)) {
+                BtnJoin.gameObject.SetActive(true);
+            }
         }
 
-        private void ActivateJoinButtonInteraction() {
-            BtnJoin.interactable = true;
+        private void ShowReturnButton(MSSRoom mssRoom) {
+            BtnJoin.gameObject.SetActive(false);
+            BtnReturn.gameObject.SetActive(true);
+
+            SetJoinButtonVisibility(mssRoom);
         }
 
-        private void DeactivateJoinButtonInteraction() {
-            BtnJoin.interactable = false;
+        private void ShowJoinButton(MSSRoom mssRoom) {
+            BtnReturn.gameObject.SetActive(false);
+            BtnJoin.gameObject.SetActive(true);
+
+            SetJoinButtonVisibility(mssRoom);
         }
 
         private void ActivateWatchButtonInteraction() {
@@ -86,6 +107,14 @@ public class LobbyRow : MonoBehaviour {
         private void SetPrivateToggle(bool isPrivate) {
             _togglePrivate.isOn = isPrivate;
         }
+
+        private bool IsJoinedRoom(string id) {
+            return NetworkManager.mss.JoinedRoom.Id == id ? true : false;
+        }
+
+        private bool IsAvailableToJoin(MSSRoom mssRoom) {
+            return mssRoom.CurrentUserCount <= mssRoom.MaxUserCount && !mssRoom.IsPrivate ? true : false;
+        }
     }
 
     [Header("Initialization")]
@@ -105,23 +134,11 @@ public class LobbyRow : MonoBehaviour {
         }
     }
 
-    public bool IsAvailableToJoin {
-        get {
-            return _MSSRoom.CurrentUserCount <= _MSSRoom.MaxUserCount && !_MSSRoom.IsPrivate ? true : false;
-        }
-    }
-
     public void Initialize(int rowNumber, MSSRoom MSSRoom) {
         this._MSSRoom = MSSRoom;
         this._rowNumber = rowNumber;
 
        _UISettings.UpdateUI(_rowNumber, _MSSRoom);
-    }
-
-    public void Initialize(int rowNumber) {
-        this._rowNumber = rowNumber;
-
-        _UISettings.UpdateUI(_rowNumber, _MSSRoom);
     }
 
     public void Destroy() {

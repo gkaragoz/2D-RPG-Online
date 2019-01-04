@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,79 +20,14 @@ public class RoomManager : Menu {
 
     #endregion
 
-    [Serializable]
-    public class UISettings {
-        public Button btnGoToLobby;
-        public Button btnLeaveRoom;
-        public TextMeshProUGUI txtRoomName;
-        public List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
-
-        public void UpdateUI(RoomPlayerInfo playerInfo) {
-            if (IsPlayerExists(playerInfo.Username)) {
-                UpdateSlot(playerInfo);
-            } else {
-                PlaceToNewSlot(playerInfo);
-            }
-        }
-
-        public void ClearSlots() {
-            for (int ii = 0; ii < _slotList.Count; ii++) {
-                _slotList[ii].Clear();
-            }
-        }
-
-        public void SetTxtRoomName(string name) {
-            txtRoomName.text = name;
-        }
-
-        private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
-            GetAvailableSlot().Initialize(playerInfo);
-        }
-
-        private void UpdateSlot(RoomPlayerInfo playerInfo) {
-            GetSlot(playerInfo.Username).Initialize(playerInfo);
-        }
-
-        private void ClearSlot(RoomPlayerInfo playerInfo) {
-            GetSlot(playerInfo.Username).Clear();
-        }
-
-        private RoomClientSlot GetAvailableSlot() {
-            for (int ii = 0; ii < _slotList.Count; ii++) {
-                if (!_slotList[ii].IsFilledSlot) {
-                    return _slotList[ii];
-                }
-            }
-
-            return null;
-        }
-
-        private RoomClientSlot GetSlot(string username) {
-            for (int ii = 0; ii < _slotList.Count; ii++) {
-                if (_slotList[ii].IsFilledSlot) {
-                    if (_slotList[ii].Username == username) {
-                        return _slotList[ii];
-                    }
-                }
-            }
-
-            return null;
-        }
-
-        private bool IsPlayerExists(string username) {
-            for (int ii = 0; ii < _slotList.Count; ii++) {
-                if (_slotList[ii].IsFilledSlot) {
-                    if (username == _slotList[ii].Username) {
-                        return true;
-                    }
-                }
-            }
-            return false;
-        }
-    }
-
     [SerializeField]
-    private UISettings _UISettings;
+    private Button _btnGoToLobby;
+    [SerializeField]
+    private Button _btnLeaveRoom;
+    [SerializeField]
+    private TextMeshProUGUI _txtRoomName;
+    [SerializeField]
+    private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
 
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
@@ -114,8 +47,22 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
 
-        _UISettings.btnGoToLobby.onClick.AddListener(GoToLobby);
-        _UISettings.btnLeaveRoom.onClick.AddListener(LeaveRoom);
+        _btnGoToLobby.onClick.AddListener(GoToLobby);
+        _btnLeaveRoom.onClick.AddListener(LeaveRoom);
+    }
+
+    public void UpdateUI(RoomPlayerInfo playerInfo) {
+        if (IsPlayerExists(playerInfo.Username)) {
+            UpdateSlot(playerInfo);
+        } else {
+            PlaceToNewSlot(playerInfo);
+        }
+    }
+
+    public void ClearSlots() {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            _slotList[ii].Clear();
+        }
     }
 
     public void CreateRoom() {
@@ -124,7 +71,7 @@ public class RoomManager : Menu {
         RoomData roomData = new RoomData();
         roomData.CreatedRoom = new MSSRoom();
 
-        roomData.CreatedRoom.Name = Guid.NewGuid().ToString().Substring(0, 10);
+        roomData.CreatedRoom.Name = System.Guid.NewGuid().ToString().Substring(0, 10);
         roomData.CreatedRoom.IsPrivate = false;
         roomData.CreatedRoom.MaxUserCount = 5;
 
@@ -176,12 +123,61 @@ public class RoomManager : Menu {
     }
 
     public void GoToLobby() {
-        LobbyManager.instance.RefreshLobby(false);
+        LobbyManager.instance.RefreshLobby();
 
         this.Hide();
         LobbyManager.instance.Show();
     }
-    
+
+    private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
+        GetAvailableSlot().UpdateUI(playerInfo);
+    }
+
+    private void UpdateSlot(RoomPlayerInfo playerInfo) {
+        GetSlot(playerInfo.Username).UpdateUI(playerInfo);
+    }
+
+    private void ClearSlot(RoomPlayerInfo playerInfo) {
+        GetSlot(playerInfo.Username).Clear();
+    }
+
+    private RoomClientSlot GetAvailableSlot() {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            if (!_slotList[ii].IsFilledSlot) {
+                return _slotList[ii];
+            }
+        }
+
+        return null;
+    }
+
+    private RoomClientSlot GetSlot(string username) {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            if (_slotList[ii].IsFilledSlot) {
+                if (_slotList[ii].Username == username) {
+                    return _slotList[ii];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    private bool IsPlayerExists(string username) {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            if (_slotList[ii].IsFilledSlot) {
+                if (username == _slotList[ii].Username) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private void SetTxtRoomName(string name) {
+        _txtRoomName.text = name;
+    }
+
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
@@ -192,7 +188,7 @@ public class RoomManager : Menu {
         TeamManager.instance.CreateTeam(data.RoomData.JoinedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
 
-        _UISettings.UpdateUI(playerInfo);
+        UpdateUI(playerInfo);
 
         LobbyManager.instance.Hide();
         this.Show();
@@ -209,15 +205,14 @@ public class RoomManager : Menu {
             RoomPlayerInfo playerInfo = data.RoomData.PlayerList[ii];
 
             TeamManager.instance.AddPlayerToTeam(playerInfo);
-            _UISettings.UpdateUI(playerInfo);
+            UpdateUI(playerInfo);
         }
     }
 
     private void OnRoomCreated(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
 
-        LobbyManager.instance.CreateLobbyRow(data.RoomData.CreatedRoom);
-        _UISettings.SetTxtRoomName(data.RoomData.CreatedRoom.Name);
+        SetTxtRoomName(data.RoomData.CreatedRoom.Name);
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo.Username = NetworkManager.mss.AccountData.Username;
@@ -226,7 +221,7 @@ public class RoomManager : Menu {
         TeamManager.instance.CreateTeam(data.RoomData.CreatedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
 
-        _UISettings.UpdateUI(playerInfo);
+        UpdateUI(playerInfo);
 
         LobbyManager.instance.Hide();
         this.Show();
@@ -250,7 +245,7 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         TeamManager.instance.AddPlayerToTeam(playerInfo);
-        _UISettings.UpdateUI(playerInfo);
+        UpdateUI(playerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
@@ -259,14 +254,14 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         TeamManager.instance.RemovePlayerFromTeam(playerInfo);
-        _UISettings.UpdateUI(playerInfo);
+        UpdateUI(playerInfo);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
 
         TeamManager.instance.ClearTeamList();
-        _UISettings.ClearSlots();
+        ClearSlots();
 
         GoToLobby();
     }

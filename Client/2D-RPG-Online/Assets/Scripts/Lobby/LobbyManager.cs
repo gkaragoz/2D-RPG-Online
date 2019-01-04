@@ -28,22 +28,11 @@ public class LobbyManager : Menu {
     public delegate void ReturnDelegate(string id);
     public ReturnDelegate onReturnButtonClicked;
 
-    [System.Serializable]
-    public class UISettings {
-        public Button btnCreateRoom;
-        public Button btnRefreshLobby;
-
-        public void UpdateUI() {
-            SetBtnCreateRoomInteraction();
-        }
-
-        private void SetBtnCreateRoomInteraction() {
-            btnCreateRoom.interactable = !NetworkManager.mss.HasPlayerRoom;
-        }
-    }
-
     [SerializeField]
-    private UISettings _UISettings;
+    private Button _btnCreateRoom;
+    [SerializeField]
+    private Button _btnRefreshLobby;
+
     [SerializeField]
     private LobbyRow _lobbyRowPrefab;
     [SerializeField]
@@ -57,11 +46,11 @@ public class LobbyManager : Menu {
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
 
-        RefreshLobby(true);
+        RefreshLobby();
 
-        _UISettings.btnCreateRoom.onClick.AddListener(CreateRoom);
-        _UISettings.btnRefreshLobby.onClick.AddListener(delegate {
-            RefreshLobby(true);
+        _btnCreateRoom.onClick.AddListener(CreateRoom);
+        _btnRefreshLobby.onClick.AddListener(delegate {
+            RefreshLobby();
         });
 
         onReturnButtonClicked = RoomManager.instance.ReturnRoom;
@@ -69,26 +58,24 @@ public class LobbyManager : Menu {
         onWatchButtonClicked = RoomManager.instance.WatchRoom;
     }
 
+    public void UpdateUI() {
+        SetBtnCreateRoomInteraction();
+    }
+
     public void CreateRoom() {
         RoomManager.instance.CreateRoom();
     }
 
-    public void RefreshLobby(bool fromNetwork) {
-        _UISettings.UpdateUI();
+    public void RefreshLobby() {
+        NetworkManager.mss.GetRoomList();
 
-        if (fromNetwork) {
-            NetworkManager.mss.GetRoomList();
-        } else {
-            for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-                _lobbyRowsList[ii].Initialize(1);
-            }
-        }
+        UpdateUI();
     }
 
-    public void CreateLobbyRow(MSSRoom MSSRoom) {
+    public void CreateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
         LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
 
-        lobbyRow.Initialize(1, MSSRoom);
+        lobbyRow.Initialize(rowNumber, MSSRoom);
         lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
         lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
 
@@ -109,6 +96,10 @@ public class LobbyManager : Menu {
         lobbyRow.Destroy();
     }
 
+    private void SetBtnCreateRoomInteraction() {
+        _btnCreateRoom.interactable = !NetworkManager.mss.HasPlayerRoom;
+    }
+
     private void OnLobbyRefreshed(ShiftServerData data) {
         LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
 
@@ -118,7 +109,7 @@ public class LobbyManager : Menu {
             if (IsLobbyRowExists(MSSRoom.Id)) {
                 UpdateLobbyRow(1, MSSRoom);
             } else {
-                CreateLobbyRow(MSSRoom);
+                CreateLobbyRow(1, MSSRoom);
             }
         }
     }

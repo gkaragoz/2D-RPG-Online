@@ -1080,17 +1080,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c62e0e230686754892c7d9b74633d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _team: 1
-  _UISettings:
-    emptySlotPrefab: {fileID: 1348305933717526}
-    filledSlotPrefab: {fileID: 1750096548223252}
-    imgFrame: {fileID: 114197521683860994}
-    imgCharacter: {fileID: 114214371829721344}
-    imgClassIcon: {fileID: 114574078572422068}
-    toggleIsReady: {fileID: 114981844403760572}
-    imgLeader: {fileID: 114435912326722218}
-    txtPlayerName: {fileID: 114021024403897152}
-    txtCharacterName: {fileID: 114583280210213286}
+  _emptySlotPrefab: {fileID: 1348305933717526}
+  _filledSlotPrefab: {fileID: 1750096548223252}
+  _imgFrame: {fileID: 114197521683860994}
+  _imgCharacter: {fileID: 114214371829721344}
+  _imgClassIcon: {fileID: 114574078572422068}
+  _toggleIsReady: {fileID: 114981844403760572}
+  _imgLeader: {fileID: 114435912326722218}
+  _txtPlayerName: {fileID: 114021024403897152}
+  _txtCharacterName: {fileID: 114583280210213286}
 --- !u!114 &114645149909258106
 MonoBehaviour:
   m_ObjectHideFlags: 1
