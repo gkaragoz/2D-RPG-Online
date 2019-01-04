@@ -62,6 +62,20 @@ namespace ShiftServer.Client.Core
                 }
             }
         }
+        public void SetCreatedRoom(ShiftServerData data)
+        {
+            if (data.RoomData != null)
+            {
+                if (data.RoomData.CreatedRoom != null)
+                {
+                    JoinedRoom = data.RoomData.CreatedRoom;
+                }
+            }
+        }
+        public void DisposeJoinedRoom(ShiftServerData data)
+        {
+            JoinedRoom = null;
+        }
 
         public void DisposeRoom(ShiftServerData data)
         {
