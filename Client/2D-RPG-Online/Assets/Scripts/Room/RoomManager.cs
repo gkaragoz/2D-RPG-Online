@@ -194,6 +194,10 @@ public class RoomManager : Menu {
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
+        RoomPlayerInfo roomPlayerInfo = new RoomPlayerInfo();
+        roomPlayerInfo.Username = "Test";
+        PlaceRoomClientSlot(roomPlayerInfo);
+
         LobbyManager.instance.Hide();
         this.Show();
     }
