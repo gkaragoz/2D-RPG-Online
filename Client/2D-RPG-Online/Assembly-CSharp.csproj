@@ -88,6 +88,8 @@
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Room\RoomClientSlot.cs" />
     <Compile Include="Assets\Scripts\Room\RoomManager.cs" />
+    <Compile Include="Assets\Scripts\Room\Team\Team.cs" />
+    <Compile Include="Assets\Scripts\Room\Team\TeamManager.cs" />
     <Compile Include="Assets\Scripts\Session\Session_SO.cs" />
     <Compile Include="Assets\Scripts\Session\SessionWatcher.cs" />
     <Compile Include="Assets\Scripts\Sound\AudioManager.cs" />

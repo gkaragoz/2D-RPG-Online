@@ -86,8 +86,6 @@ public class RoomClientSlot : MonoBehaviour {
 
     [Header("Initialization")]
     [SerializeField]
-    private RoomManager.Team _team;
-    [SerializeField]
     private UISettings _UISettings;
 
     public string Username {
