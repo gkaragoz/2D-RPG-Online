@@ -7946,7 +7946,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 925385207}
   m_HandleRect: {fileID: 925385206}
   m_Direction: 2
-  m_Value: 1
+  m_Value: 0
   m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -9710,12 +9710,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 13925743}
-  _roomLeftClientSlotsList:
+  _roomClientSlotsList:
   - {fileID: 141458257}
   - {fileID: 889357633}
   - {fileID: 1386992780}
   - {fileID: 343385890}
-  _roomRightClientSlotsList:
   - {fileID: 512556043}
   - {fileID: 1311063415}
   - {fileID: 1644467153}
@@ -19729,7 +19728,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.000015258789}
+  m_AnchoredPosition: {x: 0, y: 0.000030517578}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1588753413

@@ -620,9 +620,9 @@ PlayerSettings:
     UNet: 1
   facebookSdkVersion: 7.9.4
   apiCompatibilityLevel: 3
-  cloudProjectId: 054b01a1-aa20-46cf-8f9f-148267aedbeb
-  projectName: 2D-RPG-Online
-  organizationId: cangurcaglar
+  cloudProjectId: 
+  projectName: 
+  organizationId: 
   cloudEnabled: 0
   enableNativePlatformBackendsForNewInputSystem: 0
   disableOldInputManagerSupport: 0

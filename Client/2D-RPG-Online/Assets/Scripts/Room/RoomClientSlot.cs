@@ -86,6 +86,8 @@ public class RoomClientSlot : MonoBehaviour {
 
     [Header("Initialization")]
     [SerializeField]
+    private RoomManager.Team _team;
+    [SerializeField]
     private UISettings _UISettings;
 
     public string Username {
@@ -99,25 +101,11 @@ public class RoomClientSlot : MonoBehaviour {
             return _roomPlayerInfo == null ? false : true;
         }
     }
-
-    public RoomManager.Team Team {
-        get {
-            return _team;
-        }
-
-        set {
-            _team = value;
-        }
-    }
-
-    [SerializeField]
-    private RoomManager.Team _team;
    
     private RoomPlayerInfo _roomPlayerInfo;
 
-    public void Initialize(RoomPlayerInfo roomPlayerInfo, RoomManager.Team team) {
+    public void Initialize(RoomPlayerInfo roomPlayerInfo) {
         this._roomPlayerInfo = roomPlayerInfo;
-        this.Team = team;
 
         _UISettings.UpdateUI(_roomPlayerInfo, IsFilledSlot);
     }

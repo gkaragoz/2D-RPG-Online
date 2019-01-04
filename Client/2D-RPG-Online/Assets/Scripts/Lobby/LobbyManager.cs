@@ -33,12 +33,12 @@ public class LobbyManager : Menu {
         public Button btnCreateRoom;
         public Button btnRefreshLobby;
 
-        public void ActivateCreateRoomButton() {
-            btnCreateRoom.interactable = true;
+        public void UpdateUI() {
+            SetBtnCreateRoomInteraction();
         }
 
-        public void DeactivateCreateRoomButton() {
-            btnCreateRoom.interactable = false;
+        private void SetBtnCreateRoomInteraction() {
+            btnCreateRoom.interactable = !NetworkManager.mss.HasPlayerRoom;
         }
     }
 
@@ -74,11 +74,7 @@ public class LobbyManager : Menu {
     }
 
     public void RefreshLobby(bool fromNetwork) {
-        if (NetworkManager.mss.JoinedRoom != null) {
-            _UISettings.DeactivateCreateRoomButton();
-        } else {
-            _UISettings.ActivateCreateRoomButton();
-        }
+        _UISettings.UpdateUI();
 
         if (fromNetwork) {
             NetworkManager.mss.GetRoomList();
