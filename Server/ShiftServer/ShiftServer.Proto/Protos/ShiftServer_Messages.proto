@@ -127,6 +127,7 @@ message RoomPlayerInfo {
 	string TeamId = 2;
 	bool IsJoinedToTeam = 3;
 	bool IsReady = 4;
+	bool IsLeader = 5;
 }
 
 message AccountData {

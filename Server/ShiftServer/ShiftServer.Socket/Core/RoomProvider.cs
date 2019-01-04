@@ -66,10 +66,11 @@ namespace ShiftServer.Server.Core
                     {
                         log.Info($"ClientNO: {shift.connectionId} ------> Already in a team");
                     }
-
+                    
+                   
                 }
 
-
+                newRoom.ServerLeaderId = shift.connectionId;
                 data.RoomData.CreatedRoom.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
                 newRoom.MaxConnId = shift.connectionId;
                 _sp.world.Rooms.Add(newRoom.Id, newRoom);
@@ -182,6 +183,12 @@ namespace ShiftServer.Server.Core
                             pInfo.IsReady = cl.IsReady;
                             pInfo.IsJoinedToTeam = cl.IsJoinedToTeam;
                             pInfo.TeamId = cl.JoinedTeamId;
+
+                            if (result.ServerLeaderId == cl.connectionId)
+                                pInfo.IsLeader = true;
+                            else
+                                pInfo.IsLeader = false;
+
                             listData.RoomData.PlayerList.Add(pInfo);
                         }
                     }

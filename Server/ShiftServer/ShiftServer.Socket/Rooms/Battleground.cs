@@ -97,6 +97,16 @@ namespace ShiftServer.Server.Rooms
             pInfo.Username = currentClient.UserName;
             pInfo.TeamId = currentClient.JoinedTeamId;
             pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
+            pInfo.IsReady = currentClient.IsReady;
+
+            if (this.ServerLeaderId == currentClient.connectionId)
+            {
+                pInfo.IsLeader = true;
+            }
+            else
+            {
+                pInfo.IsLeader = false;
+            }
 
             ShiftServerData data = new ShiftServerData();
             data.RoomData = new RoomData();
