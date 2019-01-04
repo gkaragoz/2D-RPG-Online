@@ -1,24 +1,96 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class LobbyRow : MonoBehaviour {
 
+    [Serializable]
+    public class UISettings {
+        [SerializeField]
+        private TextMeshProUGUI _txtRowNumber;
+        [SerializeField]
+        private TextMeshProUGUI _txtRoomName;
+        [SerializeField]
+        private TextMeshProUGUI _txtPlayersCount;
+        [SerializeField]
+        private Toggle _togglePrivate;
+        [SerializeField]
+        private Button _btnReturn;
+        [SerializeField]
+        private Button _btnJoin;
+        [SerializeField]
+        private Button _btnWatch;
+
+        public Button BtnReturn {
+            get {
+                return _btnReturn;
+            }
+        }
+
+        public Button BtnJoin {
+            get {
+                return _btnJoin;
+            }
+        }
+
+        public Button BtnWatch {
+            get {
+                return _btnWatch;
+            }
+        }
+
+        public void UpdateUI(int rowNumber, MSSRoom mssRoom) {
+            SetRowNumber(rowNumber);
+            SetRoomName(mssRoom.Name);
+            SetUserCount(mssRoom.CurrentUserCount, mssRoom.MaxUserCount);
+            SetPrivateToggle(mssRoom.IsPrivate);
+        }
+
+        private void ActivateReturnButtonInteraction() {
+            BtnReturn.interactable = true;
+        }
+
+        private void DeactivateReturnButtonInteraction() {
+            BtnReturn.interactable = false;
+        }
+
+        private void ActivateJoinButtonInteraction() {
+            BtnJoin.interactable = true;
+        }
+
+        private void DeactivateJoinButtonInteraction() {
+            BtnJoin.interactable = false;
+        }
+
+        private void ActivateWatchButtonInteraction() {
+            BtnWatch.interactable = true;
+        }
+
+        private void DeactivateWatchButtonInteraction() {
+            BtnWatch.interactable = false;
+        }
+
+        private void SetRowNumber(int rowNumber) {
+            _txtRowNumber.text = rowNumber.ToString();
+        }
+
+        private void SetRoomName(string roomName) {
+            _txtRoomName.text = roomName;
+        }
+
+        private void SetUserCount(int currentUserCount, int maxUserCount) {
+            _txtPlayersCount.text = currentUserCount + "/" + maxUserCount;
+        }
+
+        private void SetPrivateToggle(bool isPrivate) {
+            _togglePrivate.isOn = isPrivate;
+        }
+    }
+
     [Header("Initialization")]
     [SerializeField]
-    private TextMeshProUGUI _txtRowNumber;
-    [SerializeField]
-    private TextMeshProUGUI _txtRoomName;
-    [SerializeField]
-    private TextMeshProUGUI _txtPlayersCount;
-    [SerializeField]
-    private Toggle _togglePrivate;
-    [SerializeField]
-    private Button _btnReturn;
-    [SerializeField]
-    private Button _btnJoin;
-    [SerializeField]
-    private Button _btnWatch;
+    private UISettings _UISettings;
 
     [Header("Debug")]
     [SerializeField]
@@ -43,80 +115,29 @@ public class LobbyRow : MonoBehaviour {
         this._MSSRoom = MSSRoom;
         this._rowNumber = rowNumber;
 
-        UpdateUI();
+       _UISettings.UpdateUI(_rowNumber, _MSSRoom);
     }
 
-    public void UpdateUI() {
-        SetRowNumber();
-        SetRoomName();
-        SetUserCount();
-        SetPrivateToggle();
+    public void Initialize(int rowNumber) {
+        this._rowNumber = rowNumber;
 
-        //SetActionButtonsInteractions(joinedRoomID);
+        _UISettings.UpdateUI(_rowNumber, _MSSRoom);
+    }
+
+    public void Destroy() {
+        Destroy(this.gameObject);
     }
 
     public void SetReturnButtonOnClickAction(LobbyManager.ReturnDelegate returnDelegate) {
-        _btnReturn.onClick.AddListener(() => returnDelegate(_MSSRoom.Id));
+        _UISettings.BtnReturn.onClick.AddListener(() => returnDelegate(_MSSRoom.Id));
     }
 
     public void SetJoinButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
-        _btnJoin.onClick.AddListener(() => joinDelegate(_MSSRoom.Id));
+        _UISettings.BtnJoin.onClick.AddListener(() => joinDelegate(_MSSRoom.Id));
     }
 
     public void SetWatchButtonOnClickAction(LobbyManager.WatchDelegate watchDelegate) {
-        _btnWatch.onClick.AddListener(() => watchDelegate(_MSSRoom.Id));
-    }
-
-    private void SetActionButtonsInteractions(string joinedRoomID) {
-        if (joinedRoomID == GetRoomID || _MSSRoom.IsOwner) {
-            ActivateReturnButtonInteraction();
-            DeactivateJoinButtonInteraction();
-            DeactivateWatchButtonInteraction();
-        } else if (IsAvailableToJoin) {
-            DeactivateReturnButtonInteraction();
-            ActivateJoinButtonInteraction();
-            ActivateWatchButtonInteraction();
-        }
-    }
-
-    private void ActivateReturnButtonInteraction() {
-        _btnReturn.interactable = true;
-    }
-
-    private void DeactivateReturnButtonInteraction() {
-        _btnReturn.interactable = false;
-    }
-
-    private void ActivateJoinButtonInteraction() {
-        _btnJoin.interactable = true;
-    }
-
-    private void DeactivateJoinButtonInteraction() {
-        _btnJoin.interactable = false;
-    }
-
-    private void ActivateWatchButtonInteraction() {
-        _btnWatch.interactable = true;
-    }
-
-    private void DeactivateWatchButtonInteraction() {
-        _btnWatch.interactable = false;
-    }
-
-    private void SetRowNumber() {
-        _txtRowNumber.text = _rowNumber.ToString();
-    }
-
-    private void SetRoomName() {
-        _txtRoomName.text = _MSSRoom.Name;
-    }
-
-    private void SetUserCount() {
-        _txtPlayersCount.text = _MSSRoom.CurrentUserCount + "/" + _MSSRoom.MaxUserCount;
-    }
-
-    private void SetPrivateToggle() {
-        _togglePrivate.isOn = _MSSRoom.IsPrivate;
+        _UISettings.BtnWatch.onClick.AddListener(() => watchDelegate(_MSSRoom.Id));
     }
 
 }

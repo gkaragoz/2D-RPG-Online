@@ -23,20 +23,6 @@ public class LogFile {
         writer.Close();
     }
 
-    [MenuItem("Tools/Read Log File")]
-    public static void ReadString() {
-        string path = "Assets/Resources/" + FILE_NAME;
-
-        if (!File.Exists(path)) {
-            Debug.Log("[LogFile] READ EVENT<< " + FILE_NAME + " file not found on path: " + path);
-        } else {
-            //Read the text from directly from the test.txt file
-            StreamReader reader = new StreamReader(path);
-            Debug.Log(reader.ReadToEnd());
-            reader.Close();
-        }
-    }
-
     /*DebugLOG notes.
         //Re-import the file to update the reference in the editor
         //AssetDatabase.ImportAsset(path);

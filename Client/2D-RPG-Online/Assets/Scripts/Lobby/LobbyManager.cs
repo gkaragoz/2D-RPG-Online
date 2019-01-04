@@ -33,12 +33,12 @@ public class LobbyManager : Menu {
         public Button btnCreateRoom;
         public Button btnRefreshLobby;
 
-        public void ActivateCreateRoomButton() {
-            btnCreateRoom.interactable = true;
+        public void UpdateUI() {
+            SetBtnCreateRoomInteraction();
         }
 
-        public void DeactivateCreateRoomButton() {
-            btnCreateRoom.interactable = false;
+        private void SetBtnCreateRoomInteraction() {
+            btnCreateRoom.interactable = !NetworkManager.mss.HasPlayerRoom;
         }
     }
 
@@ -74,17 +74,13 @@ public class LobbyManager : Menu {
     }
 
     public void RefreshLobby(bool fromNetwork) {
-        if (NetworkManager.mss.JoinedRoom != null) {
-            _UISettings.DeactivateCreateRoomButton();
-        } else {
-            _UISettings.ActivateCreateRoomButton();
-        }
+        _UISettings.UpdateUI();
 
         if (fromNetwork) {
             NetworkManager.mss.GetRoomList();
         } else {
             for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-                _lobbyRowsList[ii].UpdateUI();
+                _lobbyRowsList[ii].Initialize(1);
             }
         }
     }
@@ -99,8 +95,18 @@ public class LobbyManager : Menu {
         _lobbyRowsList.Add(lobbyRow);
     }
 
-    public void UpdateLobbyRow(LobbyRow lobbyRow, MSSRoom MSSRoom) {
-        lobbyRow.Initialize(1, MSSRoom);
+    public void UpdateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
+        string roomID = MSSRoom.Id;
+
+        _lobbyRowsList.Find(row => row.GetRoomID == roomID).Initialize(rowNumber, MSSRoom);
+    }
+
+    public void RemoveLobbyRow(MSSRoom MSSRoom) {
+        string roomID = MSSRoom.Id;
+
+        LobbyRow lobbyRow = _lobbyRowsList.Find(row => row.GetRoomID == roomID);
+        _lobbyRowsList.Remove(lobbyRow);
+        lobbyRow.Destroy();
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
@@ -110,7 +116,7 @@ public class LobbyManager : Menu {
             MSSRoom MSSRoom = data.RoomData.Rooms[ii];
 
             if (IsLobbyRowExists(MSSRoom.Id)) {
-                UpdateLobbyRow(_lobbyRowsList[ii], MSSRoom);
+                UpdateLobbyRow(1, MSSRoom);
             } else {
                 CreateLobbyRow(MSSRoom);
             }

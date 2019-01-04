@@ -86,29 +86,29 @@ public class SessionWatcher : MonoBehaviour {
     /// See <see cref="Introduce"/>
     /// </summary>
     private void Init() {
-        if (HasSessionData) {
-            if (_session == null) {
-                _session = AssetDatabase.LoadAssetAtPath<Session_SO>(FULL_PATH);
-            }
+        //if (HasSessionData) {
+        //    if (_session == null) {
+        //        _session = AssetDatabase.LoadAssetAtPath<Session_SO>(FULL_PATH);
+        //    }
 
-            LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
+        //    LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
 
-            if (IsItSameSystem()) {
-                SetSystemInfos();
-            } else {
-                DeleteSessionData();
-                _session = CreateSessionData();
-                SetSystemInfos();
-                LogManager.instance.AddLog(Introduce(), Log.Type.Info);
-            }
-        } else {
-            _session = CreateSessionData();
+        //    if (IsItSameSystem()) {
+        //        SetSystemInfos();
+        //    } else {
+        //        DeleteSessionData();
+        //        _session = CreateSessionData();
+        //        SetSystemInfos();
+        //        LogManager.instance.AddLog(Introduce(), Log.Type.Info);
+        //    }
+        //} else {
+        //    _session = CreateSessionData();
 
-            LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
+        //    LogManager.instance.AddLog(ON_APP_START_LOG, Log.Type.Info);
 
-            SetSystemInfos();
-            LogManager.instance.AddLog(Introduce(), Log.Type.Info);
-        }
+        //    SetSystemInfos();
+        //    LogManager.instance.AddLog(Introduce(), Log.Type.Info);
+        //}
     }
     
     /// <summary>
@@ -251,8 +251,8 @@ public class SessionWatcher : MonoBehaviour {
     private Session_SO CreateSessionData() {
         Session_SO asset = ScriptableObject.CreateInstance<Session_SO>();
 
-        AssetDatabase.CreateAsset(asset, FULL_PATH);
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.CreateAsset(asset, FULL_PATH);
+        //AssetDatabase.SaveAssets();
 
         Debug.Log("[SessionWatcher] Created new session data on path: " + FULL_PATH);
 
@@ -263,8 +263,8 @@ public class SessionWatcher : MonoBehaviour {
     /// Delete if session data exists.
     /// </summary>
     private void DeleteSessionData() {
-        AssetDatabase.DeleteAsset(FULL_PATH);
-        AssetDatabase.SaveAssets();
+        //AssetDatabase.DeleteAsset(FULL_PATH);
+        //AssetDatabase.SaveAssets();
 
         Debug.Log("[SessionWatcher] Deleted session data on path : " + FULL_PATH);
     }
