@@ -1,6 +1,5 @@
 ﻿using System;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -18,11 +17,6 @@ public class RoomClientSlot : MonoBehaviour {
         public Image imgLeader;
         public TextMeshProUGUI txtPlayerName;
         public TextMeshProUGUI txtCharacterName;
-
-        [Header("Debug")]
-        [SerializeField]
-        [Utils.ReadOnly]
-        private AnimatorController _animatorController;
 
         public void UpdateUI(RoomPlayerInfo roomPlayerInfo, bool fill) {
             SetCharacterClassVisualize(ClassManager.Classes.Warrior);
@@ -56,7 +50,6 @@ public class RoomClientSlot : MonoBehaviour {
 
             SetImgFrameColor(characterClassVisualization.classFrameColor);
             SetImgCharacter(characterClassVisualization.classSprite);
-            SetAnimatorController(characterClassVisualization.classAnimatorController);
             SetImgCharacter(characterClassVisualization.classIcon);
             SetTxtCharacterName(characterClassVisualization.className);
         }
@@ -83,10 +76,6 @@ public class RoomClientSlot : MonoBehaviour {
 
         private void SetImgCharacter(Sprite sprite) {
             imgCharacter.sprite = sprite;
-        }
-
-        private void SetAnimatorController(AnimatorController characterAnimator) {
-            _animatorController = characterAnimator;
         }
 
         private void SetImgClassIcon(Sprite sprite) {

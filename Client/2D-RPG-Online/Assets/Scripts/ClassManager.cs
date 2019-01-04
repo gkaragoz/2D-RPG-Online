@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Animations;
 using UnityEngine;
 
 /// <summary>
@@ -41,7 +40,6 @@ public class ClassManager : Menu {
     public class CharacterClassVisualization {
         public string className;
         public Sprite classSprite;
-        public AnimatorController classAnimatorController;
         public Color classFrameColor;
         public Sprite classIcon;
     }
