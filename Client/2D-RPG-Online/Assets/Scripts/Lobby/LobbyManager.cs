@@ -78,6 +78,7 @@ public class LobbyManager : Menu {
         lobbyRow.Initialize(rowNumber, MSSRoom);
         lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
         lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
+        lobbyRow.SetReturnButtonOnClickAction(onReturnButtonClicked);
 
         _lobbyRowsList.Add(lobbyRow);
     }
