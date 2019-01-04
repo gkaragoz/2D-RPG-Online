@@ -9,10 +9,8 @@ namespace ShiftServer.Client.Core
 {
     public class RoomProvider
     {
-        private List<Room> _roomList;
-        private MSSRoom _joinedRoom;
-        public List<Room> RoomList { get => _roomList; private set => _roomList = value; }
-        public MSSRoom JoinedRoom { get => _joinedRoom; private set => _joinedRoom = value; }
+        public List<Room> RoomList { get; private set; }
+        public MSSRoom JoinedRoom { get; private set; }
 
         public RoomProvider()
         {
@@ -72,17 +70,10 @@ namespace ShiftServer.Client.Core
                 }
             }
         }
-        public void DisposeJoinedRoom(ShiftServerData data)
-        {
-            JoinedRoom = null;
-        }
-
+     
         public void DisposeRoom(ShiftServerData data)
         {
-            if (data.RoomData != null)
-            {
-                JoinedRoom = null;
-            }
+            JoinedRoom = null;
         }
 
         private void AddRoom(Room room)
