@@ -75,7 +75,7 @@ public class LobbyManager : Menu {
     public void CreateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
         LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
 
-        lobbyRow.Initialize(rowNumber, MSSRoom);
+        lobbyRow.UpdateUI(rowNumber, MSSRoom);
         lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
         lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
         lobbyRow.SetReturnButtonOnClickAction(onReturnButtonClicked);
@@ -86,13 +86,13 @@ public class LobbyManager : Menu {
     public void UpdateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
         string roomID = MSSRoom.Id;
 
-        _lobbyRowsList.Find(row => row.GetRoomID == roomID).Initialize(rowNumber, MSSRoom);
+        _lobbyRowsList.Find(row => row.RoomID == roomID).UpdateUI(rowNumber, MSSRoom);
     }
 
     public void RemoveLobbyRow(MSSRoom MSSRoom) {
         string roomID = MSSRoom.Id;
 
-        LobbyRow lobbyRow = _lobbyRowsList.Find(row => row.GetRoomID == roomID);
+        LobbyRow lobbyRow = _lobbyRowsList.Find(row => row.RoomID == roomID);
         _lobbyRowsList.Remove(lobbyRow);
         lobbyRow.Destroy();
     }
@@ -117,7 +117,7 @@ public class LobbyManager : Menu {
 
     private bool IsLobbyRowExists(string roomID) {
         for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-            if (roomID == _lobbyRowsList[ii].GetRoomID) {
+            if (roomID == _lobbyRowsList[ii].RoomID) {
                 return true;
             }
         }

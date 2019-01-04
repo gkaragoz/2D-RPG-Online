@@ -590,14 +590,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf4de4aa5e1f15d429e21d736df48a60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UISettings:
-    _txtRowNumber: {fileID: 114974472100662816}
-    _txtRoomName: {fileID: 114604638237694232}
-    _txtPlayersCount: {fileID: 114218469667983752}
-    _togglePrivate: {fileID: 114585394484976360}
-    _btnReturn: {fileID: 114941103532724492}
-    _btnJoin: {fileID: 114466342350624666}
-    _btnWatch: {fileID: 114313254997661490}
+  _txtRowNumber: {fileID: 114974472100662816}
+  _txtRoomName: {fileID: 114604638237694232}
+  _txtPlayersCount: {fileID: 114218469667983752}
+  _togglePrivate: {fileID: 114585394484976360}
+  _btnReturn: {fileID: 114941103532724492}
+  _btnJoin: {fileID: 114466342350624666}
+  _btnWatch: {fileID: 114313254997661490}
   _rowNumber: 0
 --- !u!114 &114466342350624666
 MonoBehaviour:
