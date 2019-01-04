@@ -18,12 +18,13 @@ namespace ShiftServer.Client.Core
     {
         public List<ClientEventCallback> clientEvents = null;
         public List<PlayerEventCallback> playerEvents = null;
-
+        public CommonAccountData accountData  { get; private set; }
         public RoomProvider roomProvider = null;
 
         public ClientDataHandler()
         {
             roomProvider = new RoomProvider();
+            accountData = new CommonAccountData();
             clientEvents = new List<ClientEventCallback>();
             playerEvents = new List<PlayerEventCallback>();
         }
@@ -43,7 +44,7 @@ namespace ShiftServer.Client.Core
                     switch (data.Svevtid)
                     {
                         case MSServerEvent.Login:
-                            //roomProvider.AddOrUpdate(data);
+                            accountData = data.AccountData;
                             break;
                         case MSServerEvent.LobbyRefresh:
                             roomProvider.AddOrUpdate(data);

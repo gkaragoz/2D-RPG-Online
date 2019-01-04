@@ -82,7 +82,10 @@ namespace ShiftServer.Server.Rooms
             {
                 if (clientList[i].UserSession == null)
                     continue;
-               
+
+                if (clientList[i].connectionId == currentClient.connectionId)
+                    continue;
+                
                 clientList[i].SendPacket(evt, data);
             }
         }
