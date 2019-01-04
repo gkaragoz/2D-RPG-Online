@@ -43,11 +43,6 @@ public class RoomManager : Menu {
     [SerializeField]
     private UISettings _UISettings;
 
-    [Header("Debug")]
-    [SerializeField]
-    [Utils.ReadOnly]
-    private short _teamSelector = -1;
-
     public void Initialize() {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
@@ -246,7 +241,6 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
-
         ClearAllRoomClientSlots();
 
         GoToLobby();
