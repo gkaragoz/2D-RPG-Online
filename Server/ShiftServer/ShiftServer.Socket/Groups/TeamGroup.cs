@@ -24,9 +24,12 @@ namespace ShiftServer.Server.Groups
         }
         public void AddPlayer(ShiftClient client)
         {
-            client.IsJoinedToTeam = true;
-            client.JoinedTeamId = this.Id;
-            Clients.Add(client.connectionId, client);
+            if (MaxPlayer > Clients.Count)
+            {
+                client.IsJoinedToTeam = true;
+                client.JoinedTeamId = this.Id;
+                Clients.Add(client.connectionId, client);
+            }
         }
         public void RemovePlayer(ShiftClient client)
         {
