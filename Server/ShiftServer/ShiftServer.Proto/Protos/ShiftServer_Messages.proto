@@ -80,6 +80,7 @@ enum ShiftServerError
 	NO_RESPOND_SERVER = 6; 
 	ROOM_AUTH_PROBLEM = 7; 
 	NOT_IN_ANY_ROOM = 8; 
+	ROOM_FULL = 9; 
 
 }
 enum ShiftRoomType
@@ -121,7 +122,10 @@ message MSSRoom {
 
 }
 message RoomPlayerInfo {
-	string Username = 2;
+	string Username = 1;
+	string TeamId = 2;
+	bool IsJoinedToTeam = 3;
+	bool IsReady = 4;
 }
 
 message AccountData {

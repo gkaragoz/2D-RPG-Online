@@ -19,8 +19,11 @@ namespace ShiftServer.Server.Auth
         public string UserName { get; set; }
         public int connectionId { get; set; }
         public bool IsJoinedToWorld { get; set; }
+        public bool IsReady { get; set; }
         public bool IsJoinedToRoom { get; set; }
+        public bool IsJoinedToTeam { get; set; }
         public string JoinedRoomId { get; set; }
+        public string JoinedTeamId { get; set; }
         public bool IsConnected()
         {
             return Client.Connected;
@@ -57,6 +60,67 @@ namespace ShiftServer.Server.Auth
                 return false;
             }
 
+        }
+        public IGroup GetJoinedTeam(IRoom room)
+        {
+
+            IGroup group = null;
+            if (this.IsJoinedToTeam)
+            {
+                room.Teams.TryGetValue(this.JoinedTeamId, out group);
+
+                if (group != null)
+                {
+                    return group;
+                }
+                else
+                {
+                    return null;
+                }
+            }
+            else
+            {
+                return null;
+            }
+        }
+
+        public bool JoinTeam(IGroup group)
+        {
+
+            if (this.IsJoinedToTeam)
+            {
+                log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId} Already in a team");
+                return false;
+            }
+            else
+            {
+                group.AddPlayer(this);
+                return true;
+            }
+        }
+        public bool LeaveFromTeam(IRoom room)
+        {
+
+            IGroup group = null;
+            if (this.IsJoinedToTeam)
+            {
+                room.Teams.TryGetValue(this.JoinedTeamId, out group);
+
+                if (group != null)
+                {
+                    group.RemovePlayer(this);
+
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
         private bool Send(byte[] bb)
         {

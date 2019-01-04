@@ -27,7 +27,8 @@ namespace ShiftServer.Server.Core
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
 
-            BattlegroundRoom newRoom = new BattlegroundRoom();
+            Battleground newRoom = new Battleground(2, 5);
+
             if (!shift.IsJoinedToRoom)
             {
                 if (data.RoomData.CreatedRoom != null)
@@ -45,8 +46,23 @@ namespace ShiftServer.Server.Core
                     newRoom.ServerLeaderId = shift.connectionId;
                     newRoom.Clients.Add(shift.connectionId, shift);
                     newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                    data.RoomData.PlayerInfo = new RoomPlayerInfo();
+                    IGroup group = newRoom.GetRandomTeam();
+                    if (shift.JoinTeam(group))
+                    {
+                        data.RoomData.PlayerInfo.TeamId = group.Id;
+                        data.RoomData.PlayerInfo.Username = shift.UserName;
+                        data.RoomData.PlayerInfo.IsJoinedToTeam = shift.IsJoinedToTeam;
+
+                        log.Info($"ClientNO: {shift.connectionId} ------> Joined to team");
+                    }
+                    else
+                    {
+                        log.Info($"ClientNO: {shift.connectionId} ------> Already in a team");
+                    }
 
                 }
+
 
                 data.RoomData.CreatedRoom.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
                 newRoom.MaxConnId = shift.connectionId;
@@ -69,6 +85,7 @@ namespace ShiftServer.Server.Core
         {
             IRoom result = null;
             IRoom prevRoom = null;
+
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
             if (shift.IsJoinedToRoom)
             {
@@ -80,6 +97,13 @@ namespace ShiftServer.Server.Core
                     oData.ErrorReason = ShiftServerError.AlreadyInRoom;
                     shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                     return;
+                }
+
+                IGroup group = shift.GetJoinedTeam(prevRoom);
+
+                if (shift.LeaveFromTeam(prevRoom))
+                {
+                    log.Info($"ClientNO: {shift.connectionId} ------> Left From group");
                 }
 
                 prevRoom.Clients.Remove(shift.connectionId);
@@ -94,14 +118,39 @@ namespace ShiftServer.Server.Core
 
                 if (result != null)
                 {
+                    if (result.MaxUser == result.SocketIdSessionLookup.Count)
+                    {
+                        ShiftServerData oData = new ShiftServerData();
+                        log.Error($"ClientNO: {shift.connectionId} ------> " + ShiftServerError.AlreadyInRoom);
+                        oData.ErrorReason = ShiftServerError.RoomFull;
+                        shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
+                        return;
+                    }
                     result.Clients.Add(shift.connectionId, shift);
                     result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
                     shift.JoinedRoomId = result.Id;
                     shift.IsJoinedToRoom = true;
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
                     result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
+                    data.RoomData.PlayerInfo = new RoomPlayerInfo();
+
+                    IGroup group = result.GetRandomTeam();
+                    if (shift.JoinTeam(group))
+                    {
+                        log.Info($"ClientNO: {shift.connectionId} ------> Joined to team");
+                        data.RoomData.PlayerInfo.TeamId = group.Id;
+                        data.RoomData.PlayerInfo.IsJoinedToTeam = shift.IsJoinedToTeam;
+
+                    }
+                    else
+                    {
+                        log.Info($"ClientNO: {shift.connectionId} ------> Already in a team");
+                    }
 
                     ShiftServerData listData = new ShiftServerData();
+
+                    data.RoomData.PlayerInfo.Username = shift.UserName;
+
                     listData.RoomData = new RoomData();
                     ShiftClient cl = null;
 
@@ -116,9 +165,13 @@ namespace ShiftServer.Server.Core
 
                             RoomPlayerInfo pInfo = new RoomPlayerInfo();
                             pInfo.Username = cl.UserName;
+                            pInfo.IsReady = cl.IsReady;
+                            pInfo.IsJoinedToTeam = cl.IsJoinedToTeam;
+                            pInfo.TeamId = cl.JoinedTeamId;
                             listData.RoomData.PlayerList.Add(pInfo);
                         }
                     }
+
                     if (result.SocketIdSessionLookup.Count > 1)
                         shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
 
@@ -157,6 +210,10 @@ namespace ShiftServer.Server.Core
                 shift.JoinedRoomId = null;
                 ShiftServerData leavedRoom = new ShiftServerData();
 
+                if (shift.LeaveFromTeam(prevRoom))
+                {
+                    log.Info($"ClientNO: {shift.connectionId} ------> Left From group");
+                }
                 leavedRoom.RoomData = new RoomData();
                 leavedRoom.RoomData.LeavedRoom = new MSSRoom();
                 leavedRoom.RoomData.LeavedRoom.Id = prevRoom.Id;

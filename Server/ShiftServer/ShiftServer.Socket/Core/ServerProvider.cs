@@ -17,6 +17,7 @@ namespace ShiftServer.Server.Core
 
         private static Telepathy.Server server = null;
         public IZone world = null;
+
         public ServerDataHandler dataHandler = null;
         public Thread listenerThread = null;
 
@@ -204,6 +205,18 @@ namespace ShiftServer.Server.Core
                                                 room.Clients.Remove(dcedClient.connectionId);
                                                 room.SocketIdSessionLookup.Remove(dcedClient.UserSession.GetSid());
                                             }
+
+                                            IGroup group = null;
+                                            room.Teams.TryGetValue(dcedClient.JoinedTeamId, out group);
+
+                                            if (group != null)
+                                            {
+                                             
+                                                dcedClient.IsJoinedToRoom = false;
+                                                dcedClient.JoinedRoomId = null;
+                                                group.Clients.Remove(dcedClient.connectionId);
+                                            }
+
 
                                         }
                                         world.SocketIdSessionLookup.Remove(userSessionId);
