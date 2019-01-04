@@ -153,12 +153,13 @@
     <Compile Include="Factory\Entities\Player.cs" />
     <Compile Include="Factory\Entities\PlayerInput.cs" />
     <Compile Include="Factory\Movement\MotionMaster.cs" />
+    <Compile Include="Groups\TeamGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Helper\ConsoleUI.cs" />
     <Compile Include="Helper\TickRate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rooms\BattlegroundRoom.cs" />
+    <Compile Include="Rooms\Battleground.cs" />
     <Compile Include="Zones\Zone.cs" />
   </ItemGroup>
   <ItemGroup>

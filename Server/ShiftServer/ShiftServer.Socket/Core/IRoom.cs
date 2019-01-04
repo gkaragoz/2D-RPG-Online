@@ -21,6 +21,8 @@ namespace ShiftServer.Server.Core
         DateTime UpdateDate { get; set; }
         bool IsPrivate { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
+        SafeDictionary<string, IGroup> Teams { get; set; }
+        List<string> TeamIdList { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
 
@@ -34,6 +36,7 @@ namespace ShiftServer.Server.Core
         void OnObjectUse(ShiftServerData data, ShiftClient client);
         void OnGameStart(ShiftServerData data, ShiftClient client);
         void BroadcastToRoom(ShiftClient currentClient, MSServerEvent state);
+        IGroup GetRandomTeam();
         void OnRoomUpdate();
         void SendRoomState();
     }

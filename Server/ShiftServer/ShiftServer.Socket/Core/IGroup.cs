@@ -8,11 +8,16 @@ using Telepathy;
 
 namespace ShiftServer.Server.Core
 {
-    interface IGroup
+    public interface IGroup
     {
-        SafeDictionary<int, IGameObject> GameObjects { get; set; }
+        string Id { get; set; }
+        SafeDictionary<int, ShiftClient> Clients { get; set; }
+        int MaxPlayer { get; set; }
         void OnInvite(ShiftClient client, IGameObject gameObject);
         void OnAccept(ShiftClient client, IGameObject gameObject);
         void OnKick(ShiftClient client, IGameObject gameObject);
+        void AddPlayer(ShiftClient client);
+        void RemovePlayer(ShiftClient client);
+        void Leave(ShiftClient client);
     }
 }

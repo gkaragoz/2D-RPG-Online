@@ -43,39 +43,41 @@ public static partial class ShiftServerMessagesReflection {
           "b29tIqEBCgdNU1NSb29tEgoKAklkGAEgASgJEhMKC2NyZWF0ZWRUaW1lGAIg",
           "ASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgDEhEKCWlzUHJpdmF0ZRgEIAEoCBIP",
           "Cgdpc093bmVyGAUgASgIEgwKBG5hbWUYBiABKAkSFAoMbWF4VXNlckNvdW50",
-          "GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291bnQYCCABKAUiIgoOUm9vbVBsYXll",
-          "ckluZm8SEAoIVXNlcm5hbWUYAiABKAkiMQoLQWNjb3VudERhdGESEAoIdXNl",
-          "cm5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiXAoMT2JqZWN0QWN0aW9u",
-          "EiMKDWN1cnJlbnRPYmplY3QYASABKAsyDC5zR2FtZU9iamVjdBInChFpbnRl",
-          "cmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNHYW1lT2JqZWN0IkMKCkNsaWVudERh",
-          "dGESCwoDdmVyGAEgASgJEhQKDG1hY2hpbmVfbmFtZRgCIAEoCRISCgptYWNo",
-          "aW5lX2lkGAMgASgJIkcKC3NHYW1lT2JqZWN0EgsKA29pZBgBIAEoBRINCgVw",
-          "b3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEoAiKRAQoM",
-          "UGxheWVyT2JqZWN0Eh0KB3BPYmplY3QYASABKAsyDC5zR2FtZU9iamVjdBIc",
-          "CgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50SHAYAyAB",
-          "KAUSDQoFbWF4SHAYBCABKAUSIgoMcGxheWVySW5wdXRzGAUgAygLMgwuUGxh",
-          "eWVySW5wdXQiOgoLUGxheWVySW5wdXQSDQoFcG9zX3gYASABKAISDQoFcG9z",
-          "X3kYAiABKAISDQoFcG9zX3oYAyABKAIqMQoNTVNCYXNlRXZlbnRJZBIPCgtQ",
-          "bGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2ZW50EAEqXQoNTVNQbGF5ZXJFdmVu",
-          "dBIQCgxXT1JMRF9VUERBVEUQABIICgRNT1ZFEAESCgoGQVRUQUNLEAISCAoE",
-          "REVBRBADEgcKA1VTRRAEEhEKDUNSRUFURV9QTEFZRVIQBSqYAwoNTVNTZXJ2",
-          "ZXJFdmVudBIJCgVMT0dJThAAEhAKDExPR0lOX0ZBSUxFRBABEhIKDlBVQkxJ",
-          "Q19NRVNTQUdFEAISDQoJUk9PTV9KT0lOEAMSDgoKUk9PTV9MRUFWRRAEEhUK",
-          "EVJPT01fTEVBVkVfRkFJTEVEEAUSDwoLUk9PTV9DUkVBVEUQBhIPCgtST09N",
-          "X0RFTEVURRAHEhQKEFJPT01fUExBWUVSX0xFRlQQCBIWChJST09NX1BMQVlF",
-          "Ul9KT0lORUQQCRIUChBST09NX0pPSU5fRkFJTEVEEAoSFgoSUk9PTV9DUkVB",
-          "VEVfRkFJTEVEEAsSFgoSUk9PTV9ERUxFVEVfRkFJTEVEEAwSFAoQUk9PTV9H",
-          "RVRfUExBWUVSUxANEhMKD1JPT01fR0FNRV9TVEFSVBAOEhEKDUxPQkJZX1JF",
-          "RlJFU0gQDxIOCgpDT05ORUNUSU9OEBASFQoRQ09OTkVDVElPTl9GQUlMRUQQ",
-          "ERITCg9DT05ORUNUSU9OX0xPU1QQEhIQCgxQSU5HX1JFUVVFU1QQEyrXAQoQ",
-          "U2hpZnRTZXJ2ZXJFcnJvchISCg5DTElFTlRfVkVSX09MRBAAEg8KC0JBRF9T",
-          "RVNTSU9OEAESEgoOUk9PTV9OT1RfRk9VTkQQAhITCg9BTFJFQURZX0lOX1JP",
-          "T00QAxIbChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxAEEhUKEVdST05HX0NM",
-          "SUVOVF9EQVRBEAUSFQoRTk9fUkVTUE9ORF9TRVJWRVIQBhIVChFST09NX0FV",
-          "VEhfUFJPQkxFTRAHEhMKD05PVF9JTl9BTllfUk9PTRAIKjUKDVNoaWZ0Um9v",
-          "bVR5cGUSCQoFTE9CQlkQABIHCgNNTU8QARIQCgxBQ1RJT05CQVRUTEUQAio8",
-          "CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFn",
-          "ZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
+          "GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291bnQYCCABKAUiWwoOUm9vbVBsYXll",
+          "ckluZm8SEAoIVXNlcm5hbWUYASABKAkSDgoGVGVhbUlkGAIgASgJEhYKDklz",
+          "Sm9pbmVkVG9UZWFtGAMgASgIEg8KB0lzUmVhZHkYBCABKAgiMQoLQWNjb3Vu",
+          "dERhdGESEAoIdXNlcm5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiXAoM",
+          "T2JqZWN0QWN0aW9uEiMKDWN1cnJlbnRPYmplY3QYASABKAsyDC5zR2FtZU9i",
+          "amVjdBInChFpbnRlcmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNHYW1lT2JqZWN0",
+          "IkMKCkNsaWVudERhdGESCwoDdmVyGAEgASgJEhQKDG1hY2hpbmVfbmFtZRgC",
+          "IAEoCRISCgptYWNoaW5lX2lkGAMgASgJIkcKC3NHYW1lT2JqZWN0EgsKA29p",
+          "ZBgBIAEoBRINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3Nf",
+          "ehgEIAEoAiKRAQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QYASABKAsyDC5z",
+          "R2FtZU9iamVjdBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJDbGFzcxIRCglj",
+          "dXJyZW50SHAYAyABKAUSDQoFbWF4SHAYBCABKAUSIgoMcGxheWVySW5wdXRz",
+          "GAUgAygLMgwuUGxheWVySW5wdXQiOgoLUGxheWVySW5wdXQSDQoFcG9zX3gY",
+          "ASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAIqMQoNTVNCYXNl",
+          "RXZlbnRJZBIPCgtQbGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2ZW50EAEqXQoN",
+          "TVNQbGF5ZXJFdmVudBIQCgxXT1JMRF9VUERBVEUQABIICgRNT1ZFEAESCgoG",
+          "QVRUQUNLEAISCAoEREVBRBADEgcKA1VTRRAEEhEKDUNSRUFURV9QTEFZRVIQ",
+          "BSqYAwoNTVNTZXJ2ZXJFdmVudBIJCgVMT0dJThAAEhAKDExPR0lOX0ZBSUxF",
+          "RBABEhIKDlBVQkxJQ19NRVNTQUdFEAISDQoJUk9PTV9KT0lOEAMSDgoKUk9P",
+          "TV9MRUFWRRAEEhUKEVJPT01fTEVBVkVfRkFJTEVEEAUSDwoLUk9PTV9DUkVB",
+          "VEUQBhIPCgtST09NX0RFTEVURRAHEhQKEFJPT01fUExBWUVSX0xFRlQQCBIW",
+          "ChJST09NX1BMQVlFUl9KT0lORUQQCRIUChBST09NX0pPSU5fRkFJTEVEEAoS",
+          "FgoSUk9PTV9DUkVBVEVfRkFJTEVEEAsSFgoSUk9PTV9ERUxFVEVfRkFJTEVE",
+          "EAwSFAoQUk9PTV9HRVRfUExBWUVSUxANEhMKD1JPT01fR0FNRV9TVEFSVBAO",
+          "EhEKDUxPQkJZX1JFRlJFU0gQDxIOCgpDT05ORUNUSU9OEBASFQoRQ09OTkVD",
+          "VElPTl9GQUlMRUQQERITCg9DT05ORUNUSU9OX0xPU1QQEhIQCgxQSU5HX1JF",
+          "UVVFU1QQEyrmAQoQU2hpZnRTZXJ2ZXJFcnJvchISCg5DTElFTlRfVkVSX09M",
+          "RBAAEg8KC0JBRF9TRVNTSU9OEAESEgoOUk9PTV9OT1RfRk9VTkQQAhITCg9B",
+          "TFJFQURZX0lOX1JPT00QAxIbChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxAE",
+          "EhUKEVdST05HX0NMSUVOVF9EQVRBEAUSFQoRTk9fUkVTUE9ORF9TRVJWRVIQ",
+          "BhIVChFST09NX0FVVEhfUFJPQkxFTRAHEhMKD05PVF9JTl9BTllfUk9PTRAI",
+          "Eg0KCVJPT01fRlVMTBAJKjUKDVNoaWZ0Um9vbVR5cGUSCQoFTE9CQlkQABIH",
+          "CgNNTU8QARIQCgxBQ1RJT05CQVRUTEUQAio8CgtQbGF5ZXJDbGFzcxILCgdX",
+          "YXJyaW9yEAASCgoGQXJjaGVyEAESCAoETWFnZRACEgoKBlByaWVzdBADYgZw",
+          "cm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -84,7 +86,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "CreatedRoom", "JoinedRoom", "DeletedRoom", "LeavedRoom", "PlayerInfo", "PlayerList", "Rooms" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MSSRoom), global::MSSRoom.Parser, new[]{ "Id", "CreatedTime", "UpdatedTime", "IsPrivate", "IsOwner", "Name", "MaxUserCount", "CurrentUserCount" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::RoomPlayerInfo), global::RoomPlayerInfo.Parser, new[]{ "Username" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::RoomPlayerInfo), global::RoomPlayerInfo.Parser, new[]{ "Username", "TeamId", "IsJoinedToTeam", "IsReady" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::AccountData), global::AccountData.Parser, new[]{ "Username", "Password" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
@@ -162,6 +164,7 @@ public enum ShiftServerError {
   [pbr::OriginalName("NO_RESPOND_SERVER")] NoRespondServer = 6,
   [pbr::OriginalName("ROOM_AUTH_PROBLEM")] RoomAuthProblem = 7,
   [pbr::OriginalName("NOT_IN_ANY_ROOM")] NotInAnyRoom = 8,
+  [pbr::OriginalName("ROOM_FULL")] RoomFull = 9,
 }
 
 public enum ShiftRoomType {
@@ -1642,6 +1645,9 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public RoomPlayerInfo(RoomPlayerInfo other) : this() {
     username_ = other.username_;
+    teamId_ = other.teamId_;
+    isJoinedToTeam_ = other.isJoinedToTeam_;
+    isReady_ = other.isReady_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -1651,13 +1657,46 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
   }
 
   /// <summary>Field number for the "Username" field.</summary>
-  public const int UsernameFieldNumber = 2;
+  public const int UsernameFieldNumber = 1;
   private string username_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Username {
     get { return username_; }
     set {
       username_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "TeamId" field.</summary>
+  public const int TeamIdFieldNumber = 2;
+  private string teamId_ = "";
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public string TeamId {
+    get { return teamId_; }
+    set {
+      teamId_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
+    }
+  }
+
+  /// <summary>Field number for the "IsJoinedToTeam" field.</summary>
+  public const int IsJoinedToTeamFieldNumber = 3;
+  private bool isJoinedToTeam_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool IsJoinedToTeam {
+    get { return isJoinedToTeam_; }
+    set {
+      isJoinedToTeam_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "IsReady" field.</summary>
+  public const int IsReadyFieldNumber = 4;
+  private bool isReady_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool IsReady {
+    get { return isReady_; }
+    set {
+      isReady_ = value;
     }
   }
 
@@ -1675,6 +1714,9 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
       return true;
     }
     if (Username != other.Username) return false;
+    if (TeamId != other.TeamId) return false;
+    if (IsJoinedToTeam != other.IsJoinedToTeam) return false;
+    if (IsReady != other.IsReady) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -1682,6 +1724,9 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
   public override int GetHashCode() {
     int hash = 1;
     if (Username.Length != 0) hash ^= Username.GetHashCode();
+    if (TeamId.Length != 0) hash ^= TeamId.GetHashCode();
+    if (IsJoinedToTeam != false) hash ^= IsJoinedToTeam.GetHashCode();
+    if (IsReady != false) hash ^= IsReady.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -1696,8 +1741,20 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
     if (Username.Length != 0) {
-      output.WriteRawTag(18);
+      output.WriteRawTag(10);
       output.WriteString(Username);
+    }
+    if (TeamId.Length != 0) {
+      output.WriteRawTag(18);
+      output.WriteString(TeamId);
+    }
+    if (IsJoinedToTeam != false) {
+      output.WriteRawTag(24);
+      output.WriteBool(IsJoinedToTeam);
+    }
+    if (IsReady != false) {
+      output.WriteRawTag(32);
+      output.WriteBool(IsReady);
     }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
@@ -1709,6 +1766,15 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
     int size = 0;
     if (Username.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(Username);
+    }
+    if (TeamId.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(TeamId);
+    }
+    if (IsJoinedToTeam != false) {
+      size += 1 + 1;
+    }
+    if (IsReady != false) {
+      size += 1 + 1;
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -1724,6 +1790,15 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
     if (other.Username.Length != 0) {
       Username = other.Username;
     }
+    if (other.TeamId.Length != 0) {
+      TeamId = other.TeamId;
+    }
+    if (other.IsJoinedToTeam != false) {
+      IsJoinedToTeam = other.IsJoinedToTeam;
+    }
+    if (other.IsReady != false) {
+      IsReady = other.IsReady;
+    }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
 
@@ -1735,8 +1810,20 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
         default:
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
-        case 18: {
+        case 10: {
           Username = input.ReadString();
+          break;
+        }
+        case 18: {
+          TeamId = input.ReadString();
+          break;
+        }
+        case 24: {
+          IsJoinedToTeam = input.ReadBool();
+          break;
+        }
+        case 32: {
+          IsReady = input.ReadBool();
           break;
         }
       }
