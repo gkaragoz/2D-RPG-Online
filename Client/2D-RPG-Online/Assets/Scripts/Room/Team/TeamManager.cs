@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using Google.Protobuf.Collections;
 using UnityEngine;
 
 public class TeamManager : MonoBehaviour {
@@ -16,19 +18,17 @@ public class TeamManager : MonoBehaviour {
 
     #endregion
 
-    private List<Team> _teamList = new List<Team>();
-
-    public void CreateTeam(string[] ids) {
-        for (int ii = 0; ii < ids.Length; ii++) {
-            Team team = new Team(ids[ii], "New Team");
-
-            _teamList.Add(team);
-        }
+    public enum TeamNames {
+        Red,
+        Blue
     }
 
-    public void CreateTeam(string[] ids, string[] names) {
-        for (int ii = 0; ii < ids.Length; ii++) {
-            Team team = new Team(ids[ii], names[ii]);
+    [SerializeField]
+    private List<Team> _teamList = new List<Team>();
+
+    public void CreateTeam(RepeatedField<string> ids) {
+        for (int ii = 0; ii < ids.Count; ii++) {
+            Team team = new Team(ids[ii], ((TeamNames)ii).ToString());
 
             _teamList.Add(team);
         }
@@ -68,5 +68,4 @@ public class TeamManager : MonoBehaviour {
         }
         return false;
     }
-
 }

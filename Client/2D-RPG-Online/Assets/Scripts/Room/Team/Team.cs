@@ -1,12 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Team : MonoBehaviour {
+[Serializable]
+public class Team {
 
     [SerializeField]
     [Utils.ReadOnly]
     private string _ID;
     [SerializeField]
+    [Utils.ReadOnly]
     private string _name;
     [SerializeField]
     private List<RoomPlayerInfo> _playerList = new List<RoomPlayerInfo>();
