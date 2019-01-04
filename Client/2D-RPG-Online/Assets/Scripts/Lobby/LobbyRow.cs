@@ -14,27 +14,27 @@ public class LobbyRow : MonoBehaviour {
     [SerializeField]
     private Toggle _togglePrivate;
     [SerializeField]
-    private Button _btnReturn;
+    private Button _btnReturnRoom;
     [SerializeField]
-    private Button _btnJoin;
+    private Button _btnJoinRoom;
     [SerializeField]
-    private Button _btnWatch;
+    private Button _btnWatchRoom;
 
-    public Button BtnReturn {
+    public Button BtnReturnRoom {
         get {
-            return _btnReturn;
+            return _btnReturnRoom;
         }
     }
 
-    public Button BtnJoin {
+    public Button BtnJoinRoom {
         get {
-            return _btnJoin;
+            return _btnJoinRoom;
         }
     }
 
-    public Button BtnWatch {
+    public Button BtnWatchRoom {
         get {
-            return _btnWatch;
+            return _btnWatchRoom;
         }
     }
 
@@ -66,60 +66,64 @@ public class LobbyRow : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    public void SetReturnButtonOnClickAction(LobbyManager.ReturnDelegate returnDelegate) {
-        BtnReturn.onClick.AddListener(() => returnDelegate(_room.Id));
+    public void SetReturnRoomButtonOnClickAction(LobbyManager.ReturnDelegate returnDelegate) {
+        BtnReturnRoom.onClick.AddListener(() => returnDelegate(_room.Id));
     }
 
-    public void SetJoinButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
-        BtnJoin.onClick.AddListener(() => joinDelegate(_room.Id));
+    public void SetJoinRoomButtonOnClickAction(LobbyManager.JoinDelegate joinDelegate) {
+        BtnJoinRoom.onClick.AddListener(() => joinDelegate(_room.Id));
     }
 
-    public void SetWatchButtonOnClickAction(LobbyManager.WatchDelegate watchDelegate) {
-        BtnWatch.onClick.AddListener(() => watchDelegate(_room.Id));
+    public void SetWatchRoomButtonOnClickAction(LobbyManager.WatchDelegate watchDelegate) {
+        BtnWatchRoom.onClick.AddListener(() => watchDelegate(_room.Id));
+    }
+
+    public void SetJoinRoomButtonInteractions() {
+        if (NetworkManager.mss.HasPlayerRoom) {
+            BtnJoinRoom.interactable = false;
+        } else if (!IsJoinedRoom() && IsAvailableToJoin()) {
+            BtnJoinRoom.interactable = true;
+        }
+    }
+
+    public void SetWatchRoomButtonInteractions() {
+        if (NetworkManager.mss.HasPlayerRoom) {
+            BtnWatchRoom.interactable = false;
+        } else if (!IsJoinedRoom()) {
+            BtnWatchRoom.interactable = true;
+        }
     }
 
     private void ToggleActionButtonsVisibility() {
         if (NetworkManager.mss.HasPlayerRoom) {
             if (IsJoinedRoom()) {
-                ShowReturnButton();
+                ShowReturnRoomButton();
             }
         } else {
-            ShowJoinButton();
+            ShowJoinRoomButton();
         }
     }
 
-    private void SetJoinButtonVisibility() {
-        if (NetworkManager.mss.HasPlayerRoom) {
-            if (!IsJoinedRoom() && IsAvailableToJoin()) {
-                BtnJoin.gameObject.SetActive(true);
-            } else {
-                BtnJoin.gameObject.SetActive(false);
-            }
-        } else if (IsAvailableToJoin()) {
-            BtnJoin.gameObject.SetActive(true);
-        }
+    private void ShowReturnRoomButton() {
+        BtnJoinRoom.gameObject.SetActive(false);
+        BtnReturnRoom.gameObject.SetActive(true);
+
+        SetJoinRoomButtonInteractions();
     }
 
-    private void ShowReturnButton() {
-        BtnJoin.gameObject.SetActive(false);
-        BtnReturn.gameObject.SetActive(true);
+    private void ShowJoinRoomButton() {
+        BtnReturnRoom.gameObject.SetActive(false);
+        BtnJoinRoom.gameObject.SetActive(true);
 
-        SetJoinButtonVisibility();
+        SetJoinRoomButtonInteractions();
     }
 
-    private void ShowJoinButton() {
-        BtnReturn.gameObject.SetActive(false);
-        BtnJoin.gameObject.SetActive(true);
-
-        SetJoinButtonVisibility();
+    private void ActivateWatchRoomButtonInteraction() {
+        BtnWatchRoom.interactable = true;
     }
 
-    private void ActivateWatchButtonInteraction() {
-        BtnWatch.interactable = true;
-    }
-
-    private void DeactivateWatchButtonInteraction() {
-        BtnWatch.interactable = false;
+    private void DeactivateWatchRoomButtonInteraction() {
+        BtnWatchRoom.interactable = false;
     }
 
     private void SetRowNumber() {
@@ -139,7 +143,9 @@ public class LobbyRow : MonoBehaviour {
     }
 
     private bool IsJoinedRoom() {
-        return NetworkManager.mss.JoinedRoom.Id == _room.Id ? true : false;
+        if (!NetworkManager.mss.HasPlayerRoom) return false;
+
+        return NetworkManager.mss.JoinedRoom.Id == RoomID ? true : false;
     }
 
     private bool IsAvailableToJoin() {

@@ -594,9 +594,9 @@ MonoBehaviour:
   _txtRoomName: {fileID: 114604638237694232}
   _txtPlayersCount: {fileID: 114218469667983752}
   _togglePrivate: {fileID: 114585394484976360}
-  _btnReturn: {fileID: 114941103532724492}
-  _btnJoin: {fileID: 114466342350624666}
-  _btnWatch: {fileID: 114313254997661490}
+  _btnReturnRoom: {fileID: 114941103532724492}
+  _btnJoinRoom: {fileID: 114466342350624666}
+  _btnWatchRoom: {fileID: 114313254997661490}
   _rowNumber: 0
 --- !u!114 &114466342350624666
 MonoBehaviour:

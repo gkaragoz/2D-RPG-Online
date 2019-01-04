@@ -60,6 +60,7 @@ public class LobbyManager : Menu {
 
     public void UpdateUI() {
         SetBtnCreateRoomInteraction();
+        SetRowButtonsInteractions();
     }
 
     public void CreateRoom() {
@@ -76,9 +77,9 @@ public class LobbyManager : Menu {
         LobbyRow lobbyRow = Instantiate(_lobbyRowPrefab, _gridContainer);
 
         lobbyRow.UpdateUI(rowNumber, MSSRoom);
-        lobbyRow.SetJoinButtonOnClickAction(onJoinButtonClicked);
-        lobbyRow.SetWatchButtonOnClickAction(onWatchButtonClicked);
-        lobbyRow.SetReturnButtonOnClickAction(onReturnButtonClicked);
+        lobbyRow.SetJoinRoomButtonOnClickAction(onJoinButtonClicked);
+        lobbyRow.SetWatchRoomButtonOnClickAction(onWatchButtonClicked);
+        lobbyRow.SetReturnRoomButtonOnClickAction(onReturnButtonClicked);
 
         _lobbyRowsList.Add(lobbyRow);
     }
@@ -95,6 +96,13 @@ public class LobbyManager : Menu {
         LobbyRow lobbyRow = _lobbyRowsList.Find(row => row.RoomID == roomID);
         _lobbyRowsList.Remove(lobbyRow);
         lobbyRow.Destroy();
+    }
+
+    private void SetRowButtonsInteractions() {
+        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
+            _lobbyRowsList[ii].SetJoinRoomButtonInteractions();
+            _lobbyRowsList[ii].SetWatchRoomButtonInteractions();
+        }
     }
 
     private void SetBtnCreateRoomInteraction() {
