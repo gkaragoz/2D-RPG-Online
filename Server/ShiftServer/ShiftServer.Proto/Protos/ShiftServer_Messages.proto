@@ -119,6 +119,7 @@ message MSSRoom {
 	string name = 6;
 	int32 maxUserCount = 7;
 	int32 currentUserCount = 8;
+	repeated string Teams = 9;
 
 }
 message RoomPlayerInfo {

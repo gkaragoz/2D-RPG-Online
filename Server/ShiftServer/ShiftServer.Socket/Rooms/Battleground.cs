@@ -30,6 +30,7 @@ namespace ShiftServer.Server.Rooms
         public int MaxUserPerTeam { get; set; }
         public SafeDictionary<string, IGroup> Teams { get; set; }
         public List<string> TeamIdList { get; set; }
+        public string LastActiveTeam { get; set; }
 
         public Battleground(int groupCount, int maxUserPerTeam)
         {
@@ -94,6 +95,8 @@ namespace ShiftServer.Server.Rooms
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
             pInfo.Username = currentClient.UserName;
+            pInfo.TeamId = currentClient.JoinedTeamId;
+            pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
 
             ShiftServerData data = new ShiftServerData();
             data.RoomData = new RoomData();
@@ -123,14 +126,50 @@ namespace ShiftServer.Server.Rooms
 
         public IGroup GetRandomTeam()
         {
-            foreach (var team in this.Teams.GetValues())
+            var RoomTeams = this.Teams.GetValues();
+
+            for (int i = 0; i < RoomTeams.Count; i++)
             {
-
-                if (team.MaxPlayer != team.Clients.Count)
+                if (RoomTeams[i].MaxPlayer > RoomTeams[i].Clients.Count)
                 {
-                    return team;
-                }
+                    if (LastActiveTeam != null)
+                    {
+                        if (LastActiveTeam == RoomTeams[i].Id)
+                        {
+                            IGroup otherTeam = null;
+                            var otherTeamId = TeamIdList.Where(x => x != RoomTeams[i].Id).FirstOrDefault();
+                            Teams.TryGetValue(otherTeamId, out otherTeam);
+                            if (otherTeam != null)
+                            {
+                                if (otherTeam.MaxPlayer > otherTeam.Clients.Count)
+                                {
+                                    LastActiveTeam = otherTeam.Id;
+                                    return otherTeam;
+                                }
+                                else
+                                {
+                                    return null;
+                                }
+                                   
+                            }
+                            else
+                            {
+                                LastActiveTeam = RoomTeams[i].Id;
+                                return RoomTeams[i];
+                            }
+                        }
+                        else
+                        {
 
+                        }
+                    }
+                    else
+                    {
+                        LastActiveTeam = RoomTeams[i].Id;
+                        return RoomTeams[i];
+                    }
+               
+                }
             }
 
             return null;

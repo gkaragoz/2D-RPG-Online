@@ -217,7 +217,6 @@ namespace ShiftServer.Server.Worlds
             data.AccountData.VirtualMoney = 100;
             data.AccountData.VirtualSpecialMoney = 100;
 
-
             shift.SendPacket(MSServerEvent.Login, data);
             shift.UserName = data.AccountData.Username;
             SocketIdSessionLookup.Add(sessionId, shift.connectionId);

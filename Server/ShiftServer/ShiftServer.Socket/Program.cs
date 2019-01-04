@@ -28,9 +28,9 @@ namespace ShiftServer.Server
             _roomProvider = new RoomProvider(_serverProvider);
             _groupProvider = new GroupProvider(_roomProvider);
 
-            Battleground bgRoom = new Battleground(2, 5);
+            Battleground bgRoom = new Battleground(2, 4);
             bgRoom.Name = "MANASHIFT BattleRoyale #1 ( OFFICIAL )";
-            bgRoom.MaxUser = 10;
+            bgRoom.MaxUser = 8;
             _roomProvider.CreateRoom(bgRoom);
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);

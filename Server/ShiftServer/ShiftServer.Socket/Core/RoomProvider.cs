@@ -38,8 +38,14 @@ namespace ShiftServer.Server.Core
                     data.RoomData.CreatedRoom.Id = newRoom.Id;
                     newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
 
+                    foreach (var item in newRoom.TeamIdList)
+                    {
+                        data.RoomData.CreatedRoom.Teams.Add(item);
+                    }
+
                     newRoom.CreatedUserId = shift.connectionId;
                     newRoom.Name = data.RoomData.CreatedRoom.Name + " #" + _sp.world.Rooms.Count.ToString();
+                    data.RoomData.CreatedRoom.Name = newRoom.Name;
                     newRoom.CreatedDate = DateTime.UtcNow;
                     newRoom.UpdateDate = DateTime.UtcNow;
                     shift.JoinedRoomId = newRoom.Id;
@@ -126,18 +132,11 @@ namespace ShiftServer.Server.Core
                         shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                         return;
                     }
-                    result.Clients.Add(shift.connectionId, shift);
-                    result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
-                    shift.JoinedRoomId = result.Id;
-                    shift.IsJoinedToRoom = true;
-                    result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
-                    result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
-                    data.RoomData.PlayerInfo = new RoomPlayerInfo();
-
                     IGroup group = result.GetRandomTeam();
                     if (shift.JoinTeam(group))
                     {
                         log.Info($"ClientNO: {shift.connectionId} ------> Joined to team");
+                        data.RoomData.PlayerInfo = new RoomPlayerInfo();
                         data.RoomData.PlayerInfo.TeamId = group.Id;
                         data.RoomData.PlayerInfo.IsJoinedToTeam = shift.IsJoinedToTeam;
 
@@ -146,6 +145,21 @@ namespace ShiftServer.Server.Core
                     {
                         log.Info($"ClientNO: {shift.connectionId} ------> Already in a team");
                     }
+                    result.Clients.Add(shift.connectionId, shift);
+                    result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                    shift.JoinedRoomId = result.Id;
+                    shift.IsJoinedToRoom = true;
+                    result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
+                    result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
+
+
+                    data.RoomData.JoinedRoom.Name = result.Name;
+
+                    foreach (var item in result.TeamIdList)
+                    {
+                        data.RoomData.JoinedRoom.Teams.Add(item);
+                    }
+
 
                     ShiftServerData listData = new ShiftServerData();
 
