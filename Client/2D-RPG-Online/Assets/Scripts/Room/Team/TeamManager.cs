@@ -60,6 +60,10 @@ public class TeamManager : MonoBehaviour {
         }
     }
 
+    public void ClearTeamList() {
+        _teamList = new List<Team>();
+    }
+
     private bool IsTeamExists(string id) {
         for (int ii = 0; ii < _teamList.Count; ii++) {
             if (_teamList[ii].ID == id) {

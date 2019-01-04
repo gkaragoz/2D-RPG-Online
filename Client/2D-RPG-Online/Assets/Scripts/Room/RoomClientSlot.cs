@@ -18,11 +18,11 @@ public class RoomClientSlot : MonoBehaviour {
         public TextMeshProUGUI txtPlayerName;
         public TextMeshProUGUI txtCharacterName;
 
-        public void UpdateUI(RoomPlayerInfo roomPlayerInfo, bool fill) {
+        public void UpdateUI(string username, bool fill) {
             SetCharacterClassVisualize(ClassManager.Classes.Warrior);
             SetToggleIsReady(true);
             SetImgLeader(true);
-            SetTxtPlayerName(roomPlayerInfo.Username);
+            SetTxtPlayerName(username);
 
             if (fill) {
                 ActivateFilledSlotPrefab();
@@ -99,13 +99,13 @@ public class RoomClientSlot : MonoBehaviour {
             return _roomPlayerInfo == null ? false : true;
         }
     }
-   
+
     private RoomPlayerInfo _roomPlayerInfo;
 
     public void Initialize(RoomPlayerInfo roomPlayerInfo) {
         this._roomPlayerInfo = roomPlayerInfo;
 
-        _UISettings.UpdateUI(_roomPlayerInfo, IsFilledSlot);
+        _UISettings.UpdateUI(Username, IsFilledSlot);
     }
 
     public void Clear() {
