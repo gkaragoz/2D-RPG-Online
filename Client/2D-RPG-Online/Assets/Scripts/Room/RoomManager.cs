@@ -130,7 +130,7 @@ public class RoomManager : Menu {
     }
 
     private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
-        GetAvailableSlot().UpdateUI(playerInfo);
+        GetAvailableSlot(playerInfo.TeamId).UpdateUI(playerInfo);
     }
 
     private void UpdateSlot(RoomPlayerInfo playerInfo) {
@@ -141,9 +141,9 @@ public class RoomManager : Menu {
         GetSlot(playerInfo.Username).Clear();
     }
 
-    private RoomClientSlot GetAvailableSlot() {
+    private RoomClientSlot GetAvailableSlot(string teamId) {
         for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (!_slotList[ii].IsFilledSlot) {
+            if (!_slotList[ii].IsFilledSlot && _slotList[ii].TeamID == teamId) {
                 return _slotList[ii];
             }
         }
@@ -178,12 +178,24 @@ public class RoomManager : Menu {
         _txtRoomName.text = name;
     }
 
+    private void SetSlotsTeamIds(Google.Protobuf.Collections.RepeatedField<string> teamIds) {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            if (ii % 2 == 0) {
+                _slotList[ii].TeamID = teamIds[0];
+            } else {
+                _slotList[ii].TeamID = teamIds[1];
+            }
+        }
+    }
+
     private void OnRoomJoinSuccess(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
 
+        SetTxtRoomName(data.RoomData.JoinedRoom.Name);
+        SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
+
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
-        playerInfo.Username = NetworkManager.mss.AccountData.Username;
-        playerInfo.TeamId = data.RoomData.PlayerInfo.TeamId;
+        playerInfo = data.RoomData.PlayerInfo;
 
         TeamManager.instance.CreateTeam(data.RoomData.JoinedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
@@ -201,6 +213,9 @@ public class RoomManager : Menu {
     private void OnRoomGetPlayers(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomGetPlayers: " + data, Log.Type.Server);
 
+        SetTxtRoomName(data.RoomData.JoinedRoom.Name);
+        SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
+
         for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
             RoomPlayerInfo playerInfo = data.RoomData.PlayerList[ii];
 
@@ -213,10 +228,10 @@ public class RoomManager : Menu {
         LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
 
         SetTxtRoomName(data.RoomData.CreatedRoom.Name);
+        SetSlotsTeamIds(data.RoomData.CreatedRoom.Teams);
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
-        playerInfo.Username = NetworkManager.mss.AccountData.Username;
-        playerInfo.TeamId = data.RoomData.PlayerInfo.TeamId;
+        playerInfo = data.RoomData.PlayerInfo;
 
         TeamManager.instance.CreateTeam(data.RoomData.CreatedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
@@ -254,7 +269,7 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         TeamManager.instance.RemovePlayerFromTeam(playerInfo);
-        UpdateUI(playerInfo);
+        ClearSlot(playerInfo);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {

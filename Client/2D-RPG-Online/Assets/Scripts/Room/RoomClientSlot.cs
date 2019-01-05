@@ -25,6 +25,11 @@ public class RoomClientSlot : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI _txtCharacterName;
 
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private string _teamID;
+
     public string Username {
         get {
             return _playerInfo.Username;
@@ -34,6 +39,16 @@ public class RoomClientSlot : MonoBehaviour {
     public bool IsFilledSlot {
         get {
             return _playerInfo == null ? false : true;
+        }
+    }
+
+    public string TeamID {
+        get {
+            return _teamID;
+        }
+
+        set {
+            _teamID = value;
         }
     }
 
@@ -59,6 +74,7 @@ public class RoomClientSlot : MonoBehaviour {
 
     public void Clear() {
         this._playerInfo = null;
+        this._teamID = string.Empty;
 
         ActivateEmptySlotPrefab();
     }
@@ -81,11 +97,11 @@ public class RoomClientSlot : MonoBehaviour {
     }
 
     private void SetToggleIsReady() {
-        _toggleIsReady.isOn = true;
+        _toggleIsReady.isOn = _playerInfo.IsReady;
     }
 
     private void SetImgLeader() {
-        _imgLeader.enabled = true;
+        _imgLeader.gameObject.SetActive(_playerInfo.IsLeader);
     }
 
     private void SetTxtPlayerName() {
