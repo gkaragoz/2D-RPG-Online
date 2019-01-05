@@ -74,7 +74,6 @@ public class RoomClientSlot : MonoBehaviour {
 
     public void Clear() {
         this._playerInfo = null;
-        this._teamID = string.Empty;
 
         ActivateEmptySlotPrefab();
     }
