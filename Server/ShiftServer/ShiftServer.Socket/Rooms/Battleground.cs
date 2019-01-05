@@ -95,7 +95,10 @@ namespace ShiftServer.Server.Rooms
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
             pInfo.Username = currentClient.UserName;
-            pInfo.TeamId = currentClient.JoinedTeamId;
+
+            if (currentClient.JoinedTeamId != null)
+                pInfo.TeamId = currentClient.JoinedTeamId;
+
             pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
             pInfo.IsReady = currentClient.IsReady;
 
@@ -124,9 +127,25 @@ namespace ShiftServer.Server.Rooms
                 clientList[i].SendPacket(evt, data);
             }
         }
+        public void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data)
+        {
 
+
+            List<ShiftClient> clientList = this.Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSession == null)
+                    continue;
+
+                if (clientList[i].connectionId == currentClient.connectionId)
+                    continue;
+
+                clientList[i].SendPacket(state, data);
+            }
+        }
         public void SendRoomState()
         {
+
         }
 
         public void OnRoomUpdate()
@@ -157,10 +176,8 @@ namespace ShiftServer.Server.Rooms
                                     return otherTeam;
                                 }
                                 else
-                                {
                                     return null;
-                                }
-                                   
+
                             }
                             else
                             {
@@ -168,18 +185,40 @@ namespace ShiftServer.Server.Rooms
                                 return RoomTeams[i];
                             }
                         }
-                        else
-                        {
-
-                        }
                     }
                     else
                     {
                         LastActiveTeam = RoomTeams[i].Id;
                         return RoomTeams[i];
                     }
-               
+
                 }
+            }
+
+            return null;
+        }
+
+        public ShiftClient SetRandomNewLeader()
+        {
+            ShiftClient shift = null;
+            for (int i = 0; i < MaxConnId; i++)
+            {
+                this.Clients.TryGetValue(i, out shift);
+
+                if (shift != null && this.ServerLeaderId == -1)
+                {
+
+                    if (this.ServerLeaderId != shift.connectionId)
+                    {
+                        this.ServerLeaderId = shift.connectionId;
+                        return shift;
+                    }
+                    else
+                    {
+                        return null;
+                    }
+                }
+            
             }
 
             return null;
