@@ -54,10 +54,22 @@ namespace ShiftServer.Server.Core
                     newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
                     IGroup group = newRoom.GetRandomTeam();
+
+                    data.RoomData.PlayerInfo.TeamId = group.Id;
+                    data.RoomData.PlayerInfo.Username = shift.UserName;
+                    data.RoomData.PlayerInfo.IsReady = shift.IsReady;
+
+
+                    if (newRoom.ServerLeaderId == shift.connectionId)
+                        data.RoomData.PlayerInfo.IsLeader = true;
+                    else
+                        data.RoomData.PlayerInfo.IsLeader = false;
+
+                    data.RoomData.PlayerInfo.IsReady = shift.IsReady;
+
                     if (shift.JoinTeam(group))
                     {
-                        data.RoomData.PlayerInfo.TeamId = group.Id;
-                        data.RoomData.PlayerInfo.Username = shift.UserName;
+
                         data.RoomData.PlayerInfo.IsJoinedToTeam = shift.IsJoinedToTeam;
 
                         log.Info($"ClientNO: {shift.connectionId} ------> Joined to team");
@@ -153,20 +165,23 @@ namespace ShiftServer.Server.Core
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
                     result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
 
+                    ShiftServerData listData = new ShiftServerData();
+                    listData.RoomData = new RoomData();
+                    listData.RoomData.JoinedRoom = new MSSRoom();
 
                     data.RoomData.JoinedRoom.Name = result.Name;
 
                     foreach (var item in result.TeamIdList)
                     {
                         data.RoomData.JoinedRoom.Teams.Add(item);
+                        listData.RoomData.JoinedRoom.Teams.Add(item);
+
                     }
 
 
-                    ShiftServerData listData = new ShiftServerData();
 
                     data.RoomData.PlayerInfo.Username = shift.UserName;
 
-                    listData.RoomData = new RoomData();
                     ShiftClient cl = null;
 
 
