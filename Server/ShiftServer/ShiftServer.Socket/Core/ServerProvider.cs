@@ -285,7 +285,7 @@ namespace ShiftServer.Server.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
-            SendMessage(shift.connectionId, MSServerEvent.PingRequest, data);
+            shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
         public int ClientCount()

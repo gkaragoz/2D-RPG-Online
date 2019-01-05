@@ -87,16 +87,24 @@ namespace ShiftServer.Server.Auth
         public bool JoinTeam(IGroup group)
         {
 
-            if (this.IsJoinedToTeam)
+            if (group != null)
             {
-                log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId} Already in a team");
-                return false;
+                if (this.IsJoinedToTeam)
+                {
+                    log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId} Already in a team");
+                    return false;
+                }
+                else
+                {
+                    group.AddPlayer(this);
+                    return true;
+                }
             }
             else
             {
-                group.AddPlayer(this);
-                return true;
+                return false;
             }
+       
         }
         public bool LeaveFromTeam(IRoom room)
         {
@@ -109,7 +117,7 @@ namespace ShiftServer.Server.Auth
                 if (group != null)
                 {
                     group.RemovePlayer(this);
-
+                    this.IsJoinedToTeam = false;
                     return true;
                 }
                 else

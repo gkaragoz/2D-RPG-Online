@@ -36,7 +36,9 @@ namespace ShiftServer.Server.Core
         void OnObjectUse(ShiftServerData data, ShiftClient client);
         void OnGameStart(ShiftServerData data, ShiftClient client);
         void BroadcastToRoom(ShiftClient currentClient, MSServerEvent state);
+        void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data);
         IGroup GetRandomTeam();
+        ShiftClient SetRandomNewLeader();
         void OnRoomUpdate();
         void SendRoomState();
     }

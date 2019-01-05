@@ -10,12 +10,12 @@ namespace ShiftServer.Test
     public class Main
     {
         private static ManaShiftServer _mss = null;
-
+        public TestContext TestContext { get; set; }
 
         [TestCleanup]
         public void CleanUp()
         {
-
+            _mss.Disconnect();
         }
 
         [TestInitialize]
@@ -23,11 +23,15 @@ namespace ShiftServer.Test
         {
             try
             {
+
                 Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
                 _mss = new ManaShiftServer();
+
                 ConfigData _cfg = new ConfigData();
-                _cfg.Host = "127.0.0.1";
-                _cfg.Port = 2000;
+
+                _cfg.Host = TestContext.Properties["gameserverIp"].ToString();
+                _cfg.Port = int.Parse(TestContext.Properties["port"].ToString());
+
                 _mss.Connect(_cfg);
 
                 Assert.IsFalse(_mss.IsConnected, TestResults.NOT_CONNECTED_TO_SERVER);
