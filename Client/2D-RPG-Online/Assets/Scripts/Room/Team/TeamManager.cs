@@ -37,7 +37,7 @@ public class TeamManager : MonoBehaviour {
     public void AddPlayerToTeam(RoomPlayerInfo playerInfo) {
         if (IsTeamExists(playerInfo.TeamId)) {
             for (int ii = 0; ii < _teamList.Count; ii++) {
-                if (_teamList[ii].ID == playerInfo.TeamId) {
+                if (_teamList[ii].IsPlayerExists(playerInfo)) {
                     _teamList[ii].AddPlayer(playerInfo);
                 }
             }
@@ -50,7 +50,7 @@ public class TeamManager : MonoBehaviour {
     public void RemovePlayerFromTeam(RoomPlayerInfo playerInfo) {
         if (IsTeamExists(playerInfo.TeamId)) {
             for (int ii = 0; ii < _teamList.Count; ii++) {
-                if (_teamList[ii].ID == playerInfo.TeamId) {
+                if (_teamList[ii].IsPlayerExists(playerInfo)) {
                     _teamList[ii].RemovePlayer(playerInfo);
                 }
             }

@@ -51,7 +51,7 @@ public class Team {
         _playerList.Remove(playerInfo);
     }
 
-    private bool IsPlayerExists(RoomPlayerInfo playerInfo) {
+    public bool IsPlayerExists(RoomPlayerInfo playerInfo) {
         for (int ii = 0; ii < _playerList.Count; ii++) {
             if (_playerList[ii].Username == playerInfo.Username) {
                 return true;
