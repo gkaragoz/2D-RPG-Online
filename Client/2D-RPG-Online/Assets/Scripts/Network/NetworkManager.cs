@@ -13,21 +13,12 @@ public class NetworkManager : MonoBehaviour {
     [SerializeField]
     private int _port = 1337;
 
-    [SerializeField]
-    private bool _offlineMode = false;
-
     private ConfigData _cfg;
 
     private const string CONNECT = "Trying connect to the server... ";
     private const string ON_CONNECTION_SUCCESS = "Connection success!";
     private const string ON_CONNECTION_FAILED = "Connection failed!";
     private const string ON_CONNECTION_LOST = "Connection lost!";
-
-    public bool OfflineMode {
-        get {
-            return _offlineMode;
-        }
-    }
 
     /// <summary>
     /// Instance of this class.
@@ -49,19 +40,17 @@ public class NetworkManager : MonoBehaviour {
     }
 
     private void InitNetwork() {
-        if (!OfflineMode) {
-            mss = new ManaShiftServer();
-            mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
-            mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
-            mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
+        mss = new ManaShiftServer();
+        mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
+        mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
+        mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
 
-            _cfg = new ConfigData();
-            _cfg.Host = _hostName;
-            _cfg.Port = _port;
+        _cfg = new ConfigData();
+        _cfg.Host = _hostName;
+        _cfg.Port = _port;
 
-            //LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
-            mss.Connect(_cfg);
-        }
+        //LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
+        mss.Connect(_cfg);
     }
 
     private void Update() {
@@ -83,10 +72,8 @@ public class NetworkManager : MonoBehaviour {
     }
 
     private void OnApplicationQuit() {
-        if (!OfflineMode) {
-            if (mss.IsConnected) {
-                mss.Disconnect();
-            }
+        if (mss.IsConnected) {
+            mss.Disconnect();
         }
     }
 }

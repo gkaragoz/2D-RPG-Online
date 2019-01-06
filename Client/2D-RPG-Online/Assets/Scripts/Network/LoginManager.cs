@@ -64,10 +64,8 @@ public class LoginManager : Menu {
     private const string ON_LOGIN_FAILED = "Login failed!";
 
     private void Start() {
-        if (!NetworkManager.instance.OfflineMode) {
-            NetworkManager.mss.AddEventListener(MSServerEvent.Login, OnLoginSuccess);
-            NetworkManager.mss.AddEventListener(MSServerEvent.LoginFailed, OnLoginFailed);
-        }
+        NetworkManager.mss.AddEventListener(MSServerEvent.Login, OnLoginSuccess);
+        NetworkManager.mss.AddEventListener(MSServerEvent.LoginFailed, OnLoginFailed);
     }
 
     private void Update() {
