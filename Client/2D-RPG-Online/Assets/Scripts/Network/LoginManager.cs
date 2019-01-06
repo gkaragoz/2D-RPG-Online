@@ -107,7 +107,9 @@ public class LoginManager : Menu {
         this.Hide();
         LobbyManager.instance.Initialize();
         RoomManager.instance.Initialize();
+        FriendManager.instance.Initialize();
         LobbyManager.instance.Show();
+        FriendManager.instance.Show();
 
         LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
         LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
