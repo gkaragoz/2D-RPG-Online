@@ -69,8 +69,6 @@ public class LobbyManager : Menu {
 
     public void RefreshLobby() {
         NetworkManager.mss.GetRoomList();
-
-        UpdateUI();
     }
 
     public void CreateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
@@ -84,24 +82,15 @@ public class LobbyManager : Menu {
         _lobbyRowsList.Add(lobbyRow);
     }
 
-    public void UpdateLobbyRow(int rowNumber, MSSRoom MSSRoom) {
+    public void UpdateLobbyRow(LobbyRow lobbyRow, int rowNumber, MSSRoom MSSRoom) {
         string roomID = MSSRoom.Id;
 
-        _lobbyRowsList.Find(row => row.RoomID == roomID).UpdateUI(rowNumber, MSSRoom);
+        lobbyRow.UpdateUI(rowNumber, MSSRoom);
     }
 
-    public void RemoveLobbyRow(MSSRoom MSSRoom) {
-        string roomID = MSSRoom.Id;
-
-        LobbyRow lobbyRow = _lobbyRowsList.Find(row => row.RoomID == roomID);
+    public void RemoveLobbyRow(LobbyRow lobbyRow) {
         _lobbyRowsList.Remove(lobbyRow);
         lobbyRow.Destroy();
-    }
-
-    private void DestroyAllLobbyRows() {
-        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
-            _lobbyRowsList[ii].Destroy();
-        }
     }
 
     private void SetRowButtonsInteractions() {
@@ -118,17 +107,28 @@ public class LobbyManager : Menu {
     private void OnLobbyRefreshed(ShiftServerData data) {
         LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
 
-        DestroyAllLobbyRows();
-
         for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
             MSSRoom MSSRoom = data.RoomData.Rooms[ii];
 
-            if (IsLobbyRowExists(MSSRoom.Id)) {
-                UpdateLobbyRow(1, MSSRoom);
+            LobbyRow lobbyRow = GetLobbyRow(MSSRoom.Id);
+
+            if (lobbyRow != null) {
+                UpdateLobbyRow(lobbyRow, 1, MSSRoom);
             } else {
                 CreateLobbyRow(1, MSSRoom);
             }
         }
+
+        UpdateUI();
+    }
+
+    private LobbyRow GetLobbyRow(string roomID) {
+        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
+            if (roomID == _lobbyRowsList[ii].RoomID) {
+                return _lobbyRowsList[ii];
+            }
+        }
+        return null;
     }
 
     private bool IsLobbyRowExists(string roomID) {
