@@ -19,6 +19,12 @@ public class FriendManager : Menu {
 
     #endregion
 
+    public delegate void SendMessageDelegate();
+    public SendMessageDelegate onSendMessageButtonClicked;
+
+    public delegate void DeleteFriendDelegate();
+    public DeleteFriendDelegate onDeleteFriendButtonClicked;
+
     public void Initialize() {
 
     }
