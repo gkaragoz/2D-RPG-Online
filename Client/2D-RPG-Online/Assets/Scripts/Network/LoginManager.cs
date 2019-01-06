@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -20,44 +19,29 @@ public class LoginManager : Menu {
 
     #endregion
 
-    [System.Serializable]
-    public class UISettings {
-        public TMP_InputField inputFieldUsername;
-        public TMP_InputField inputFieldPassword;
-        public Button btnLogin;
-
-        public bool IsUsernameValid {
-            get { return inputFieldUsername.text != string.Empty ? true : false; }
-        }
-
-        public bool IsPasswordValid {
-            get { return inputFieldPassword.text != string.Empty ? true : false; }
-        }
-
-        public string GetUsername() {
-            return inputFieldUsername.text;
-        }
-
-        public string GetPassword() {
-            return inputFieldPassword.text;
-        }
-
-        public void ActivateLoginUIs() {
-            inputFieldUsername.interactable = true;
-            inputFieldPassword.interactable = true;
-            btnLogin.interactable = true;
-        }
-
-        public void DeactivateLoginUIS() {
-            inputFieldUsername.interactable = false;
-            inputFieldPassword.interactable = false;
-            btnLogin.interactable = false;
-        }
-    }
-
     [Header("Initialization")]
     [SerializeField]
-    private UISettings _UISettings;
+    private TMP_InputField _inputFieldUsername;
+    [SerializeField]
+    private TMP_InputField _inputFieldPassword;
+    [SerializeField]
+    private Button _btnLogin;
+
+    public bool IsUsernameValid {
+        get { return _inputFieldUsername.text != string.Empty ? true : false; }
+    }
+
+    public bool IsPasswordValid {
+        get { return _inputFieldPassword.text != string.Empty ? true : false; }
+    }
+
+    public string GetUsername() {
+        return _inputFieldUsername.text;
+    }
+
+    public string GetPassword() {
+        return _inputFieldPassword.text;
+    }
 
     private const string JOIN = "Trying to join into the account... ";
     private const string ON_LOGIN_SUCCESS = "Login success!";
@@ -70,19 +54,19 @@ public class LoginManager : Menu {
 
     private void Update() {
         if (NetworkManager.mss.IsConnected) {
-            _UISettings.ActivateLoginUIs();
+            ActivateLoginUIs();
         } else {
-            _UISettings.DeactivateLoginUIS();
+            DeactivateLoginUIS();
         }
     }
 
     public void Login() {
-        if (_UISettings.IsUsernameValid && _UISettings.IsPasswordValid) {
+        if (IsUsernameValid && IsPasswordValid) {
             LogManager.instance.AddLog(JOIN, Log.Type.Server);
 
             AccountData account = new AccountData();
-            account.Username = _UISettings.GetUsername();
-            account.Password = _UISettings.GetPassword();
+            account.Username = GetUsername();
+            account.Password = GetPassword();
 
             ClientData clientInfo = new ClientData();
             clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
@@ -97,6 +81,18 @@ public class LoginManager : Menu {
         } else {
             LogManager.instance.AddLog("You must fill those input fields!", Log.Type.Error);
         }
+    }
+
+    public void ActivateLoginUIs() {
+        _inputFieldUsername.interactable = true;
+        _inputFieldPassword.interactable = true;
+        _btnLogin.interactable = true;
+    }
+
+    public void DeactivateLoginUIS() {
+        _inputFieldUsername.interactable = false;
+        _inputFieldPassword.interactable = false;
+        _btnLogin.interactable = false;
     }
 
     private void OnLoginSuccess(ShiftServerData data) {
