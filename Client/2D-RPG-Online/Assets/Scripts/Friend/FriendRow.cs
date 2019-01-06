@@ -43,6 +43,7 @@ public class FriendRow : MonoBehaviour {
     public void SetOnline() {
         _txtUsername.color = _onlineUIColor;
         _txtUserStatus.color = _onlineUIColor;
+        _txtUserStatus.text = "Online";
 
         _imgClassIcon.color = Color.white;
         _btnSendMessage.interactable = true;
@@ -52,6 +53,7 @@ public class FriendRow : MonoBehaviour {
     public void SetOffline() {
         _txtUsername.color = _offlineUIColor;
         _txtUserStatus.color = _offlineUIColor;
+        _txtUserStatus.text = "Offline";
 
         _imgClassIcon.color = _offlineUIColor;
         _btnSendMessage.interactable = false;
@@ -68,8 +70,6 @@ public class FriendRow : MonoBehaviour {
         }
 
         public override void OnInspectorGUI() {
-            base.OnInspectorGUI();
-
             bool is_interactive_target = friendRow.IsOnline;
             GUI.backgroundColor = (is_interactive_target) ? Color.green : Color.red;
             GUILayout.Space(10f);
@@ -82,12 +82,15 @@ public class FriendRow : MonoBehaviour {
                 } else {
                     friendRow.SetOffline();
                 }
+
+                EditorWindow view = EditorWindow.GetWindow<SceneView>();
+                view.Repaint();
             }
             GUI.backgroundColor = Color.white;
-            SceneView.RepaintAll();
+
+            base.OnInspectorGUI();
         }
     }
-
 #endif
 
 }
