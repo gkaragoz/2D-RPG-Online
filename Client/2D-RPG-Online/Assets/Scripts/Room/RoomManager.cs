@@ -47,6 +47,8 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
 
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomChangeLeader, OnRoomLeaderChanged);
+
         _btnGoToLobby.onClick.AddListener(GoToLobby);
         _btnLeaveRoom.onClick.AddListener(LeaveRoom);
     }
@@ -283,6 +285,14 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
         LogManager.instance.AddLog("OnRoomLeaveFailed: " + data, Log.Type.Server);
+    }
+
+    private void OnRoomLeaderChanged(ShiftServerData data) {
+        LogManager.instance.AddLog("OnRoomLeaderChanged: " + data, Log.Type.Server);
+
+        RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
+
+        UpdateUI(playerInfo);
     }
 
 }
