@@ -1,4 +1,6 @@
-﻿using TMPro;
+﻿using CI.HttpClient;
+using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -19,6 +21,11 @@ public class LoginManager : Menu {
 
     #endregion
 
+    public class LoginData {
+        public string username;
+        public string password;
+    }
+
     [SerializeField]
     private TMP_InputField _inputFieldUsername;
     [SerializeField]
@@ -27,6 +34,9 @@ public class LoginManager : Menu {
     private Button _btnLogin;
     [SerializeField]
     private Button _btnSignup;
+
+    [Header("Settings")]
+    public string URL;
 
     public bool IsUsernameValid {
         get { return _inputFieldUsername.text != string.Empty ? true : false; }
@@ -48,40 +58,58 @@ public class LoginManager : Menu {
     private const string ON_LOGIN_SUCCESS = "Login success!";
     private const string ON_LOGIN_FAILED = "Login failed!";
 
-    private void Start() {
-        NetworkManager.mss.AddEventListener(MSServerEvent.Login, OnLoginSuccess);
-        NetworkManager.mss.AddEventListener(MSServerEvent.LoginFailed, OnLoginFailed);
-    }
-
-    private void Update() {
-        if (NetworkManager.mss.IsConnected) {
-            ActivateLoginUIs();
-        } else {
-            DeactivateLoginUIS();
-        }
-    }
-
     public void Login() {
         if (IsUsernameValid && IsPasswordValid) {
             LogManager.instance.AddLog(JOIN, Log.Type.Server);
 
-            AccountData account = new AccountData();
-            account.Username = GetUsername();
-            account.Password = GetPassword();
+            HttpClient client = new HttpClient();
 
-            ClientData clientInfo = new ClientData();
-            clientInfo.MachineId = SystemInfo.deviceUniqueIdentifier;
-            clientInfo.MachineName = SystemInfo.deviceName;
-            clientInfo.Ver = "0.1";
+            LoginData data = new LoginData();
+            data.username = _inputFieldUsername.text;
+            data.password = _inputFieldPassword.text;
 
-            ShiftServerData data = new ShiftServerData();
-            data.Account = account;
-            data.ClientInfo = clientInfo;
+            string jsonData = JsonUtility.ToJson(data);
 
-            NetworkManager.mss.SendMessage(MSServerEvent.Login, data);
+            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+
+            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response =>
+            {
+                Debug.Log(response);
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //IF SUCCESS
+                //LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+
+                //this.Hide();
+                //LobbyManager.instance.Initialize();
+                //RoomManager.instance.Initialize();
+                //FriendManager.instance.Initialize();
+                //LobbyManager.instance.Show();
+                //FriendManager.instance.Show();
+
+                //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
+                //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
+                //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
+
+                //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+                //IF ERROR
+                //LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
+
+                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            });
+
         } else {
-            LogManager.instance.AddLog("You must fill those input fields!", Log.Type.Error);
+            LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
         }
+    }
+
+    public void GoToSignupPage() {
+        this.Hide();
+        SignupManager.instance.Show();
     }
 
     public void ActivateLoginUIs() {
@@ -94,34 +122,6 @@ public class LoginManager : Menu {
         _inputFieldUsername.interactable = false;
         _inputFieldPassword.interactable = false;
         _btnLogin.interactable = false;
-    }
-
-    private void OnLoginSuccess(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
-
-        this.Hide();
-        LobbyManager.instance.Initialize();
-        RoomManager.instance.Initialize();
-        FriendManager.instance.Initialize();
-        LobbyManager.instance.Show();
-        FriendManager.instance.Show();
-
-        LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
-        LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
-        LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-
-        LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
-
-        LogManager.instance.AddLog("Press TAB to toggle Log Panel.", Log.Type.Info);
-        LogManager.instance.AddLog("Press 1 to show Info message.", Log.Type.Info);
-        LogManager.instance.AddLog("Press 2 to show Error message.", Log.Type.Error);
-        LogManager.instance.AddLog("Press 3 to show Loot message.", Log.Type.Loot);
-        LogManager.instance.AddLog("Press 4 to show Interact message.", Log.Type.Interact);
-        LogManager.instance.AddLog("Press 5 to show Drop message.", Log.Type.Drop);
-    }
-
-    private void OnLoginFailed(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
     }
 
 }
