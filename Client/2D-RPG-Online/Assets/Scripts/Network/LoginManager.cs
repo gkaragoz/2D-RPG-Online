@@ -19,13 +19,14 @@ public class LoginManager : Menu {
 
     #endregion
 
-    [Header("Initialization")]
     [SerializeField]
     private TMP_InputField _inputFieldUsername;
     [SerializeField]
     private TMP_InputField _inputFieldPassword;
     [SerializeField]
     private Button _btnLogin;
+    [SerializeField]
+    private Button _btnSignup;
 
     public bool IsUsernameValid {
         get { return _inputFieldUsername.text != string.Empty ? true : false; }
