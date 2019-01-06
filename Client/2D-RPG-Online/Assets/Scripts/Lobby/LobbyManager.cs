@@ -98,6 +98,12 @@ public class LobbyManager : Menu {
         lobbyRow.Destroy();
     }
 
+    private void DestroyAllLobbyRows() {
+        for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
+            _lobbyRowsList[ii].Destroy();
+        }
+    }
+
     private void SetRowButtonsInteractions() {
         for (int ii = 0; ii < _lobbyRowsList.Count; ii++) {
             _lobbyRowsList[ii].SetJoinRoomButtonInteractions();
@@ -111,6 +117,8 @@ public class LobbyManager : Menu {
 
     private void OnLobbyRefreshed(ShiftServerData data) {
         LogManager.instance.AddLog("OnLobbyRefreshed: " + data, Log.Type.Server);
+
+        DestroyAllLobbyRows();
 
         for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
             MSSRoom MSSRoom = data.RoomData.Rooms[ii];
