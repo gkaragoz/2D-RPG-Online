@@ -9,13 +9,13 @@ namespace ShiftServer.Proto.Models
  
     public class AuthResponse
     {
-        public string AccessToken { get; set; }
-        public string Code { get; set; }
-        public string ErrorMessage { get; set; }
-        public int ExpireIn { get; set; }
-        public string IdToken { get; set; }
-        public string RefreshToken { get; set; }
-        public string Session { get; set; }
-        public bool Success { get; set; }
+        public string AccessToken;
+        public string Code;
+        public string ErrorMessage;
+        public int ExpireIn;
+        public string IdToken;
+        public string RefreshToken;
+        public string Session;
+        public bool Success;
     }
 }

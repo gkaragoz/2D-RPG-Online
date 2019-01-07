@@ -37,10 +37,12 @@ def login():
         "Success": False,
         "Session": "",
         "AccessToken": "",
+        "Code": "",
+        "ErrorMessage": "",
         "RefreshToken": "",
         "IdToken": "",
         "ExpireIn": 0,     
-    }
+    } 
     u = Cognito('eu-central-1_Csbkzqg5d','1nasds8i6jci7vlntp03r0si8', "eu-central-1",
             username=content["username"], access_key=ACCESS_ID, secret_key=SECRET_HASH)
 
@@ -73,6 +75,8 @@ def sign_up():
         "Success": False,
         "Session": "",
         "AccessToken": "",
+        "Code": "",
+        "ErrorMessage": "",
         "RefreshToken": "",
         "IdToken": "",
         "ExpireIn": 0,     
