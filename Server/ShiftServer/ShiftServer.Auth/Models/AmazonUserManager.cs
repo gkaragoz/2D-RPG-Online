@@ -59,6 +59,36 @@ namespace ShiftServer.Auth.Models
         }
 
         
+        public async Task<AuthResponse> SignUp(string Email, string Username, string Password)
+        {
+            try
+            {
+
+                // Register the user using Cognito
+                var signUpRequest = new SignUpRequest
+                {
+                    ClientId = _clientId,
+                    Password = Password,
+                    Username = Username,
+
+                };
+
+                var emailAttribute = new AttributeType
+                {
+                    Name = "email",
+                    Value = Email
+                };
+                signUpRequest.UserAttributes.Add(emailAttribute);
+
+                var resp = _client.SignUpAsync(signUpRequest);
+
+                return new AuthResponse() { Success = true };
+            }
+            catch (Exception err)
+            {
+                return new AuthResponse() { Success = false, ErrorMessage = err.Message };
+            }
+        }  
         public async Task<AuthResponse> ChangePasswordAsync(string oldPassword, string password)
         {
             try
