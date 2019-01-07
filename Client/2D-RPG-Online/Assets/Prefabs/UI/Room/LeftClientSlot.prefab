@@ -963,18 +963,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2c62e0e230686754892c7d9b74633d22, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _UISettings:
-    emptySlotPrefab: {fileID: 1838078669297928}
-    filledSlotPrefab: {fileID: 1759925055462008}
-    imgFrame: {fileID: 114782001276824664}
-    imgCharacter: {fileID: 114848282557914108}
-    imgClassIcon: {fileID: 114002195549792196}
-    toggleIsReady: {fileID: 114221431618767674}
-    imgLeader: {fileID: 114806561094994054}
-    txtPlayerName: {fileID: 114502024058010174}
-    txtCharacterName: {fileID: 114546046098480388}
-    _animatorController: {fileID: 0}
-  _team: 0
+  _emptySlotPrefab: {fileID: 1838078669297928}
+  _filledSlotPrefab: {fileID: 1759925055462008}
+  _imgFrame: {fileID: 114782001276824664}
+  _imgCharacter: {fileID: 114848282557914108}
+  _imgClassIcon: {fileID: 114002195549792196}
+  _toggleIsReady: {fileID: 114221431618767674}
+  _imgLeader: {fileID: 114806561094994054}
+  _txtPlayerName: {fileID: 114502024058010174}
+  _txtCharacterName: {fileID: 114546046098480388}
 --- !u!114 &114486847757395632
 MonoBehaviour:
   m_ObjectHideFlags: 1
