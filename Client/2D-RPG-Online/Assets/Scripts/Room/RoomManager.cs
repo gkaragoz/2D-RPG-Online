@@ -104,11 +104,6 @@ public class RoomManager : Menu {
     }
 
     public void LeaveRoom() {
-        ShiftServerData data = new ShiftServerData();
-
-        RoomData roomData = new RoomData();
-        roomData.LeavedRoom = new MSSRoom();
-
         NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave);
     }
 
