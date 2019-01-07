@@ -16,56 +16,84 @@ app = Flask(__name__)
 wsgi_app = app.wsgi_app
 
 
+@app.route('/api/auth/status', methods=['GET'])
+def status():
+    resp = {"GameServer": "ONLINE"}
+    return jsonify(resp)
+
+
+@app.route('/api/auth/changepass', methods=['POST'])
+def changepass():
+    resp = {"Status": "CHANGED"}
+    content = request.get_json()
+    print(content)
+    return jsonify(resp)
+
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     content = request.get_json()
-
+    print(content)
     resp = {
         "Success": False,
-        "HttpCode": 0,
         "Session": None,
         "AccessToken": "",
         "RefreshToken": "",
         "IdToken": "",
-        "ErrorMessage": "",
-        "ErrorType": 0,
         "ExpireIn": 0,     
     }
     u = Cognito('eu-central-1_Csbkzqg5d','1nasds8i6jci7vlntp03r0si8', "eu-central-1",
-            username=content["Username"], access_key=ACCESS_ID, secret_key=SECRET_HASH)
+            username=content["username"], access_key=ACCESS_ID, secret_key=SECRET_HASH)
 
     try:
-        cognitoData = u.admin_authenticate(password=content["Password"])
+       if "email" not in content:
+            content["email"] = ""    
+       elif  len(content["password"]) < 8:
+            resp["Error"]["Message"] = "Provide a valid Password"
+            resp["Error"]["Code"] = "InvalidPasswordLength"
+            return jsonify(resp)
+
+       cognitoData = u.admin_authenticate(password=content["password"])
+       resp["Success"] = True
+       resp["AccessToken"] = u.access_token
+       resp["RefreshToken"] = u.refresh_token
+       resp["IdToken"] = u.id_token
+       print(cognitoData)
     except BaseException as err:
-        resp["Error"] = err.response.Error
+        print(err)
+        resp["Error"] = err.response["Error"]
 
     return jsonify(resp)
 
 @app.route('/api/auth/signup', methods=['POST'])
 def sign_up():
     content = request.get_json()
-    
+    print(content)
     resp = {
         "Success": False,
         "Session": None,
         "AccessToken": "",
         "RefreshToken": "",
         "IdToken": "",
-        "ExpireIn": 0,
-        "Error": {}
-    }
+        "ExpireIn": 0,     
+    } 
 
     u = Cognito('eu-central-1_Csbkzqg5d','1nasds8i6jci7vlntp03r0si8', "eu-central-1",)
 
     try:
-        if "Email" not in content:
-            content["Email"] = ""
+        if "email" not in content:
+            content["email"] = ""     
+        elif  len(content["password"]) < 8:
+            resp["Error"]["Message"] = "Provide a valid Password"
+            resp["Error"]["Code"] = "InvalidPasswordLength"
+            return jsonify(resp)
 
-        u.add_base_attributes(email=content["Email"])
-        cognitoData = u.register(content["Username"], content["Password"])
+        u.add_base_attributes(email=content["email"])
+        cognitoData = u.register(content["username"], content["password"])
         resp["Success"] = True
     except BaseException as err:
+        print(err)
         resp["Error"] = err.response["Error"]
+
 
     return jsonify(resp)
 
