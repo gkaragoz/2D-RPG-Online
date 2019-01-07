@@ -64,7 +64,7 @@ public class LoginManager : Menu {
     private const string ON_LOGIN_FAILED = "Login failed!";
 
     public void Login() {
-        if (IsUsernameValid && IsPasswordValid && IsURLEmpty) {
+        if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
             LogManager.instance.AddLog(JOIN, Log.Type.Server);
 
             HttpClient client = new HttpClient();

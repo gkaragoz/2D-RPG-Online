@@ -65,7 +65,7 @@ public class SignupManager : Menu {
     private const string ON_SIGNUP_FAILED = "Sign up failed!";
 
     public void Signup() {
-        if (IsUsernameValid && IsPasswordValid && IsEmailValid && IsURLEmpty) {
+        if (IsUsernameValid && IsPasswordValid && IsEmailValid && !IsURLEmpty) {
             LogManager.instance.AddLog(SIGNUP, Log.Type.Server);
             
             HttpClient client = new HttpClient();
