@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
+using ShiftServer.Auth.Models;
 
 namespace ShiftServer.Auth
 {
@@ -26,6 +27,9 @@ namespace ShiftServer.Auth
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.Configure<AmazonConfig>(Configuration.GetSection("AmazonConfig"));
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

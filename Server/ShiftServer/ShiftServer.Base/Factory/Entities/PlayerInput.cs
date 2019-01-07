@@ -1,4 +1,4 @@
-﻿using ShiftServer.Server.Core;
+﻿using ShiftServer.Base.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,7 +6,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Factory.Entities
+namespace ShiftServer.Base.Factory.Entities
 {
     public class PlayerInput : IGameInput
     {

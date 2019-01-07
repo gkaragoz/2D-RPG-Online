@@ -1,11 +1,11 @@
-﻿using ShiftServer.Server.Auth;
+﻿using ShiftServer.Base.Auth;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public class ServerEventCallback
     {

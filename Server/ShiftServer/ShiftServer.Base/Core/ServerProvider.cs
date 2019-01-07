@@ -1,14 +1,14 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Proto.Helper;
-using ShiftServer.Server.Auth;
-using ShiftServer.Server.Helper;
+using ShiftServer.Base.Auth;
+using ShiftServer.Base.Helper;
 using System;
 using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public class ServerProvider
     {
@@ -60,7 +60,7 @@ namespace ShiftServer.Server.Core
 
         }
 
-        internal void AddServerEventListener(MSServerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
+        public void AddServerEventListener(MSServerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
         {
             log.Info("Add listener event to: " + eventType.ToString());
 
@@ -70,7 +70,7 @@ namespace ShiftServer.Server.Core
                 EventId = eventType
             });
         }
-        internal void AddServerEventListener(MSPlayerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
+        public void AddServerEventListener(MSPlayerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
         {
             log.Info("Add listener event to: " + eventType.ToString());
 
@@ -81,11 +81,6 @@ namespace ShiftServer.Server.Core
             });
         }
 
-
-        private void GetPlayerPackets(object source, ElapsedEventArgs e)
-        {
-            this.GetMessages();
-        }
         private void UpdateWorld(object source, ElapsedEventArgs e)
         {
             world.OnWorldUpdate();

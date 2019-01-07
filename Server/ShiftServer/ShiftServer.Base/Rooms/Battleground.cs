@@ -1,7 +1,7 @@
 ﻿using Google.Protobuf.WellKnownTypes;
-using ShiftServer.Server.Auth;
-using ShiftServer.Server.Core;
-using ShiftServer.Server.Groups;
+using ShiftServer.Base.Auth;
+using ShiftServer.Base.Core;
+using ShiftServer.Base.Groups;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
 
-namespace ShiftServer.Server.Rooms
+namespace ShiftServer.Base.Rooms
 {
     public class Battleground : IRoom
     {

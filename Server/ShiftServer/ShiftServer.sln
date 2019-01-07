@@ -5,13 +5,17 @@ VisualStudioVersion = 15.0.27703.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Server", "ShiftServer.Socket\ShiftServer.Server.csproj", "{191B9A36-BCC1-45D3-89E8-08EFC75270DB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.SocketTest", "ShiftServer.SocketTest\ShiftServer.SocketTest.csproj", "{FEE146CF-30F1-4125-9A25-B0370419F538}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Client", "ShiftServer.SocketClient\ShiftServer.Client.csproj", "{2689BF43-6198-42E3-B8D7-04CFCBF9E9DF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Proto", "ShiftServer.Proto\ShiftServer.Proto.csproj", "{CE127E51-41A4-4C6A-9F9B-10954401E692}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Test", "ShiftServer.Test\ShiftServer.Test.csproj", "{A275517A-51A1-40F1-8F27-B6BFBAE5DEA3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Base", "ShiftServer.Base\ShiftServer.Base.csproj", "{3E240D23-FBA9-44F8-8042-DE24CA806189}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Chat", "ShiftServer.Chat\ShiftServer.Chat.csproj", "{2E598311-FF95-4282-B64D-747B7803E7D4}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Auth", "ShiftServer.Auth\ShiftServer.Auth.csproj", "{B8CDE7E2-9C24-469D-84EA-B923352D107E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,10 +27,6 @@ Global
 		{191B9A36-BCC1-45D3-89E8-08EFC75270DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{191B9A36-BCC1-45D3-89E8-08EFC75270DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{191B9A36-BCC1-45D3-89E8-08EFC75270DB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FEE146CF-30F1-4125-9A25-B0370419F538}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FEE146CF-30F1-4125-9A25-B0370419F538}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FEE146CF-30F1-4125-9A25-B0370419F538}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FEE146CF-30F1-4125-9A25-B0370419F538}.Release|Any CPU.Build.0 = Release|Any CPU
 		{2689BF43-6198-42E3-B8D7-04CFCBF9E9DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2689BF43-6198-42E3-B8D7-04CFCBF9E9DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2689BF43-6198-42E3-B8D7-04CFCBF9E9DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -39,6 +39,18 @@ Global
 		{A275517A-51A1-40F1-8F27-B6BFBAE5DEA3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A275517A-51A1-40F1-8F27-B6BFBAE5DEA3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A275517A-51A1-40F1-8F27-B6BFBAE5DEA3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E240D23-FBA9-44F8-8042-DE24CA806189}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E240D23-FBA9-44F8-8042-DE24CA806189}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E240D23-FBA9-44F8-8042-DE24CA806189}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E240D23-FBA9-44F8-8042-DE24CA806189}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E598311-FF95-4282-B64D-747B7803E7D4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E598311-FF95-4282-B64D-747B7803E7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E598311-FF95-4282-B64D-747B7803E7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E598311-FF95-4282-B64D-747B7803E7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B8CDE7E2-9C24-469D-84EA-B923352D107E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8CDE7E2-9C24-469D-84EA-B923352D107E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8CDE7E2-9C24-469D-84EA-B923352D107E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8CDE7E2-9C24-469D-84EA-B923352D107E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

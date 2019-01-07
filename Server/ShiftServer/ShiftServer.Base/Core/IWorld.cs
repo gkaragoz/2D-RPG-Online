@@ -1,16 +1,9 @@
-﻿using ShiftServer.Server.Auth;
-using ShiftServer.Server.Factory.Entities;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
+﻿using ShiftServer.Base.Auth;
 using System.Numerics;
-using System.Text;
 using System.Threading;
-using System.Threading.Tasks;
 using Telepathy;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public interface IZone
     {

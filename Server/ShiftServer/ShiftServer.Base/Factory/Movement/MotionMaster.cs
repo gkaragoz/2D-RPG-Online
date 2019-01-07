@@ -1,8 +1,8 @@
-﻿using ShiftServer.Server.Core;
+﻿using ShiftServer.Base.Core;
 using System;
 
 
-namespace ShiftServer.Server.Factory.Movement
+namespace ShiftServer.Base.Factory.Movement
 {
     public static class MotionMaster
     {

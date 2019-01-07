@@ -1,12 +1,7 @@
-﻿using ShiftServer.Server.Auth;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using ShiftServer.Base.Auth;
 using Telepathy;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public interface IGroup
     {

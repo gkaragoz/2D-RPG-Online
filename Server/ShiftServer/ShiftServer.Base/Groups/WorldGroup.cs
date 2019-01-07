@@ -1,5 +1,5 @@
-﻿using ShiftServer.Server.Auth;
-using ShiftServer.Server.Core;
+﻿using ShiftServer.Base.Auth;
+using ShiftServer.Base.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
 
-namespace ShiftServer.Server.Groups
+namespace ShiftServer.Base.Groups
 {
     public class WorldGroup : IGroup
     {

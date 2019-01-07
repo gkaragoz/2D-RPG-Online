@@ -1,13 +1,9 @@
-﻿using Google.Protobuf.WellKnownTypes;
-using ShiftServer.Server.Auth;
+﻿using ShiftServer.Base.Auth;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Telepathy;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public interface IRoom
     {

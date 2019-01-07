@@ -1,8 +1,7 @@
-using ShiftServer.Server.Core;
-using ShiftServer.Server.Factory.Movement;
-using ShiftServer.Server.Helper;
-using ShiftServer.Server.Rooms;
-using ShiftServer.Server.Worlds;
+using ShiftServer.Base.Core;
+using ShiftServer.Base.Helper;
+using ShiftServer.Base.Rooms;
+using ShiftServer.Base.Worlds;
 
 
 namespace ShiftServer.Server
@@ -23,7 +22,7 @@ namespace ShiftServer.Server
         {
 
 
-            Zone zone = new Zone();
+            GameZone zone = new GameZone();
             _serverProvider = new ServerProvider(zone);
             _roomProvider = new RoomProvider(_serverProvider);
             _groupProvider = new GroupProvider(_roomProvider);
@@ -47,7 +46,7 @@ namespace ShiftServer.Server
             _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 
-            _serverProvider.Listen(tickrate : 75, port : 2000);
+            _serverProvider.Listen(tickrate : 30, port : 2000);
 
             ConsoleUI.Run(_serverProvider);
             //Run Server Simulation

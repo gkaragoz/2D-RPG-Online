@@ -5,7 +5,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Auth
+namespace ShiftServer.Base.Auth
 {
     public static class Crypto
     {

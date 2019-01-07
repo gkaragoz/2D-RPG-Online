@@ -135,32 +135,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Auth\Crypto.cs" />
-    <Compile Include="Auth\ShiftClient.cs" />
-    <Compile Include="Core\GroupProvider.cs" />
-    <Compile Include="Core\IClient.cs" />
-    <Compile Include="Core\ICommand.cs" />
-    <Compile Include="Core\IGameInput.cs" />
-    <Compile Include="Core\IGameObject.cs" />
-    <Compile Include="Core\IGroup.cs" />
-    <Compile Include="Core\IRoom.cs" />
-    <Compile Include="Core\IWorld.cs" />
-    <Compile Include="Core\RoomProvider.cs" />
-    <Compile Include="Core\ServerDataHandler.cs" />
-    <Compile Include="Core\ServerEventCallback.cs" />
-    <Compile Include="Core\ServerProvider.cs" />
-    <Compile Include="Core\Session.cs" />
-    <Compile Include="Factory\Entities\Player.cs" />
-    <Compile Include="Factory\Entities\PlayerInput.cs" />
-    <Compile Include="Factory\Movement\MotionMaster.cs" />
-    <Compile Include="Groups\TeamGroup.cs" />
-    <Compile Include="Groups\WorldGroup.cs" />
-    <Compile Include="Helper\ConsoleUI.cs" />
-    <Compile Include="Helper\TickRate.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Rooms\Battleground.cs" />
-    <Compile Include="Zones\Zone.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -170,15 +146,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\ShiftServer.Base\ShiftServer.Base.csproj">
+      <Project>{3E240D23-FBA9-44F8-8042-DE24CA806189}</Project>
+      <Name>ShiftServer.Base</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">
       <Project>{ce127e51-41a4-4c6a-9f9b-10954401e692}</Project>
       <Name>ShiftServer.Proto</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Factory\AI\" />
-    <Folder Include="Factory\Combat\" />
-    <Folder Include="Factory\Loot\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

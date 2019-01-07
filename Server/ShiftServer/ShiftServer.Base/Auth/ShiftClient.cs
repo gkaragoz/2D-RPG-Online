@@ -1,5 +1,5 @@
 ﻿using Google.Protobuf;
-using ShiftServer.Server.Core;
+using ShiftServer.Base.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Auth
+namespace ShiftServer.Base.Auth
 {
     public class ShiftClient : IClient
     {

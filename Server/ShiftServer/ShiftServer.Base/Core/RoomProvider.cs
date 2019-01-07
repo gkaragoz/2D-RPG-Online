@@ -1,13 +1,9 @@
-﻿using ShiftServer.Proto.Helper;
-using ShiftServer.Server.Auth;
-using ShiftServer.Server.Rooms;
+﻿using ShiftServer.Base.Auth;
+using ShiftServer.Base.Rooms;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Core
+namespace ShiftServer.Base.Core
 {
     public class RoomProvider
     {

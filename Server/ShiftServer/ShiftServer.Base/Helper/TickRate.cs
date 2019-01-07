@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Server.Helper
+namespace ShiftServer.Base.Helper
 {
     public static class TickRate
     {

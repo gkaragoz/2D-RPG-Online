@@ -43,11 +43,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="ChatServer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ShiftServer.Base\ShiftServer.Base.csproj">
+      <Project>{3e240d23-fba9-44f8-8042-de24ca806189}</Project>
+      <Name>ShiftServer.Base</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">
+      <Project>{CE127E51-41A4-4C6A-9F9B-10954401E692}</Project>
+      <Name>ShiftServer.Proto</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

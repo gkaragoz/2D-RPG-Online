@@ -1,4 +1,4 @@
-﻿using ShiftServer.Server.Core;
+﻿using ShiftServer.Base.Core;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
 
-namespace ShiftServer.Server.Factory.Entities
+namespace ShiftServer.Base.Factory.Entities
 {
     public class Player : IGameObject
     {

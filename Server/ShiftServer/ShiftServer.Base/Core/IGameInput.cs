@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Numerics;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Numerics;
 
-namespace ShiftServer.Server.Core
+
+namespace ShiftServer.Base.Core
 {
     public interface IGameInput
     {
