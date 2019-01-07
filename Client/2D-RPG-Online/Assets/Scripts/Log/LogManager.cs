@@ -262,11 +262,9 @@ public class LogManager : Menu {
 
         string logMessage = log.GetMessage();
         string dateTime = log.GetFormattedDateTime();
-        int sessionID = SessionWatcher.instance.SessionID;
         string tracingString = log.GetTracingString();
 
-        logString = string.Format("[SESSION:{0}][TIME:{1}][LOG-MESSAGE:\t{2}]",
-                                       sessionID,
+        logString = string.Format("[TIME:{0}][LOG-MESSAGE:\t{1}]",
                                        dateTime,
                                        logMessage);
 

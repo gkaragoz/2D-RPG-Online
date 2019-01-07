@@ -60,6 +60,25 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\HttpClient\Dispatcher\Dispatcher.cs" />
+    <Compile Include="Assets\HttpClient\Dispatcher\IDispatcher.cs" />
+    <Compile Include="Assets\HttpClient\Enums\ContentReadAction.cs" />
+    <Compile Include="Assets\HttpClient\Enums\HttpAction.cs" />
+    <Compile Include="Assets\HttpClient\Enums\HttpCompletionOption.cs" />
+    <Compile Include="Assets\HttpClient\Example\ExampleSceneManagerController.cs" />
+    <Compile Include="Assets\HttpClient\Helpers\AuthHelper.cs" />
+    <Compile Include="Assets\HttpClient\HttpClient.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\ByteArrayContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\FormUrlEncodedContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\IHttpContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\MultiPartContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\MultipartFormDataContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\StreamContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpContent\StringContent.cs" />
+    <Compile Include="Assets\HttpClient\HttpRequest\HttpBase.cs" />
+    <Compile Include="Assets\HttpClient\HttpRequest\HttpRequest.cs" />
+    <Compile Include="Assets\HttpClient\Messages\HttpResponseMessage.cs" />
+    <Compile Include="Assets\HttpClient\Messages\UploadStatusMessage.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAttack.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
@@ -73,6 +92,8 @@
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\FadeInOut.cs" />
+    <Compile Include="Assets\Scripts\Friend\FriendManager.cs" />
+    <Compile Include="Assets\Scripts\Friend\FriendRow.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Lobby\LobbyManager.cs" />
     <Compile Include="Assets\Scripts\Lobby\LobbyRow.cs" />
@@ -83,13 +104,14 @@
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\PingStatus.cs" />
+    <Compile Include="Assets\Scripts\Network\SignupManager.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Room\RoomClientSlot.cs" />
     <Compile Include="Assets\Scripts\Room\RoomManager.cs" />
-    <Compile Include="Assets\Scripts\Session\Session_SO.cs" />
-    <Compile Include="Assets\Scripts\Session\SessionWatcher.cs" />
+    <Compile Include="Assets\Scripts\Room\Team\Team.cs" />
+    <Compile Include="Assets\Scripts\Room\Team\TeamManager.cs" />
     <Compile Include="Assets\Scripts\Sound\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
@@ -107,6 +129,7 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Sprites\Kyrise's 16x16 RPG Icon Pack - V1.2\read me.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
+    <None Include="Assets\HttpClient\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
