@@ -85,6 +85,9 @@
     <Compile Include="Assets\Scripts\Character\CharacterMotor.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStats_SO.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormAI.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormAnimator.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormMotor.cs" />
     <Compile Include="Assets\Scripts\ClassManager.cs" />
     <Compile Include="Assets\Scripts\Destructable.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShakeInstance.cs" />
