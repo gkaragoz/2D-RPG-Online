@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
+﻿using UnityEngine;
 
 public class PopupManager : MonoBehaviour {
 
@@ -23,12 +20,13 @@ public class PopupManager : MonoBehaviour {
     [SerializeField]
     private PopupLoading _popupLoading;
 
-    public void ShowLoadingPopup() {
-        _popupLoading.Show();
+    public void ShowLoadingPopup(string message) {
+        _popupLoading.Show(message);
     }
 
-    public void HideLoadingPopup() {
-        _popupLoading.Hide();
+    public void HideLoadingPopup(string message, float seconds = 0f) {
+        _popupLoading.SetMessage(message);
+        _popupLoading.HideAfter(seconds);
     }
 
 }

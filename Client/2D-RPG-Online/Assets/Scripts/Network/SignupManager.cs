@@ -81,6 +81,8 @@ public class SignupManager : Menu {
     }
 
     private IEnumerator ISignupPostMethod() {
+        PopupManager.instance.ShowLoadingPopup(SIGNUP);
+
         SignUpData data = new SignUpData();
         data.username = _inputFieldUsername.text;
         data.password = _inputFieldPassword.text;
@@ -94,10 +96,21 @@ public class SignupManager : Menu {
         Client http = new Client();
         yield return http.Send(request);
 
-        // Use the response if the request was successful, otherwise print an error
         if (http.IsSuccessful()) {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(http.Response().ToString());
+
+            if (authResponse.Success == "true") {
+                LogManager.instance.AddLog(ON_SIGNUP_SUCCESS, Log.Type.Server);
+
+                PopupManager.instance.HideLoadingPopup(ON_SIGNUP_SUCCESS, 1f);
+            } else {
+                LogManager.instance.AddLog(ON_SIGNUP_FAILED, Log.Type.Server);
+
+                PopupManager.instance.HideLoadingPopup(ON_SIGNUP_FAILED, 1f);
+            }
         } else {
             Debug.Log("error: " + http.Error());
         }

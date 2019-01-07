@@ -493,8 +493,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1ef37d0da71934d43a66ddd89875122c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  container: {fileID: 392100762}
+  container: {fileID: 11318269}
   _loadingBar: {fileID: 1948560527}
+  _txtMessage: {fileID: 208602317}
   _speed: 50
   _currentAmount: 0
 --- !u!1 &13925743
@@ -10547,7 +10548,7 @@ GameObject:
   m_Component:
   - component: {fileID: 392100763}
   m_Layer: 5
-  m_Name: LoginAccount
+  m_Name: Content
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15089,7 +15090,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 925385207}
   m_HandleRect: {fileID: 925385206}
   m_Direction: 2
-  m_Value: 0
+  m_Value: 1
   m_Size: 0.9999997
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -39036,7 +39037,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f385b4a05416c6c47a16ccbd25df02ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _popupLoading: {fileID: 0}
+  _popupLoading: {fileID: 11318273}
 --- !u!4 &1534328509
 Transform:
   m_ObjectHideFlags: 0
@@ -40117,7 +40118,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0.000030517578}
+  m_AnchoredPosition: {x: 0, y: -0.000015258789}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1588753413

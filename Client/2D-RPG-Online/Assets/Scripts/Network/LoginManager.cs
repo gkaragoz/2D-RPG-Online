@@ -75,6 +75,8 @@ public class LoginManager : Menu {
     }
 
     private IEnumerator ILoginPostMethod() {
+        PopupManager.instance.ShowLoadingPopup(LOGIN);
+
         LoginData data = new LoginData();
         data.username = _inputFieldUsername.text;
         data.password = _inputFieldPassword.text;
@@ -91,22 +93,29 @@ public class LoginManager : Menu {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(http.Response().ToString());
 
-            this.Hide();
-            LobbyManager.instance.Initialize();
-            RoomManager.instance.Initialize();
-            FriendManager.instance.Initialize();
-            LobbyManager.instance.Show();
-            FriendManager.instance.Show();
+            if (authResponse.Success == "true") {
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
 
-            //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
-            //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
-            //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-            //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+                LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+
+                this.Hide();
+                LobbyManager.instance.Initialize();
+                RoomManager.instance.Initialize();
+                FriendManager.instance.Initialize();
+                LobbyManager.instance.Show();
+                FriendManager.instance.Show();
+
+                //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
+                //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
+                //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
+                //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+            } else {
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 1f);
+            }
         } else {
             Debug.Log("error: " + http.Error());
-            LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
         }
     }
 
