@@ -115,11 +115,11 @@ public class LoginManager : Menu {
             } else {
                 LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
 
-                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f);
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f, true);
             }
         } else {
             Debug.Log("error: " + http.Error());
-            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f);
+            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
         }
     }
 
