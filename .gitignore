@@ -23,3 +23,4 @@ Server/ShiftServer/ShiftServer.Socket/bin/
 Server/ShiftServer/ShiftServer.SocketTest/bin/
 Server/ShiftServer/ShiftServer.SocketClient/bin/Debug/
 Server/ShiftServer/ShiftServer.SocketClient/bin/Release/
+/Server/ShiftServer/ShiftServer.AuthServer/manaconfig.py

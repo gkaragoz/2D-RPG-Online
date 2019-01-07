@@ -6,25 +6,21 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Proto.Models
 {
-    public class AuthResponse
+    public class Error
     {
-        public bool Success { get; set; }
-        public int HttpCode { get; set; }
-        public string Session { get; set; }
-        public string AccessToken { get; set; }
-        public string RefreshToken { get; set; }
-        public string IdToken { get; set; }
-        public string ErrorMessage { get; set; }
-        public int ErrorType { get; set; }
+        public string Code;
+        public string Message;
     }
 
-    public enum AuthError
+    public class AuthResponse
     {
-        USER_NOT_FOUND = 0,
-        USERNAME_ALREADY_EXIST = 1,
-        EMAIL_INVALID = 2,
-        USERNAME_INVALID = 3,
-        CREDS_INVALID = 4,
-        USER_NOT_CONFIRMED = 5
+        public string Success;
+        public int HttpCode;
+        public string Session;
+        public string AccessToken;
+        public string RefreshToken;
+        public string IdToken;
+        public string ExpireIn;
+        public Error Error;
     }
 }
