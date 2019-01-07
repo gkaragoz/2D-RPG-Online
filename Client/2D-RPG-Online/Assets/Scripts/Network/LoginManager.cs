@@ -63,6 +63,7 @@ public class LoginManager : Menu {
     private const string LOGIN = "Trying to login into the account... ";
     private const string ON_LOGIN_SUCCESS = "Login success!";
     private const string ON_LOGIN_FAILED = "Login failed!";
+    private const string ON_CAN_NOT_CONNECT_TO_HOST = "Login failed! Can not connect to host!";
 
     public void Login() {
         if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
@@ -112,10 +113,13 @@ public class LoginManager : Menu {
                 //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
                 //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
             } else {
-                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 1f);
+                LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
+
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f);
             }
         } else {
             Debug.Log("error: " + http.Error());
+            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f);
         }
     }
 

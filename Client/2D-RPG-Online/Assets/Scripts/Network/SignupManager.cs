@@ -69,6 +69,7 @@ public class SignupManager : Menu {
     private const string SIGNUP = "Trying to create a new account... ";
     private const string ON_SIGNUP_SUCCESS = "Sign up success!";
     private const string ON_SIGNUP_FAILED = "Sign up failed!";
+    private const string ON_CAN_NOT_CONNECT_TO_HOST = "Signup failed! Can not connect to host!";
 
     public void Signup() {
         if (IsUsernameValid && IsPasswordValid && IsEmailValid && !IsURLEmpty) {
@@ -113,6 +114,7 @@ public class SignupManager : Menu {
             }
         } else {
             Debug.Log("error: " + http.Error());
+            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f);
         }
     }
 
