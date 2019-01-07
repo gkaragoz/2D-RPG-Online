@@ -1,4 +1,5 @@
 ﻿using CI.HttpClient;
+using ShiftServer.Proto.Models;
 using System;
 using TMPro;
 using UnityEngine;
@@ -68,9 +69,9 @@ public class LoginManager : Menu {
 
             HttpClient client = new HttpClient();
 
-            LoginData data = new LoginData();
-            data.username = _inputFieldUsername.text;
-            data.password = _inputFieldPassword.text;
+            LoginForm data = new LoginForm();
+            data.Username = _inputFieldUsername.text;
+            data.Password = _inputFieldPassword.text;
 
             string jsonData = JsonUtility.ToJson(data);
 

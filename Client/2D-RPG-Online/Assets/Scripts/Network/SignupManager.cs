@@ -3,6 +3,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ShiftServer.Proto.Models;
 
 public class SignupManager : Menu {
 
@@ -20,12 +21,6 @@ public class SignupManager : Menu {
     }
 
     #endregion
-
-    public class SignupData {
-        public string username;
-        public string password;
-        public string email;
-    }
 
     [SerializeField]
     private TMP_InputField _inputFieldUsername;
@@ -72,13 +67,13 @@ public class SignupManager : Menu {
     public void Signup() {
         if (IsUsernameValid && IsPasswordValid && IsEmailValid && IsURLEmpty) {
             LogManager.instance.AddLog(SIGNUP, Log.Type.Server);
-
+            
             HttpClient client = new HttpClient();
 
-            SignupData data = new SignupData();
-            data.username = _inputFieldUsername.text;
-            data.password = _inputFieldPassword.text;
-            data.email = _inputFieldEmail.text;
+            SignUpForm data = new SignUpForm();
+            data.Username = _inputFieldUsername.text;
+            data.Password = _inputFieldPassword.text;
+            data.Email = _inputFieldEmail.text;
 
             string jsonData = JsonUtility.ToJson(data);
 
