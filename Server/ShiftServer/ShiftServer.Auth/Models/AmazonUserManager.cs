@@ -71,6 +71,11 @@ namespace ShiftServer.Auth.Models
             {
                 return new AuthResponse() { Success = false, ErrorType = (int)AuthError.EMAIL_INVALID, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
             }
+            catch (UserNotConfirmedException err)
+            {
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.USER_NOT_CONFIRMED, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+
+            }
         }
 
         public async Task<AuthResponse> SignUpAsync(string Email, string Username, string Password)

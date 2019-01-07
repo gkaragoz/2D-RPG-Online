@@ -24,6 +24,7 @@ namespace ShiftServer.Proto.Models
         USERNAME_ALREADY_EXIST = 1,
         EMAIL_INVALID = 2,
         USERNAME_INVALID = 3,
-        CREDS_INVALID = 4
+        CREDS_INVALID = 4,
+        USER_NOT_CONFIRMED = 5
     }
 }
