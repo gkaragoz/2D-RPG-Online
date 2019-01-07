@@ -93,9 +93,9 @@ public class LoginManager : Menu {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(http.Response().ToString());
+            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
 
-            if (authResponse.Success == "true") {
+            if (authResponse.Success) {
                 PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
 
                 LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
