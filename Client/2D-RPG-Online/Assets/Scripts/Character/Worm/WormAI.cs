@@ -5,8 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(WormMotor))]
 public class WormAI : MonoBehaviour {
 
-    [Range(0.1f, 1f)]
     [SerializeField]
+    [Range(0.1f, 1f)]
     private float _randomSpeed;
 
     private WormMotor _wormMotor;

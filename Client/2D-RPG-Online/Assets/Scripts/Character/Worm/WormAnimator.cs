@@ -7,10 +7,6 @@ public class WormAnimator : MonoBehaviour {
     [Header("Initialization")]
     [SerializeField]
     private Transform _wormTransform;
-    [SerializeField]
-    private Transform _groundInTransform;
-    [SerializeField]
-    private Transform _groundOutTransform;
 
     private Animator _animator;
 

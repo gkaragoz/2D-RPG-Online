@@ -7,34 +7,24 @@ public class WormMotor : MonoBehaviour {
     [Header("Initialization")]
     public float speed = 3f;
 
-    [SerializeField]
-    private Transform _groundInTransform;
-    [SerializeField]
-    private Transform _groundOutTransform;
-
     private Rigidbody2D _rb2D;
+    private Vector2 _target;
 
     private void Start() {
         _rb2D = GetComponent<Rigidbody2D>();
     }
 
-    public void JumpToPosition(Vector2 target) {
-        StartCoroutine(IJumpToPosition(target));
+    public void JumpToPosition(Vector2 position) {
+        Vector2 start = transform.position;
+        _target = start + position;
     }
 
-    private IEnumerator IJumpToPosition(Vector2 target) {
-        float t = 0;
-        Vector2 start = transform.position;
-        Vector2 endPosition = start + target;
+    private void FixedUpdate() {
+        if (_target != Vector2.zero) {
+            float step = speed * Time.fixedDeltaTime;
 
-        while (t <= 1) {
-            t += Time.fixedDeltaTime / speed;
-            _rb2D.MovePosition(Vector2.Lerp(start, endPosition, t));
-
-            yield return null;
+            transform.position = Vector3.MoveTowards(transform.position, _target, step);
         }
-
-        StopAllCoroutines();
     }
 
 }
