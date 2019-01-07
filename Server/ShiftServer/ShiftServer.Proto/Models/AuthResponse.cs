@@ -8,18 +8,18 @@ namespace ShiftServer.Proto.Models
 {
     public class Error
     {
-        public string Code;
-        public string Message;
+        public string Code { get; set; }
+        public string Message { get; set; }
     }
 
     public class AuthResponse
     {
-        public string Success;
-        public string Session;
-        public string AccessToken;
-        public string RefreshToken;
-        public string IdToken;
-        public string ExpireIn;
-        public Error Error;
+        public string AccessToken { get; set; }
+        public Error Error { get; set; }
+        public int ExpireIn { get; set; }
+        public string IdToken { get; set; }
+        public string RefreshToken { get; set; }
+        public string Session { get; set; }
+        public bool Success { get; set; }
     }
 }
