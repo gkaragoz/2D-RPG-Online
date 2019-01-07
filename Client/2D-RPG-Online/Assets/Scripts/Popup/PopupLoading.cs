@@ -31,6 +31,8 @@ public class PopupLoading : Menu {
     private void Update() {
         if (_currentAmount < 100) {
             _currentAmount += _speed * Time.deltaTime;
+        } else {
+            _currentAmount = 0;
         }
 
         _loadingBar.fillAmount = _currentAmount / 100;
