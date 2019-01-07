@@ -35,7 +35,7 @@ def login():
     print(content)
     resp = {
         "Success": False,
-        "Session": None,
+        "Session": "",
         "AccessToken": "",
         "RefreshToken": "",
         "IdToken": "",
@@ -70,7 +70,7 @@ def sign_up():
     print(content)
     resp = {
         "Success": False,
-        "Session": None,
+        "Session": "",
         "AccessToken": "",
         "RefreshToken": "",
         "IdToken": "",
