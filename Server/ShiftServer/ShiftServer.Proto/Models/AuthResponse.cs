@@ -15,7 +15,6 @@ namespace ShiftServer.Proto.Models
     public class AuthResponse
     {
         public string Success;
-        public int HttpCode;
         public string Session;
         public string AccessToken;
         public string RefreshToken;
