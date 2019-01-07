@@ -41,22 +41,55 @@ public class SignupManager : Menu {
     [Header("Settings")]
     public string URL;
 
+    public bool IsURLEmpty {
+        get { return URL == string.Empty ? true : false; }
+    }
+
+    public bool IsUsernameValid {
+        get { return _inputFieldUsername.text != string.Empty ? true : false; }
+    }
+
+    public bool IsPasswordValid {
+        get { return _inputFieldPassword.text != string.Empty ? true : false; }
+    }
+
+    public bool IsEmailValid {
+        get { return _inputFieldEmail.text != string.Empty ? true : false; }
+    }
+
+    public string GetUsername() {
+        return _inputFieldUsername.text;
+    }
+
+    public string GetPassword() {
+        return _inputFieldPassword.text;
+    }
+
+    private const string SIGNUP = "Trying to create a new account... ";
+    private const string ON_SIGNUP_SUCCESS = "Sign up success!";
+    private const string ON_SIGNUP_FAILED = "Sign up failed!";
+
     public void Signup() {
-        HttpClient client = new HttpClient();
+        if (IsUsernameValid && IsPasswordValid && IsEmailValid && IsURLEmpty) {
+            LogManager.instance.AddLog(SIGNUP, Log.Type.Server);
 
-        SignupData data = new SignupData();
-        data.username = _inputFieldUsername.text;
-        data.password = _inputFieldPassword.text;
-        data.email = _inputFieldEmail.text;
+            HttpClient client = new HttpClient();
 
-        string jsonData = JsonUtility.ToJson(data);
+            SignupData data = new SignupData();
+            data.username = _inputFieldUsername.text;
+            data.password = _inputFieldPassword.text;
+            data.email = _inputFieldEmail.text;
 
-        IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+            string jsonData = JsonUtility.ToJson(data);
 
-        client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response =>
-        {
-            Debug.Log(response);
-        });
+            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+
+            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response => {
+                Debug.Log(response);
+            });
+        } else {
+            LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+        }
     }
 
     public void GoToLoginPage() {

@@ -38,6 +38,10 @@ public class LoginManager : Menu {
     [Header("Settings")]
     public string URL;
 
+    public bool IsURLEmpty {
+        get { return URL == string.Empty ? true : false; }
+    }
+
     public bool IsUsernameValid {
         get { return _inputFieldUsername.text != string.Empty ? true : false; }
     }
@@ -59,7 +63,7 @@ public class LoginManager : Menu {
     private const string ON_LOGIN_FAILED = "Login failed!";
 
     public void Login() {
-        if (IsUsernameValid && IsPasswordValid) {
+        if (IsUsernameValid && IsPasswordValid && IsURLEmpty) {
             LogManager.instance.AddLog(JOIN, Log.Type.Server);
 
             HttpClient client = new HttpClient();
