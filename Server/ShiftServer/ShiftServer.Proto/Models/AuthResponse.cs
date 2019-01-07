@@ -8,12 +8,14 @@ namespace ShiftServer.Proto.Models
 {
     public class Error
     {
+        public Error() { }
         public string Code { get; set; }
         public string Message { get; set; }
     }
 
     public class AuthResponse
     {
+        public AuthResponse() { }
         public string AccessToken { get; set; }
         public Error Error { get; set; }
         public int ExpireIn { get; set; }
