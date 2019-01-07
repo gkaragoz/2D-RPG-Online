@@ -1,9 +1,9 @@
-﻿using CI.HttpClient;
-using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using ShiftServer.Proto.Models;
+using System.Collections;
+using SimpleHTTP;
 
 public class SignupManager : Menu {
 
@@ -21,6 +21,12 @@ public class SignupManager : Menu {
     }
 
     #endregion
+
+    public class SignUpData {
+        public string username;
+        public string password;
+        public string email;
+    }
 
     [SerializeField]
     private TMP_InputField _inputFieldUsername;
@@ -67,23 +73,33 @@ public class SignupManager : Menu {
     public void Signup() {
         if (IsUsernameValid && IsPasswordValid && IsEmailValid && !IsURLEmpty) {
             LogManager.instance.AddLog(SIGNUP, Log.Type.Server);
-            
-            HttpClient client = new HttpClient();
 
-            SignUpForm data = new SignUpForm();
-            data.Username = _inputFieldUsername.text;
-            data.Password = _inputFieldPassword.text;
-            data.Email = _inputFieldEmail.text;
-
-            string jsonData = JsonUtility.ToJson(data);
-
-            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-
-            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response => {
-                Debug.Log(response);
-            });
+            StartCoroutine(ISignupPostMethod());
         } else {
             LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+        }
+    }
+
+    private IEnumerator ISignupPostMethod() {
+        SignUpData data = new SignUpData();
+        data.username = _inputFieldUsername.text;
+        data.password = _inputFieldPassword.text;
+        data.email = _inputFieldEmail.text;
+
+        JsonUtility.ToJson(data);
+
+        Request request = new Request(URL)
+            .Post(RequestBody.From<SignUpData>(data));
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        // Use the response if the request was successful, otherwise print an error
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+        } else {
+            Debug.Log("error: " + http.Error());
         }
     }
 

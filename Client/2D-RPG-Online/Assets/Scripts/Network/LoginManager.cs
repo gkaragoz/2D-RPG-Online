@@ -1,6 +1,7 @@
-﻿using CI.HttpClient;
-using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.Models;
+using SimpleHTTP;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -59,56 +60,53 @@ public class LoginManager : Menu {
         return _inputFieldPassword.text;
     }
 
-    private const string JOIN = "Trying to join into the account... ";
+    private const string LOGIN = "Trying to login into the account... ";
     private const string ON_LOGIN_SUCCESS = "Login success!";
     private const string ON_LOGIN_FAILED = "Login failed!";
 
     public void Login() {
         if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
-            LogManager.instance.AddLog(JOIN, Log.Type.Server);
+            LogManager.instance.AddLog(LOGIN, Log.Type.Server);
 
-            HttpClient client = new HttpClient();
-
-            LoginForm data = new LoginForm();
-            data.Username = _inputFieldUsername.text;
-            data.Password = _inputFieldPassword.text;
-
-            string jsonData = JsonUtility.ToJson(data);
-
-            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-
-            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response =>
-            {
-                Debug.Log(response);
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                //IF SUCCESS
-                //LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
-
-                //this.Hide();
-                //LobbyManager.instance.Initialize();
-                //RoomManager.instance.Initialize();
-                //FriendManager.instance.Initialize();
-                //LobbyManager.instance.Show();
-                //FriendManager.instance.Show();
-
-                //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
-                //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
-                //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-
-                //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                //IF ERROR
-                //LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            });
-
+            StartCoroutine(ILoginPostMethod());
         } else {
             LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+        }
+    }
+
+    private IEnumerator ILoginPostMethod() {
+        LoginData data = new LoginData();
+        data.username = _inputFieldUsername.text;
+        data.password = _inputFieldPassword.text;
+
+        JsonUtility.ToJson(data);
+
+        Request request = new Request(URL)
+            .Post(RequestBody.From<LoginData>(data));
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+
+            this.Hide();
+            LobbyManager.instance.Initialize();
+            RoomManager.instance.Initialize();
+            FriendManager.instance.Initialize();
+            LobbyManager.instance.Show();
+            FriendManager.instance.Show();
+
+            //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
+            //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
+            //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
+            //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+        } else {
+            Debug.Log("error: " + http.Error());
+            LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
         }
     }
 
