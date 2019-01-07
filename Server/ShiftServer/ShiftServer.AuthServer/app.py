@@ -60,7 +60,8 @@ def login():
        print(cognitoData)
     except BaseException as err:
         print(err)
-        resp["Error"] = err.response["Error"]
+        resp["ErrorMessage"] = err.response["Error"]["Message"]
+        resp["Code"] = err.response["Error"]["Code"]
 
     return jsonify(resp)
 
@@ -92,8 +93,8 @@ def sign_up():
         resp["Success"] = True
     except BaseException as err:
         print(err)
-        resp["Error"] = err.response["Error"]
-
+        resp["ErrorMessage"] = err.response["Error"]["Message"]
+        resp["Code"] = err.response["Error"]["Code"]
 
     return jsonify(resp)
 
