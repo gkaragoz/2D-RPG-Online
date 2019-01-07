@@ -7,6 +7,10 @@ public class WormAnimator : MonoBehaviour {
     [Header("Initialization")]
     [SerializeField]
     private Transform _wormTransform;
+    [SerializeField]
+    private Transform _groundInTransform;
+    [SerializeField]
+    private Transform _groundOutTransform;
 
     private Animator _animator;
 
@@ -18,12 +22,11 @@ public class WormAnimator : MonoBehaviour {
         float xValue = direction.x;
 
         if (xValue < 0) {
-            _animator.transform.localScale = new Vector3(-1, _animator.transform.localScale.y, _animator.transform.localScale.z);
+            _wormTransform.transform.localScale = new Vector3(-1, _wormTransform.transform.localScale.y, _wormTransform.transform.localScale.z);
         } else {
-            _animator.transform.localScale = new Vector3(1, _animator.transform.localScale.y, _animator.transform.localScale.z);
+            _wormTransform.transform.localScale = new Vector3(1, _wormTransform.transform.localScale.y, _wormTransform.transform.localScale.z);
         }
 
-        _animator.transform.position = _wormTransform.position + new Vector3(direction.x, direction.y, 0);
         _animator.SetTrigger("Jump");
     }
 
