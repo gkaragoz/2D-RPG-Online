@@ -6,11 +6,21 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Proto.Models
 {
+    public class Error
+    {
+        public string Code;
+        public string Message;
+    }
+
     public class AuthResponse
     {
-        public bool Success { get; set; }
-        public int HttpCode { get; set; }
-        public string Session { get; set; }
-        public string ErrorMessage { get; set; }
+        public string Success;
+        public int HttpCode;
+        public string Session;
+        public string AccessToken;
+        public string RefreshToken;
+        public string IdToken;
+        public string ExpireIn;
+        public Error Error;
     }
 }

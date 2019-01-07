@@ -6,6 +6,7 @@ using ShiftServer.Proto.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 
 namespace ShiftServer.Auth.Models
@@ -27,7 +28,7 @@ namespace ShiftServer.Auth.Models
             CognitoAWSCredentials creds = new CognitoAWSCredentials(
                    cfg.IDENITYPOOL_ID, // Identity pool ID
                    RegionEndpoint.EUCentral1 // Region
-                   
+
                );
 
             _client = new AmazonCognitoIdentityProviderClient(RegionEndpoint.EUCentral1);
@@ -37,7 +38,7 @@ namespace ShiftServer.Auth.Models
         {
             try
             {
-             
+
 
                 var authReq = new AdminInitiateAuthRequest
                 {
@@ -49,17 +50,35 @@ namespace ShiftServer.Auth.Models
                 authReq.AuthParameters.Add("PASSWORD", password);
 
                 AdminInitiateAuthResponse authResp = await _client.AdminInitiateAuthAsync(authReq);
+                if (authResp.Session == null)
+                {
+                    return new AuthResponse() { Success = true, AccessToken = authResp.AuthenticationResult.AccessToken,
+                        IdToken = authResp.AuthenticationResult.IdToken, RefreshToken = authResp.AuthenticationResult.RefreshToken,
+                        HttpCode = (int)HttpStatusCode.OK};
 
-                return new AuthResponse() { Success = true };
+                }
+                else
+                {
+                    // to do more challenges
+                    return new AuthResponse() { Success = true, Session = authResp.Session };
+                }
             }
-            catch (Exception err)
+            catch (UserNotFoundException err)
             {
-                return new AuthResponse() { Success = false, ErrorMessage = err.Message };
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.USER_NOT_FOUND, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+            }
+            catch (InvalidParameterException err)
+            {
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.EMAIL_INVALID, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+            }
+            catch (UserNotConfirmedException err)
+            {
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.USER_NOT_CONFIRMED, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+
             }
         }
 
-        
-        public async Task<AuthResponse> SignUp(string Email, string Username, string Password)
+        public async Task<AuthResponse> SignUpAsync(string Email, string Username, string Password)
         {
             try
             {
@@ -80,15 +99,27 @@ namespace ShiftServer.Auth.Models
                 };
                 signUpRequest.UserAttributes.Add(emailAttribute);
 
-                var resp = _client.SignUpAsync(signUpRequest);
+                var resp = await _client.SignUpAsync(signUpRequest);
 
                 return new AuthResponse() { Success = true };
             }
-            catch (Exception err)
+            catch (UsernameExistsException err)
             {
-                return new AuthResponse() { Success = false, ErrorMessage = err.Message };
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.USERNAME_ALREADY_EXIST, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
             }
-        }  
+            catch (UserNotFoundException err)
+            {
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.USER_NOT_FOUND, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+            }
+            catch (InvalidParameterException err)
+            {
+                return new AuthResponse() { Success = false, ErrorType = (int)AuthError.EMAIL_INVALID, ErrorMessage = err.Message, HttpCode = (int)HttpStatusCode.BadRequest };
+            }
+
+
+
+
+        }
         public async Task<AuthResponse> ChangePasswordAsync(string oldPassword, string password)
         {
             try
