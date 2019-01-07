@@ -11,7 +11,7 @@ using ShiftServer.Proto.Models;
 
 namespace ShiftServer.Auth.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api/[controller]/[action]")]
     [ApiController]
     public class AuthController : ControllerBase
     {
@@ -28,7 +28,7 @@ namespace ShiftServer.Auth.Controllers
 
         [HttpPost]
         [ActionName("Login")]
-        public async Task<AuthResponse> LoginAsync(LoginForm form)
+        public AuthResponse Login(LoginForm form)
         {
             AuthResponse resp = new AuthResponse();
 
@@ -45,13 +45,13 @@ namespace ShiftServer.Auth.Controllers
         }
         [HttpPost]
         [ActionName("SignUp")]
-        public async Task<AuthResponse> SignUpAsync(LoginForm form)
+        public AuthResponse SignUp(SignUpForm form)
         {
             AuthResponse resp = new AuthResponse();
 
             try
             {
-                resp = _userCtx.SignInAsync(form.Username, form.Password).Result;
+                resp = _userCtx.SignUpAsync(form.Email, form.Username, form.Password).Result;
                 return resp;
 
             }
@@ -63,7 +63,7 @@ namespace ShiftServer.Auth.Controllers
 
         [HttpPost]
         [ActionName("ChangePassword")]
-        public async Task<AuthResponse> ChangePasswordAsync(LoginForm form)
+        public AuthResponse ChangePassword(LoginForm form)
         {
             AuthResponse resp = new AuthResponse();
 
