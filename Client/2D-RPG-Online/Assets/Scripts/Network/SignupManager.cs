@@ -1,8 +1,9 @@
-﻿using CI.HttpClient;
-using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using ShiftServer.Proto.Models;
+using System.Collections;
+using SimpleHTTP;
 
 public class SignupManager : Menu {
 
@@ -21,7 +22,7 @@ public class SignupManager : Menu {
 
     #endregion
 
-    public class SignupData {
+    public class SignUpData {
         public string username;
         public string password;
         public string email;
@@ -68,27 +69,52 @@ public class SignupManager : Menu {
     private const string SIGNUP = "Trying to create a new account... ";
     private const string ON_SIGNUP_SUCCESS = "Sign up success!";
     private const string ON_SIGNUP_FAILED = "Sign up failed!";
+    private const string ON_CAN_NOT_CONNECT_TO_HOST = "Signup failed! Can not connect to host!";
 
     public void Signup() {
-        if (IsUsernameValid && IsPasswordValid && IsEmailValid && IsURLEmpty) {
+        if (IsUsernameValid && IsPasswordValid && IsEmailValid && !IsURLEmpty) {
             LogManager.instance.AddLog(SIGNUP, Log.Type.Server);
 
-            HttpClient client = new HttpClient();
-
-            SignupData data = new SignupData();
-            data.username = _inputFieldUsername.text;
-            data.password = _inputFieldPassword.text;
-            data.email = _inputFieldEmail.text;
-
-            string jsonData = JsonUtility.ToJson(data);
-
-            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
-
-            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response => {
-                Debug.Log(response);
-            });
+            StartCoroutine(ISignupPostMethod());
         } else {
             LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+        }
+    }
+
+    private IEnumerator ISignupPostMethod() {
+        PopupManager.instance.ShowLoadingPopup(SIGNUP);
+
+        SignUpData data = new SignUpData();
+        data.username = _inputFieldUsername.text;
+        data.password = _inputFieldPassword.text;
+        data.email = _inputFieldEmail.text;
+
+        JsonUtility.ToJson(data);
+
+        Request request = new Request(URL)
+            .Post(RequestBody.From<SignUpData>(data));
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+
+            if (authResponse.Success) {
+                LogManager.instance.AddLog(ON_SIGNUP_SUCCESS, Log.Type.Server);
+
+                PopupManager.instance.HideLoadingPopup(ON_SIGNUP_SUCCESS, 1f);
+            } else {
+                LogManager.instance.AddLog(ON_SIGNUP_FAILED, Log.Type.Server);
+
+                PopupManager.instance.HideLoadingPopup(ON_SIGNUP_FAILED, 2f, true);
+            }
+        } else {
+            Debug.Log("error: " + http.Error());
+            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
         }
     }
 

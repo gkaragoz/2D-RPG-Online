@@ -60,31 +60,15 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\HttpClient\Dispatcher\Dispatcher.cs" />
-    <Compile Include="Assets\HttpClient\Dispatcher\IDispatcher.cs" />
-    <Compile Include="Assets\HttpClient\Enums\ContentReadAction.cs" />
-    <Compile Include="Assets\HttpClient\Enums\HttpAction.cs" />
-    <Compile Include="Assets\HttpClient\Enums\HttpCompletionOption.cs" />
-    <Compile Include="Assets\HttpClient\Example\ExampleSceneManagerController.cs" />
-    <Compile Include="Assets\HttpClient\Helpers\AuthHelper.cs" />
-    <Compile Include="Assets\HttpClient\HttpClient.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\ByteArrayContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\FormUrlEncodedContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\IHttpContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\MultiPartContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\MultipartFormDataContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\StreamContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpContent\StringContent.cs" />
-    <Compile Include="Assets\HttpClient\HttpRequest\HttpBase.cs" />
-    <Compile Include="Assets\HttpClient\HttpRequest\HttpRequest.cs" />
-    <Compile Include="Assets\HttpClient\Messages\HttpResponseMessage.cs" />
-    <Compile Include="Assets\HttpClient\Messages\UploadStatusMessage.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAnimator.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterAttack.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterController.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterMotor.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Character\CharacterStats_SO.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormAI.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormAnimator.cs" />
+    <Compile Include="Assets\Scripts\Character\Worm\WormMotor.cs" />
     <Compile Include="Assets\Scripts\ClassManager.cs" />
     <Compile Include="Assets\Scripts\Destructable.cs" />
     <Compile Include="Assets\Scripts\EZCameraShaker\CameraShakeInstance.cs" />
@@ -107,11 +91,19 @@
     <Compile Include="Assets\Scripts\Network\SignupManager.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Popup\PopupLoading.cs" />
+    <Compile Include="Assets\Scripts\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Room\RoomClientSlot.cs" />
     <Compile Include="Assets\Scripts\Room\RoomManager.cs" />
     <Compile Include="Assets\Scripts\Room\Team\Team.cs" />
     <Compile Include="Assets\Scripts\Room\Team\TeamManager.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\Client.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\Example.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\FormData.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\Request.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\RequestBody.cs" />
+    <Compile Include="Assets\Scripts\SimpleHTTP\Response.cs" />
     <Compile Include="Assets\Scripts\Sound\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Sound\Sound.cs" />
     <Compile Include="Assets\Scripts\UIManager.cs" />
@@ -129,7 +121,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Sprites\Kyrise's 16x16 RPG Icon Pack - V1.2\read me.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
-    <None Include="Assets\HttpClient\readme.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />

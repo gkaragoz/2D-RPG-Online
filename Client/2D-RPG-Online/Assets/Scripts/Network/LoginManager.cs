@@ -1,5 +1,7 @@
-﻿using CI.HttpClient;
+﻿using ShiftServer.Proto.Models;
+using SimpleHTTP;
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -58,56 +60,66 @@ public class LoginManager : Menu {
         return _inputFieldPassword.text;
     }
 
-    private const string JOIN = "Trying to join into the account... ";
+    private const string LOGIN = "Trying to login into the account... ";
     private const string ON_LOGIN_SUCCESS = "Login success!";
     private const string ON_LOGIN_FAILED = "Login failed!";
+    private const string ON_CAN_NOT_CONNECT_TO_HOST = "Login failed! Can not connect to host!";
 
     public void Login() {
-        if (IsUsernameValid && IsPasswordValid && IsURLEmpty) {
-            LogManager.instance.AddLog(JOIN, Log.Type.Server);
+        if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
+            LogManager.instance.AddLog(LOGIN, Log.Type.Server);
 
-            HttpClient client = new HttpClient();
+            StartCoroutine(ILoginPostMethod());
+        } else {
+            LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+        }
+    }
 
-            LoginData data = new LoginData();
-            data.username = _inputFieldUsername.text;
-            data.password = _inputFieldPassword.text;
+    private IEnumerator ILoginPostMethod() {
+        PopupManager.instance.ShowLoadingPopup(LOGIN);
 
-            string jsonData = JsonUtility.ToJson(data);
+        LoginData data = new LoginData();
+        data.username = _inputFieldUsername.text;
+        data.password = _inputFieldPassword.text;
 
-            IHttpContent content = new StringContent(jsonData, System.Text.Encoding.UTF8, "application/json");
+        JsonUtility.ToJson(data);
 
-            client.Post(new Uri(URL), content, HttpCompletionOption.AllResponseContent, response =>
-            {
-                Debug.Log(response);
+        Request request = new Request(URL)
+            .Post(RequestBody.From<LoginData>(data));
 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+        Client http = new Client();
+        yield return http.Send(request);
 
-                //IF SUCCESS
-                //LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-                //this.Hide();
-                //LobbyManager.instance.Initialize();
-                //RoomManager.instance.Initialize();
-                //FriendManager.instance.Initialize();
-                //LobbyManager.instance.Show();
-                //FriendManager.instance.Show();
+            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+
+            if (authResponse.Success) {
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
+
+                LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+
+                this.Hide();
+                LobbyManager.instance.Initialize();
+                RoomManager.instance.Initialize();
+                FriendManager.instance.Initialize();
+                LobbyManager.instance.Show();
+                FriendManager.instance.Show();
 
                 //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
                 //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
                 //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-
                 //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+            } else {
+                LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
 
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-                //IF ERROR
-                //LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
-
-                /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            });
-
+                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f, true);
+            }
         } else {
-            LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+            Debug.Log("error: " + http.Error());
+            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
         }
     }
 

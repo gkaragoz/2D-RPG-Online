@@ -4,15 +4,7 @@ using UnityEngine;
 
 /// <summary>
 /// This class is responsible to manage character's real movement.
-/// <list type="bullet">
-/// Required Components:
-/// <item>
-/// <term>Rigidbody2D</term>
-/// <description>See <see cref="Rigidbody2D"/></description>
-/// </item>
-/// </list>
 /// </summary>
-[RequireComponent(typeof(Rigidbody2D))]
 public class CharacterMotor : MonoBehaviour {
 
     /// <summary>
@@ -47,7 +39,7 @@ public class CharacterMotor : MonoBehaviour {
     /// </remarks>
     /// <param name="direction"></param>
     public void Move(Vector2 direction) {
-        Vector2 currentPosition = transform.position;
+        Vector2 currentPosition = _rb2D.transform.position;
         _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
         AudioManager.instance.Play("footstep");

@@ -62,6 +62,18 @@ public class CharacterAttack : MonoBehaviour {
     /// <para>Checks overlappedBox around the attackHitPoint than attack them</para>
     /// </remarks>
     public void Attack() {
+        StartCoroutine(IAttack());
+    }
+
+    /// <summary>
+    /// This function is triggered on Attack animation key event.
+    /// </summary>
+    public void OnHit() {
+        Debug.Log("On Hit.");
+        IsAttacking = false;
+    }
+
+    private IEnumerator IAttack() {
         AudioManager.instance.Play("swing" + Random.Range(1, 3));
 
         _nextAttackTime = Time.time + attackSpeed;
@@ -73,14 +85,10 @@ public class CharacterAttack : MonoBehaviour {
         }
 
         IsAttacking = true;
-    }
 
-    /// <summary>
-    /// This function is triggered on Attack animation key event.
-    /// </summary>
-    public void OnHit() {
-        Debug.Log("On Hit.");
-        IsAttacking = false;
+        yield return new WaitForSeconds(attackSpeed);
+
+        OnHit();
     }
 
     /// <summary>

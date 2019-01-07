@@ -16,7 +16,7 @@ public class CharacterAnimator : MonoBehaviour {
     /// Get component references.
     /// </summary>
     private void Start() {
-        _animator = GetComponent<Animator>();
+        _animator = GetComponentInChildren< Animator>();
     }
 
     /// <summary>
@@ -30,9 +30,9 @@ public class CharacterAnimator : MonoBehaviour {
         float xValue = direction.x;
 
         if (xValue < 0) {
-            transform.localScale = new Vector3(-1, transform.localScale.y, transform.localScale.z);
+            _animator.transform.localScale = new Vector3(-1, _animator.transform.localScale.y, _animator.transform.localScale.z);
         } else {
-            transform.localScale = new Vector3(1, transform.localScale.y, transform.localScale.z);
+            _animator.transform.localScale = new Vector3(1, _animator.transform.localScale.y, _animator.transform.localScale.z);
         }
 
         _animator.SetBool("Run", true);
