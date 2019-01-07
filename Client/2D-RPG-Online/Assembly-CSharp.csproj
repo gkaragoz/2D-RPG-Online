@@ -91,6 +91,8 @@
     <Compile Include="Assets\Scripts\Network\SignupManager.cs" />
     <Compile Include="Assets\Scripts\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Popup\PopupLoading.cs" />
+    <Compile Include="Assets\Scripts\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Portal.cs" />
     <Compile Include="Assets\Scripts\Room\RoomClientSlot.cs" />
     <Compile Include="Assets\Scripts\Room\RoomManager.cs" />
