@@ -132,7 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   animator: {fileID: 95505192276163284}
-  spawnedTransform: {fileID: 4769565647760840, guid: 8cf9f3913169acc45bfd86a9b6a1a614,
+  spawnedTransform: {fileID: 4378432847348090, guid: 564f9f84665c4af43b54572dc2955368,
     type: 2}
 --- !u!212 &212546322938005662
 SpriteRenderer:
