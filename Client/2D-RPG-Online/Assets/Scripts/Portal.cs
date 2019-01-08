@@ -5,7 +5,6 @@ using UnityEngine;
 public class Portal : MonoBehaviour {
 
     public Animator animator;
-
     public Transform spawnedTransform;
 
     public void Init(Transform spawnedTransform) {

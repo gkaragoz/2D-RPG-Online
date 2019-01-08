@@ -27,7 +27,6 @@ public class UIManager : MonoBehaviour {
     #endregion
 
     public LoginManager loginManager;
-
     public ClassManager classManager;
 
     public void HideLoginPanel() {

@@ -6,9 +6,7 @@ public class CharacterAttack : MonoBehaviour {
 
     [Header("Initialization")]
     public float attackSpeed = 1f;
-
     public float attackRangeX = 0.35f;
-
     public float attackRangeY = 0.35f;
 
     public LayerMask attackables;
