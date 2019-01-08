@@ -20,14 +20,8 @@ public class NetworkManager : MonoBehaviour {
     private const string ON_CONNECTION_FAILED = "Connection failed!";
     private const string ON_CONNECTION_LOST = "Connection lost!";
 
-    /// <summary>
-    /// Instance of this class.
-    /// </summary>
     public static NetworkManager instance;
 
-    /// <summary>
-    /// Initialize Singleton pattern.
-    /// </summary>
     void Awake() {
         if (instance == null)
             instance = this;

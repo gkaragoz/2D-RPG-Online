@@ -2,24 +2,12 @@ using UnityEngine.Audio;
 using System;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible to handle Audio system in game.
-/// </summary>
-/// <remarks>
-/// <para>AudioManager operates the sound as Play or be able to check a sound is playing or not.</para>
-/// </remarks>
 public class AudioManager : MonoBehaviour {
 
     #region Singleton
 
-    /// <summary>
-    /// Instance of this class.
-    /// </summary>
     public static AudioManager instance;
 
-    /// <summary>
-    /// Initialize Singleton pattern.
-    /// </summary>
     void Awake() {
         if (instance == null)
             instance = this;
@@ -32,21 +20,12 @@ public class AudioManager : MonoBehaviour {
     #endregion
 
     [Header("Initialize")]
-    /// <summary>
-    /// This variable holds all sounds used in the game.
-    /// </summary>
     public Sound[] sounds;
 
     [Header("Settings")]
     [SerializeField]
     private bool _playBgMusic = false;
 
-    /// <summary>
-    /// Initialize, create AudioSource for per sound in the sounds array.
-    /// </summary>
-    /// <remarks>
-    /// Plays a background music called Desecrated Temple.
-    /// </remarks>
     private void Start() {
         foreach (Sound sound in sounds) {
             sound.source = gameObject.AddComponent<AudioSource>();
@@ -61,10 +40,6 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Play a sound for one shot.
-    /// </summary>
-    /// <param name="sound"></param>
     public void Play(string sound) {
         Sound tempSound = Array.Find(sounds, item => item.name == sound);
         if (tempSound == null) {
@@ -80,11 +55,6 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Check a sound is currently playing or not.
-    /// </summary>
-    /// <param name="sound"></param>
-    /// <returns>Bool for playing or not.</returns>
     private bool IsPlaying(Sound sound) {
         if (sound.source.isPlaying) {
             return true;

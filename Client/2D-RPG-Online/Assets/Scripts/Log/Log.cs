@@ -2,9 +2,6 @@
 using TMPro;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible to hold simple Log data.
-/// </summary>
 public class Log : Menu {
 
     public enum Type {

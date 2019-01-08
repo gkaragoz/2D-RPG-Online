@@ -3,9 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible for collect user inputs about selected class.
-/// </summary>
 public class ClassManager : Menu {
 
     #region Singleton

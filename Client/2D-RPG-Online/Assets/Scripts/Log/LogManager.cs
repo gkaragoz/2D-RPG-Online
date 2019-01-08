@@ -5,12 +5,6 @@ using TMPro;
 using UnityEngine.UI;
 using UnityEngine.Events;
 
-/// <summary>
-/// This class is responsible to handle any logs.
-/// </summary>
-/// <remarks>
-/// <para>Has Application.logMessageReceived event. That means any Debug.Log function triggers this class.</para>
-/// </remarks>
 public class LogManager : Menu {
 
     #region Singleton

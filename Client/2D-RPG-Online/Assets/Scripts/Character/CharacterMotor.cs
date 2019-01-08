@@ -2,14 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-/// <summary>
-/// This class is responsible to manage character's real movement.
-/// </summary>
 public class CharacterMotor : MonoBehaviour {
 
-    /// <summary>
-    /// Character's movement speed.
-    /// </summary>
     [Header("Initialization")]
     public float speed = 3f;
 
@@ -19,25 +13,12 @@ public class CharacterMotor : MonoBehaviour {
         }
     }
 
-    /// <summary>
-    /// Rigidbody component to handle collisions.
-    /// </summary>
     private Rigidbody2D _rb2D;
 
-    /// <summary>
-    /// Get component references
-    /// </summary>
     private void Start() {
         _rb2D = GetComponent<Rigidbody2D>();
     }
 
-    /// <summary>
-    /// Actual function does the movement based on Rigidbody2D.
-    /// </summary>
-    /// <remarks>
-    /// <para>Play footstep sound.</para>
-    /// </remarks>
-    /// <param name="direction"></param>
     public void Move(Vector2 direction) {
         Vector2 currentPosition = _rb2D.transform.position;
         _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
