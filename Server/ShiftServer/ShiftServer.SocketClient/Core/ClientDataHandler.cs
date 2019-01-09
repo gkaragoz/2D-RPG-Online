@@ -43,7 +43,7 @@ namespace ShiftServer.Client.Core
                 case MSBaseEventId.ServerEvent:
                     switch (data.Svevtid)
                     {
-                        case MSServerEvent.Login:
+                        case MSServerEvent.AccountJoin:
                             accountData = data.AccountData;
                             break;
                         case MSServerEvent.LobbyRefresh:

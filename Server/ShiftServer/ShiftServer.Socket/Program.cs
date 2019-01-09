@@ -33,8 +33,7 @@ namespace ShiftServer.Server
             _roomProvider.CreateRoom(bgRoom);
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
-
-            //_serverProvider.AddServerEventListener(MSServerEvent.Login, zone.OnAccountLogin);
+            _serverProvider.AddServerEventListener(MSServerEvent.AccountJoin, _serverProvider.OnAccountJoin);
 
             _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);

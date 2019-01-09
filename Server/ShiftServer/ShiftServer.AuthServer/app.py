@@ -6,12 +6,18 @@ from warrant import Cognito
 from flask import Flask
 from flask import request
 from flask import jsonify
+from datetime import datetime
+from flask_pymongo import PyMongo
+
 import boto3
 
 from manaconfig import SECRET_HASH, ACCESS_ID
 
 app = Flask(__name__)
-
+app.config["MONGO_URI"] = "mongodb://localhost:27017/ManaShiftGameDB"
+mongo = PyMongo(app)
+accounts = mongo.db.Accounts
+sessions = mongo.db.AccountSessions
 # Make the WSGI interface available at the top level so wfastcgi can get it.
 wsgi_app = app.wsgi_app
 
@@ -33,6 +39,7 @@ def changepass():
 def login():
     content = request.get_json()
     print(content)
+
     resp = {
         "Success": False,
         "Session": "",
@@ -47,19 +54,40 @@ def login():
             username=content["username"], access_key=ACCESS_ID, secret_key=SECRET_HASH)
 
     try:
-       if "email" not in content:
-            content["email"] = ""    
+       if "username" not in content:
+            content["username"] = ""    
        elif  len(content["password"]) < 8:
-            resp["Error"]["Message"] = "Provide a valid Password"
-            resp["Error"]["Code"] = "InvalidPasswordLength"
+            resp["ErrorMessage"] = "Provide a valid Password"
+            resp["Code"] = "InvalidPasswordLength"
+
             return jsonify(resp)
 
+
+ 
+   
+
        cognitoData = u.admin_authenticate(password=content["password"])
-       resp["Success"] = True
        resp["AccessToken"] = u.access_token
        resp["RefreshToken"] = u.refresh_token
        resp["IdToken"] = u.id_token
-       print(cognitoData)
+
+       account = accounts.find_one({'username': content["username"]})
+       if account is None:
+            resp["ErrorMessage"] = "Cant find account"
+            resp["Code"] = "AccountDoesNotExist"
+            return jsonify(resp)
+
+       session = {
+               "username": str(u.username),
+               "session_id": u.access_token,
+               "expire_in": 3600,
+               "created_at": datetime.utcnow(),
+               "updated_at": datetime.utcnow()
+       }
+
+       session_id = sessions.update_one({"username": str(u.username)}, {"$set":session}, upsert = True)
+       resp["Success"] = True
+       print(session)
     except BaseException as err:
         print(err)
         resp["ErrorMessage"] = err.response["Error"]["Message"]
@@ -86,15 +114,36 @@ def sign_up():
 
     try:
         if "email" not in content:
-            content["email"] = ""     
+           content["email"] = ""    
         elif  len(content["password"]) < 8:
-            resp["Error"]["Message"] = "Provide a valid Password"
-            resp["Error"]["Code"] = "InvalidPasswordLength"
+           resp["ErrorMessage"] = "Provide a valid Password"
+           resp["Code"] = "InvalidPasswordLength"
+
+           return jsonify(resp)
+
+        account = accounts.find_one({'email': content["email"]})
+        if account is not None:
+            resp["ErrorMessage"] = "Email already exist in our database"
+            resp["Code"] = "EmailAlreadyExist"
             return jsonify(resp)
+
 
         u.add_base_attributes(email=content["email"])
         cognitoData = u.register(content["username"], content["password"])
+        userUsername = u.username
+        userEmail = u.email
         resp["Success"] = True
+
+
+        AccountObject = {
+            'username': userUsername,
+            'email': userEmail,
+            'created_at': datetime.utcnow(),
+            'updated_at': datetime.utcnow()
+        }
+
+        user_id = accounts.insert_one(AccountObject).inserted_id
+        print("New Account Document Inserted")
     except BaseException as err:
         print(err)
         resp["ErrorMessage"] = err.response["Error"]["Message"]
@@ -109,4 +158,5 @@ if __name__ == '__main__':
         PORT = int(os.environ.get('SERVER_PORT', '5555'))
     except ValueError:
         PORT = 5555
+
     app.run("192.168.1.2", PORT)

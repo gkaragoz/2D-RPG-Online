@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
+using ShiftServer.Proto.Db;
 
 namespace ShiftServer.Base.Core
 {
@@ -21,10 +22,21 @@ namespace ShiftServer.Base.Core
         public ServerDataHandler dataHandler = null;
         public Thread listenerThread = null;
 
+        public DBServiceProvider ctx = null;
         public ServerProvider(IZone createdWorld)
         {
             world = createdWorld;
             dataHandler = new ServerDataHandler();
+
+            try
+            {
+                ctx = new DBServiceProvider();
+            }
+            catch (Exception err)
+            {
+
+                log.Error("DB PROVIDER FAILED", err);
+            }
         }
 
         public void Listen(int tickrate, int port)
@@ -283,6 +295,46 @@ namespace ShiftServer.Base.Core
             shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
+        public void OnAccountJoin(ShiftServerData data, ShiftClient shift)
+        {
+            if (data.ClientInfo == null)
+            {
+                ShiftServerData errorData = new ShiftServerData();
+                errorData.ErrorReason = ShiftServerError.WrongClientData;
+                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
+                return;
+            }
+
+            if(!this.SessionCheck(data, shift))
+                return;
+
+            
+            //check account
+            string accUsername = data.Account.Username;
+            string accPassword = data.Account.Password;
+            //QUERY TO SOMEWHERE ELSE
+
+            //Checking the client has only one player character under control
+            shift.UserSession.SetSid(data);
+            string sessionId = shift.UserSession.GetSid();
+            data.Session = new SessionData();
+            data.Session.Sid = sessionId;
+            //check login data
+            data.AccessToken = null;
+            data.Account = null;
+            data.AccountData = new CommonAccountData();
+            data.AccountData.Username = accUsername;
+            data.AccountData.VirtualMoney = 100;
+            data.AccountData.VirtualSpecialMoney = 100;
+
+            shift.SendPacket(MSServerEvent.AccountJoin, data);
+            shift.UserName = data.AccountData.Username;
+            world.SocketIdSessionLookup.Add(sessionId, shift.connectionId);
+            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+
+        }
+
         public int ClientCount()
         {
             return world.Clients.Count;
@@ -297,6 +349,32 @@ namespace ShiftServer.Base.Core
             }
 
             server.Stop();
+        }
+
+        public bool SessionCheck(ShiftServerData data, ShiftClient shift)
+        {
+            bool result = false;
+            //session check
+            if (data.AccessToken != null)
+            {
+                AccountSession session = ctx.Sessions.FindByAccessToken(data.AccessToken);
+                if (session != null)
+                {
+                    if (session.AccountID == data.Account.Username && session.SessionID == data.AccessToken)
+                        result = true;
+                }
+              
+            }
+
+
+            if (result)
+                return result;
+            else
+            {
+                shift.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
+                shift.Client.Close();
+                return result;
+            }
         }
     }
 }

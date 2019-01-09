@@ -14,10 +14,10 @@ message ShiftServerData {
 
 	repeated sGameObject WorldState = 9; // GameObjects list
 	ObjectAction Interaction = 10;
-
 	PlayerObject sPlayerObject = 11;
-
 	ShiftServerError ErrorReason = 12;
+
+	string AccessToken = 13;
 
 }
 
@@ -45,17 +45,17 @@ enum MSPlayerEvent
 
 enum MSServerEvent
 {
-	LOGIN = 0;	
-	LOGIN_FAILED = 1;
+	ACCOUNT_JOIN = 0;	
+	ACCOUNT_JOIN_FAILED = 1;
 	PUBLIC_MESSAGE = 2;			
 	
-	ROOM_JOIN = 3;						
-	ROOM_LEAVE = 4;						
-	ROOM_LEAVE_FAILED = 5;						
-	ROOM_CREATE = 6;						
-	ROOM_DELETE = 7;						
-	ROOM_PLAYER_LEFT = 8;						
-	ROOM_PLAYER_JOINED = 9;						
+	ROOM_JOIN = 3;
+	ROOM_LEAVE = 4;
+	ROOM_LEAVE_FAILED = 5;
+	ROOM_CREATE = 6;
+	ROOM_DELETE = 7;
+	ROOM_PLAYER_LEFT = 8;
+	ROOM_PLAYER_JOINED = 9;
 	ROOM_JOIN_FAILED = 10;		
 	ROOM_CREATE_FAILED = 11;		
 	ROOM_DELETE_FAILED = 12;		
@@ -63,10 +63,12 @@ enum MSServerEvent
 	ROOM_GAME_START = 14;		
 	ROOM_CHANGE_LEADER = 15;		
 
-	MESSAGE_SEND = 15;
-	MESSAGE_RECIEVE = 16;	
+	MESSAGE_SEND = 16;
+	MESSAGE_RECIEVE = 17;	
 
-	LOBBY_REFRESH = 21;		
+	LOBBY_MATCHMAKING = 18;	
+	LOBBY_REFRESH = 21;
+	
 	CONNECTION = 22;			
 	CONNECTION_FAILED = 23;			
 	CONNECTION_LOST = 24;			
@@ -85,6 +87,7 @@ enum ShiftServerError
 	ROOM_AUTH_PROBLEM = 7; 
 	NOT_IN_ANY_ROOM = 8; 
 	ROOM_FULL = 9; 
+	MATCHMAKING_FAILED = 10; 
 
 }
 enum ShiftRoomType
