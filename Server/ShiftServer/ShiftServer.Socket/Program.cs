@@ -34,6 +34,7 @@ namespace ShiftServer.Server
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
             _serverProvider.AddServerEventListener(MSServerEvent.AccountJoin, _serverProvider.OnAccountJoin);
+            _serverProvider.AddServerEventListener(MSServerEvent.LobbyMatchmaking, _serverProvider.OnMatchmaking);
 
             _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);

@@ -99,6 +99,13 @@ namespace ShiftServer.Base.Core
             world.SendWorldState();
         }
 
+        public void OnMatchmaking(ShiftServerData data, ShiftClient shift)
+        {
+            //world.OnWorldUpdate();
+            //world.SendWorldState();
+        }
+
+     
         private static void SetInterval(int timerInterval, Action<object, ElapsedEventArgs> job)
         {
             System.Timers.Timer aTimer = new System.Timers.Timer();

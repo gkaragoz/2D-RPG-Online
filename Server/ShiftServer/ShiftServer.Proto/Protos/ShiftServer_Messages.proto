@@ -18,6 +18,7 @@ message ShiftServerData {
 	ShiftServerError ErrorReason = 12;
 
 	string AccessToken = 13;
+	MatchmakingData MatchmakingData = 14;
 
 }
 
@@ -75,6 +76,13 @@ enum MSServerEvent
 	PING_REQUEST = 25;				
 }
 
+enum MatchmakingRoom
+{
+		BG_2 = 0;
+		BG_4 = 1;
+
+}
+
 enum ShiftServerError
 {
 	CLIENT_VER_OLD = 0; // Application.version
@@ -98,6 +106,9 @@ enum ShiftRoomType
 }
 message SessionData {
 	string sid = 2;
+}
+message MatchmakingData {
+	MatchmakingRoom Type = 1;
 }
 
 message CommonAccountData {

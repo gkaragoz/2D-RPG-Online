@@ -22,7 +22,7 @@ public static partial class ShiftServerMessagesReflection {
   static ShiftServerMessagesReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLDAwoPU2hpZnRTZXJ2ZXJE",
+          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLuAwoPU2hpZnRTZXJ2ZXJE",
           "YXRhEiAKCGJhc2V2dGlkGAEgASgOMg4uTVNCYXNlRXZlbnRJZBIfCgdzdmV2",
           "dGlkGAIgASgOMg4uTVNTZXJ2ZXJFdmVudBIfCgdwbGV2dGlkGAMgASgOMg4u",
           "TVNQbGF5ZXJFdmVudBIdCgdTZXNzaW9uGAQgASgLMgwuU2Vzc2lvbkRhdGES",
@@ -32,61 +32,65 @@ public static partial class ShiftServerMessagesReflection {
           "CgpXb3JsZFN0YXRlGAkgAygLMgwuc0dhbWVPYmplY3QSIgoLSW50ZXJhY3Rp",
           "b24YCiABKAsyDS5PYmplY3RBY3Rpb24SJAoNc1BsYXllck9iamVjdBgLIAEo",
           "CzINLlBsYXllck9iamVjdBImCgtFcnJvclJlYXNvbhgMIAEoDjIRLlNoaWZ0",
-          "U2VydmVyRXJyb3ISEwoLQWNjZXNzVG9rZW4YDSABKAkiGgoLU2Vzc2lvbkRh",
-          "dGESCwoDc2lkGAIgASgJIlgKEUNvbW1vbkFjY291bnREYXRhEhAKCHVzZXJu",
-          "YW1lGAEgASgJEhQKDHZpcnR1YWxNb25leRgCIAEoBRIbChN2aXJ0dWFsU3Bl",
-          "Y2lhbE1vbmV5GAMgASgFIucBCghSb29tRGF0YRIdCgtDcmVhdGVkUm9vbRgB",
-          "IAEoCzIILk1TU1Jvb20SHAoKSm9pbmVkUm9vbRgCIAEoCzIILk1TU1Jvb20S",
-          "HQoLRGVsZXRlZFJvb20YAyABKAsyCC5NU1NSb29tEhwKCkxlYXZlZFJvb20Y",
-          "BCABKAsyCC5NU1NSb29tEiMKClBsYXllckluZm8YBSABKAsyDy5Sb29tUGxh",
-          "eWVySW5mbxIjCgpQbGF5ZXJMaXN0GAYgAygLMg8uUm9vbVBsYXllckluZm8S",
-          "FwoFcm9vbXMYByADKAsyCC5NU1NSb29tIrABCgdNU1NSb29tEgoKAklkGAEg",
-          "ASgJEhMKC2NyZWF0ZWRUaW1lGAIgASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgD",
-          "EhEKCWlzUHJpdmF0ZRgEIAEoCBIPCgdpc093bmVyGAUgASgIEgwKBG5hbWUY",
-          "BiABKAkSFAoMbWF4VXNlckNvdW50GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291",
-          "bnQYCCABKAUSDQoFVGVhbXMYCSADKAkibQoOUm9vbVBsYXllckluZm8SEAoI",
-          "VXNlcm5hbWUYASABKAkSDgoGVGVhbUlkGAIgASgJEhYKDklzSm9pbmVkVG9U",
-          "ZWFtGAMgASgIEg8KB0lzUmVhZHkYBCABKAgSEAoISXNMZWFkZXIYBSABKAgi",
-          "MQoLQWNjb3VudERhdGESEAoIdXNlcm5hbWUYASABKAkSEAoIcGFzc3dvcmQY",
-          "AiABKAkiXAoMT2JqZWN0QWN0aW9uEiMKDWN1cnJlbnRPYmplY3QYASABKAsy",
-          "DC5zR2FtZU9iamVjdBInChFpbnRlcmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNH",
-          "YW1lT2JqZWN0IkMKCkNsaWVudERhdGESCwoDdmVyGAEgASgJEhQKDG1hY2hp",
-          "bmVfbmFtZRgCIAEoCRISCgptYWNoaW5lX2lkGAMgASgJIkcKC3NHYW1lT2Jq",
-          "ZWN0EgsKA29pZBgBIAEoBRINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEo",
-          "AhINCgVwb3NfehgEIAEoAiKRAQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QY",
-          "ASABKAsyDC5zR2FtZU9iamVjdBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJD",
-          "bGFzcxIRCgljdXJyZW50SHAYAyABKAUSDQoFbWF4SHAYBCABKAUSIgoMcGxh",
-          "eWVySW5wdXRzGAUgAygLMgwuUGxheWVySW5wdXQiOgoLUGxheWVySW5wdXQS",
-          "DQoFcG9zX3gYASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAIq",
-          "MQoNTVNCYXNlRXZlbnRJZBIPCgtQbGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2",
-          "ZW50EAEqXQoNTVNQbGF5ZXJFdmVudBIQCgxXT1JMRF9VUERBVEUQABIICgRN",
-          "T1ZFEAESCgoGQVRUQUNLEAISCAoEREVBRBADEgcKA1VTRRAEEhEKDUNSRUFU",
-          "RV9QTEFZRVIQBSr8AwoNTVNTZXJ2ZXJFdmVudBIQCgxBQ0NPVU5UX0pPSU4Q",
-          "ABIXChNBQ0NPVU5UX0pPSU5fRkFJTEVEEAESEgoOUFVCTElDX01FU1NBR0UQ",
-          "AhINCglST09NX0pPSU4QAxIOCgpST09NX0xFQVZFEAQSFQoRUk9PTV9MRUFW",
-          "RV9GQUlMRUQQBRIPCgtST09NX0NSRUFURRAGEg8KC1JPT01fREVMRVRFEAcS",
-          "FAoQUk9PTV9QTEFZRVJfTEVGVBAIEhYKElJPT01fUExBWUVSX0pPSU5FRBAJ",
-          "EhQKEFJPT01fSk9JTl9GQUlMRUQQChIWChJST09NX0NSRUFURV9GQUlMRUQQ",
-          "CxIWChJST09NX0RFTEVURV9GQUlMRUQQDBIUChBST09NX0dFVF9QTEFZRVJT",
-          "EA0SEwoPUk9PTV9HQU1FX1NUQVJUEA4SFgoSUk9PTV9DSEFOR0VfTEVBREVS",
-          "EA8SEAoMTUVTU0FHRV9TRU5EEBASEwoPTUVTU0FHRV9SRUNJRVZFEBESFQoR",
-          "TE9CQllfTUFUQ0hNQUtJTkcQEhIRCg1MT0JCWV9SRUZSRVNIEBUSDgoKQ09O",
-          "TkVDVElPThAWEhUKEUNPTk5FQ1RJT05fRkFJTEVEEBcSEwoPQ09OTkVDVElP",
-          "Tl9MT1NUEBgSEAoMUElOR19SRVFVRVNUEBkq/gEKEFNoaWZ0U2VydmVyRXJy",
-          "b3ISEgoOQ0xJRU5UX1ZFUl9PTEQQABIPCgtCQURfU0VTU0lPThABEhIKDlJP",
-          "T01fTk9UX0ZPVU5EEAISEwoPQUxSRUFEWV9JTl9ST09NEAMSGwoXV1JPTkdf",
-          "TE9HSU5fQ1JFREVOVElBTFMQBBIVChFXUk9OR19DTElFTlRfREFUQRAFEhUK",
-          "EU5PX1JFU1BPTkRfU0VSVkVSEAYSFQoRUk9PTV9BVVRIX1BST0JMRU0QBxIT",
-          "Cg9OT1RfSU5fQU5ZX1JPT00QCBINCglST09NX0ZVTEwQCRIWChJNQVRDSE1B",
-          "S0lOR19GQUlMRUQQCio1Cg1TaGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoD",
-          "TU1PEAESEAoMQUNUSU9OQkFUVExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2Fy",
-          "cmlvchAAEgoKBkFyY2hlchABEggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJv",
-          "dG8z"));
+          "U2VydmVyRXJyb3ISEwoLQWNjZXNzVG9rZW4YDSABKAkSKQoPTWF0Y2htYWtp",
+          "bmdEYXRhGA4gASgLMhAuTWF0Y2htYWtpbmdEYXRhIhoKC1Nlc3Npb25EYXRh",
+          "EgsKA3NpZBgCIAEoCSIxCg9NYXRjaG1ha2luZ0RhdGESHgoEVHlwZRgBIAEo",
+          "DjIQLk1hdGNobWFraW5nUm9vbSJYChFDb21tb25BY2NvdW50RGF0YRIQCgh1",
+          "c2VybmFtZRgBIAEoCRIUCgx2aXJ0dWFsTW9uZXkYAiABKAUSGwoTdmlydHVh",
+          "bFNwZWNpYWxNb25leRgDIAEoBSLnAQoIUm9vbURhdGESHQoLQ3JlYXRlZFJv",
+          "b20YASABKAsyCC5NU1NSb29tEhwKCkpvaW5lZFJvb20YAiABKAsyCC5NU1NS",
+          "b29tEh0KC0RlbGV0ZWRSb29tGAMgASgLMgguTVNTUm9vbRIcCgpMZWF2ZWRS",
+          "b29tGAQgASgLMgguTVNTUm9vbRIjCgpQbGF5ZXJJbmZvGAUgASgLMg8uUm9v",
+          "bVBsYXllckluZm8SIwoKUGxheWVyTGlzdBgGIAMoCzIPLlJvb21QbGF5ZXJJ",
+          "bmZvEhcKBXJvb21zGAcgAygLMgguTVNTUm9vbSKwAQoHTVNTUm9vbRIKCgJJ",
+          "ZBgBIAEoCRITCgtjcmVhdGVkVGltZRgCIAEoAxITCgt1cGRhdGVkVGltZRgD",
+          "IAEoAxIRCglpc1ByaXZhdGUYBCABKAgSDwoHaXNPd25lchgFIAEoCBIMCgRu",
+          "YW1lGAYgASgJEhQKDG1heFVzZXJDb3VudBgHIAEoBRIYChBjdXJyZW50VXNl",
+          "ckNvdW50GAggASgFEg0KBVRlYW1zGAkgAygJIm0KDlJvb21QbGF5ZXJJbmZv",
+          "EhAKCFVzZXJuYW1lGAEgASgJEg4KBlRlYW1JZBgCIAEoCRIWCg5Jc0pvaW5l",
+          "ZFRvVGVhbRgDIAEoCBIPCgdJc1JlYWR5GAQgASgIEhAKCElzTGVhZGVyGAUg",
+          "ASgIIjEKC0FjY291bnREYXRhEhAKCHVzZXJuYW1lGAEgASgJEhAKCHBhc3N3",
+          "b3JkGAIgASgJIlwKDE9iamVjdEFjdGlvbhIjCg1jdXJyZW50T2JqZWN0GAEg",
+          "ASgLMgwuc0dhbWVPYmplY3QSJwoRaW50ZXJhY3RlZE9iamVjdHMYAiADKAsy",
+          "DC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3ZlchgBIAEoCRIUCgxt",
+          "YWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgDIAEoCSJHCgtzR2Ft",
+          "ZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kY",
+          "AyABKAISDQoFcG9zX3oYBCABKAIikQEKDFBsYXllck9iamVjdBIdCgdwT2Jq",
+          "ZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSHAoGcENsYXNzGAIgASgOMgwuUGxh",
+          "eWVyQ2xhc3MSEQoJY3VycmVudEhwGAMgASgFEg0KBW1heEhwGAQgASgFEiIK",
+          "DHBsYXllcklucHV0cxgFIAMoCzIMLlBsYXllcklucHV0IjoKC1BsYXllcklu",
+          "cHV0Eg0KBXBvc194GAEgASgCEg0KBXBvc195GAIgASgCEg0KBXBvc196GAMg",
+          "ASgCKjEKDU1TQmFzZUV2ZW50SWQSDwoLUGxheWVyRXZlbnQQABIPCgtTZXJ2",
+          "ZXJFdmVudBABKl0KDU1TUGxheWVyRXZlbnQSEAoMV09STERfVVBEQVRFEAAS",
+          "CAoETU9WRRABEgoKBkFUVEFDSxACEggKBERFQUQQAxIHCgNVU0UQBBIRCg1D",
+          "UkVBVEVfUExBWUVSEAUq/AMKDU1TU2VydmVyRXZlbnQSEAoMQUNDT1VOVF9K",
+          "T0lOEAASFwoTQUNDT1VOVF9KT0lOX0ZBSUxFRBABEhIKDlBVQkxJQ19NRVNT",
+          "QUdFEAISDQoJUk9PTV9KT0lOEAMSDgoKUk9PTV9MRUFWRRAEEhUKEVJPT01f",
+          "TEVBVkVfRkFJTEVEEAUSDwoLUk9PTV9DUkVBVEUQBhIPCgtST09NX0RFTEVU",
+          "RRAHEhQKEFJPT01fUExBWUVSX0xFRlQQCBIWChJST09NX1BMQVlFUl9KT0lO",
+          "RUQQCRIUChBST09NX0pPSU5fRkFJTEVEEAoSFgoSUk9PTV9DUkVBVEVfRkFJ",
+          "TEVEEAsSFgoSUk9PTV9ERUxFVEVfRkFJTEVEEAwSFAoQUk9PTV9HRVRfUExB",
+          "WUVSUxANEhMKD1JPT01fR0FNRV9TVEFSVBAOEhYKElJPT01fQ0hBTkdFX0xF",
+          "QURFUhAPEhAKDE1FU1NBR0VfU0VORBAQEhMKD01FU1NBR0VfUkVDSUVWRRAR",
+          "EhUKEUxPQkJZX01BVENITUFLSU5HEBISEQoNTE9CQllfUkVGUkVTSBAVEg4K",
+          "CkNPTk5FQ1RJT04QFhIVChFDT05ORUNUSU9OX0ZBSUxFRBAXEhMKD0NPTk5F",
+          "Q1RJT05fTE9TVBAYEhAKDFBJTkdfUkVRVUVTVBAZKiUKD01hdGNobWFraW5n",
+          "Um9vbRIICgRCR18yEAASCAoEQkdfNBABKv4BChBTaGlmdFNlcnZlckVycm9y",
+          "EhIKDkNMSUVOVF9WRVJfT0xEEAASDwoLQkFEX1NFU1NJT04QARISCg5ST09N",
+          "X05PVF9GT1VORBACEhMKD0FMUkVBRFlfSU5fUk9PTRADEhsKF1dST05HX0xP",
+          "R0lOX0NSRURFTlRJQUxTEAQSFQoRV1JPTkdfQ0xJRU5UX0RBVEEQBRIVChFO",
+          "T19SRVNQT05EX1NFUlZFUhAGEhUKEVJPT01fQVVUSF9QUk9CTEVNEAcSEwoP",
+          "Tk9UX0lOX0FOWV9ST09NEAgSDQoJUk9PTV9GVUxMEAkSFgoSTUFUQ0hNQUtJ",
+          "TkdfRkFJTEVEEAoqNQoNU2hpZnRSb29tVHlwZRIJCgVMT0JCWRAAEgcKA01N",
+          "TxABEhAKDEFDVElPTkJBVFRMRRACKjwKC1BsYXllckNsYXNzEgsKB1dhcnJp",
+          "b3IQABIKCgZBcmNoZXIQARIICgRNYWdlEAISCgoGUHJpZXN0EANiBnByb3Rv",
+          "Mw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
-        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "WorldState", "Interaction", "SPlayerObject", "ErrorReason", "AccessToken" }, null, null, null),
+        new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::MatchmakingRoom), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
+          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "WorldState", "Interaction", "SPlayerObject", "ErrorReason", "AccessToken", "MatchmakingData" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::MatchmakingData), global::MatchmakingData.Parser, new[]{ "Type" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::RoomData), global::RoomData.Parser, new[]{ "CreatedRoom", "JoinedRoom", "DeletedRoom", "LeavedRoom", "PlayerInfo", "PlayerList", "Rooms" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MSSRoom), global::MSSRoom.Parser, new[]{ "Id", "CreatedTime", "UpdatedTime", "IsPrivate", "IsOwner", "Name", "MaxUserCount", "CurrentUserCount", "Teams" }, null, null, null),
@@ -151,6 +155,11 @@ public enum MSServerEvent {
   [pbr::OriginalName("CONNECTION_FAILED")] ConnectionFailed = 23,
   [pbr::OriginalName("CONNECTION_LOST")] ConnectionLost = 24,
   [pbr::OriginalName("PING_REQUEST")] PingRequest = 25,
+}
+
+public enum MatchmakingRoom {
+  [pbr::OriginalName("BG_2")] Bg2 = 0,
+  [pbr::OriginalName("BG_4")] Bg4 = 1,
 }
 
 public enum ShiftServerError {
@@ -230,6 +239,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     sPlayerObject_ = other.sPlayerObject_ != null ? other.sPlayerObject_.Clone() : null;
     errorReason_ = other.errorReason_;
     accessToken_ = other.accessToken_;
+    matchmakingData_ = other.matchmakingData_ != null ? other.matchmakingData_.Clone() : null;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
 
@@ -395,6 +405,17 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
   }
 
+  /// <summary>Field number for the "MatchmakingData" field.</summary>
+  public const int MatchmakingDataFieldNumber = 14;
+  private global::MatchmakingData matchmakingData_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::MatchmakingData MatchmakingData {
+    get { return matchmakingData_; }
+    set {
+      matchmakingData_ = value;
+    }
+  }
+
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
     return Equals(other as ShiftServerData);
@@ -421,6 +442,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (!object.Equals(SPlayerObject, other.SPlayerObject)) return false;
     if (ErrorReason != other.ErrorReason) return false;
     if (AccessToken != other.AccessToken) return false;
+    if (!object.Equals(MatchmakingData, other.MatchmakingData)) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
 
@@ -440,6 +462,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (sPlayerObject_ != null) hash ^= SPlayerObject.GetHashCode();
     if (ErrorReason != 0) hash ^= ErrorReason.GetHashCode();
     if (AccessToken.Length != 0) hash ^= AccessToken.GetHashCode();
+    if (matchmakingData_ != null) hash ^= MatchmakingData.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
     }
@@ -502,6 +525,10 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
       output.WriteRawTag(106);
       output.WriteString(AccessToken);
     }
+    if (matchmakingData_ != null) {
+      output.WriteRawTag(114);
+      output.WriteMessage(MatchmakingData);
+    }
     if (_unknownFields != null) {
       _unknownFields.WriteTo(output);
     }
@@ -546,6 +573,9 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
     if (AccessToken.Length != 0) {
       size += 1 + pb::CodedOutputStream.ComputeStringSize(AccessToken);
+    }
+    if (matchmakingData_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(MatchmakingData);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -615,6 +645,12 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
     if (other.AccessToken.Length != 0) {
       AccessToken = other.AccessToken;
+    }
+    if (other.matchmakingData_ != null) {
+      if (matchmakingData_ == null) {
+        matchmakingData_ = new global::MatchmakingData();
+      }
+      MatchmakingData.MergeFrom(other.MatchmakingData);
     }
     _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
   }
@@ -698,6 +734,13 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
         }
         case 106: {
           AccessToken = input.ReadString();
+          break;
+        }
+        case 114: {
+          if (matchmakingData_ == null) {
+            matchmakingData_ = new global::MatchmakingData();
+          }
+          input.ReadMessage(matchmakingData_);
           break;
         }
       }
@@ -835,6 +878,135 @@ public sealed partial class SessionData : pb::IMessage<SessionData> {
 
 }
 
+public sealed partial class MatchmakingData : pb::IMessage<MatchmakingData> {
+  private static readonly pb::MessageParser<MatchmakingData> _parser = new pb::MessageParser<MatchmakingData>(() => new MatchmakingData());
+  private pb::UnknownFieldSet _unknownFields;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pb::MessageParser<MatchmakingData> Parser { get { return _parser; } }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public static pbr::MessageDescriptor Descriptor {
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[2]; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  pbr::MessageDescriptor pb::IMessage.Descriptor {
+    get { return Descriptor; }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MatchmakingData() {
+    OnConstruction();
+  }
+
+  partial void OnConstruction();
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MatchmakingData(MatchmakingData other) : this() {
+    type_ = other.type_;
+    _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public MatchmakingData Clone() {
+    return new MatchmakingData(this);
+  }
+
+  /// <summary>Field number for the "Type" field.</summary>
+  public const int TypeFieldNumber = 1;
+  private global::MatchmakingRoom type_ = 0;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::MatchmakingRoom Type {
+    get { return type_; }
+    set {
+      type_ = value;
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override bool Equals(object other) {
+    return Equals(other as MatchmakingData);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public bool Equals(MatchmakingData other) {
+    if (ReferenceEquals(other, null)) {
+      return false;
+    }
+    if (ReferenceEquals(other, this)) {
+      return true;
+    }
+    if (Type != other.Type) return false;
+    return Equals(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override int GetHashCode() {
+    int hash = 1;
+    if (Type != 0) hash ^= Type.GetHashCode();
+    if (_unknownFields != null) {
+      hash ^= _unknownFields.GetHashCode();
+    }
+    return hash;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public override string ToString() {
+    return pb::JsonFormatter.ToDiagnosticString(this);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void WriteTo(pb::CodedOutputStream output) {
+    if (Type != 0) {
+      output.WriteRawTag(8);
+      output.WriteEnum((int) Type);
+    }
+    if (_unknownFields != null) {
+      _unknownFields.WriteTo(output);
+    }
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CalculateSize() {
+    int size = 0;
+    if (Type != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
+    }
+    if (_unknownFields != null) {
+      size += _unknownFields.CalculateSize();
+    }
+    return size;
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(MatchmakingData other) {
+    if (other == null) {
+      return;
+    }
+    if (other.Type != 0) {
+      Type = other.Type;
+    }
+    _unknownFields = pb::UnknownFieldSet.MergeFrom(_unknownFields, other._unknownFields);
+  }
+
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public void MergeFrom(pb::CodedInputStream input) {
+    uint tag;
+    while ((tag = input.ReadTag()) != 0) {
+      switch(tag) {
+        default:
+          _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
+          break;
+        case 8: {
+          type_ = (global::MatchmakingRoom) input.ReadEnum();
+          break;
+        }
+      }
+    }
+  }
+
+}
+
 public sealed partial class CommonAccountData : pb::IMessage<CommonAccountData> {
   private static readonly pb::MessageParser<CommonAccountData> _parser = new pb::MessageParser<CommonAccountData>(() => new CommonAccountData());
   private pb::UnknownFieldSet _unknownFields;
@@ -843,7 +1015,7 @@ public sealed partial class CommonAccountData : pb::IMessage<CommonAccountData> 
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[2]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[3]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1028,7 +1200,7 @@ public sealed partial class RoomData : pb::IMessage<RoomData> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[3]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[4]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1339,7 +1511,7 @@ public sealed partial class MSSRoom : pb::IMessage<MSSRoom> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[4]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[5]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1684,7 +1856,7 @@ public sealed partial class RoomPlayerInfo : pb::IMessage<RoomPlayerInfo> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[5]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[6]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -1925,7 +2097,7 @@ public sealed partial class AccountData : pb::IMessage<AccountData> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[6]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[7]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2082,7 +2254,7 @@ public sealed partial class ObjectAction : pb::IMessage<ObjectAction> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[7]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[8]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2237,7 +2409,7 @@ public sealed partial class ClientData : pb::IMessage<ClientData> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[8]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[9]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2422,7 +2594,7 @@ public sealed partial class sGameObject : pb::IMessage<sGameObject> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[9]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[10]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2635,7 +2807,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[10]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[11]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
@@ -2874,7 +3046,7 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
-    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[11]; }
+    get { return global::ShiftServerMessagesReflection.Descriptor.MessageTypes[12]; }
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
