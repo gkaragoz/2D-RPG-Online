@@ -253,6 +253,7 @@
     <Compile Include="Assets\GooglePlayGames\Platforms\PlayGamesClientFactory.cs" />
     <Compile Include="Assets\GooglePlayGames\Platforms\TokenClient.cs" />
     <Compile Include="Assets\GooglePlayGames\PluginVersion.cs" />
+    <Compile Include="Assets\GPGSIds.cs" />
     <Compile Include="Assets\Scripts\Archieve\Lobby\LobbyManager.cs" />
     <Compile Include="Assets\Scripts\Archieve\Lobby\LobbyRow.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\RoomClientSlot.cs" />
@@ -280,7 +281,6 @@
     <Compile Include="Assets\Scripts\INGame\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\INGame\PlayerController.cs" />
     <Compile Include="Assets\Scripts\INGame\Portal.cs" />
-    <Compile Include="Assets\Scripts\Network\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\PingStatus.cs" />
@@ -293,9 +293,10 @@
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Response.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\Sound.cs" />
+    <Compile Include="Assets\Scripts\Systems\Facebook\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />
-    <Compile Include="Assets\Scripts\Systems\GPGSIds.cs" />
+    <Compile Include="Assets\Scripts\Systems\GooglePlay\GooglePlayManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\Log.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />

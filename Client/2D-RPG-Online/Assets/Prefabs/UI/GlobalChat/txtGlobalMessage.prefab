@@ -21,7 +21,6 @@ GameObject:
   - component: {fileID: 224686804017227824}
   - component: {fileID: 222835669101145604}
   - component: {fileID: 114540477642617736}
-  - component: {fileID: 114941167888304288}
   m_Layer: 5
   m_Name: txtGlobalMessage
   m_TagString: Untagged
@@ -206,23 +205,6 @@ MonoBehaviour:
   - {fileID: 0}
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &114941167888304288
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1226641613671568}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1b27d06e879654ea581d821bce3c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  _logType: 0
-  _message: 
-  _tracingString: 
-  _colorStringHEX: 
-  _txtLog: {fileID: 114540477642617736}
 --- !u!222 &222323404775107638
 CanvasRenderer:
   m_ObjectHideFlags: 1

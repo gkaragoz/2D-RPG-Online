@@ -170,7 +170,6 @@ GameObject:
   - component: {fileID: 224840989478070082}
   - component: {fileID: 222284963605441264}
   - component: {fileID: 114218908603893934}
-  - component: {fileID: 114250386432131258}
   m_Layer: 5
   m_Name: txtMessage
   m_TagString: Untagged
@@ -391,7 +390,6 @@ GameObject:
   - component: {fileID: 224622350025662434}
   - component: {fileID: 222929971664992062}
   - component: {fileID: 114087982460378632}
-  - component: {fileID: 114418822655590082}
   m_Layer: 5
   m_Name: txtMessage (1)
   m_TagString: Untagged
@@ -1231,23 +1229,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114250386432131258
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1277587495052964}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1b27d06e879654ea581d821bce3c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  _logType: 0
-  _message: 
-  _tracingString: 
-  _colorStringHEX: 
-  _txtLog: {fileID: 114218908603893934}
 --- !u!114 &114365776624075668
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1321,23 +1302,6 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
---- !u!114 &114418822655590082
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1598785032730882}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cb1b27d06e879654ea581d821bce3c5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  container: {fileID: 0}
-  _logType: 0
-  _message: 
-  _tracingString: 
-  _colorStringHEX: 
-  _txtLog: {fileID: 114087982460378632}
 --- !u!114 &114488507096088262
 MonoBehaviour:
   m_ObjectHideFlags: 1
