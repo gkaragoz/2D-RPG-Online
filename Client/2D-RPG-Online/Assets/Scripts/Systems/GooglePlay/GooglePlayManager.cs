@@ -10,9 +10,13 @@ using System;
 public class GooglePlayManager : MonoBehaviour {
 
     public TMPro.TextMeshProUGUI txtID;
+    public TMPro.TextMeshProUGUI txtAuthCode;
+    public TMPro.TextMeshProUGUI txtAuthanticated;
 
     private void Start() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
+            .RequestServerAuthCode(false)
+            .RequestIdToken()
             .Build();
 
         PlayGamesPlatform.InitializeInstance(config);
@@ -21,8 +25,14 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private void Update() {
+        txtAuthanticated.text = PlayGamesPlatform.Instance.IsAuthenticated().ToString();
+
         if (Social.localUser.authenticated) {
-            txtID.text = ((PlayGamesLocalUser)Social.localUser).GetIdToken();
+            txtID.text = "ID:" + PlayGamesPlatform.Instance.GetIdToken();
+
+            if (txtAuthCode.text != string.Empty) {
+                txtAuthCode.text = "ServerAuth:" + PlayGamesPlatform.Instance.GetServerAuthCode();
+            }
         }
     }
 
