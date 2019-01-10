@@ -891,7 +891,7 @@ Transform:
   m_Children:
   - {fileID: 1443702649}
   m_Father: {fileID: 0}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64685929
 GameObject:
@@ -6595,7 +6595,7 @@ Transform:
   m_Children:
   - {fileID: 717115456}
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &480033596
 GameObject:
@@ -8001,7 +8001,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &537757442
 MonoBehaviour:
@@ -10129,6 +10129,128 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &694988060
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 694988062}
+  - component: {fileID: 694988061}
+  m_Layer: 0
+  m_Name: _AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &694988061
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 694988060}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500cf0213e16a3648bc218b5dba86c51, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: footstep
+    clip: {fileID: 8300000, guid: fe7e014e5dd315a408e53c61456d1513, type: 3}
+    volume: 0.3
+    volumeVariance: 0.3
+    pitch: 0.5
+    pitchVariance: 0.5
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: destruct1
+    clip: {fileID: 8300000, guid: 8a300d0ee9b9c204e9bed811e6788bce, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: destruct2
+    clip: {fileID: 8300000, guid: ebbe651c130c06845bccfebe54d87d6e, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: destruct3
+    clip: {fileID: 8300000, guid: e92ce840c04091940ac4094907a4b369, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing1
+    clip: {fileID: 8300000, guid: b59e1950f9083534bba26cc9b207441d, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing2
+    clip: {fileID: 8300000, guid: 51b65f93ec117fc4481920ea7a47f4d1, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: swing3
+    clip: {fileID: 8300000, guid: 17e070d9e94cab349ab0666037a2949e, type: 3}
+    volume: 1
+    volumeVariance: 0.2
+    pitch: 0.3
+    pitchVariance: 0.3
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: Desecrated Temple
+    clip: {fileID: 8300000, guid: 1eacfcdb92668214da15f032d1137407, type: 3}
+    volume: 0.5
+    volumeVariance: 0
+    pitch: 0
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 243538156050603238, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  _playBgMusic: 0
+--- !u!4 &694988062
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 694988060}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &702335099
 GameObject:
   m_ObjectHideFlags: 0
@@ -29800,7 +29922,7 @@ Transform:
   - {fileID: 1877065972}
   - {fileID: 353455130}
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820584311
 GameObject:
