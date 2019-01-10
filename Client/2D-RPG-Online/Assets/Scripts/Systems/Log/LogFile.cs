@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
-using UnityEditor;
 using System.IO;
-using System;
 
 public class LogFile {
 
@@ -14,10 +12,8 @@ public class LogFile {
             Debug.Log("[LogFile] WRITE EVENT>> " + FILE_NAME + " file is creating on path: " + path);
         }
 
-        //Create or open file.
         FileStream file = File.Open(path, FileMode.Append, FileAccess.Write);
 
-        //Write some text to the test.txt file
         StreamWriter writer = new StreamWriter(file);
         writer.WriteLine(logString);
         writer.Close();

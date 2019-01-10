@@ -1,8 +1,7 @@
 ﻿using System;
-using TMPro;
-using UnityEngine;
 
-public class Log : Menu {
+[System.Serializable]
+public class Log {
 
     public enum Type {
         Empty,
@@ -15,34 +14,15 @@ public class Log : Menu {
         Server
     }
 
-    [Header("Debug")]
-    [SerializeField]
-    [Utils.ReadOnly]
     private Type _logType;
-    [SerializeField]
-    [Utils.ReadOnly]
+    private string _body;
     private string _message;
-    [SerializeField]
-    [Utils.ReadOnly]
     private DateTime _dateTime;
-    [SerializeField]
-    [Utils.ReadOnly]
     private string _tracingString;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private string _colorStringHEX;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private TextMeshProUGUI _txtLog;
 
-    private void Start() {
-        _txtLog = GetComponent<TextMeshProUGUI>();
-    }
-
-    public void Init(string message, DateTime dateTime, string colorStringHEX, Type logType) {
+    public Log(string message, DateTime dateTime, Type logType) {
         this._message = message;
         this._dateTime = dateTime;
-        this._colorStringHEX = colorStringHEX;
         this._tracingString = System.Environment.StackTrace;
         this._logType = logType;
 
@@ -54,11 +34,14 @@ public class Log : Menu {
                 break;
         }
 
-        this._txtLog.text = string.Format("[{1}] <color={0}>{2}</color> {3}",
-                            colorStringHEX,
+        this._body = string.Format("[{0}] {1} {2}",
                             this._dateTime.ToLongTimeString(), 
                             _title,
                             this._message);
+    }
+
+    public string GetBody() {
+        return this._body;
     }
 
     public string GetMessage() {
