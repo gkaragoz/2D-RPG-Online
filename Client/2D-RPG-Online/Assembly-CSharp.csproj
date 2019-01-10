@@ -295,6 +295,7 @@
     <Compile Include="Assets\Scripts\Systems\Audio\Sound.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />
+    <Compile Include="Assets\Scripts\Systems\GPGSIds.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\Log.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
