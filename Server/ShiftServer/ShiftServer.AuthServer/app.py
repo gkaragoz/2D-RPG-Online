@@ -50,23 +50,11 @@ def login():
         "IdToken": "",
         "ExpireIn": 0,     
     } 
-    u = Cognito('eu-central-1_Csbkzqg5d','1nasds8i6jci7vlntp03r0si8', "eu-central-1",
-            username=content["username"], access_key=ACCESS_ID, secret_key=SECRET_HASH)
 
     try:
-       if "username" not in content:
-            content["username"] = ""    
-       elif  len(content["password"]) < 8:
-            resp["ErrorMessage"] = "Provide a valid Password"
-            resp["Code"] = "InvalidPasswordLength"
+     
+  
 
-            return jsonify(resp)
-
-
- 
-   
-
-       cognitoData = u.admin_authenticate(password=content["password"])
        resp["AccessToken"] = u.access_token
        resp["RefreshToken"] = u.refresh_token
        resp["IdToken"] = u.id_token

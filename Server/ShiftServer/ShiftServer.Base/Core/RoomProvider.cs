@@ -237,6 +237,10 @@ namespace ShiftServer.Base.Core
         {
             try
             {
+                if (!_sp.SessionCheck(data, shift))
+                    return;
+
+                
 
             }
             catch (Exception err)
