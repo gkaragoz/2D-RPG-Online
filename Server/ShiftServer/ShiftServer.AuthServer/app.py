@@ -45,7 +45,7 @@ def changepass():
 def get_accountdata():
     content = request.get_json()
     print(content)
-
+    success = False
     if "session_id" not in content:
         abort(403)
 
@@ -59,22 +59,33 @@ def get_accountdata():
     if account is None:
         abort(403)
 
-    accountChars = account_chars.find({'account_email': account["email"]})
+    accountChars = list(account_chars.find({'account_email': account["email"]}))
     chars = []
 
-    for char in accountChars:
-        charObj = {
-                    "account_id": char["account_id"],
-                    "account_email": char["account_email"],
-                    "name": char["name"],
-                    "class_id" : char["class"],
-                    "level":  char["level"],
-                    "exp":  char["exp"],
+    try:
+       for char in accountChars:
+            charObj = {
+                        "account_id": char["account_id"],
+                        "account_email": char["account_email"],
+                        "name": char["name"],
+                        "class_id" : char["class"],
+                        "level":  char["level"],
+                        "exp":  char["exp"],
+            }
+
+            chars.append(charObj)
+    except BaseException as err:
+        print(err)
+ 
+    success = True
+    resp = {
+            "success": success,
+            "gem": account["gem"],
+            "gold": account["gold"],
+            "chars": chars
         }
 
-        chars.append(charObj)
-
-
+    return jsonify(resp)
 
 @app.route('/api/char/add', methods=['POST'])
 def add_character():
@@ -115,7 +126,7 @@ def add_character():
     else:
 
 
-        accountChars = account_chars.find({'account_email': account["email"]})
+        accountChars = list(account_chars.find({'account_email': account["email"]}))
         chars = []
 
         for char in accountChars:
