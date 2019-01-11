@@ -17,6 +17,7 @@ namespace ShiftServer.Base.Worlds
         Vector3 IZone.Scale { get; set; }
 
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
+        public SafeQueue<ShiftClient> MatchMakingPlayerList { get; set; }
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
         public SafeDictionary<string, IRoom> Rooms { get; set; }

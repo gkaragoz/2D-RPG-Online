@@ -74,14 +74,10 @@ namespace ShiftServer.Base.Auth
                     return group;
                 }
                 else
-                {
                     return null;
-                }
             }
             else
-            {
                 return null;
-            }
         }
 
         public bool JoinTeam(IGroup group)
@@ -101,9 +97,7 @@ namespace ShiftServer.Base.Auth
                 }
             }
             else
-            {
                 return false;
-            }
        
         }
         public bool LeaveFromTeam(IRoom room)
@@ -121,14 +115,10 @@ namespace ShiftServer.Base.Auth
                     return true;
                 }
                 else
-                {
                     return false;
-                }
             }
             else
-            {
                 return false;
-            }
         }
         private bool Send(byte[] bb)
         {
@@ -146,9 +136,7 @@ namespace ShiftServer.Base.Auth
                 }
             }
             else
-            {
                 return false;
-            }
         }
         // send message (via stream) with the <size,content> message structure
         protected static bool SendMessage(NetworkStream stream, byte[] content)
@@ -188,7 +176,7 @@ namespace ShiftServer.Base.Auth
     public static class ShiftHelper
     {
         public static ShiftClient GetShiftClient(List<ShiftClient> shifts, TcpClient tcpclient)
-        {
+        { 
             return shifts.Where(x => x.Client == tcpclient).FirstOrDefault();
         }
 

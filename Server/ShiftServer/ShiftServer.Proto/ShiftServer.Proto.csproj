@@ -71,10 +71,10 @@
     <Compile Include="Db\AccountFriendRequests.cs" />
     <Compile Include="Db\AccountSession.cs" />
     <Compile Include="Db\AccountStats.cs" />
+    <Compile Include="Models\Account.cs" />
     <Compile Include="Models\AuthResponse.cs" />
-    <Compile Include="Models\LoginForm.cs" />
+    <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ShiftServerMessages.cs" />
-    <Compile Include="Models\SignUpForm.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AccountService.cs" />
     <Compile Include="Services\SessionService.cs" />
