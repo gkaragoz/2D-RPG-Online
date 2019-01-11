@@ -26,15 +26,24 @@ public class LoadingManager : Menu {
     [SerializeField]
     private TextMeshProUGUI _txtFilledAmount;
 
+    [Header("Settings")]
+    [SerializeField]
+    private float _lerpSpeed;
+
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _completedProgressAmount;
     [SerializeField]
     [Utils.ReadOnly]
     private bool[] _checkList;
 
+    private void Update() {
+        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, _completedProgressAmount * 0.01f, Time.deltaTime * _lerpSpeed);
+    }
+
     public void SetCheckList(int checkpoints) {
         _checkList = new bool[checkpoints];
-        for (int ii = 0; ii < checkpoints; ii++) {
-            _checkList[ii] = false;
-        }
 
         UpdateUI("Loading! %0");
     }
@@ -55,16 +64,15 @@ public class LoadingManager : Menu {
     private void UpdateUI(string progressName) {
         float progressFilledAmount = GetPerProgressFilledAmount();
 
-        float filledAmount = 0;
+        _completedProgressAmount = 0;
 
         for (int ii = 0; ii < _checkList.Length; ii++) {
             if (_checkList[ii]) {
-                filledAmount += progressFilledAmount;        
+                _completedProgressAmount += progressFilledAmount;        
             }
         }
 
-        _imgFilledBar.fillAmount = filledAmount * 0.01f;
-        _txtFilledAmount.text = progressName + " %" + filledAmount;
+        _txtFilledAmount.text = progressName + " %" + _completedProgressAmount;
     }
 
     private float GetPerProgressFilledAmount() {

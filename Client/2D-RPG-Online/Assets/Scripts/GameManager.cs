@@ -19,10 +19,12 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     private void Start() {
-        LoadingManager.instance.SetCheckList(2);
+        LoadingManager.instance.SetCheckList(3);
 
         GooglePlayManager.instance.Initialize(OnGooglePlayInitialized);
         GooglePlayManager.instance.SignIn(OnSignInStatus);
+
+        LoadingManager.instance.Progress("Complete!");
     }
 
     private void OnSignInStatus(bool success) {
