@@ -7,6 +7,8 @@ using UnityEngine.SocialPlatforms;
 using GooglePlayGames.BasicApi.Multiplayer;
 using System;
 using SimpleHTTP;
+using ShiftServer.Proto.Models;
+using TMPro;
 
 public class GooglePlayManager : MonoBehaviour {
 
@@ -24,6 +26,9 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     #endregion
+
+    public TextMeshProUGUI txtDebug;
+    public TextMeshProUGUI txtIsAuthanticated;
 
     [Header("Initialization")]
     public string IDTokenURL;
@@ -45,6 +50,8 @@ public class GooglePlayManager : MonoBehaviour {
         PlayGamesPlatform.InitializeInstance(config);
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
+
+        SignIn();
     }
 
     public void SignIn() {
@@ -52,28 +59,52 @@ public class GooglePlayManager : MonoBehaviour {
         Social.localUser.Authenticate((bool signInSuccess) => {
             // handle success or failure
             if (signInSuccess) {
+                txtDebug.text = "SIGN IN SUCCESS\nGETTING SESSION ID";
+
                 // post IdToken and receive sessionID
                 IDTokenData idTokenData = new IDTokenData();
                 idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
 
-                StartCoroutine(IIdTokenPostMethod(idTokenData, (string sessionID) => {
-                    if (sessionID != string.Empty) {
-                        NetworkManager.instance.SessionID = sessionID;
+                StartCoroutine(IIdTokenPostMethod(idTokenData, (AuthResponse authResponse) => {
+                    if (authResponse.success) {
+                        txtDebug.text = "AUTHRESPONSE SUCCESS.\nGETTING ACCOUNDATA";
+
+                        //NetworkManager.instance.SessionID = authResponse.session;
 
                         // post sessionID and receive accountData
                         AccountData accountData = new AccountData();
-                        accountData.session_id = NetworkManager.instance.SessionID;
+                        //accountData.session_id = NetworkManager.instance.SessionID;
+                        accountData.session_id = authResponse.session;
 
-                        StartCoroutine(IAccountDataPostMethod(accountData, (bool accountDataSuccess) => {
-                            
+                        StartCoroutine(IAccountDataPostMethod(accountData, (Account accountResponse) => {
+                            string responseAccountString = accountResponse.gem + "\n" +
+                                                            accountResponse.gold + "\n";
+
+                            if (accountResponse.characters.Count > 0) {
+                                responseAccountString += accountResponse.characters[0].account_email + "\n" +
+                                                         accountResponse.characters[0].account_id + "\n" +
+                                                         accountResponse.characters[0].class_id + "\n" +
+                                                         accountResponse.characters[0].exp + "\n" +
+                                                         accountResponse.characters[0].level + "\n" +
+                                                         accountResponse.characters[0].name + "\n" +
+                                                         accountResponse.characters[0];
+                            }
+
+                            txtDebug.text = responseAccountString;
                         }));
                     } else {
                         // couldn't receive sessionID;
                         // retry SignIn and get sessionID
+
+                        txtDebug.text = "COULDN'T RECEIVE SESSION ID";
                     }
                 }));
+            } else {
+                txtDebug.text = "COULDN'T SIGN IS SUCCESFULY";
             }
         });
+
+        txtIsAuthanticated.text = Social.localUser.authenticated.ToString();
     }
 
     public void UnlockAchievement() {
@@ -175,7 +206,9 @@ public class GooglePlayManager : MonoBehaviour {
         PlayGamesPlatform.Instance.SignOut();
     }
 
-    private IEnumerator IIdTokenPostMethod(IDTokenData data, Action<string> callback) {
+    private IEnumerator IIdTokenPostMethod(IDTokenData data, Action<AuthResponse> callback) {
+        AuthResponse authResponse = new AuthResponse();
+
         Request request = new Request(IDTokenURL)
             .Post(RequestBody.From(data));
 
@@ -186,15 +219,18 @@ public class GooglePlayManager : MonoBehaviour {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            //AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
-            //callback(authRespone.success);
+            authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
-            //callback(false);
+
+            callback(authResponse);
         }
     }
 
-    private IEnumerator IAccountDataPostMethod(AccountData data, Action<bool> callback) {
+    private IEnumerator IAccountDataPostMethod(AccountData data, Action<Account> callback) {
+        Account account = new Account();
+
         Request request = new Request(AccountDataURL)
             .Post(RequestBody.From(data));
 
@@ -205,12 +241,13 @@ public class GooglePlayManager : MonoBehaviour {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            //AccountData accountData = JsonUtility.FromJson<AccountData>(resp.Body());
+            account = JsonUtility.FromJson<Account>(resp.Body());
+            callback(account);
         } else {
             Debug.Log("error: " + http.Error());
-        }
 
-        callback(http.IsSuccessful());
+            callback(account);
+        }
     }
 
 }

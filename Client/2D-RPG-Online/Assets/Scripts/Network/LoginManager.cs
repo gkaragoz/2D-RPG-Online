@@ -8,136 +8,136 @@ using UnityEngine.UI;
 
 public class LoginManager : Menu {
 
-    #region Singleton
+    //#region Singleton
 
-    public static LoginManager instance;
+    //public static LoginManager instance;
 
-    void Awake() {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
+    //void Awake() {
+    //    if (instance == null)
+    //        instance = this;
+    //    else if (instance != this)
+    //        Destroy(gameObject);
 
-        DontDestroyOnLoad(instance);
-    }
+    //    DontDestroyOnLoad(instance);
+    //}
 
-    #endregion
+    ////#endregion
 
-    public class LoginData {
-        public string username;
-        public string password;
-    }
+    //public class LoginData {
+    //    public string username;
+    //    public string password;
+    //}
 
-    [SerializeField]
-    private TMP_InputField _inputFieldUsername;
-    [SerializeField]
-    private TMP_InputField _inputFieldPassword;
-    [SerializeField]
-    private Button _btnLogin;
-    [SerializeField]
-    private Button _btnSignup;
+    //[SerializeField]
+    //private TMP_InputField _inputFieldUsername;
+    //[SerializeField]
+    //private TMP_InputField _inputFieldPassword;
+    //[SerializeField]
+    //private Button _btnLogin;
+    //[SerializeField]
+    //private Button _btnSignup;
 
-    [Header("Settings")]
-    public string URL;
+    //[Header("Settings")]
+    //public string URL;
 
-    public bool IsURLEmpty {
-        get { return URL == string.Empty ? true : false; }
-    }
+    //public bool IsURLEmpty {
+    //    get { return URL == string.Empty ? true : false; }
+    //}
 
-    public bool IsUsernameValid {
-        get { return _inputFieldUsername.text != string.Empty ? true : false; }
-    }
+    //public bool IsUsernameValid {
+    //    get { return _inputFieldUsername.text != string.Empty ? true : false; }
+    //}
 
-    public bool IsPasswordValid {
-        get { return _inputFieldPassword.text != string.Empty ? true : false; }
-    }
+    //public bool IsPasswordValid {
+    //    get { return _inputFieldPassword.text != string.Empty ? true : false; }
+    //}
 
-    public string GetUsername() {
-        return _inputFieldUsername.text;
-    }
+    //public string GetUsername() {
+    //    return _inputFieldUsername.text;
+    //}
 
-    public string GetPassword() {
-        return _inputFieldPassword.text;
-    }
+    //public string GetPassword() {
+    //    return _inputFieldPassword.text;
+    //}
 
-    private const string LOGIN = "Trying to login into the account... ";
-    private const string ON_LOGIN_SUCCESS = "Login success!";
-    private const string ON_LOGIN_FAILED = "Login failed!";
-    private const string ON_CAN_NOT_CONNECT_TO_HOST = "Login failed! Can not connect to host!";
+    //private const string LOGIN = "Trying to login into the account... ";
+    //private const string ON_LOGIN_SUCCESS = "Login success!";
+    //private const string ON_LOGIN_FAILED = "Login failed!";
+    //private const string ON_CAN_NOT_CONNECT_TO_HOST = "Login failed! Can not connect to host!";
 
-    public void Login() {
-        if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
-            LogManager.instance.AddLog(LOGIN, Log.Type.Server);
+    //public void Login() {
+    //    if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
+    //        LogManager.instance.AddLog(LOGIN, Log.Type.Server);
 
-            StartCoroutine(ILoginPostMethod());
-        } else {
-            LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
-        }
-    }
+    //        StartCoroutine(ILoginPostMethod());
+    //    } else {
+    //        LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
+    //    }
+    //}
 
-    private IEnumerator ILoginPostMethod() {
-        PopupManager.instance.ShowLoadingPopup(LOGIN);
+    //private IEnumerator ILoginPostMethod() {
+    //    PopupManager.instance.ShowLoadingPopup(LOGIN);
 
-        LoginData data = new LoginData();
-        data.username = _inputFieldUsername.text;
-        data.password = _inputFieldPassword.text;
+    //    LoginData data = new LoginData();
+    //    data.username = _inputFieldUsername.text;
+    //    data.password = _inputFieldPassword.text;
 
-        JsonUtility.ToJson(data);
+    //    JsonUtility.ToJson(data);
 
-        Request request = new Request(URL)
-            .Post(RequestBody.From<LoginData>(data));
+    //    Request request = new Request(URL)
+    //        .Post(RequestBody.From<LoginData>(data));
 
-        Client http = new Client();
-        yield return http.Send(request);
+    //    Client http = new Client();
+    //    yield return http.Send(request);
 
-        if (http.IsSuccessful()) {
-            Response resp = http.Response();
-            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+    //    if (http.IsSuccessful()) {
+    //        Response resp = http.Response();
+    //        Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+    //        AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
 
-            if (authResponse.Success) {
-                PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
+    //        if (authResponse.Success) {
+    //            PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
 
-                LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+    //            LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
 
-                this.Hide();
-                LobbyManager.instance.Initialize();
-                RoomManager.instance.Initialize();
-                FriendManager.instance.Initialize();
-                LobbyManager.instance.Show();
-                FriendManager.instance.Show();
+    //            this.Hide();
+    //            LobbyManager.instance.Initialize();
+    //            RoomManager.instance.Initialize();
+    //            FriendManager.instance.Initialize();
+    //            LobbyManager.instance.Show();
+    //            FriendManager.instance.Show();
 
-                //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
-                //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
-                //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-                //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
-            } else {
-                LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
+    //            //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
+    //            //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
+    //            //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
+    //            //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
+    //        } else {
+    //            LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
 
-                PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f, true);
-            }
-        } else {
-            Debug.Log("error: " + http.Error());
-            PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
-        }
-    }
+    //            PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f, true);
+    //        }
+    //    } else {
+    //        Debug.Log("error: " + http.Error());
+    //        PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
+    //    }
+    //}
 
-    public void GoToSignupPage() {
-        this.Hide();
-        SignupManager.instance.Show();
-    }
+    //public void GoToSignupPage() {
+    //    this.Hide();
+    //    SignupManager.instance.Show();
+    //}
 
-    public void ActivateLoginUIs() {
-        _inputFieldUsername.interactable = true;
-        _inputFieldPassword.interactable = true;
-        _btnLogin.interactable = true;
-    }
+    //public void ActivateLoginUIs() {
+    //    _inputFieldUsername.interactable = true;
+    //    _inputFieldPassword.interactable = true;
+    //    _btnLogin.interactable = true;
+    //}
 
-    public void DeactivateLoginUIS() {
-        _inputFieldUsername.interactable = false;
-        _inputFieldPassword.interactable = false;
-        _btnLogin.interactable = false;
-    }
+    //public void DeactivateLoginUIS() {
+    //    _inputFieldUsername.interactable = false;
+    //    _inputFieldPassword.interactable = false;
+    //    _btnLogin.interactable = false;
+    //}
 
 }

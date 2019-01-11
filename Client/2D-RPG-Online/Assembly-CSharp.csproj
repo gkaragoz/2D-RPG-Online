@@ -311,16 +311,20 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
+    <None Include="Assets\Scripts\Network\ShiftServer\DnsClient.xml" />
+    <None Include="Assets\Scripts\Network\ShiftServer\MongoDB.Bson.xml" />
     <None Include="Assets\Scripts\Network\ShiftServer\protobuf-net.xml" />
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Following Characters.txt" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Masking.shader" />
+    <None Include="Assets\Scripts\Network\ShiftServer\MongoDB.Driver.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap-Mobile.shader" />
     <None Include="Assets\Sprites\Kyrise's 16x16 RPG Icon Pack - V1.2\read me.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Surface.cginc" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
     <None Include="Assets\FacebookSDK\link.xml" />
+    <None Include="Assets\Scripts\Network\ShiftServer\MongoDB.Driver.Core.xml" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
     <None Include="Assets\Scripts\Network\ShiftServer\ShiftServer.Client.xml" />
@@ -577,6 +581,21 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="DnsClient">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/DnsClient.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
