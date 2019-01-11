@@ -44,7 +44,7 @@ namespace ShiftServer.Base.Zones
                 ShiftServerData errorData = new ShiftServerData();
                 errorData.ErrorReason = ShiftServerError.WrongClientData;
                 log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-                shift.SendPacket(MSServerEvent.LoginFailed, errorData);
+                shift.SendPacket(MSServerEvent.AccountJoin, errorData);
                 return;
             }
 
@@ -67,7 +67,7 @@ namespace ShiftServer.Base.Zones
             data.AccountData.VirtualMoney = 100;
             data.AccountData.VirtualSpecialMoney = 100;
 
-            shift.SendPacket(MSServerEvent.Login, data);
+            shift.SendPacket(MSServerEvent.AccountJoin, data);
             shift.UserName = data.AccountData.Username;
             SocketIdSessionLookup.Add(sessionId, shift.connectionId);
             log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");

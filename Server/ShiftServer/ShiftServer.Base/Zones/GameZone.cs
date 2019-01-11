@@ -17,6 +17,7 @@ namespace ShiftServer.Base.Worlds
         Vector3 IZone.Scale { get; set; }
 
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
+        public SafeQueue<ShiftClient> MatchMakingPlayerList { get; set; }
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
         public SafeDictionary<string, IRoom> Rooms { get; set; }
@@ -169,51 +170,5 @@ namespace ShiftServer.Base.Worlds
   
         }
 
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>
-        ///
-        /// data.Session;
-        /// data.AccountData;
-        /// </returns>
-        /// <param name="data"></param>
-        /// <param name="shift"></param>
-        public void OnAccountLogin(ShiftServerData data, ShiftClient shift)
-        {
-            if (data.ClientInfo == null)
-            {
-                ShiftServerData errorData = new ShiftServerData();
-                errorData.ErrorReason = ShiftServerError.WrongClientData;
-                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-                shift.SendPacket(MSServerEvent.LoginFailed, errorData);
-                return;
-            }
-
-          
-            //check account
-            string accUsername = data.Account.Username;
-            string accPassword = data.Account.Password;
-            //QUERY TO SOMEWHERE ELSE
-
-            //Checking the client has only one player character under control
-            shift.UserSession.SetSid(data);
-            string sessionId = shift.UserSession.GetSid();
-            data.Session = new SessionData();
-            data.Session.Sid = sessionId;
-            //check login data
-
-            data.Account = null;
-            data.AccountData = new CommonAccountData();
-            data.AccountData.Username = accUsername;
-            data.AccountData.VirtualMoney = 100;
-            data.AccountData.VirtualSpecialMoney = 100;
-
-            shift.SendPacket(MSServerEvent.Login, data);
-            shift.UserName = data.AccountData.Username;
-            SocketIdSessionLookup.Add(sessionId, shift.connectionId);
-            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
-
-        }
     }
 }

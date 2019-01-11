@@ -22,6 +22,8 @@ namespace ShiftServer.Base.Core
         }
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
+            if (!_sp.SessionCheck(data, shift))
+                return;
 
             Battleground newRoom = new Battleground(2, 5);
 
@@ -102,6 +104,10 @@ namespace ShiftServer.Base.Core
             IRoom prevRoom = null;
 
             log.Info($"ClientNO: {shift.connectionId} ------> RoomJoin");
+
+            if (!_sp.SessionCheck(data, shift))
+                return;
+
             if (shift.IsJoinedToRoom)
             {
                 _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
@@ -227,6 +233,25 @@ namespace ShiftServer.Base.Core
             }
         }
 
+        public void OnMatchMaking(ShiftServerData data, ShiftClient shift)
+        {
+            try
+            {
+                if (!_sp.SessionCheck(data, shift))
+                    return;
+
+                
+
+            }
+            catch (Exception err)
+            {
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem);
+                ShiftServerData errdata = new ShiftServerData();
+                errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
+                shift.SendPacket(MSServerEvent.RoomLeaveFailed, errdata);
+
+            }
+        }
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
             try
@@ -234,6 +259,10 @@ namespace ShiftServer.Base.Core
                 IRoom prevRoom = null;
                 bool isDestroyed = false;
                 log.Info($"ClientNO: {shift.connectionId} ------> RoomLeave");
+
+                if (!_sp.SessionCheck(data, shift))
+                    return;
+
                 if (shift.IsJoinedToRoom)
                 {
                     _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
@@ -327,6 +356,10 @@ namespace ShiftServer.Base.Core
             log.Info($"ClientNO: {shift.connectionId} ------> RoomDelete");
             bool isSuccess = false;
             IRoom room = null;
+
+            if (!_sp.SessionCheck(data, shift))
+                return;
+
             if (data.RoomData.DeletedRoom != null)
             {
                 _sp.world.Rooms.TryGetValue(data.RoomData.DeletedRoom.Id, out room);
@@ -390,6 +423,10 @@ namespace ShiftServer.Base.Core
         public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> LobbyRefresh");
+
+            if (!_sp.SessionCheck(data, shift))
+                return;
+
             DateTime now = DateTime.UtcNow;
             //room data
             data.RoomData = new RoomData();

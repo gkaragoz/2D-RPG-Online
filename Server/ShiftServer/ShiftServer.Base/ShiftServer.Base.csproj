@@ -53,6 +53,7 @@
     <Reference Include="System.Buffers, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Buffers.4.3.0\lib\netstandard1.1\System.Buffers.dll</HintPath>
     </Reference>
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
     <Reference Include="System.Numerics.Vectors" />
@@ -73,6 +74,7 @@
     <Compile Include="Auth\Crypto.cs" />
     <Compile Include="Auth\ShiftClient.cs" />
     <Compile Include="Core\ChatProvider.cs" />
+    <Compile Include="Core\DBServiceProvider.cs" />
     <Compile Include="Core\GroupProvider.cs" />
     <Compile Include="Core\IClient.cs" />
     <Compile Include="Core\ICommand.cs" />
@@ -105,6 +107,7 @@
     <Folder Include="Factory\AI\" />
     <Folder Include="Factory\Combat\" />
     <Folder Include="Factory\Loot\" />
+    <Folder Include="System\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">

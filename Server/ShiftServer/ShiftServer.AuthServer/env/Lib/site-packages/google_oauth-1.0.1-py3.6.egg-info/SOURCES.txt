@@ -1,0 +1,11 @@
+README.rst
+setup.cfg
+setup.py
+google_oauth/__init__.py
+google_oauth/exceptions.py
+google_oauth/service.py
+google_oauth.egg-info/PKG-INFO
+google_oauth.egg-info/SOURCES.txt
+google_oauth.egg-info/dependency_links.txt
+google_oauth.egg-info/requires.txt
+google_oauth.egg-info/top_level.txt

@@ -13,7 +13,6 @@ namespace ShiftServer.Base.Core
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         SafeDictionary<string, IRoom> Rooms { get; set; }
         SafeDictionary<string, Thread> RoomGameThreadList { get; set; }
-        void OnAccountLogin(ShiftServerData data, ShiftClient client);
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
