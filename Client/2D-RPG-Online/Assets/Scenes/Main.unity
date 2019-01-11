@@ -865,7 +865,7 @@ Transform:
   m_Children:
   - {fileID: 1443702649}
   m_Father: {fileID: 0}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64685929
 GameObject:
@@ -6711,7 +6711,7 @@ Transform:
   m_Children:
   - {fileID: 717115456}
   m_Father: {fileID: 0}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &480033596
 GameObject:
@@ -20726,7 +20726,7 @@ GameObject:
   - component: {fileID: 1313327375}
   - component: {fileID: 1313327374}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtFilledAmount
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23919,6 +23919,53 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
+--- !u!1 &1469689116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1469689118}
+  - component: {fileID: 1469689117}
+  m_Layer: 0
+  m_Name: _LoadingManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1469689117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469689116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a1fe9448b7681f64cbf9f28f4314b861, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  container: {fileID: 1718954593}
+  _imgFilledBar: {fileID: 1920225980}
+  _txtFilledAmount: {fileID: 1313327374}
+  _checkList: 
+--- !u!4 &1469689118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1469689116}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1478910487
 GameObject:
   m_ObjectHideFlags: 0
@@ -28893,7 +28940,7 @@ Transform:
   - {fileID: 1877065972}
   - {fileID: 353455130}
   m_Father: {fileID: 0}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1820584311
 GameObject:
@@ -30614,7 +30661,7 @@ GameObject:
   - component: {fileID: 1920225981}
   - component: {fileID: 1920225980}
   m_Layer: 5
-  m_Name: imgFilled
+  m_Name: imgFilledBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
