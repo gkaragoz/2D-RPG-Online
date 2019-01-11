@@ -297,6 +297,7 @@
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />
     <Compile Include="Assets\Scripts\Systems\GooglePlay\GooglePlayManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\Loading\LoadingManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\Log.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
@@ -334,11 +335,11 @@
     <Reference Include="Unity.PackageManagerUI.Editor">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.PackageManagerUI.Editor.dll</HintPath>
     </Reference>
-    <Reference Include="Unity.TextMeshPro">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
-    </Reference>
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
+    </Reference>
+    <Reference Include="Unity.TextMeshPro">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>

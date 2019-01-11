@@ -6,16 +6,39 @@ using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
 using GooglePlayGames.BasicApi.Multiplayer;
 using System;
+using SimpleHTTP;
 
 public class GooglePlayManager : MonoBehaviour {
 
-    public TMPro.TextMeshProUGUI txtID;
-    public TMPro.TextMeshProUGUI txtAuthCode;
-    public TMPro.TextMeshProUGUI txtAuthanticated;
+    #region Singleton
+
+    public static GooglePlayManager instance;
+
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
+    }
+
+    #endregion
+
+    [Header("Initialization")]
+    public string IDTokenURL;
+    public string AccountDataURL;
+
+    public class IDTokenData {
+        public string id_token;
+    }
+
+    public class AccountData {
+        public string session_id;
+    }
 
     private void Start() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
-            .RequestServerAuthCode(false)
             .RequestIdToken()
             .Build();
 
@@ -24,22 +47,32 @@ public class GooglePlayManager : MonoBehaviour {
         PlayGamesPlatform.Activate();
     }
 
-    private void Update() {
-        txtAuthanticated.text = PlayGamesPlatform.Instance.IsAuthenticated().ToString();
-
-        if (Social.localUser.authenticated) {
-            txtID.text = "ID:" + PlayGamesPlatform.Instance.GetIdToken();
-
-            if (txtAuthCode.text != string.Empty) {
-                txtAuthCode.text = "ServerAuth:" + PlayGamesPlatform.Instance.GetServerAuthCode();
-            }
-        }
-    }
-
     public void SignIn() {
         // authenticate user:
-        Social.localUser.Authenticate((bool success) => {
+        Social.localUser.Authenticate((bool signInSuccess) => {
             // handle success or failure
+            if (signInSuccess) {
+                // post IdToken and receive sessionID
+                IDTokenData idTokenData = new IDTokenData();
+                idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
+
+                StartCoroutine(IIdTokenPostMethod(idTokenData, (string sessionID) => {
+                    if (sessionID != string.Empty) {
+                        NetworkManager.instance.SessionID = sessionID;
+
+                        // post sessionID and receive accountData
+                        AccountData accountData = new AccountData();
+                        accountData.session_id = NetworkManager.instance.SessionID;
+
+                        StartCoroutine(IAccountDataPostMethod(accountData, (bool accountDataSuccess) => {
+                            
+                        }));
+                    } else {
+                        // couldn't receive sessionID;
+                        // retry SignIn and get sessionID
+                    }
+                }));
+            }
         });
     }
 
@@ -109,8 +142,7 @@ public class GooglePlayManager : MonoBehaviour {
             userIds.Add(score.userID);
         }
         // load the profiles and display (or in this case, log)
-        Social.LoadUsers(userIds.ToArray(), (users) =>
-        {
+        Social.LoadUsers(userIds.ToArray(), (users) => {
             string status = "Leaderboard loading: " + lb.title + " count = " +
                 lb.scores.Length;
             foreach (IScore score in lb.scores) {
@@ -130,7 +162,7 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     public void LoadFriends() {
-            Social.localUser.LoadFriends((ok) => {
+        Social.localUser.LoadFriends((ok) => {
             Debug.Log("Friends loaded OK: " + ok);
             foreach (IUserProfile p in Social.localUser.friends) {
                 Debug.Log(p.userName + " is a friend");
@@ -141,6 +173,44 @@ public class GooglePlayManager : MonoBehaviour {
     public void SignOut() {
         // sign out
         PlayGamesPlatform.Instance.SignOut();
+    }
+
+    private IEnumerator IIdTokenPostMethod(IDTokenData data, Action<string> callback) {
+        Request request = new Request(IDTokenURL)
+            .Post(RequestBody.From(data));
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            //AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            //callback(authRespone.success);
+        } else {
+            Debug.Log("error: " + http.Error());
+            //callback(false);
+        }
+    }
+
+    private IEnumerator IAccountDataPostMethod(AccountData data, Action<bool> callback) {
+        Request request = new Request(AccountDataURL)
+            .Post(RequestBody.From(data));
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            //AccountData accountData = JsonUtility.FromJson<AccountData>(resp.Body());
+        } else {
+            Debug.Log("error: " + http.Error());
+        }
+
+        callback(http.IsSuccessful());
     }
 
 }

@@ -7,6 +7,8 @@ public class NetworkManager : MonoBehaviour {
     
     public static ManaShiftServer mss;
 
+    public string SessionID { get; set; }
+
     [SerializeField]
     private string _hostName = "127.0.0.0";
 
