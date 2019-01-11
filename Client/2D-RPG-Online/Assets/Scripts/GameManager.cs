@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour {
@@ -19,24 +20,16 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     private void Start() {
-        LoadingManager.instance.SetCheckList(3);
+        List<Task> tasks = new List<Task>();
+        tasks.Add(GooglePlayManager.instance.initializationProgress);
+        tasks.Add(GooglePlayManager.instance.signInResponseProgress);
+        tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
+        tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
 
-        GooglePlayManager.instance.Initialize(OnGooglePlayInitialized);
-        GooglePlayManager.instance.SignIn(OnSignInStatus);
+        LoadingManager.instance.SetCheckList(tasks);
 
-        LoadingManager.instance.Progress("Complete!");
-    }
-
-    private void OnSignInStatus(bool success) {
-        if (success) {
-            LoadingManager.instance.Progress("Sign in completed!");
-        } else {
-            Debug.Log("FLOW FAILED: Sign in into Google Play Services!");
-        }
-    }
-
-    private void OnGooglePlayInitialized() {
-        LoadingManager.instance.Progress("GPGS initialized");
+        GooglePlayManager.instance.Initialize();
+        GooglePlayManager.instance.SignIn();
     }
 
 }

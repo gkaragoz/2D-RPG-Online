@@ -25,6 +25,11 @@ public class GooglePlayManager : MonoBehaviour {
 
     #endregion
 
+    public Task initializationProgress;
+    public Task signInResponseProgress;
+    public Task sessionIdResponseProgress;
+    public Task accountDataResponseProgress;
+
     [Header("Initialization")]
     public string IDTokenURL;
     public string AccountDataURL;
@@ -38,18 +43,21 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private const string ATTEMP_TO_SIGN_IN = "ATTEMP to Google Play sign in!";
+    private const string ATTEMP_TO_SIGN_OUT = "ATTEMP to Google Play sign out!";
     private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
     private const string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
 
     private const string ERROR_SIGN_IN = "ERROR on Google Play sign in!";
+    private const string ERROR_SIGN_OUT = "ERROR on Google Play sign out!";
     private const string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
     private const string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
 
     private const string SUCCESS_SIGN_IN = "SUCCESS on Google Play sign in!";
+    private const string SUCCESS_SIGN_OUT = "SUCCESS on Google Play sign out!";
     private const string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
     private const string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
 
-    public void Initialize(Action callback) {
+    public void Initialize() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
             .RequestIdToken()
             .Build();
@@ -58,51 +66,14 @@ public class GooglePlayManager : MonoBehaviour {
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
 
-        callback();
+        initializationProgress?.Invoke();
     }
 
-    public void SignIn(Action<bool> callback) {
+    public void SignIn() {
         Debug.Log(ATTEMP_TO_SIGN_IN);
 
         // authenticate user:
-        Social.localUser.Authenticate((bool signInSuccess) => {
-            // handle success or failure
-            if (signInSuccess) {
-                Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
-                Debug.Log(ATTEMP_TO_GET_SESSION_ID);
-
-                // post IdToken and receive sessionID
-                IDTokenData idTokenData = new IDTokenData();
-                idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
-
-                StartCoroutine(IIdTokenPostMethod(idTokenData, (AuthResponse authResponse) => {
-                    if (authResponse.success) {
-                        Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session);
-
-                        //NetworkManager.instance.SessionID = authResponse.session;
-
-                        // post sessionID and receive accountData
-                        AccountData accountData = new AccountData();
-                        //accountData.session_id = NetworkManager.instance.SessionID;
-                        accountData.session_id = authResponse.session;
-
-                        StartCoroutine(IAccountDataPostMethod(accountData, (Account accountResponse) => {
-                            Debug.Log(SUCCESS_GET_ACCOUNT_INFO);
-                        }));
-                    } else {
-                        // couldn't receive sessionID;
-                        // retry SignIn and get sessionID
-
-                        Debug.Log(ERROR_GET_SESSION_ID);
-                    }
-                }));
-            } else {
-                Debug.Log(ERROR_SIGN_IN);
-            }
-        });
-
-        Debug.Log("Finished");
-        callback(Social.localUser.authenticated);
+        Social.localUser.Authenticate(OnSignInResponse);
     }
 
     public void UnlockAchievement() {
@@ -200,8 +171,15 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     public void SignOut() {
+        Debug.Log(ATTEMP_TO_SIGN_OUT + Social.localUser.userName);
         // sign out
         PlayGamesPlatform.Instance.SignOut();
+
+        if (Social.localUser.authenticated) {
+            Debug.Log(ERROR_SIGN_OUT + Social.localUser.userName);
+        } else {
+            Debug.Log(SUCCESS_SIGN_OUT);
+        }
     }
 
     private IEnumerator IIdTokenPostMethod(IDTokenData data, Action<AuthResponse> callback) {
@@ -246,6 +224,54 @@ public class GooglePlayManager : MonoBehaviour {
 
             callback(account);
         }
+    }
+
+    private void OnSignInResponse(bool success) {
+        signInResponseProgress?.Invoke();
+
+        // handle success or failure
+        if (success) {
+            Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
+            Debug.Log(ATTEMP_TO_GET_SESSION_ID);
+
+            // post IdToken and receive sessionID
+            IDTokenData idTokenData = new IDTokenData();
+            idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
+
+            StartCoroutine(IIdTokenPostMethod(idTokenData, OnSessionIDResponse));
+        } else {
+            Debug.Log(ERROR_SIGN_IN);
+        }
+    }
+
+    private void OnSessionIDResponse(AuthResponse authResponse) {
+        sessionIdResponseProgress?.Invoke();
+
+        if (authResponse.success) {
+            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session);
+            Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
+
+            //NetworkManager.instance.SessionID = authResponse.session;
+
+            // post sessionID and receive accountData
+            AccountData accountData = new AccountData();
+            //accountData.session_id = NetworkManager.instance.SessionID;
+            accountData.session_id = authResponse.session;
+
+            StartCoroutine(IAccountDataPostMethod(accountData, OnAccountDataResponse));
+        } else {
+            // couldn't receive sessionID;
+            // retry SignIn and get sessionID
+
+            Debug.Log(ERROR_GET_SESSION_ID);
+            SignOut();
+        }
+    }
+
+    private void OnAccountDataResponse(Account accountResponse) {
+        accountDataResponseProgress?.Invoke();
+
+        Debug.Log(SUCCESS_GET_ACCOUNT_INFO);
     }
 
 }

@@ -298,6 +298,7 @@
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />
     <Compile Include="Assets\Scripts\Systems\GooglePlay\GooglePlayManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Loading\LoadingManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\Loading\Task.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\Log.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
