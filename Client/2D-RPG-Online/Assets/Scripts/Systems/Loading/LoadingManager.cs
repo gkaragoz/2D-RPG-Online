@@ -28,19 +28,19 @@ public class LoadingManager : Menu {
 
     [SerializeField]
     [Utils.ReadOnly]
-    private List<bool> _checkList = new List<bool>();
+    private bool[] _checkList;
 
     public void SetCheckList(int checkpoints) {
-        _checkList = new List<bool>();
+        _checkList = new bool[checkpoints];
         for (int ii = 0; ii < checkpoints; ii++) {
             _checkList[ii] = false;
         }
 
-        UpdateUI();
+        UpdateUI("Loading! %0");
     }
 
-    public void CompleteACheckpoint() {
-        for (int ii = 0; ii < _checkList.Count; ii++) {
+    public void Progress(string progressName) {
+        for (int ii = 0; ii < _checkList.Length; ii++) {
             if (_checkList[ii]) {
                 continue;
             } else {
@@ -48,25 +48,27 @@ public class LoadingManager : Menu {
                 break;
             }
         }
+
+        UpdateUI(progressName);
     }
 
-    private void UpdateUI() {
+    private void UpdateUI(string progressName) {
         float progressFilledAmount = GetPerProgressFilledAmount();
 
         float filledAmount = 0;
 
-        for (int ii = 0; ii < _checkList.Count; ii++) {
+        for (int ii = 0; ii < _checkList.Length; ii++) {
             if (_checkList[ii]) {
                 filledAmount += progressFilledAmount;        
             }
         }
 
-        _imgFilledBar.fillAmount = filledAmount;
-        _txtFilledAmount.text = "Loading! %" + filledAmount;
+        _imgFilledBar.fillAmount = filledAmount * 0.01f;
+        _txtFilledAmount.text = progressName + " %" + filledAmount;
     }
 
     private float GetPerProgressFilledAmount() {
-        return 100 / _checkList.Count;
+        return (100 / _checkList.Length);
     }
 
 }

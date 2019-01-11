@@ -4,11 +4,9 @@ using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
-using GooglePlayGames.BasicApi.Multiplayer;
 using System;
 using SimpleHTTP;
 using ShiftServer.Proto.Models;
-using TMPro;
 
 public class GooglePlayManager : MonoBehaviour {
 
@@ -27,9 +25,6 @@ public class GooglePlayManager : MonoBehaviour {
 
     #endregion
 
-    public TextMeshProUGUI txtDebug;
-    public TextMeshProUGUI txtIsAuthanticated;
-
     [Header("Initialization")]
     public string IDTokenURL;
     public string AccountDataURL;
@@ -42,7 +37,19 @@ public class GooglePlayManager : MonoBehaviour {
         public string session_id;
     }
 
-    private void Start() {
+    private const string ATTEMP_TO_SIGN_IN = "ATTEMP to Google Play sign in!";
+    private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
+    private const string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
+
+    private const string ERROR_SIGN_IN = "ERROR on Google Play sign in!";
+    private const string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
+    private const string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
+
+    private const string SUCCESS_SIGN_IN = "SUCCESS on Google Play sign in!";
+    private const string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
+    private const string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
+
+    public void Initialize(Action callback) {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
             .RequestIdToken()
             .Build();
@@ -51,15 +58,18 @@ public class GooglePlayManager : MonoBehaviour {
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
 
-        SignIn();
+        callback();
     }
 
-    public void SignIn() {
+    public void SignIn(Action<bool> callback) {
+        Debug.Log(ATTEMP_TO_SIGN_IN);
+
         // authenticate user:
         Social.localUser.Authenticate((bool signInSuccess) => {
             // handle success or failure
             if (signInSuccess) {
-                txtDebug.text = "SIGN IN SUCCESS\nGETTING SESSION ID";
+                Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
+                Debug.Log(ATTEMP_TO_GET_SESSION_ID);
 
                 // post IdToken and receive sessionID
                 IDTokenData idTokenData = new IDTokenData();
@@ -67,7 +77,7 @@ public class GooglePlayManager : MonoBehaviour {
 
                 StartCoroutine(IIdTokenPostMethod(idTokenData, (AuthResponse authResponse) => {
                     if (authResponse.success) {
-                        txtDebug.text = "AUTHRESPONSE SUCCESS.\nGETTING ACCOUNDATA";
+                        Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session);
 
                         //NetworkManager.instance.SessionID = authResponse.session;
 
@@ -77,34 +87,22 @@ public class GooglePlayManager : MonoBehaviour {
                         accountData.session_id = authResponse.session;
 
                         StartCoroutine(IAccountDataPostMethod(accountData, (Account accountResponse) => {
-                            string responseAccountString = accountResponse.gem + "\n" +
-                                                            accountResponse.gold + "\n";
-
-                            if (accountResponse.characters.Count > 0) {
-                                responseAccountString += accountResponse.characters[0].account_email + "\n" +
-                                                         accountResponse.characters[0].account_id + "\n" +
-                                                         accountResponse.characters[0].class_id + "\n" +
-                                                         accountResponse.characters[0].exp + "\n" +
-                                                         accountResponse.characters[0].level + "\n" +
-                                                         accountResponse.characters[0].name + "\n" +
-                                                         accountResponse.characters[0];
-                            }
-
-                            txtDebug.text = responseAccountString;
+                            Debug.Log(SUCCESS_GET_ACCOUNT_INFO);
                         }));
                     } else {
                         // couldn't receive sessionID;
                         // retry SignIn and get sessionID
 
-                        txtDebug.text = "COULDN'T RECEIVE SESSION ID";
+                        Debug.Log(ERROR_GET_SESSION_ID);
                     }
                 }));
             } else {
-                txtDebug.text = "COULDN'T SIGN IS SUCCESFULY";
+                Debug.Log(ERROR_SIGN_IN);
             }
         });
 
-        txtIsAuthanticated.text = Social.localUser.authenticated.ToString();
+        Debug.Log("Finished");
+        callback(Social.localUser.authenticated);
     }
 
     public void UnlockAchievement() {
