@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        if (Input.GetKey(KeyCode.Space)) {
+        if (Input.GetButton("Fire1")) {
             Attack();
         }
     }
