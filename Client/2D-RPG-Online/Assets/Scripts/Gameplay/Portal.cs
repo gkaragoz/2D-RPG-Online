@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Portal : MonoBehaviour {
 
-    public Animator animator;
     public Transform spawnedTransform;
+    public Transform spawnPoint;
 
     public void Init(Transform spawnedTransform) {
         this.spawnedTransform = spawnedTransform;
@@ -13,13 +13,7 @@ public class Portal : MonoBehaviour {
 
     public void Spawn() {
         spawnedTransform = Instantiate(spawnedTransform);
-        animator.SetTrigger("Move");
-    }
-
-    private void Update() {
-        if (spawnedTransform != null) {
-            spawnedTransform.position = animator.transform.position;
-        }
+        spawnedTransform.position = spawnPoint.position;
     }
 
 }
