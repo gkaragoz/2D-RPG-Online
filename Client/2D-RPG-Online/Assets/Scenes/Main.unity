@@ -31662,6 +31662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba41859e8a3ac7f4ca30abe4371bb318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  accountDataResponseProgress: {fileID: 1469689119}
 --- !u!4 &1913362829
 Transform:
   m_ObjectHideFlags: 0
@@ -33940,8 +33941,6 @@ MonoBehaviour:
   signInResponseProgress: {fileID: 1469689119}
   sessionIdResponseProgress: {fileID: 1469689119}
   accountDataResponseProgress: {fileID: 1469689119}
-  IDTokenURL: http://192.168.1.2:5555/api/auth/login
-  AccountDataURL: http://192.168.1.2:5555/api/user/account
 --- !u!4 &2049785930
 Transform:
   m_ObjectHideFlags: 0

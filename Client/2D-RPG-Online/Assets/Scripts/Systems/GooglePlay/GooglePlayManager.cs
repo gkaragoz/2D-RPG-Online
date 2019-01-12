@@ -40,19 +40,7 @@ public class GooglePlayManager : MonoBehaviour {
     public Task signInResponseProgress;
     public Task sessionIdResponseProgress;
     public Task accountDataResponseProgress;
-
-    [Header("Initialization")]
-    public string IDTokenURL;
-    public string AccountDataURL;
-
-    public class IDTokenData {
-        public string id_token;
-    }
-
-    public class AccountData {
-        public string session_id;
-    }
-
+    
     private const string ATTEMP_TO_SIGN_IN = "ATTEMP to Google Play sign in!";
     private const string ATTEMP_TO_SIGN_OUT = "ATTEMP to Google Play sign out!";
     private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
@@ -198,57 +186,6 @@ public class GooglePlayManager : MonoBehaviour {
         }
     }
 
-    private IEnumerator IIdTokenPostMethod(IDTokenData data, Action<AuthResponse> callback) {
-        AuthResponse authResponse = new AuthResponse();
-
-        Request request = new Request(IDTokenURL)
-            .Post(RequestBody.From(data));
-
-        request.Timeout(10);
-
-        Client http = new Client();
-        yield return http.Send(request);
-
-        if (http.IsSuccessful()) {
-            Response resp = http.Response();
-            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
-
-            authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
-            callback(authResponse);
-        } else {
-            Debug.Log("error: " + http.Error());
-
-            onAnyErrorOccured?.Invoke(Errors.GET_ID_TOKEN);
-            callback(authResponse);
-        }
-    }
-
-    private IEnumerator IAccountDataPostMethod(AccountData data, Action<Account> callback) {
-        Account account = new Account();
-
-        Request request = new Request(AccountDataURL)
-            .Post(RequestBody.From(data));
-
-        request.Timeout(10);
-
-        Client http = new Client();
-        
-        yield return http.Send(request);
-
-        if (http.IsSuccessful()) {
-            Response resp = http.Response();
-            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
-
-            account = JsonUtility.FromJson<Account>(resp.Body());
-            callback(account);
-        } else {
-            Debug.Log("error: " + http.Error());
-
-            onAnyErrorOccured?.Invoke(Errors.GET_ACCOUNT_DATA);
-            callback(account);
-        }
-    }
-
     private void OnSignInResponse(bool success) {
         // handle success or failure
         if (success) {
@@ -257,12 +194,12 @@ public class GooglePlayManager : MonoBehaviour {
             Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
 
             // post IdToken and receive sessionID
-            IDTokenData idTokenData = new IDTokenData();
-            idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
+            APIConfig.SessionIDRequest sessionIDRequest = new APIConfig.SessionIDRequest();
+            sessionIDRequest.id_token = PlayGamesPlatform.Instance.GetIdToken();
 
-            if (idTokenData.id_token != null) {
+            if (sessionIDRequest.id_token != null) {
                 Debug.Log(ATTEMP_TO_GET_SESSION_ID);
-                StartCoroutine(IIdTokenPostMethod(idTokenData, OnSessionIDResponse));
+                StartCoroutine(APIConfig.ISessionIDPostMethod(sessionIDRequest, OnSessionIDResponse));
             } else {
                 Debug.Log(ERROR_GET_ID_TOKEN);
                 onAnyErrorOccured?.Invoke(Errors.GET_ID_TOKEN);
@@ -283,11 +220,11 @@ public class GooglePlayManager : MonoBehaviour {
             //NetworkManager.instance.SessionID = authResponse.session;
 
             // post sessionID and receive accountData
-            AccountData accountData = new AccountData();
+            APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
             //accountData.session_id = NetworkManager.instance.SessionID;
-            accountData.session_id = authResponse.session;
+            accountDataRequest.session_id = authResponse.session;
 
-            StartCoroutine(IAccountDataPostMethod(accountData, OnAccountDataResponse));
+            StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
         } else {
             // couldn't receive sessionID;
             // retry SignIn and get sessionID

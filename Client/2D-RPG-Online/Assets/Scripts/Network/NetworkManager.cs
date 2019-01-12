@@ -2,6 +2,7 @@
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
 using System;
+using System.Net.NetworkInformation;
 
 public class NetworkManager : MonoBehaviour {
     
@@ -24,7 +25,7 @@ public class NetworkManager : MonoBehaviour {
 
     public static NetworkManager instance;
 
-    void Awake() {
+    private void Awake() {
         if (instance == null)
             instance = this;
         else if (instance != this)
@@ -33,6 +34,20 @@ public class NetworkManager : MonoBehaviour {
         DontDestroyOnLoad(instance);
 
         InitNetwork();
+    }
+
+    public static string GetMacAddress() {
+        string macAddresses = "";
+        foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces()) {
+            // Only consider Ethernet network interfaces, thereby ignoring any
+            // loopback devices etc.
+            if (nic.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
+            if (nic.OperationalStatus == OperationalStatus.Up) {
+                macAddresses += nic.GetPhysicalAddress().ToString();
+                break;
+            }
+        }
+        return macAddresses;
     }
 
     private void InitNetwork() {

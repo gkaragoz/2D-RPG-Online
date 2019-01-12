@@ -281,6 +281,7 @@
     <Compile Include="Assets\Scripts\INGame\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\INGame\PlayerController.cs" />
     <Compile Include="Assets\Scripts\INGame\Portal.cs" />
+    <Compile Include="Assets\Scripts\Network\APIConfig.cs" />
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\PingStatus.cs" />

@@ -1,6 +1,7 @@
-﻿using System;
+﻿using ShiftServer.Proto.Models;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    public Task accountDataResponseProgress;
+
     private const string ERROR_SIGN_IN_TITLE = "Ups! Google Play!";
     private const string ERROR_SIGN_IN_MESSAGE = "You must logged in your Google account to save your account informations!";
 
@@ -34,17 +37,32 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         GooglePlayManager.instance.onAnyErrorOccured += OnGooglePlayManagerErrorOccured;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+        
+        if (Application.isEditor) {
+            List<Task> tasks = new List<Task>();
+            tasks.Add(accountDataResponseProgress);
 
-        List<Task> tasks = new List<Task>();
-        tasks.Add(GooglePlayManager.instance.initializationProgress);
-        tasks.Add(GooglePlayManager.instance.signInResponseProgress);
-        tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
-        tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
+            LoadingManager.instance.SetCheckList(tasks);
 
-        LoadingManager.instance.SetCheckList(tasks);
+            APIConfig.AccountDataRequestMAC accountDataRequestMAC = new APIConfig.AccountDataRequestMAC();
+            accountDataRequestMAC.mac = NetworkManager.GetMacAddress();
 
-        GooglePlayManager.instance.Initialize();
-        GooglePlayManager.instance.SignIn();
+            StartCoroutine(APIConfig.IAccountDataMACPostMethod(accountDataRequestMAC, (Account accountResponse) => {
+                Debug.Log(accountResponse.gold);
+                accountDataResponseProgress?.Invoke();
+            }));
+        } else {
+            List<Task> tasks = new List<Task>();
+            tasks.Add(GooglePlayManager.instance.initializationProgress);
+            tasks.Add(GooglePlayManager.instance.signInResponseProgress);
+            tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
+            tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
+
+            LoadingManager.instance.SetCheckList(tasks);
+
+            GooglePlayManager.instance.Initialize();
+            GooglePlayManager.instance.SignIn();
+        }
     }
 
     private void OnGooglePlayManagerErrorOccured(GooglePlayManager.Errors error) {
@@ -70,6 +88,10 @@ public class GameManager : MonoBehaviour {
 
     private void OnLoadingCompleted() {
         LoadingManager.instance.Hide();
+
+        SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+
         PopupManager.instance.ShowPopupMessage("sust4in!", "Bu adam yapar da olmaz mi?", PopupMessage.Type.Success);
     }
+
 }
