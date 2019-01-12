@@ -306,6 +306,7 @@
     <Compile Include="Assets\Scripts\Systems\Popup\PopupLoading.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupMessage.cs" />
+    <Compile Include="Assets\Scripts\Systems\Tutorial\TutorialManager.cs" />
     <Compile Include="Assets\Scripts\Utils.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
