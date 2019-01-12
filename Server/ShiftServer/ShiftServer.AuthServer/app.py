@@ -173,60 +173,6 @@ def add_character():
     return jsonify(resp)
 
 
-@app.route('/api/auth/guestlogin', methods=['POST'])
-def guestlogin():
-    content = request.get_json()
-    print(content)
-    resp = {
-                "success": False,
-                "sessionId": "",
-                "guestId": ""
-               
-    }
-
-    ## If this request does not have `X-Requested-With` header, this could be a CSRF
-    #if not request.headers.get('X-Requested-With'):
-    #    abort(403)
-
- 
-    # (Receive token by HTTPS POST)
-    # ...
-
-    try:
-            
-        AccountObject = {
-            'userid': str(uuid.uuid4()),
-            'email': "",
-            'gold': 1000,
-            'gem': 300,
-            'created_at': datetime.utcnow(),
-            'updated_at': datetime.utcnow()
-        }
-        
-        account = accounts.find_one({'email': email})
-
-        if account is None:
-            user_inserted_id = accounts.insert_one(AccountObject).inserted_id
-        
-
-        session = {
-               "email": email,
-               "sub": mac,
-               "session_id": str(uuid.uuid4()),
-               "expire_in": 3600,
-               "created_at": datetime.utcnow(),
-               "updated_at": datetime.utcnow()
-        }
-        session_id = sessions.update_one({"email": email}, {"$set":session}, upsert = True)
-        resp["success"] = True
-        resp["session"] = session["session_id"]
-        resp['email_verified']: idinfo["email_verified"]
-    except BaseException as err:
-        print(err)
-        resp["success"] = False
-
- 
-    return jsonify(resp)
 
 @app.route('/api/auth/guestlogin', methods=['POST'])
 def guestlogin():
@@ -235,13 +181,15 @@ def guestlogin():
     resp = {
                 "success": False,
                 "session_id": "",
-                "guest_id": "",              
     }
     if "guest_id" not in content:
        abort(403)
     else:
-       token = content["id_token"]
-    token = str(uuid.uuid4())
+       token = content["guest_id"]
+    
+    if len(token) == 0 or token == "":
+        token = str(uuid.uuid4())
+    
     is_guest = True
 
     CLIENT_ID = "374468244948-1vrf3t9ol7so72uo1as7nbo1icrmjbvb.apps.googleusercontent.com"
@@ -290,13 +238,14 @@ def guestlogin():
 
         resp["success"] = True
         resp["session_id"] = session["session_id"]
-        resp["is_guest"] = is_guest
         resp["user_id"] = session["sub"]      
         resp['email_verified']: False
 
     except BaseException as err:
         print(err)
         resp["success"] = False
+
+    return jsonify(resp)
 
 @app.route('/api/auth/login', methods=['POST'])
 def login():
