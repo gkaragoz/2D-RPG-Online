@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 209741105, guid: b4a165e6e3608fc4ea31cb2c96899f88, type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b4a165e6e3608fc4ea31cb2c96899f88, type: 3}
 --- !u!4 &6037270 stripped
@@ -283,6 +287,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1861487266, guid: 1fdf66f2a8316e34595df0ab771be06c, type: 3}
       propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1861487266, guid: 1fdf66f2a8316e34595df0ab771be06c, type: 3}
+      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -671,31 +679,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1d79bd360871e3f4d8ce097ab3e463e6, type: 3}
---- !u!1 &501561736 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1473683635, guid: 1d79bd360871e3f4d8ce097ab3e463e6,
-    type: 3}
-  m_PrefabInstance: {fileID: 501561735}
-  m_PrefabAsset: {fileID: 0}
---- !u!95 &501561737
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 501561736}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 7647521f0cf09784aa8a1d44320341d4, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1001 &752925431
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -983,6 +966,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2136466374, guid: fe212ae25e8c3884d9fea8e2ffda7e74, type: 3}
       propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2136466374, guid: fe212ae25e8c3884d9fea8e2ffda7e74, type: 3}
+      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1310,6 +1297,10 @@ PrefabInstance:
       propertyPath: m_havePropertiesChanged
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 107366038, guid: 93a1509953a3180488a929b66b281e2d, type: 3}
+      propertyPath: m_isInputParsingRequired
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 93a1509953a3180488a929b66b281e2d, type: 3}
 --- !u!4 &1399013439 stripped
@@ -1510,6 +1501,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1219822686, guid: 2e2fb17ccae59cd41b12a22bd788ebde, type: 3}
       propertyPath: m_havePropertiesChanged
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1219822686, guid: 2e2fb17ccae59cd41b12a22bd788ebde, type: 3}
+      propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []

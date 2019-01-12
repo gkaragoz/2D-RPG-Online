@@ -147,7 +147,7 @@ MonoBehaviour:
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -170,6 +170,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 215828221}
+  - component: {fileID: 1907663281792590503}
+  - component: {fileID: 1515540784590497134}
   m_Layer: 0
   m_Name: Name
   m_TagString: Untagged
@@ -198,6 +200,40 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1907663281792590503
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215828220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60f9ec45d463f264cbdb8cadcb5ddb8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTransform: {fileID: 215828221}
+  speed: 0.3
+  repeatRate: 2
+  delay: 0
+  tickingAmount: 2
+--- !u!114 &1515540784590497134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 215828220}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b86bdc8e0e5b98f4cb4f6036da0760c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTransform: {fileID: 215828221}
+  speed: 0.3
+  repeatRate: 2
+  delay: 0
+  scaleAmount: {x: 0.1, y: 0.1, z: 0.1}
 --- !u!1 &618548354
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,6 +417,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1393846071}
+  - component: {fileID: 974768761484918923}
   m_Layer: 0
   m_Name: Interaction
   m_TagString: Untagged
@@ -410,6 +447,23 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 55.000008}
   m_SizeDelta: {x: 20, y: 29.999985}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &974768761484918923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1393846070}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47b7f69e909115a498110d2a728c83ac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _targetTransform: {fileID: 1858480723}
+  speed: 0.3
+  repeatRate: 0.61
+  delay: 0
+  scaleAmount: {x: 8, y: 8}
 --- !u!1 &1726233248
 GameObject:
   m_ObjectHideFlags: 0
