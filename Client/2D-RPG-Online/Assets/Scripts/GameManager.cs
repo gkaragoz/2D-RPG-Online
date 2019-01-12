@@ -93,7 +93,7 @@ public class GameManager : MonoBehaviour {
 
         SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
-        PopupManager.instance.ShowPopupMessage("Tutorial!", "Let's learn basics!", PopupMessage.Type.Success);
+        TutorialManager.instance.StartTutorial();
     }
 
 }

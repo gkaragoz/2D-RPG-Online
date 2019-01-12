@@ -1260,6 +1260,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GreenPortal
       objectReference: {fileID: 0}
+    - target: {fileID: 1363376672052574, guid: 7b19f0eb3891e354ebf289a000bff002, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4751824691944984, guid: 7b19f0eb3891e354ebf289a000bff002, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2
