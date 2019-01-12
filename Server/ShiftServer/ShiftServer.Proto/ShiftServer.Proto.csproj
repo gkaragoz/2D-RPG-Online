@@ -72,6 +72,8 @@
     <Compile Include="Db\AccountSession.cs" />
     <Compile Include="Db\AccountStats.cs" />
     <Compile Include="Models\Account.cs" />
+    <Compile Include="Models\AddCharRequest.cs" />
+    <Compile Include="Models\AddCharResponse.cs" />
     <Compile Include="Models\AuthResponse.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\ShiftServerMessages.cs" />

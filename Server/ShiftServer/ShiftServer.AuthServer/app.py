@@ -45,7 +45,7 @@ def changepass():
 def get_accountdata():
     content = request.get_json()
     print(content)
-
+    success = False
     if "session_id" not in content:
         abort(403)
 
@@ -59,28 +59,117 @@ def get_accountdata():
     if account is None:
         abort(403)
 
-    accountChars = account_chars.find({'account_email': account["email"]})
+    accountChars = list(account_chars.find({'account_email': account["email"]}))
     chars = []
 
-    for char in accountChars:
-        charObj = {
-                    "account_id": char["account_id"],
-                    "account_email": char["account_email"],
-                    "name": char["name"],
-                    "class_id" : char["class"],
-                    "level":  char["level"],
-                    "exp":  char["exp"],
+    try:
+       for char in accountChars:
+            charObj = {
+                        "account_id": char["account_id"],
+                        "account_email": char["account_email"],
+                        "name": char["name"],
+                        "class_id" : char["class"],
+                        "level":  char["level"],
+                        "exp":  char["exp"],
+            }
+
+            chars.append(charObj)
+    except BaseException as err:
+        print(err)
+ 
+    success = True
+    resp = {
+            "success": success,
+            "gem": account["gem"],
+            "gold": account["gold"],
+            "chars": chars
         }
 
-        chars.append(charObj)
+    return jsonify(resp)
 
-
-    print(account)
+@app.route('/api/char/add', methods=['POST'])
+def add_character():
     resp = {
-                "gem": account["gem"],
-                "gold": account["gold"],
-                "characters": chars
+        "error_message": "",
+        "success": False,
+        "character": {
+            
+        }
     }
+    content = request.get_json()
+    print(content)
+
+    if "session_id" not in content:
+        abort(403)
+
+    if "char_class" not in content:
+        abort(403)
+
+    if "char_name" not in content:
+        abort(403)
+
+    session_obj = sessions.find_one({'session_id': content["session_id"]})
+
+    if session_obj is None:
+        abort(403)
+
+    account = accounts.find_one({'email': session_obj["email"]})
+
+    if account is None:
+        abort(403)
+
+    char_in_db = account_chars.find_one({'name': content["char_name"]})
+
+    if char_in_db is not None:
+        resp["error_message"] = "Character Name Already Exist"
+        return jsonify(resp)
+    else:
+
+
+        accountChars = list(account_chars.find({'account_email': account["email"]}))
+        chars = []
+
+        for char in accountChars:
+            charObj = {
+                        "account_id": char["account_id"],
+                        "account_email": char["account_email"],
+                        "name": char["name"],
+                        "class_id" : char["class"],
+                        "level":  char["level"],
+                        "exp":  char["exp"],
+            }
+
+            chars.append(charObj)
+
+
+        if len(chars) == 4:
+            resp["error_message"] = "Already has 4 characters"
+            resp["success"] = False
+            return jsonify(resp)
+
+        if int(content["char_class"]) > 3:
+            resp["error_message"] = "Malformed data"
+            resp["success"] = False
+            return jsonify(resp)
+ 
+        if int(content["char_name"]) > 14:
+            resp["error_message"] = "Character username is too long. Must be lower than 14 chars"
+            resp["success"] = False
+            return jsonify(resp)
+
+        CharObject = {
+             "account_id": account.get('_id'),
+             "account_email":  account["email"],
+             "name": content["char_name"],
+             "class": content["char_class"],
+             "level": 1,
+             "exp": 0,
+        }
+        char_inserted_id = account_chars.insert_one(CharObject).inserted_id
+        resp["success"] = True
+        resp["character"] = CharObject
+        print(char_inserted_id)
+
     return jsonify(resp)
 
 
