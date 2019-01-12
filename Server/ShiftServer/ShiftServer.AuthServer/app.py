@@ -228,6 +228,76 @@ def guestlogin():
  
     return jsonify(resp)
 
+@app.route('/api/auth/guestlogin', methods=['POST'])
+def guestlogin():
+    content = request.get_json()
+    print(content)
+    resp = {
+                "success": False,
+                "session_id": "",
+                "guest_id": "",              
+    }
+    if "guest_id" not in content:
+       abort(403)
+    else:
+       token = content["id_token"]
+    token = str(uuid.uuid4())
+    is_guest = True
+
+    CLIENT_ID = "374468244948-1vrf3t9ol7so72uo1as7nbo1icrmjbvb.apps.googleusercontent.com"
+    ## If this request does not have `X-Requested-With` header, this could be a CSRF
+    #if not request.headers.get('X-Requested-With'):
+    #    abort(403)
+
+ 
+    # (Receive token by HTTPS POST)
+    # ...
+
+    try:
+
+        userid = token
+        email = ""
+
+        print("userid:" + userid + "email:" + email)
+    
+        AccountObject = {
+            'userid': userid,
+            'email': email,
+            'is_guest': is_guest,
+            'gold': 1000,
+            'gem': 300,
+            'created_at': datetime.utcnow(),
+            'updated_at': datetime.utcnow()
+        }
+        
+        guest_account = accounts.find_one({'userid': token})
+        if guest_account is None:
+            user_inserted_id = accounts.insert_one(AccountObject).inserted_id
+
+        
+
+        session = {
+               "email": email,
+               "sub": userid,
+               "is_guest": is_guest,
+               "session_id": str(uuid.uuid4()),
+               "expire_in": 3600,
+               "created_at": datetime.utcnow(),
+               "updated_at": datetime.utcnow()
+        }
+
+        session_id = sessions.update_one({"sub": userid}, {"$set":session}, upsert = True)
+
+        resp["success"] = True
+        resp["session_id"] = session["session_id"]
+        resp["is_guest"] = is_guest
+        resp["user_id"] = session["sub"]      
+        resp['email_verified']: False
+
+    except BaseException as err:
+        print(err)
+        resp["success"] = False
+
 @app.route('/api/auth/login', methods=['POST'])
 def login():
     content = request.get_json()
@@ -239,11 +309,9 @@ def login():
                
     }
 
-    is_guest = False
     
     if "id_token" not in content:
-        token = str(uuid.uuid4())
-        is_guest = True
+        abort(403)
     else:
         token = content["id_token"]
 
@@ -259,20 +327,16 @@ def login():
     try:
         userid = ""
         email = ""
-        if not is_guest:
-            # Specify the CLIENT_ID of the app that accesses the backend:
-            idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
+        # Specify the CLIENT_ID of the app that accesses the backend:
+        idinfo = id_token.verify_oauth2_token(token, requests.Request(), CLIENT_ID)
 
 
-            if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
-                raise ValueError('Wrong issuer.')
+        if idinfo['iss'] not in ['accounts.google.com', 'https://accounts.google.com']:
+            raise ValueError('Wrong issuer.')
              
-            userid = idinfo['sub']
-            email = idinfo['email']
-        else:
-            userid = token
-            email = ""
-
+        userid = idinfo['sub']
+        email = idinfo['email']
+       
         print("userid:" + userid + "email:" + email)
     
         AccountObject = {
@@ -287,15 +351,9 @@ def login():
         
 
         account = accounts.find_one({'email': email})
-
-        if not is_guest:
-            account = accounts.find_one({'email': email})
-            if account is None:
-                user_inserted_id = accounts.insert_one(AccountObject).inserted_id
-        else:
-            guest_account = accounts.find_one({'userid': token})
-            if guest_account is None:
-                user_inserted_id = accounts.insert_one(AccountObject).inserted_id
+        if account is None:
+            user_inserted_id = accounts.insert_one(AccountObject).inserted_id
+ 
 
         
 
@@ -308,21 +366,15 @@ def login():
                "created_at": datetime.utcnow(),
                "updated_at": datetime.utcnow()
         }
-        if not is_guest:
-            session_id = sessions.update_one({"email": email}, {"$set":session}, upsert = True)
-        else:
-            session_id = sessions.update_one({"sub": userid}, {"$set":session}, upsert = True)
+
+        session_id = sessions.update_one({"email": email}, {"$set":session}, upsert = True)
+
 
         resp["success"] = True
         resp["session_id"] = session["session_id"]
-        resp["is_guest"] = is_guest
         resp["user_id"] = session["sub"]
-        
-        if is_guest:
-            resp['email_verified']: False
-
-        else:
-            resp['email_verified']: idinfo["email_verified"]
+        resp["is_guest"] = False
+        resp['email_verified']: idinfo["email_verified"]
     except BaseException as err:
         print(err)
         resp["success"] = False

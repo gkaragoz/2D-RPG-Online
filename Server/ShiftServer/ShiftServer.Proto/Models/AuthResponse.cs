@@ -9,5 +9,6 @@ namespace ShiftServer.Proto.Models
         public string user_id;
         public bool success;
         public bool is_guest;
+        public bool email_verified;
     }
 }
