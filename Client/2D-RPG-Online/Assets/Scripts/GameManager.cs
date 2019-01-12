@@ -40,31 +40,16 @@ public class GameManager : MonoBehaviour {
         GooglePlayManager.instance.onAnyErrorOccured += OnGooglePlayManagerErrorOccured;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
         
-        if (Application.isEditor) {
-            List<Task> tasks = new List<Task>();
-            tasks.Add(accountDataResponseProgress);
+        List<Task> tasks = new List<Task>();
+        tasks.Add(GooglePlayManager.instance.initializationProgress);
+        tasks.Add(GooglePlayManager.instance.signInResponseProgress);
+        tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
+        tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
 
-            LoadingManager.instance.SetCheckList(tasks);
+        LoadingManager.instance.SetCheckList(tasks);
 
-            APIConfig.AccountDataRequestMAC accountDataRequestMAC = new APIConfig.AccountDataRequestMAC();
-            accountDataRequestMAC.mac = NetworkManager.GetMacAddress();
-
-            StartCoroutine(APIConfig.IAccountDataMACPostMethod(accountDataRequestMAC, (Account accountResponse) => {
-                Debug.Log(accountResponse.gold);
-                accountDataResponseProgress?.Invoke();
-            }));
-        } else {
-            List<Task> tasks = new List<Task>();
-            tasks.Add(GooglePlayManager.instance.initializationProgress);
-            tasks.Add(GooglePlayManager.instance.signInResponseProgress);
-            tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
-            tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
-
-            LoadingManager.instance.SetCheckList(tasks);
-
-            GooglePlayManager.instance.Initialize();
-            GooglePlayManager.instance.SignIn();
-        }
+        GooglePlayManager.instance.Initialize();
+        GooglePlayManager.instance.SignIn();
     }
 
     private void OnGooglePlayManagerErrorOccured(GooglePlayManager.Errors error) {
