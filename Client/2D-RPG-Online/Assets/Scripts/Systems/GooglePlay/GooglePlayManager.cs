@@ -250,10 +250,10 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private void OnSignInResponse(bool success) {
-        signInResponseProgress?.Invoke();
-
         // handle success or failure
         if (success) {
+            signInResponseProgress?.Invoke();
+
             Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
 
             // post IdToken and receive sessionID
@@ -274,9 +274,9 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private void OnSessionIDResponse(AuthResponse authResponse) {
-        sessionIdResponseProgress?.Invoke();
-
         if (authResponse.success) {
+            sessionIdResponseProgress?.Invoke();
+
             Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session);
             Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
 
