@@ -9,6 +9,7 @@ public static class APIConfig {
     public static string URL_SessionID = "http://192.168.1.2:5555/api/auth/login";
     public static string URL_AccountData = "http://192.168.1.2:5555/api/user/account";
     public static string URL_AccountDataMAC = "http://192.168.1.2:5555/api/auth/unitylogin";
+    public static string URL_GuestLogin = "http://192.168.1.2:5555/api/auth/guestlogin";
 
     public class SessionIDRequest {
         public string id_token;
@@ -20,6 +21,10 @@ public static class APIConfig {
 
     public class AccountDataRequestMAC {
         public string mac;
+    }
+
+    public class GuestSessionRequest {
+        public string guest_id;
     }
 
     public static IEnumerator ISessionIDPostMethod(SessionIDRequest data, Action<AuthResponse> callback) {
@@ -95,6 +100,31 @@ public static class APIConfig {
         } else {
             Debug.Log("error: " + http.Error());
             callback(account);
+        }
+    }
+
+    public static IEnumerator IGuestLoginPostMethod(GuestSessionRequest data, Action<AuthResponse> callback) {
+        AuthResponse authResponse = new AuthResponse();
+
+        Request request = new Request(URL_GuestLogin)
+            .Post(RequestBody.From(data));
+
+        request.Timeout(10);
+
+        Client http = new Client();
+        yield return http.Send(request);
+
+        if (http.IsSuccessful()) {
+            Response resp = http.Response();
+            Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+
+            authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            callback(authResponse);
+        } else {
+            Debug.Log("error: " + http.Error());
+
+            GooglePlayManager.instance.onAnyErrorOccured?.Invoke(GooglePlayManager.Errors.GET_ID_TOKEN);
+            callback(authResponse);
         }
     }
 

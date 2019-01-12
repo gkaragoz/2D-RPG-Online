@@ -46,18 +46,21 @@ public class GooglePlayManager : MonoBehaviour {
     private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
     private const string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
     private const string ATTEMP_TO_GET_ID_TOKEN = "ATTEMP to get Google Play ID Token!";
+    private const string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
 
     private const string ERROR_SIGN_IN = "ERROR on Google Play sign in!";
     private const string ERROR_SIGN_OUT = "ERROR on Google Play sign out!";
     private const string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
     private const string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
     private const string ERROR_GET_ID_TOKEN = "ERROR on getting Google Play ID Token!";
+    private const string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
 
     private const string SUCCESS_SIGN_IN = "SUCCESS on Google Play sign in!";
     private const string SUCCESS_SIGN_OUT = "SUCCESS on Google Play sign out!";
     private const string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
     private const string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
     private const string SUCCESS_GET_ID_TOKEN = "SUCCESS on getting Google Play ID Token!";
+    private const string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
 
     public void Initialize() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -207,6 +210,12 @@ public class GooglePlayManager : MonoBehaviour {
         } else {
             Debug.Log(ERROR_SIGN_IN);
             onAnyErrorOccured?.Invoke(Errors.SIGN_IN);
+
+            Debug.Log(ATTEMP_TO_GET_GUEST_SESSION);
+            APIConfig.GuestSessionRequest guestSessionRequest = new APIConfig.GuestSessionRequest();
+            guestSessionRequest.guest_id = "";
+
+            StartCoroutine(APIConfig.IGuestLoginPostMethod(guestSessionRequest, OnSessionIDResponse));
         }
     }
 
@@ -214,7 +223,7 @@ public class GooglePlayManager : MonoBehaviour {
         if (authResponse.success) {
             sessionIdResponseProgress?.Invoke();
 
-            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session);
+            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session_id);
             Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
 
             //NetworkManager.instance.SessionID = authResponse.session;
@@ -222,7 +231,7 @@ public class GooglePlayManager : MonoBehaviour {
             // post sessionID and receive accountData
             APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
             //accountData.session_id = NetworkManager.instance.SessionID;
-            accountDataRequest.session_id = authResponse.session;
+            accountDataRequest.session_id = authResponse.session_id;
 
             StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
         } else {
