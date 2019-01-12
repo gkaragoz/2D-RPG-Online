@@ -35313,6 +35313,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraHolder
       objectReference: {fileID: 0}
+    - target: {fileID: 7742976623261845990, guid: ac4906717276849489e5149e6697f29d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7742976623261845991, guid: ac4906717276849489e5149e6697f29d,
         type: 3}
       propertyPath: m_LocalPosition.x
