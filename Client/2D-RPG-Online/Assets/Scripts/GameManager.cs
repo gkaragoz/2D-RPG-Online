@@ -20,6 +20,9 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     private void Start() {
+        GooglePlayManager.instance.onAnyErrorOccured += OnGooglePlayManagerErrorOccured;
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+
         List<Task> tasks = new List<Task>();
         tasks.Add(GooglePlayManager.instance.initializationProgress);
         tasks.Add(GooglePlayManager.instance.signInResponseProgress);
@@ -32,4 +35,24 @@ public class GameManager : MonoBehaviour {
         GooglePlayManager.instance.SignIn();
     }
 
+    private void OnGooglePlayManagerErrorOccured(GooglePlayManager.Errors error) {
+        switch (error) {
+            case GooglePlayManager.Errors.SIGN_IN:
+                break;
+            case GooglePlayManager.Errors.SIGN_OUT:
+                break;
+            case GooglePlayManager.Errors.GET_SESSION_ID:
+                break;
+            case GooglePlayManager.Errors.GET_ACCOUNT_DATA:
+                break;
+            case GooglePlayManager.Errors.GET_ID_TOKEN:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void OnLoadingCompleted() {
+        LoadingManager.instance.Hide();
+    }
 }

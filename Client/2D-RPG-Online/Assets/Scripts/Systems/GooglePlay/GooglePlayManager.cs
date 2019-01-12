@@ -25,6 +25,17 @@ public class GooglePlayManager : MonoBehaviour {
 
     #endregion
 
+    public enum Errors {
+        SIGN_IN,
+        SIGN_OUT,
+        GET_SESSION_ID,
+        GET_ACCOUNT_DATA,
+        GET_ID_TOKEN
+    }
+
+    public delegate void AnyErrorOccuredDelegate(Errors error);
+    public AnyErrorOccuredDelegate onAnyErrorOccured;
+
     public Task initializationProgress;
     public Task signInResponseProgress;
     public Task sessionIdResponseProgress;
@@ -46,16 +57,19 @@ public class GooglePlayManager : MonoBehaviour {
     private const string ATTEMP_TO_SIGN_OUT = "ATTEMP to Google Play sign out!";
     private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
     private const string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
+    private const string ATTEMP_TO_GET_ID_TOKEN = "ATTEMP to get Google Play ID Token!";
 
     private const string ERROR_SIGN_IN = "ERROR on Google Play sign in!";
     private const string ERROR_SIGN_OUT = "ERROR on Google Play sign out!";
     private const string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
     private const string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
+    private const string ERROR_GET_ID_TOKEN = "ERROR on getting Google Play ID Token!";
 
     private const string SUCCESS_SIGN_IN = "SUCCESS on Google Play sign in!";
     private const string SUCCESS_SIGN_OUT = "SUCCESS on Google Play sign out!";
     private const string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
     private const string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
+    private const string SUCCESS_GET_ID_TOKEN = "SUCCESS on getting Google Play ID Token!";
 
     public void Initialize() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -177,6 +191,8 @@ public class GooglePlayManager : MonoBehaviour {
 
         if (Social.localUser.authenticated) {
             Debug.Log(ERROR_SIGN_OUT + Social.localUser.userName);
+
+            onAnyErrorOccured?.Invoke(Errors.SIGN_OUT);
         } else {
             Debug.Log(SUCCESS_SIGN_OUT);
         }
@@ -200,6 +216,7 @@ public class GooglePlayManager : MonoBehaviour {
         } else {
             Debug.Log("error: " + http.Error());
 
+            onAnyErrorOccured?.Invoke(Errors.GET_ID_TOKEN);
             callback(authResponse);
         }
     }
@@ -222,6 +239,7 @@ public class GooglePlayManager : MonoBehaviour {
         } else {
             Debug.Log("error: " + http.Error());
 
+            onAnyErrorOccured?.Invoke(Errors.GET_ACCOUNT_DATA);
             callback(account);
         }
     }
@@ -232,15 +250,21 @@ public class GooglePlayManager : MonoBehaviour {
         // handle success or failure
         if (success) {
             Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
-            Debug.Log(ATTEMP_TO_GET_SESSION_ID);
 
             // post IdToken and receive sessionID
             IDTokenData idTokenData = new IDTokenData();
             idTokenData.id_token = PlayGamesPlatform.Instance.GetIdToken();
 
-            StartCoroutine(IIdTokenPostMethod(idTokenData, OnSessionIDResponse));
+            if (idTokenData.id_token != null) {
+                Debug.Log(ATTEMP_TO_GET_SESSION_ID);
+                StartCoroutine(IIdTokenPostMethod(idTokenData, OnSessionIDResponse));
+            } else {
+                Debug.Log(ERROR_GET_ID_TOKEN);
+                onAnyErrorOccured?.Invoke(Errors.GET_ID_TOKEN);
+            }
         } else {
             Debug.Log(ERROR_SIGN_IN);
+            onAnyErrorOccured?.Invoke(Errors.SIGN_IN);
         }
     }
 
@@ -264,6 +288,7 @@ public class GooglePlayManager : MonoBehaviour {
             // retry SignIn and get sessionID
 
             Debug.Log(ERROR_GET_SESSION_ID);
+            onAnyErrorOccured?.Invoke(Errors.GET_SESSION_ID);
             SignOut();
         }
     }

@@ -6,6 +6,9 @@ using UnityEngine.UI;
 
 public class LoadingManager : Menu {
 
+    public delegate void LoadingCompleteDelegate();
+    public LoadingCompleteDelegate onLoadingCompleted;
+
     #region Singleton
 
     public static LoadingManager instance;
@@ -38,18 +41,27 @@ public class LoadingManager : Menu {
     [Utils.ReadOnly]
     private bool[] _checkList;
 
+    private void Start() {
+        _imgFilledBar.fillAmount = 0;
+    }
+
     private void Update() {
+        _txtFilledAmount.text = "Loading! %" + _completedProgressAmount;
         _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, _completedProgressAmount * 0.01f, Time.deltaTime * _lerpSpeed);
     }
 
     public void SetCheckList(List<Task> tasks) {
         _checkList = new bool[tasks.Count];
-
-        UpdateUI();
     }
 
     public void Progress() {
+        float progressFilledAmount = GetPerProgressFilledAmount();
+
+        _completedProgressAmount = 0;
+
         for (int ii = 0; ii < _checkList.Length; ii++) {
+            _completedProgressAmount += progressFilledAmount;
+
             if (_checkList[ii]) {
                 continue;
             } else {
@@ -58,21 +70,9 @@ public class LoadingManager : Menu {
             }
         }
 
-        UpdateUI();
-    }
-
-    private void UpdateUI() {
-        float progressFilledAmount = GetPerProgressFilledAmount();
-
-        _completedProgressAmount = 0;
-
-        for (int ii = 0; ii < _checkList.Length; ii++) {
-            if (_checkList[ii]) {
-                _completedProgressAmount += progressFilledAmount;        
-            }
+        if (_completedProgressAmount >= 100) {
+            onLoadingCompleted?.Invoke();
         }
-
-        _txtFilledAmount.text =  "%" + _completedProgressAmount;
     }
 
     private float GetPerProgressFilledAmount() {

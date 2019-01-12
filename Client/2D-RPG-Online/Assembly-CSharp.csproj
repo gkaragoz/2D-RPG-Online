@@ -559,8 +559,20 @@
     <Reference Include="Facebook.Unity.Settings">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/FacebookSDK/Plugins/Settings/Facebook.Unity.Settings.dll</HintPath>
     </Reference>
+    <Reference Include="DnsClient">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/DnsClient.dll</HintPath>
+    </Reference>
     <Reference Include="Google.Protobuf">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/Google.Protobuf.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Bson">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Bson.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver.Core">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="MongoDB.Driver">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.dll</HintPath>
     </Reference>
     <Reference Include="protobuf-net">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/protobuf-net.dll</HintPath>
@@ -570,6 +582,9 @@
     </Reference>
     <Reference Include="ShiftServer.Proto">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/ShiftServer.Proto.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Buffers">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/System.Buffers.dll</HintPath>
     </Reference>
     <Reference Include="Telepathy">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/Telepathy.dll</HintPath>
@@ -582,21 +597,6 @@
     </Reference>
     <Reference Include="Unity.Analytics.Tracker">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/PackageCache/com.unity.analytics@3.2.2/Unity.Analytics.Tracker.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Buffers">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Bson">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Bson.dll</HintPath>
-    </Reference>
-    <Reference Include="MongoDB.Driver.Core">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/MongoDB.Driver.Core.dll</HintPath>
-    </Reference>
-    <Reference Include="DnsClient">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Assets/Scripts/Network/ShiftServer/DnsClient.dll</HintPath>
     </Reference>
     <Reference Include="mscorlib">
       <HintPath>C:/Program Files/Unity/Editor/Data/MonoBleedingEdge/lib/mono/4.7.1-api/mscorlib.dll</HintPath>
