@@ -91,7 +91,7 @@ public class GameManager : MonoBehaviour {
 
         SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
-        PopupManager.instance.ShowPopupMessage("sust4in!", "Bu adam yapar da olmaz mi?", PopupMessage.Type.Success);
+        PopupManager.instance.ShowPopupMessage("Tutorial!", "Let's learn basics!", PopupMessage.Type.Success);
     }
 
 }
