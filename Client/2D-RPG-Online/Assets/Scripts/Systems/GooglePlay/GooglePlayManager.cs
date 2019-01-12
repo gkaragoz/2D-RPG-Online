@@ -30,7 +30,8 @@ public class GooglePlayManager : MonoBehaviour {
         SIGN_OUT,
         GET_SESSION_ID,
         GET_ACCOUNT_DATA,
-        GET_ID_TOKEN
+        GET_ID_TOKEN,
+        GET_GUEST_SESSION
     }
 
     public delegate void AnyErrorOccuredDelegate(Errors error);
@@ -192,8 +193,6 @@ public class GooglePlayManager : MonoBehaviour {
     private void OnSignInResponse(bool success) {
         // handle success or failure
         if (success) {
-            signInResponseProgress?.Invoke();
-
             Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
 
             // post IdToken and receive sessionID
@@ -217,21 +216,22 @@ public class GooglePlayManager : MonoBehaviour {
 
             StartCoroutine(APIConfig.IGuestLoginPostMethod(guestSessionRequest, OnSessionIDResponse));
         }
+        signInResponseProgress?.Invoke();
     }
 
     private void OnSessionIDResponse(AuthResponse authResponse) {
         if (authResponse.success) {
+            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session_id);
             sessionIdResponseProgress?.Invoke();
 
-            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session_id);
             Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
 
-            //NetworkManager.instance.SessionID = authResponse.session;
+            NetworkManager.SessionID = authResponse.session_id;
 
             // post sessionID and receive accountData
             APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
             //accountData.session_id = NetworkManager.instance.SessionID;
-            accountDataRequest.session_id = authResponse.session_id;
+            accountDataRequest.session_id = NetworkManager.SessionID;
 
             StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
         } else {
@@ -245,9 +245,8 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     private void OnAccountDataResponse(Account accountResponse) {
-        accountDataResponseProgress?.Invoke();
-
         Debug.Log(SUCCESS_GET_ACCOUNT_INFO);
+        accountDataResponseProgress?.Invoke();
     }
 
 }

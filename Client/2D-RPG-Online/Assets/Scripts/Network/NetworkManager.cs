@@ -7,8 +7,7 @@ using System.Net.NetworkInformation;
 public class NetworkManager : MonoBehaviour {
     
     public static ManaShiftServer mss;
-
-    public string SessionID { get; set; }
+    public static string SessionID { get; set; }
 
     [SerializeField]
     private string _hostName = "127.0.0.0";
@@ -33,7 +32,7 @@ public class NetworkManager : MonoBehaviour {
 
         DontDestroyOnLoad(instance);
 
-        InitNetwork();
+        //InitNetwork();
     }
 
     public static string GetMacAddress() {
@@ -83,8 +82,10 @@ public class NetworkManager : MonoBehaviour {
     }
 
     private void OnApplicationQuit() {
-        if (mss.IsConnected) {
-            mss.Disconnect();
+        if (mss != null) {
+            if (mss.IsConnected) {
+                mss.Disconnect();
+            }
         }
     }
 }

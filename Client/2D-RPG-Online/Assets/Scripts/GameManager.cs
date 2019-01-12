@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Proto.Models;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,10 @@ public class GameManager : MonoBehaviour {
     #endregion
 
     public Task accountDataResponseProgress;
+
+    private const string ATTEMP_TO_CREATE_CHARACTER = "ATTEMP to create character!";
+    private const string ERROR_CREATE_CHARACTER = "ERROR on create character!";
+    private const string SUCCESS_CREATE_CHARACTER = "SUCCESS on create character!";
 
     private const string ERROR_SIGN_IN_TITLE = "Ups! Google Play!";
     private const string ERROR_SIGN_IN_MESSAGE = "You must logged in your Google account to save your account informations!";
@@ -56,7 +61,6 @@ public class GameManager : MonoBehaviour {
         switch (error) {
             case GooglePlayManager.Errors.SIGN_IN:
             case GooglePlayManager.Errors.SIGN_OUT:
-                PopupManager.instance.ShowPopupMessage(ERROR_SIGN_IN_TITLE, ERROR_SIGN_IN_MESSAGE, PopupMessage.Type.Info);
                 break;
             case GooglePlayManager.Errors.GET_SESSION_ID:
                 PopupManager.instance.ShowPopupMessage(ERROR_GET_SESSION_ID_TITLE, ERROR_GET_SESSION_ID_MESSAGE, PopupMessage.Type.Error);
@@ -76,9 +80,29 @@ public class GameManager : MonoBehaviour {
     private void OnLoadingCompleted() {
         LoadingManager.instance.Hide();
 
-        SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+        Debug.Log(ATTEMP_TO_CREATE_CHARACTER);
+        APIConfig.CreateCharacterRequest createCharacterRequest = new APIConfig.CreateCharacterRequest();
+        createCharacterRequest.char_class = 0;
+        createCharacterRequest.char_name = "Whoaa";
+        createCharacterRequest.session_id = NetworkManager.SessionID;
+        Debug.Log("Class: " + createCharacterRequest.char_class);
+        Debug.Log("Char name: " + createCharacterRequest.char_name);
+        Debug.Log("SessionID: " + createCharacterRequest.session_id);
 
-        TutorialManager.instance.StartTutorial();
+        StartCoroutine(APIConfig.ICreateCharacterPostMethod(createCharacterRequest, OnCreateCharacterResponse));
+
+        //SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+
+        //TutorialManager.instance.StartTutorial();
     }
 
+    private void OnCreateCharacterResponse(AddCharResponse createCharacterResponse) {
+        if (createCharacterResponse.success) {
+            Debug.Log(SUCCESS_CREATE_CHARACTER);
+            Debug.Log(createCharacterResponse.character);
+        } else {
+            Debug.Log(ERROR_CREATE_CHARACTER);
+            Debug.Log(createCharacterResponse.error_message);
+        }
+    }
 }
