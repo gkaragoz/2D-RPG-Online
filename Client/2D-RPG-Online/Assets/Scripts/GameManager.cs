@@ -19,6 +19,18 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
+    private const string ERROR_SIGN_IN_TITLE = "Ups! Google Play!";
+    private const string ERROR_SIGN_IN_MESSAGE = "You must logged in your Google account to save your account informations!";
+
+    private const string ERROR_GET_SESSION_ID_TITLE = "Authorization Problem!";
+    private const string ERROR_GET_SESSION_ID_MESSAGE = "Some problem occured on server!";
+
+    private const string ERROR_GET_ACCOUNT_DATA_TITLE = "Ups! Account!";
+    private const string ERROR_GET_ACCOUNT_DATA_MESSAGE = "Some problem occured on server!";
+
+    private const string ERROR_GET_ID_TOKEN_TITLE = "Wow!";
+    private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
+
     private void Start() {
         GooglePlayManager.instance.onAnyErrorOccured += OnGooglePlayManagerErrorOccured;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
@@ -38,16 +50,20 @@ public class GameManager : MonoBehaviour {
     private void OnGooglePlayManagerErrorOccured(GooglePlayManager.Errors error) {
         switch (error) {
             case GooglePlayManager.Errors.SIGN_IN:
-                break;
             case GooglePlayManager.Errors.SIGN_OUT:
+                PopupManager.instance.ShowPopupMessage(ERROR_SIGN_IN_TITLE, ERROR_SIGN_IN_MESSAGE, PopupMessage.Type.Info);
                 break;
             case GooglePlayManager.Errors.GET_SESSION_ID:
+                PopupManager.instance.ShowPopupMessage(ERROR_GET_SESSION_ID_TITLE, ERROR_GET_SESSION_ID_MESSAGE, PopupMessage.Type.Error);
                 break;
             case GooglePlayManager.Errors.GET_ACCOUNT_DATA:
+                PopupManager.instance.ShowPopupMessage(ERROR_GET_ACCOUNT_DATA_TITLE, ERROR_GET_ACCOUNT_DATA_MESSAGE, PopupMessage.Type.Error);
                 break;
             case GooglePlayManager.Errors.GET_ID_TOKEN:
+                PopupManager.instance.ShowPopupMessage(ERROR_GET_ID_TOKEN_TITLE, ERROR_GET_ID_TOKEN_MESSAGE, PopupMessage.Type.Error);
                 break;
             default:
+                PopupManager.instance.ShowPopupMessage(ERROR_GET_ID_TOKEN_TITLE, ERROR_GET_ID_TOKEN_MESSAGE, PopupMessage.Type.Error);
                 break;
         }
     }
