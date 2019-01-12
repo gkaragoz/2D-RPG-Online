@@ -19,14 +19,24 @@ public class PopupManager : MonoBehaviour {
 
     [SerializeField]
     private PopupLoading _popupLoading;
+    //[SerializeField]
+    //private PopupMessage _popupMessage;
 
-    public void ShowLoadingPopup(string message) {
+    public void ShowPopupLoading(string message) {
         _popupLoading.Show(message);
     }
 
-    public void HideLoadingPopup(string message, float seconds = 0f, bool error = false) {
+    public void HidePopupLoading(string message, float seconds = 0f, bool error = false) {
         _popupLoading.SetMessage(message);
         _popupLoading.HideAfter(seconds, error);
+    }
+
+    public void ShowPopupMessage(string message) {
+
+    }
+
+    public void HidePopupMessage() {
+
     }
 
 }
