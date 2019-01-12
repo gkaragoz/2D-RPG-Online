@@ -204,6 +204,8 @@ public class GooglePlayManager : MonoBehaviour {
         Request request = new Request(IDTokenURL)
             .Post(RequestBody.From(data));
 
+        request.Timeout(10);
+
         Client http = new Client();
         yield return http.Send(request);
 
@@ -227,7 +229,10 @@ public class GooglePlayManager : MonoBehaviour {
         Request request = new Request(AccountDataURL)
             .Post(RequestBody.From(data));
 
+        request.Timeout(10);
+
         Client http = new Client();
+        
         yield return http.Send(request);
 
         if (http.IsSuccessful()) {

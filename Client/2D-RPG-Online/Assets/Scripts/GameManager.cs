@@ -70,5 +70,6 @@ public class GameManager : MonoBehaviour {
 
     private void OnLoadingCompleted() {
         LoadingManager.instance.Hide();
+        PopupManager.instance.ShowPopupMessage("sust4in!", "Bu adam yapar da olmaz mi?", PopupMessage.Type.Success);
     }
 }
