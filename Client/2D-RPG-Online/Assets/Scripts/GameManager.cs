@@ -1,5 +1,6 @@
 ﻿using ShiftServer.Proto.Models;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -95,4 +96,33 @@ public class GameManager : MonoBehaviour {
             Debug.Log(createCharacterResponse.error_message);
         }
     }
+
+
+
+#if UNITY_EDITOR
+    [CustomEditor(typeof(GameManager))]
+    public class ExampleScriptEditor : Editor {
+        public GameManager gameManager;
+
+        public void OnEnable() {
+            gameManager = (GameManager)target;
+        }
+
+        public override void OnInspectorGUI() {
+            GUI.backgroundColor = PlayerPrefs.HasKey(HAS_PLAYED_BEFORE) ? Color.red : Color.green;
+            GUILayout.Space(10f);
+            GUILayout.Label("Player Prefs");
+            if (GUILayout.Button("RESET")) {
+                PlayerPrefs.DeleteAll();
+
+                EditorWindow view = EditorWindow.GetWindow<SceneView>();
+                view.Repaint();
+            }
+            GUI.backgroundColor = Color.white;
+
+            base.OnInspectorGUI();
+        }
+    }
+#endif
+
 }
