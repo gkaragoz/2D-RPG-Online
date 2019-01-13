@@ -1,7 +1,7 @@
 ﻿
 using System;
 
-namespace ShiftServer.Proto.Models
+namespace ShiftServer.Proto.RestModels
 {
     [Serializable]
     public class CharacterModel

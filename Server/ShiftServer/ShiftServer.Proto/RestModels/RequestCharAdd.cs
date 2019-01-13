@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Proto.Models
+namespace ShiftServer.Proto.RestModels
 {
-    public class CharAddRequest
+    public class RequestCharAdd
     {
         public string session_id;
         public string char_name;
