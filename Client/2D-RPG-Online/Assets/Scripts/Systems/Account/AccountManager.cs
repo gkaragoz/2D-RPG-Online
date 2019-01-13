@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Proto.Models;
+using System;
 using UnityEngine;
 
 public class AccountManager : MonoBehaviour {
@@ -20,6 +21,8 @@ public class AccountManager : MonoBehaviour {
 
     public Task initializationProgress;
 
+    public Action onAccountUpdated;
+
     [Header("Debug")]
     [SerializeField]
     private Account _account;
@@ -33,12 +36,25 @@ public class AccountManager : MonoBehaviour {
         }
     }
 
+    private void Start() {
+        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
+    }
+
     public void Initialize(Account account) {
         this.Account = account;
 
-        MenuManager.instance.Initialize();
-
         initializationProgress?.Invoke();
+        onAccountUpdated?.Invoke();
+    }
+
+    private void AddCharacter(Character newCharacter) {
+        _account.characters.Add(newCharacter);
+
+        onAccountUpdated?.Invoke();
+    }
+
+    private void OnCharacterCreated(Character newCharacter) {
+        AddCharacter(newCharacter);
     }
 
 }
