@@ -151,6 +151,13 @@ public class LoginManager : MonoBehaviour {
         if (accountDataResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
 
+            AccountModel accountModel = new AccountModel();
+            accountModel.characters = accountDataResponse.characters;
+            accountModel.characters = accountDataResponse.characters;
+            accountModel.characters = accountDataResponse.characters;
+            accountModel.characters = accountDataResponse.characters;
+            accountModel.characters = accountDataResponse.characters;
+
             AccountManager.instance.Initialize(accountDataResponse);
 
             onLoginResult.Invoke(APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA);

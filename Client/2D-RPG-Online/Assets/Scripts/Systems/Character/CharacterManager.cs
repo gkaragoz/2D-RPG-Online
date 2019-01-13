@@ -23,7 +23,7 @@ public class CharacterManager : MonoBehaviour {
     public Task initializationProgress;
 
     public Action<CharacterModel> onCharacterCreated;
-    public Action<string> onCharacterSelected;
+    public Action<CharacterModel> onCharacterSelected;
 
     public List<CharacterModel> AllCharacters { get { return _allCharacters; } }
 
@@ -64,16 +64,25 @@ public class CharacterManager : MonoBehaviour {
         _characterSelection.Hide();
     }
 
-    public void SelectCharacter(string characterName) {
-        _selectedCharacterName = characterName;
+    public void SelectCharacter(CharacterModel selectedCharacter) {
+        _selectedCharacterName = selectedCharacter.name;
 
-        onCharacterSelected?.Invoke(characterName);
+        onCharacterSelected?.Invoke(GetCharacterModel(_selectedCharacterName));
     }
 
     public void AddCharacter(CharacterModel newCharacter) {
         AllCharacters.Add(newCharacter);
 
         onCharacterCreated?.Invoke(newCharacter);
+    }
+
+    public CharacterModel GetCharacterModel(string name) {
+        for (int ii = 0; ii < _allCharacters.Count; ii++) {
+            if (_allCharacters[ii].name == name) {
+                return _allCharacters[ii];
+            }
+        }
+        return null;
     }
 
 }

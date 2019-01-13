@@ -1,7 +1,7 @@
 ﻿using ShiftServer.Proto.Models;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Experimental.UIElements;
+using UnityEngine.UI;
 
 public class CharacterSelection : Menu {
 
@@ -14,9 +14,9 @@ public class CharacterSelection : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private int _selectedCharacterName;
+    private string _selectedCharacterName;
 
-    public int SelectedCharacterName {
+    public string SelectedCharacterName {
         get { return _selectedCharacterName; }
     }
 
@@ -47,7 +47,7 @@ public class CharacterSelection : Menu {
         if (selectCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 
-            CharacterManager.instance.SelectCharacter(selectCharacterResponse.character);
+            CharacterManager.instance.SelectCharacter(CharacterManager.instance.GetCharacterModel(_selectedCharacterName));
         } else {
             Debug.Log(APIConfig.ERROR_SELECT_CHARACTER);
 

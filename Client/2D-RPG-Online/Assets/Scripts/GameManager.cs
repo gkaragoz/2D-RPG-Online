@@ -115,7 +115,7 @@ public class GameManager : MonoBehaviour {
         MenuManager.instance.Show();
     }
 
-    private void OnCharacterSelected(string selectedCharacter) {
+    private void OnCharacterSelected(CharacterModel selectedCharacter) {
         CharacterManager.instance.HideCharacterSelectionMenu();
         MenuManager.instance.Show();
     }

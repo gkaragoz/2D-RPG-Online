@@ -61,7 +61,7 @@ public class CharacterCreation : Menu {
     }
 
     public void CreateCharacter() {
-        APIConfig.CreateCharacterRequest createCharacterRequest = new APIConfig.CreateCharacterRequest();
+        CharAddRequest createCharacterRequest = new CharAddRequest();
         createCharacterRequest.char_class = SelectedClassID;
         createCharacterRequest.char_name = CharacterName;
         createCharacterRequest.session_id = NetworkManager.SessionID;
