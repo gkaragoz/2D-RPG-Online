@@ -36,6 +36,8 @@ public class AccountManager : MonoBehaviour {
     public void Initialize(Account account) {
         this.Account = account;
 
+        MenuManager.instance.Initialize();
+
         initializationProgress?.Invoke();
     }
 

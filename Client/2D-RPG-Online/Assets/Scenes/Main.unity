@@ -953,7 +953,7 @@ GameObject:
   - component: {fileID: 64685932}
   - component: {fileID: 64685931}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtGems
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2481,7 +2481,7 @@ GameObject:
   - component: {fileID: 169052690}
   - component: {fileID: 169052689}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtHealth
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2645,7 +2645,7 @@ GameObject:
   - component: {fileID: 174330161}
   - component: {fileID: 174330160}
   m_Layer: 5
-  m_Name: txtStatsPointsTitle (1)
+  m_Name: txtStatPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6284,7 +6284,7 @@ GameObject:
   - component: {fileID: 443554747}
   - component: {fileID: 443554746}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtSettings
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10184,7 +10184,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 1089635890}
-  initializationProgress: {fileID: 0}
+  initializationProgress: {fileID: 1469689119}
+  _txtAccountGold: {fileID: 1346719510}
+  _txtAccountGem: {fileID: 64685931}
+  _txtCharacterName: {fileID: 1011160478}
+  _txtCharacterLevel: {fileID: 2102479304}
+  _txtCharacterExperience: {fileID: 1450924757}
+  _txtCharacterStatPoints: {fileID: 174330160}
+  _txtCharacterHealth: {fileID: 169052689}
+  _txtCharacterMana: {fileID: 1931895518}
+  _txtCharacterStrength: {fileID: 1832998058}
+  _txtCharacterIntelligence: {fileID: 1691018520}
+  _txtCharacterDexterity: {fileID: 1429260763}
 --- !u!4 &693039845
 Transform:
   m_ObjectHideFlags: 0
@@ -12613,6 +12624,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 235008968}
     m_Modifications:
+    - target: {fileID: 1044392014330978, guid: 75899c92c3ee31442b965c76bf989aac, type: 3}
+      propertyPath: m_Name
+      value: txtStrength
+      objectReference: {fileID: 0}
     - target: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
         type: 3}
       propertyPath: m_havePropertiesChanged
@@ -14922,8 +14937,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1794602925}
   m_HandleRect: {fileID: 1794602924}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.99999595
+  m_Value: 0
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -16573,7 +16588,7 @@ GameObject:
   - component: {fileID: 1075466655}
   - component: {fileID: 1075466654}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtFriends
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -21676,7 +21691,7 @@ GameObject:
   - component: {fileID: 1346719511}
   - component: {fileID: 1346719510}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtGolds
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -23468,6 +23483,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421467577}
   m_CullTransparentMesh: 0
+--- !u!114 &1429260763 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1793914655}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1433786339
 GameObject:
   m_ObjectHideFlags: 0
@@ -23784,7 +23811,7 @@ GameObject:
   - component: {fileID: 1450924758}
   - component: {fileID: 1450924757}
   m_Layer: 5
-  m_Name: txtFillAmount
+  m_Name: txtExperience
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -25522,6 +25549,10 @@ PrefabInstance:
     - target: {fileID: 1505030350001822, guid: 75899c92c3ee31442b965c76bf989aac, type: 3}
       propertyPath: m_Name
       value: INT
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044392014330978, guid: 75899c92c3ee31442b965c76bf989aac, type: 3}
+      propertyPath: m_Name
+      value: txtIntelligence
       objectReference: {fileID: 0}
     - target: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
         type: 3}
@@ -27331,6 +27362,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1678905309}
   m_CullTransparentMesh: 0
+--- !u!114 &1691018520 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
+    type: 3}
+  m_PrefabInstance: {fileID: 1580246840}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1700263598
 GameObject:
   m_ObjectHideFlags: 0
@@ -28671,7 +28714,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: 0, y: -0.000022888184}
+  m_AnchoredPosition: {x: 0, y: 0.0000076293945}
   m_SizeDelta: {x: 0, y: 120}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!114 &1785084311
@@ -28721,6 +28764,10 @@ PrefabInstance:
     - target: {fileID: 1505030350001822, guid: 75899c92c3ee31442b965c76bf989aac, type: 3}
       propertyPath: m_Name
       value: DEX
+      objectReference: {fileID: 0}
+    - target: {fileID: 1044392014330978, guid: 75899c92c3ee31442b965c76bf989aac, type: 3}
+      propertyPath: m_Name
+      value: txtDexterity
       objectReference: {fileID: 0}
     - target: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
         type: 3}
@@ -29091,7 +29138,7 @@ RectTransform:
   m_Father: {fileID: 303518923}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0.000004053116}
+  m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 20}
@@ -29628,6 +29675,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1829634170}
   m_CullTransparentMesh: 0
+--- !u!114 &1832998058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114548158974971328, guid: 75899c92c3ee31442b965c76bf989aac,
+    type: 3}
+  m_PrefabInstance: {fileID: 836762927}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1837473093
 GameObject:
   m_ObjectHideFlags: 0
@@ -30153,7 +30212,7 @@ GameObject:
   - component: {fileID: 1864014404}
   - component: {fileID: 1864014403}
   m_Layer: 5
-  m_Name: txtStatsPointsTitle
+  m_Name: txtStatPointsTitle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -31544,7 +31603,7 @@ GameObject:
   - component: {fileID: 1931895519}
   - component: {fileID: 1931895518}
   m_Layer: 5
-  m_Name: txtLabel
+  m_Name: txtMana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -33580,7 +33639,7 @@ GameObject:
   - component: {fileID: 2086967984}
   - component: {fileID: 2086967985}
   m_Layer: 5
-  m_Name: StatsPoints
+  m_Name: StatPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
