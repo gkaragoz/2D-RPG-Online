@@ -49,24 +49,24 @@ public class LoginManager : MonoBehaviour {
     }
 
     private void LoginAsAGuest() {
-        RequestGuestAuth guestAuthRequest = new RequestGuestAuth();
-        guestAuthRequest.guest_id = "";
+        RequestGuestAuth requestGuestAuth = new RequestGuestAuth();
+        requestGuestAuth.guest_id = "";
 
-        StartCoroutine(APIConfig.IGuestLoginPostMethod(guestAuthRequest, OnSessionIDResponse));
+        StartCoroutine(APIConfig.IGuestLoginPostMethod(requestGuestAuth, OnSessionIDResponse));
     }
 
     private void RequestSessionID() {
-        RequestAuth authRequest = new RequestAuth();
-        authRequest.id_token = GooglePlayManager.ID_TOKEN;
+        RequestAuth requestAuth = new RequestAuth();
+        requestAuth.id_token = GooglePlayManager.ID_TOKEN;
 
-        StartCoroutine(APIConfig.ISessionIDPostMethod(authRequest, OnSessionIDResponse));
+        StartCoroutine(APIConfig.ISessionIDPostMethod(requestAuth, OnSessionIDResponse));
     }
 
     private void RequestAccountData() {
-        RequestAccountData accountDataRequest = new RequestAccountData();
-        accountDataRequest.session_id = NetworkManager.SessionID;
+        RequestAccountData requestAccountData = new RequestAccountData();
+        requestAccountData.session_id = NetworkManager.SessionID;
 
-        StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
+        StartCoroutine(APIConfig.IAccountDataPostMethod(requestAccountData, OnAccountDataResponse));
     }
 
     private void OnLoginResult(APIConfig.LoginResults result) {
@@ -145,7 +145,7 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void OnAccountDataResponse(ShiftServer.Proto.RestModels.AccountData accountDataResponse) {
+    private void OnAccountDataResponse(Account accountDataResponse) {
         if (accountDataResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
 

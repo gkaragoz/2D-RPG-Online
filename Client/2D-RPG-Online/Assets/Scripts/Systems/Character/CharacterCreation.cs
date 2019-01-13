@@ -60,24 +60,24 @@ public class CharacterCreation : Menu {
     }
 
     public void CreateCharacter() {
-        RequestCharAdd createCharacterRequest = new RequestCharAdd();
-        createCharacterRequest.class_index = SelectedClassID;
-        createCharacterRequest.char_name = CharacterName;
-        createCharacterRequest.session_id = NetworkManager.SessionID;
+        RequestCharAdd requestCreateCharacter = new RequestCharAdd();
+        requestCreateCharacter.class_index = SelectedClassID;
+        requestCreateCharacter.char_name = CharacterName;
+        requestCreateCharacter.session_id = NetworkManager.SessionID;
 
-        StartCoroutine(APIConfig.ICreateCharacterPostMethod(createCharacterRequest, OnCreateCharacterResponse));
+        StartCoroutine(APIConfig.ICreateCharacterPostMethod(requestCreateCharacter, OnCreateCharacterResponse));
     }
 
-    private void OnCreateCharacterResponse(CharAdd createCharacterResponse) {
-        if (createCharacterResponse.success) {
+    private void OnCreateCharacterResponse(CharAdd createdCharacterResponse) {
+        if (createdCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_CREATE_CHARACTER);
 
-            CharacterManager.instance.AddCharacter(createCharacterResponse.character);
-            CharacterManager.instance.SelectCharacter(createCharacterResponse.character);
+            CharacterManager.instance.AddCharacter(createdCharacterResponse.character);
+            CharacterManager.instance.SelectCharacter(createdCharacterResponse.character);
         } else {
             Debug.Log(APIConfig.ERROR_CREATE_CHARACTER);
 
-            PopupManager.instance.ShowPopupMessage("ERROR", createCharacterResponse.error_message, PopupMessage.Type.Error);
+            PopupManager.instance.ShowPopupMessage("ERROR", createdCharacterResponse.error_message, PopupMessage.Type.Error);
         }
     }
 

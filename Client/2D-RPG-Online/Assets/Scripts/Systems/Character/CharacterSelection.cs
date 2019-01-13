@@ -36,15 +36,15 @@ public class CharacterSelection : Menu {
     }
 
     public void SelectCharacter() {
-        RequestCharSelect selectCharacterRequest = new RequestCharSelect();
-        selectCharacterRequest.char_name = SelectedCharacterName;
-        selectCharacterRequest.session_id = NetworkManager.SessionID;
+        RequestCharSelect RequestSelectCharacter = new RequestCharSelect();
+        RequestSelectCharacter.char_name = SelectedCharacterName;
+        RequestSelectCharacter.session_id = NetworkManager.SessionID;
 
-        StartCoroutine(APIConfig.ISelectCharacterPostMethod(selectCharacterRequest, OnSelectCharacterResponse));
+        StartCoroutine(APIConfig.ISelectCharacterPostMethod(RequestSelectCharacter, OnSelectCharacterResponse));
     }
 
-    private void OnSelectCharacterResponse(CharSelect selectCharacterResponse) {
-        if (selectCharacterResponse.success) {
+    private void OnSelectCharacterResponse(CharSelect selectedCharacterResponse) {
+        if (selectedCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 
             CharacterManager.instance.SelectCharacter(CharacterManager.instance.GetCharacterModel(_selectedCharacterName));

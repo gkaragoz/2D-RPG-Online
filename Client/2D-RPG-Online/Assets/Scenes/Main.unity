@@ -11093,6 +11093,7 @@ MonoBehaviour:
     success: 0
     gem: 0
     gold: 0
+    selected_char_name: 
     characters: []
 --- !u!4 &729233407
 Transform:
@@ -32397,6 +32398,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 1015086514}
+    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8747095469866931588, guid: f2382040e8ed9b64ba6159427ed8a94e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -32411,16 +32422,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 1015086514}
-    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
-        type: 3}
-      propertyPath: m_IsOn
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2382040e8ed9b64ba6159427ed8a94e, type: 3}
@@ -34876,6 +34877,16 @@ PrefabInstance:
       propertyPath: m_isInputParsingRequired
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
+        type: 3}
+      propertyPath: m_Group
+      value: 
+      objectReference: {fileID: 1015086514}
+    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
+        type: 3}
+      propertyPath: m_IsOn
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8747095469866931588, guid: f2382040e8ed9b64ba6159427ed8a94e,
         type: 3}
       propertyPath: m_AnchoredPosition.x
@@ -34890,16 +34901,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
-        type: 3}
-      propertyPath: m_Group
-      value: 
-      objectReference: {fileID: 1015086514}
-    - target: {fileID: 6466538859807150404, guid: f2382040e8ed9b64ba6159427ed8a94e,
-        type: 3}
-      propertyPath: m_IsOn
-      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f2382040e8ed9b64ba6159427ed8a94e, type: 3}
@@ -35152,6 +35153,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aad569220f9e19042899ce13141b05b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  container: {fileID: 0}
+  _btnSelectCharacter: {fileID: 0}
+  _characterSelectionSlots: []
+  _selectedCharacterName: 
 --- !u!1 &2057467512
 GameObject:
   m_ObjectHideFlags: 0
@@ -35344,12 +35349,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e08d7d68101bb458269a512c14dc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initializationProgress: {fileID: 1469689119}
   _characterCreation: {fileID: 643801560}
+  _characterSelection: {fileID: 2051453230}
   _selectedCharacter:
     account_id: 
     account_email: 
     name: 
-    class_id: 0
+    class_index: 0
     level: 0
     exp: 0
   _allCharacters: []

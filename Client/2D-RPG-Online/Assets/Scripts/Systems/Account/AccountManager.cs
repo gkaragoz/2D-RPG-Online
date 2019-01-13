@@ -25,9 +25,9 @@ public class AccountManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField]
-    private ShiftServer.Proto.RestModels.AccountData _account;
+    private Account _account;
 
-    public ShiftServer.Proto.RestModels.AccountData Account {
+    public Account Account {
         get {
             return _account;
         }
@@ -41,7 +41,7 @@ public class AccountManager : MonoBehaviour {
         CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
     }
 
-    public void Initialize(ShiftServer.Proto.RestModels.AccountData account) {
+    public void Initialize(Account account) {
         this.Account = account;
 
         CharacterManager.instance.Initialize(account.characters, CharacterManager.instance.GetCharacterModel(account.selected_char_name));
