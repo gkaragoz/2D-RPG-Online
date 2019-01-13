@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Proto.Models;
+using System;
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
@@ -50,7 +51,9 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         Application.targetFrameRate = 60;
 
-        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+        LoginManager.instance.onLoginCompleted = OnLoginCompleted;
+        LoadingManager.instance.onLoadingCompleted = OnLoadingCompleted;
+        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -72,34 +75,42 @@ public class GameManager : MonoBehaviour {
         }
     }
 
+    private void OnTutorialCompleted() {
+        PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
+
+        SceneManager.UnloadSceneAsync("Tutorial");
+
+        CharacterManager.instance.ShowCharacterCreationMenu();
+    }
+
     private void OnLoadingCompleted() {
         LoadingManager.instance.Hide();
 
         if (!HasPlayedBefore) {
-            PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
-
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+
+            TutorialManager.instance.onTutorialCompleted = OnTutorialCompleted;
+            TutorialManager.instance.StartTutorial();
 
             LoginManager.instance.Login();
 
-            TutorialManager.instance.StartTutorial();
+            TutorialManager.instance.PauseTutorial();
         } else {
             //Open Main Menu.
             MenuManager.instance.Show();
         }
     }
 
-    private void OnCreateCharacterResponse(AddCharResponse createCharacterResponse) {
-        if (createCharacterResponse.success) {
-            Debug.Log(SUCCESS_CREATE_CHARACTER);
-            Debug.Log(createCharacterResponse.character);
-        } else {
-            Debug.Log(ERROR_CREATE_CHARACTER);
-            Debug.Log(createCharacterResponse.error_message);
+    private void OnLoginCompleted() {
+        if (!HasPlayedBefore) {
+            TutorialManager.instance.ResumeTutorial();
         }
     }
 
-
+    private void OnCharacterCreated(Character newCharacter) {
+        CharacterManager.instance.HideCharacterCreationMenu();
+        MenuManager.instance.Show();
+    }
 
 #if UNITY_EDITOR
     [CustomEditor(typeof(GameManager))]

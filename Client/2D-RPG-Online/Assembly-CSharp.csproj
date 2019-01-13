@@ -278,7 +278,6 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormAI.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormAnimator.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormMotor.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\ClassManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Destructable.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakePresets.cs" />
@@ -303,6 +302,9 @@
     <Compile Include="Assets\Scripts\Systems\Account\AccountManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\Sound.cs" />
+    <Compile Include="Assets\Scripts\Systems\Character\CharacterClassVisualization.cs" />
+    <Compile Include="Assets\Scripts\Systems\Character\CharacterCreation.cs" />
+    <Compile Include="Assets\Scripts\Systems\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Facebook\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />

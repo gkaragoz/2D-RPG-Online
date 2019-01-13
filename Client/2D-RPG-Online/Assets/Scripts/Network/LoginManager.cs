@@ -21,6 +21,8 @@ public class LoginManager : MonoBehaviour {
 
     #endregion
 
+    public Action onLoginCompleted;
+
     public Action<APIConfig.LoginResults> onLoginResult;
 
     public Task initializationProgress;
@@ -88,8 +90,10 @@ public class LoginManager : MonoBehaviour {
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA:
                 accountDataResponseProgress?.Invoke();
+                onLoginCompleted?.Invoke();
                 break;
             default:
+                PopupManager.instance.ShowPopupMessage("ERROR", "Unknown", PopupMessage.Type.Error);
                 break;
         }
     }
@@ -101,6 +105,7 @@ public class LoginManager : MonoBehaviour {
             case GooglePlayManager.Results.ERROR_SIGN_OUT:
                 break;
             default:
+                PopupManager.instance.ShowPopupMessage("ERROR", "Unknown", PopupMessage.Type.Error);
                 break;
         }
     }

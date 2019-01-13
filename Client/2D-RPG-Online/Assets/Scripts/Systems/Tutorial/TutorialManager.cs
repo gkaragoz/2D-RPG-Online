@@ -19,6 +19,8 @@ public class TutorialManager : Menu {
 
     #endregion
 
+    public Action onTutorialCompleted;
+
     private void Initialize() {
         if (Camera.main != null) {
             GameObject.Find("DummyCamera").SetActive(false);
@@ -27,8 +29,22 @@ public class TutorialManager : Menu {
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            onTutorialCompleted?.Invoke();
+        }
+    }
+
     public void StartTutorial() {
         PopupManager.instance.ShowPopupMessage("Tutorial!", "Let's learn basics!", PopupMessage.Type.Success);
+    }
+
+    public void PauseTutorial() {
+        PopupManager.instance.ShowPopupMessage("Tutorial!", "Tutorial paused!", PopupMessage.Type.Info);
+    }
+
+    public void ResumeTutorial() {
+        PopupManager.instance.ShowPopupMessage("Tutorial!", "Tutorial resumed!", PopupMessage.Type.Info);
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
