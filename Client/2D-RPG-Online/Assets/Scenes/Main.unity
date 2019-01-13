@@ -24253,6 +24253,7 @@ MonoBehaviour:
   _imgFilledBar: {fileID: 1920225980}
   _txtFilledAmount: {fileID: 1313327374}
   _lerpSpeed: 2
+  _delay: 1
   _completedProgressAmount: 0
   _checkList: 
 --- !u!4 &1469689118

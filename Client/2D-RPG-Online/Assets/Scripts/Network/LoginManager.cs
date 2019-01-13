@@ -21,8 +21,7 @@ public class LoginManager : MonoBehaviour {
 
     #endregion
 
-    public delegate void AnyErrorOccuredDelegate(APIConfig.LoginResults error);
-    public AnyErrorOccuredDelegate onAnyErrorOccured;
+    public Action<APIConfig.LoginResults> onLoginResult;
 
     public Task initializationProgress;
     public Task googlePlaySignInResponseProgress;
@@ -35,6 +34,7 @@ public class LoginManager : MonoBehaviour {
 
     public void Initialize() {
         GooglePlayManager.instance.onGooglePlaySignInResult = OnGooglePlaySignInResult;
+        onLoginResult = OnLoginResult;
 
         initializationProgress?.Invoke();
     }
@@ -67,6 +67,31 @@ public class LoginManager : MonoBehaviour {
         accountDataRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
+    }
+
+    private void OnLoginResult(APIConfig.LoginResults result) {
+        switch (result) {
+            case APIConfig.LoginResults.ERROR_GET_SESSION_ID:
+                PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
+                break;
+            case APIConfig.LoginResults.ERROR_GET_GUEST_SESSION:
+                PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
+                break;
+            case APIConfig.LoginResults.ERROR_GET_ACCOUNT_DATA:
+                PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
+                break;
+            case APIConfig.LoginResults.SUCCESS_GET_SESSION_ID:
+                sessionIdResponseProgress?.Invoke();
+                break;
+            case APIConfig.LoginResults.SUCCESS_GET_GUEST_SESSION:
+                sessionIdResponseProgress?.Invoke();
+                break;
+            case APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA:
+                accountDataResponseProgress?.Invoke();
+                break;
+            default:
+                break;
+        }
     }
 
     private void OnGooglePlaySignInError(GooglePlayManager.Results result) {
@@ -110,10 +135,10 @@ public class LoginManager : MonoBehaviour {
 
             RequestAccountData();
 
-            sessionIdResponseProgress?.Invoke();
+            onLoginResult?.Invoke(APIConfig.LoginResults.SUCCESS_GET_SESSION_ID);
         } else {
             Debug.Log(APIConfig.ERROR_GET_SESSION_ID);
-            onAnyErrorOccured?.Invoke(APIConfig.LoginResults.ERROR_GET_SESSION_ID);
+            onLoginResult?.Invoke(APIConfig.LoginResults.ERROR_GET_SESSION_ID);
         }
     }
 
@@ -131,10 +156,10 @@ public class LoginManager : MonoBehaviour {
                 Debug.Log("ACC Name: " + accountDataResponse.characters[ii].name);
             }
 
-            accountDataResponseProgress?.Invoke();
+            onLoginResult.Invoke(APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA);
         } else {
             Debug.Log(APIConfig.ERROR_GET_ACCOUNT_INFO);
-            onAnyErrorOccured.Invoke(APIConfig.LoginResults.ERROR_GET_ACCOUNT_DATA);
+            onLoginResult.Invoke(APIConfig.LoginResults.ERROR_GET_ACCOUNT_DATA);
         }
     }
 

@@ -7,15 +7,13 @@ using UnityEngine;
 public static class APIConfig {
 
     public enum LoginResults {
-        ERROR_GET_ID_TOKEN = 10020,
-        ERROR_GET_SESSION_ID = 10030,
-        ERROR_GET_GUEST_SESSION = 10021,
-        ERROR_GET_ACCOUNT_DATA = 10040,
+        ERROR_GET_SESSION_ID = 10010,
+        ERROR_GET_GUEST_SESSION = 10011,
+        ERROR_GET_ACCOUNT_DATA = 10020,
 
-        SUCCESS_GET_ID_TOKEN = 00020,
-        SUCCESS_GET_SESSION_ID = 00030,
-        SUCCESS_GET_GUEST_SESSION = 00021,
-        SUCCESS_GET_ACCOUNT_DATA = 00040
+        SUCCESS_GET_SESSION_ID = 00010,
+        SUCCESS_GET_GUEST_SESSION = 00011,
+        SUCCESS_GET_ACCOUNT_DATA = 00020
     }
 
     public static string URL_SessionID = "http://192.168.1.2:5555/api/auth/login";
