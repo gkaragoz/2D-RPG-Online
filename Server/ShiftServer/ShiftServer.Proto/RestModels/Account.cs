@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace ShiftServer.Proto.RestModels
 {
     [Serializable]
-    public class AccountData
+    public class Account
     {
         public bool success;
         public int gem;

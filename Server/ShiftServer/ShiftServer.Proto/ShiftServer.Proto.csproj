@@ -72,7 +72,7 @@
     <Compile Include="Db\AccountSession.cs" />
     <Compile Include="Db\AccountStats.cs" />
     <Compile Include="RestModels\RequestAccountData.cs" />
-    <Compile Include="RestModels\AccountData.cs" />
+    <Compile Include="RestModels\Account.cs" />
     <Compile Include="RestModels\RequestCharAdd.cs" />
     <Compile Include="RestModels\CharAdd.cs" />
     <Compile Include="RestModels\RequestAuth.cs" />
