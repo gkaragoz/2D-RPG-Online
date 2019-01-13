@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CharacterCreation : MonoBehaviour {
+public class CharacterCreation : Menu {
 
     public Action onCharacterCreated;
 
