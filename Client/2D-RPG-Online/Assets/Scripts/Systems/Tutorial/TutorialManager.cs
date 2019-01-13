@@ -29,7 +29,6 @@ public class TutorialManager : Menu {
 
     public void StartTutorial() {
         PopupManager.instance.ShowPopupMessage("Tutorial!", "Let's learn basics!", PopupMessage.Type.Success);
-        Time.timeScale = 0;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {

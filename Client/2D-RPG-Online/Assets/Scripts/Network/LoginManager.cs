@@ -2,142 +2,140 @@
 using SimpleHTTP;
 using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
-public class LoginManager : Menu {
+public class LoginManager : MonoBehaviour {
 
-    //#region Singleton
+    #region Singleton
 
-    //public static LoginManager instance;
+    public static LoginManager instance;
 
-    //void Awake() {
-    //    if (instance == null)
-    //        instance = this;
-    //    else if (instance != this)
-    //        Destroy(gameObject);
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
 
-    //    DontDestroyOnLoad(instance);
-    //}
+        DontDestroyOnLoad(instance);
+    }
 
-    ////#endregion
+    #endregion
 
-    //public class LoginData {
-    //    public string username;
-    //    public string password;
-    //}
+    public delegate void AnyErrorOccuredDelegate(APIConfig.LoginResults error);
+    public AnyErrorOccuredDelegate onAnyErrorOccured;
 
-    //[SerializeField]
-    //private TMP_InputField _inputFieldUsername;
-    //[SerializeField]
-    //private TMP_InputField _inputFieldPassword;
-    //[SerializeField]
-    //private Button _btnLogin;
-    //[SerializeField]
-    //private Button _btnSignup;
+    public Task initializationProgress;
+    public Task googlePlaySignInResponseProgress;
+    public Task sessionIdResponseProgress;
+    public Task accountDataResponseProgress;
 
-    //[Header("Settings")]
-    //public string URL;
+    public static string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
+    public static string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
+    public static string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
 
-    //public bool IsURLEmpty {
-    //    get { return URL == string.Empty ? true : false; }
-    //}
+    public void Initialize() {
+        GooglePlayManager.instance.onGooglePlaySignInResult = OnGooglePlaySignInResult;
 
-    //public bool IsUsernameValid {
-    //    get { return _inputFieldUsername.text != string.Empty ? true : false; }
-    //}
+        initializationProgress?.Invoke();
+    }
 
-    //public bool IsPasswordValid {
-    //    get { return _inputFieldPassword.text != string.Empty ? true : false; }
-    //}
+    public void Login() {
+        LoginViaGooglePlayServices();
+    }
 
-    //public string GetUsername() {
-    //    return _inputFieldUsername.text;
-    //}
+    private void LoginViaGooglePlayServices() {
+        GooglePlayManager.instance.Initialize();
+        GooglePlayManager.instance.SignIn();
+    }
 
-    //public string GetPassword() {
-    //    return _inputFieldPassword.text;
-    //}
+    private void LoginAsAGuest() {
+        APIConfig.GuestSessionRequest guestSessionRequest = new APIConfig.GuestSessionRequest();
+        guestSessionRequest.guest_id = "";
 
-    //private const string LOGIN = "Trying to login into the account... ";
-    //private const string ON_LOGIN_SUCCESS = "Login success!";
-    //private const string ON_LOGIN_FAILED = "Login failed!";
-    //private const string ON_CAN_NOT_CONNECT_TO_HOST = "Login failed! Can not connect to host!";
+        StartCoroutine(APIConfig.IGuestLoginPostMethod(guestSessionRequest, OnSessionIDResponse));
+    }
 
-    //public void Login() {
-    //    if (IsUsernameValid && IsPasswordValid && !IsURLEmpty) {
-    //        LogManager.instance.AddLog(LOGIN, Log.Type.Server);
+    private void RequestSessionID() {
+        APIConfig.SessionIDRequest sessionIDRequest = new APIConfig.SessionIDRequest();
+        sessionIDRequest.id_token = GooglePlayManager.ID_TOKEN;
 
-    //        StartCoroutine(ILoginPostMethod());
-    //    } else {
-    //        LogManager.instance.AddLog("You must fill input fields!", Log.Type.Error);
-    //    }
-    //}
+        StartCoroutine(APIConfig.ISessionIDPostMethod(sessionIDRequest, OnSessionIDResponse));
+    }
 
-    //private IEnumerator ILoginPostMethod() {
-    //    PopupManager.instance.ShowLoadingPopup(LOGIN);
+    private void RequestAccountData() {
+        APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
+        accountDataRequest.session_id = NetworkManager.SessionID;
 
-    //    LoginData data = new LoginData();
-    //    data.username = _inputFieldUsername.text;
-    //    data.password = _inputFieldPassword.text;
+        StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
+    }
 
-    //    JsonUtility.ToJson(data);
+    private void OnGooglePlaySignInError(GooglePlayManager.Results result) {
+        switch (result) {
+            case GooglePlayManager.Results.ERROR_SIGN_IN:
+                break;
+            case GooglePlayManager.Results.ERROR_SIGN_OUT:
+                break;
+            default:
+                break;
+        }
+    }
 
-    //    Request request = new Request(URL)
-    //        .Post(RequestBody.From<LoginData>(data));
+    private void OnGooglePlaySignInResult(GooglePlayManager.Results result) {
+        googlePlaySignInResponseProgress?.Invoke();
 
-    //    Client http = new Client();
-    //    yield return http.Send(request);
+        switch (result) {
+            case GooglePlayManager.Results.SUCCESS_SIGN_IN:
+                RequestSessionID();
+                break;
+            case GooglePlayManager.Results.SUCCESS_SIGN_OUT:
+                LoginAsAGuest();
+                break;
+            case GooglePlayManager.Results.ERROR_SIGN_IN:
+                LoginAsAGuest();
+                break;
+            case GooglePlayManager.Results.ERROR_SIGN_OUT:
+                PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
+                break;
+            default:
+                PopupManager.instance.ShowPopupMessage("ERROR", "Unknown", PopupMessage.Type.Error);
+                break;
+        }
+    }
 
-    //    if (http.IsSuccessful()) {
-    //        Response resp = http.Response();
-    //        Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
+    private void OnSessionIDResponse(AuthResponse authResponse) {
+        if (authResponse.success) {
+            Debug.Log(APIConfig.SUCCESS_GET_SESSION_ID + authResponse.session_id);
 
-    //        AuthResponse authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            NetworkManager.SessionID = authResponse.session_id;
 
-    //        if (authResponse.Success) {
-    //            PopupManager.instance.HideLoadingPopup(ON_LOGIN_SUCCESS, 1f);
+            RequestAccountData();
 
-    //            LogManager.instance.AddLog(ON_LOGIN_SUCCESS, Log.Type.Server);
+            sessionIdResponseProgress?.Invoke();
+        } else {
+            Debug.Log(APIConfig.ERROR_GET_SESSION_ID);
+            onAnyErrorOccured?.Invoke(APIConfig.LoginResults.ERROR_GET_SESSION_ID);
+        }
+    }
 
-    //            this.Hide();
-    //            LobbyManager.instance.Initialize();
-    //            RoomManager.instance.Initialize();
-    //            FriendManager.instance.Initialize();
-    //            LobbyManager.instance.Show();
-    //            FriendManager.instance.Show();
+    private void OnAccountDataResponse(Account accountDataResponse) {
+        if (accountDataResponse.success) {
+            Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
+            Debug.Log(accountDataResponse.gem);
+            Debug.Log(accountDataResponse.gold);
+            for (int ii = 0; ii < accountDataResponse.characters.Count; ii++) {
+                Debug.Log("ACC Email: " + accountDataResponse.characters[ii].account_email);
+                Debug.Log("ACC ID: " + accountDataResponse.characters[ii].account_id);
+                Debug.Log("ACC ClassID: " + accountDataResponse.characters[ii].class_id);
+                Debug.Log("ACC EXP: " + accountDataResponse.characters[ii].exp);
+                Debug.Log("ACC Level: " + accountDataResponse.characters[ii].level);
+                Debug.Log("ACC Name: " + accountDataResponse.characters[ii].name);
+            }
 
-    //            //LogManager.instance.AddLog("Welcome " + data.AccountData.Username + "!", Log.Type.Server);
-    //            //LogManager.instance.AddLog("Your virtual money is " + data.AccountData.VirtualMoney, Log.Type.Server);
-    //            //LogManager.instance.AddLog("Your special virtual money is " + data.AccountData.VirtualSpecialMoney, Log.Type.Server);
-    //            //LogManager.instance.AddLog("Your session ID is " + data.Session.Sid, Log.Type.Server);
-    //        } else {
-    //            LogManager.instance.AddLog(ON_LOGIN_FAILED, Log.Type.Server);
-
-    //            PopupManager.instance.HideLoadingPopup(ON_LOGIN_FAILED, 2f, true);
-    //        }
-    //    } else {
-    //        Debug.Log("error: " + http.Error());
-    //        PopupManager.instance.HideLoadingPopup(ON_CAN_NOT_CONNECT_TO_HOST, 2f, true);
-    //    }
-    //}
-
-    //public void GoToSignupPage() {
-    //    this.Hide();
-    //    SignupManager.instance.Show();
-    //}
-
-    //public void ActivateLoginUIs() {
-    //    _inputFieldUsername.interactable = true;
-    //    _inputFieldPassword.interactable = true;
-    //    _btnLogin.interactable = true;
-    //}
-
-    //public void DeactivateLoginUIS() {
-    //    _inputFieldUsername.interactable = false;
-    //    _inputFieldPassword.interactable = false;
-    //    _btnLogin.interactable = false;
-    //}
+            accountDataResponseProgress?.Invoke();
+        } else {
+            Debug.Log(APIConfig.ERROR_GET_ACCOUNT_INFO);
+            onAnyErrorOccured.Invoke(APIConfig.LoginResults.ERROR_GET_ACCOUNT_DATA);
+        }
+    }
 
 }

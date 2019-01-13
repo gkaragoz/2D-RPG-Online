@@ -1,12 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 using GooglePlayGames;
 using GooglePlayGames.BasicApi;
 using UnityEngine.SocialPlatforms;
 using System;
-using SimpleHTTP;
-using ShiftServer.Proto.Models;
 
 public class GooglePlayManager : MonoBehaviour {
 
@@ -25,43 +22,17 @@ public class GooglePlayManager : MonoBehaviour {
 
     #endregion
 
-    public enum Errors {
-        SIGN_IN,
-        SIGN_OUT,
-        GET_SESSION_ID,
-        GET_ACCOUNT_DATA,
-        GET_ID_TOKEN,
-        GET_GUEST_SESSION
+    public enum Results {
+        SUCCESS_SIGN_IN = 00010,
+        SUCCESS_SIGN_OUT = 00099,
+
+        ERROR_SIGN_IN = 10010,
+        ERROR_SIGN_OUT = 10099
     }
 
-    public delegate void AnyErrorOccuredDelegate(Errors error);
-    public AnyErrorOccuredDelegate onAnyErrorOccured;
+    public Action<Results> onGooglePlaySignInResult;
 
-    public Task initializationProgress;
-    public Task signInResponseProgress;
-    public Task sessionIdResponseProgress;
-    public Task accountDataResponseProgress;
-    
-    private const string ATTEMP_TO_SIGN_IN = "ATTEMP to Google Play sign in!";
-    private const string ATTEMP_TO_SIGN_OUT = "ATTEMP to Google Play sign out!";
-    private const string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
-    private const string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
-    private const string ATTEMP_TO_GET_ID_TOKEN = "ATTEMP to get Google Play ID Token!";
-    private const string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
-
-    private const string ERROR_SIGN_IN = "ERROR on Google Play sign in!";
-    private const string ERROR_SIGN_OUT = "ERROR on Google Play sign out!";
-    private const string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
-    private const string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
-    private const string ERROR_GET_ID_TOKEN = "ERROR on getting Google Play ID Token!";
-    private const string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
-
-    private const string SUCCESS_SIGN_IN = "SUCCESS on Google Play sign in!";
-    private const string SUCCESS_SIGN_OUT = "SUCCESS on Google Play sign out!";
-    private const string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
-    private const string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
-    private const string SUCCESS_GET_ID_TOKEN = "SUCCESS on getting Google Play ID Token!";
-    private const string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
+    public static string ID_TOKEN = "";
 
     public void Initialize() {
         PlayGamesClientConfiguration config = new PlayGamesClientConfiguration.Builder()
@@ -71,12 +42,10 @@ public class GooglePlayManager : MonoBehaviour {
         PlayGamesPlatform.InitializeInstance(config);
         // Activate the Google Play Games platform
         PlayGamesPlatform.Activate();
-
-        initializationProgress?.Invoke();
     }
 
     public void SignIn() {
-        Debug.Log(ATTEMP_TO_SIGN_IN);
+        Debug.Log(APIConfig.ATTEMP_TO_GOOGLE_PLAY_SIGN_IN);
 
         // authenticate user:
         Social.localUser.Authenticate(OnSignInResponse);
@@ -177,76 +146,35 @@ public class GooglePlayManager : MonoBehaviour {
     }
 
     public void SignOut() {
-        Debug.Log(ATTEMP_TO_SIGN_OUT + Social.localUser.userName);
+        Debug.Log(APIConfig.ATTEMP_TO_GOOGLE_PLAY_SIGN_OUT + Social.localUser.userName);
         // sign out
         PlayGamesPlatform.Instance.SignOut();
 
         if (Social.localUser.authenticated) {
-            Debug.Log(ERROR_SIGN_OUT + Social.localUser.userName);
+            Debug.Log(APIConfig.ERROR_GOOGLE_PLAY_SIGN_OUT + Social.localUser.userName);
 
-            onAnyErrorOccured?.Invoke(Errors.SIGN_OUT);
+            onGooglePlaySignInResult?.Invoke(Results.SUCCESS_SIGN_OUT);
         } else {
-            Debug.Log(SUCCESS_SIGN_OUT);
+            Debug.Log(APIConfig.SUCCESS_GOOGLE_PLAY_SIGN_OUT);
+
+            onGooglePlaySignInResult?.Invoke(Results.ERROR_SIGN_OUT);
         }
     }
 
     private void OnSignInResponse(bool success) {
         // handle success or failure
         if (success) {
-            Debug.Log(SUCCESS_SIGN_IN + Social.localUser.userName);
+            Debug.Log(APIConfig.SUCCESS_GOOGLE_PLAY_SIGN_IN + Social.localUser.userName);
 
-            // post IdToken and receive sessionID
-            APIConfig.SessionIDRequest sessionIDRequest = new APIConfig.SessionIDRequest();
-            sessionIDRequest.id_token = PlayGamesPlatform.Instance.GetIdToken();
+            ID_TOKEN = PlayGamesPlatform.Instance.GetIdToken();
 
-            if (sessionIDRequest.id_token != null) {
-                Debug.Log(ATTEMP_TO_GET_SESSION_ID);
-                StartCoroutine(APIConfig.ISessionIDPostMethod(sessionIDRequest, OnSessionIDResponse));
-            } else {
-                Debug.Log(ERROR_GET_ID_TOKEN);
-                onAnyErrorOccured?.Invoke(Errors.GET_ID_TOKEN);
-            }
+            onGooglePlaySignInResult?.Invoke(Results.SUCCESS_SIGN_IN);
+
         } else {
-            Debug.Log(ERROR_SIGN_IN);
-            onAnyErrorOccured?.Invoke(Errors.SIGN_IN);
+            Debug.Log(APIConfig.ERROR_GOOGLE_PLAY_SIGN_IN);
 
-            Debug.Log(ATTEMP_TO_GET_GUEST_SESSION);
-            APIConfig.GuestSessionRequest guestSessionRequest = new APIConfig.GuestSessionRequest();
-            guestSessionRequest.guest_id = "";
-
-            StartCoroutine(APIConfig.IGuestLoginPostMethod(guestSessionRequest, OnSessionIDResponse));
+            onGooglePlaySignInResult?.Invoke(Results.ERROR_SIGN_IN);
         }
-        signInResponseProgress?.Invoke();
-    }
-
-    private void OnSessionIDResponse(AuthResponse authResponse) {
-        if (authResponse.success) {
-            Debug.Log(SUCCESS_GET_SESSION_ID + authResponse.session_id);
-            sessionIdResponseProgress?.Invoke();
-
-            Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
-
-            NetworkManager.SessionID = authResponse.session_id;
-
-            // post sessionID and receive accountData
-            APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
-            //accountData.session_id = NetworkManager.instance.SessionID;
-            accountDataRequest.session_id = NetworkManager.SessionID;
-
-            StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
-        } else {
-            // couldn't receive sessionID;
-            // retry SignIn and get sessionID
-
-            Debug.Log(ERROR_GET_SESSION_ID);
-            onAnyErrorOccured?.Invoke(Errors.GET_SESSION_ID);
-            SignOut();
-        }
-    }
-
-    private void OnAccountDataResponse(Account accountResponse) {
-        Debug.Log(SUCCESS_GET_ACCOUNT_INFO);
-        accountDataResponseProgress?.Invoke();
     }
 
 }

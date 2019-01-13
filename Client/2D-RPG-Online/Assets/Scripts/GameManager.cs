@@ -1,5 +1,4 @@
 ﻿using ShiftServer.Proto.Models;
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -23,6 +22,14 @@ public class GameManager : MonoBehaviour {
 
     public Task accountDataResponseProgress;
 
+    public const string HAS_PLAYED_BEFORE = "HAS_PLAYED_BEFORE";
+
+    public bool HasPlayedBefore {
+        get {
+            return PlayerPrefs.GetInt(HAS_PLAYED_BEFORE) == 1 ? true : false;
+        }
+    }
+
     private const string ATTEMP_TO_CREATE_CHARACTER = "ATTEMP to create character!";
     private const string ERROR_CREATE_CHARACTER = "ERROR on create character!";
     private const string SUCCESS_CREATE_CHARACTER = "SUCCESS on create character!";
@@ -42,58 +49,44 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         Application.targetFrameRate = 60;
 
-        GooglePlayManager.instance.onAnyErrorOccured += OnGooglePlayManagerErrorOccured;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
-        
+
         List<Task> tasks = new List<Task>();
-        tasks.Add(GooglePlayManager.instance.initializationProgress);
-        tasks.Add(GooglePlayManager.instance.signInResponseProgress);
-        tasks.Add(GooglePlayManager.instance.sessionIdResponseProgress);
-        tasks.Add(GooglePlayManager.instance.accountDataResponseProgress);
 
-        LoadingManager.instance.SetCheckList(tasks);
+        if (HasPlayedBefore) {
+            tasks.Add(LoginManager.instance.initializationProgress);
+            tasks.Add(LoginManager.instance.googlePlaySignInResponseProgress);
+            tasks.Add(LoginManager.instance.sessionIdResponseProgress);
+            tasks.Add(LoginManager.instance.accountDataResponseProgress);
 
-        GooglePlayManager.instance.Initialize();
-        GooglePlayManager.instance.SignIn();
-    }
+            LoadingManager.instance.SetCheckList(tasks);
 
-    private void OnGooglePlayManagerErrorOccured(GooglePlayManager.Errors error) {
-        switch (error) {
-            case GooglePlayManager.Errors.SIGN_IN:
-            case GooglePlayManager.Errors.SIGN_OUT:
-                break;
-            case GooglePlayManager.Errors.GET_SESSION_ID:
-                PopupManager.instance.ShowPopupMessage(ERROR_GET_SESSION_ID_TITLE, ERROR_GET_SESSION_ID_MESSAGE, PopupMessage.Type.Error);
-                break;
-            case GooglePlayManager.Errors.GET_ACCOUNT_DATA:
-                PopupManager.instance.ShowPopupMessage(ERROR_GET_ACCOUNT_DATA_TITLE, ERROR_GET_ACCOUNT_DATA_MESSAGE, PopupMessage.Type.Error);
-                break;
-            case GooglePlayManager.Errors.GET_ID_TOKEN:
-                PopupManager.instance.ShowPopupMessage(ERROR_GET_ID_TOKEN_TITLE, ERROR_GET_ID_TOKEN_MESSAGE, PopupMessage.Type.Error);
-                break;
-            default:
-                PopupManager.instance.ShowPopupMessage(ERROR_GET_ID_TOKEN_TITLE, ERROR_GET_ID_TOKEN_MESSAGE, PopupMessage.Type.Error);
-                break;
+            LoginManager.instance.Initialize();
+            LoginManager.instance.Login();
+        } else {
+            tasks.Add(LoginManager.instance.initializationProgress);
+
+            LoadingManager.instance.SetCheckList(tasks);
+
+            LoginManager.instance.Initialize();
         }
+
     }
 
     private void OnLoadingCompleted() {
         LoadingManager.instance.Hide();
 
-        Debug.Log(ATTEMP_TO_CREATE_CHARACTER);
-        APIConfig.CreateCharacterRequest createCharacterRequest = new APIConfig.CreateCharacterRequest();
-        createCharacterRequest.char_class = 0;
-        createCharacterRequest.char_name = "Whoaa";
-        createCharacterRequest.session_id = NetworkManager.SessionID;
-        Debug.Log("Class: " + createCharacterRequest.char_class);
-        Debug.Log("Char name: " + createCharacterRequest.char_name);
-        Debug.Log("SessionID: " + createCharacterRequest.session_id);
+        if (!HasPlayedBefore) {
+            PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
 
-        StartCoroutine(APIConfig.ICreateCharacterPostMethod(createCharacterRequest, OnCreateCharacterResponse));
+            SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
-        //SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+            LoginManager.instance.Login();
 
-        //TutorialManager.instance.StartTutorial();
+            TutorialManager.instance.StartTutorial();
+        } else {
+            //Open Main Menu.
+        }
     }
 
     private void OnCreateCharacterResponse(AddCharResponse createCharacterResponse) {

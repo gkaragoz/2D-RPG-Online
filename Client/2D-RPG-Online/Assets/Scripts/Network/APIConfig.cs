@@ -6,10 +6,44 @@ using UnityEngine;
 
 public static class APIConfig {
 
+    public enum LoginResults {
+        ERROR_GET_ID_TOKEN = 10020,
+        ERROR_GET_SESSION_ID = 10030,
+        ERROR_GET_GUEST_SESSION = 10021,
+        ERROR_GET_ACCOUNT_DATA = 10040,
+
+        SUCCESS_GET_ID_TOKEN = 00020,
+        SUCCESS_GET_SESSION_ID = 00030,
+        SUCCESS_GET_GUEST_SESSION = 00021,
+        SUCCESS_GET_ACCOUNT_DATA = 00040
+    }
+
     public static string URL_SessionID = "http://192.168.1.2:5555/api/auth/login";
     public static string URL_AccountData = "http://192.168.1.2:5555/api/user/account";
     public static string URL_GuestLogin = "http://192.168.1.2:5555/api/auth/guestlogin";
     public static string URL_CreateCharacter = "http://192.168.1.2:5555/api/char/add";
+
+    public static string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
+    public static string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
+    public static string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
+
+    public static string ATTEMP_TO_GOOGLE_PLAY_SIGN_IN = "ATTEMP to Google Play sign in!";
+    public static string ATTEMP_TO_GOOGLE_PLAY_SIGN_OUT = "ATTEMP to Google Play sign out!";
+    public static string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
+    public static string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
+    public static string ATTEMP_TO_GET_GOOGLE_PLAY_ID_TOKEN = "ATTEMP to get Google Play ID Token!";
+
+    public static string ERROR_GOOGLE_PLAY_SIGN_IN = "ERROR on Google Play sign in!";
+    public static string ERROR_GOOGLE_PLAY_SIGN_OUT = "ERROR on Google Play sign out!";
+    public static string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
+    public static string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
+    public static string ERROR_GET_GOOGLE_PLAY_ID_TOKEN = "ERROR on getting Google Play ID Token!";
+
+    public static string SUCCESS_GOOGLE_PLAY_SIGN_IN = "SUCCESS on Google Play sign in!";
+    public static string SUCCESS_GOOGLE_PLAY_SIGN_OUT = "SUCCESS on Google Play sign out!";
+    public static string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
+    public static string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
+    public static string SUCCESS_GET_GOOGLE_PLAY_ID_TOKEN = "SUCCESS on getting Google Play ID Token!";
 
     public class SessionIDRequest {
         public string id_token;
@@ -30,6 +64,8 @@ public static class APIConfig {
     }
 
     public static IEnumerator ISessionIDPostMethod(SessionIDRequest data, Action<AuthResponse> callback) {
+        Debug.Log(APIConfig.ATTEMP_TO_GET_SESSION_ID);
+
         AuthResponse authResponse = new AuthResponse();
 
         Request request = new Request(URL_SessionID)
@@ -48,9 +84,6 @@ public static class APIConfig {
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
-
-            GooglePlayManager.instance.onAnyErrorOccured?.Invoke(GooglePlayManager.Errors.GET_ID_TOKEN);
-            callback(authResponse);
         }
     }
 
@@ -74,13 +107,12 @@ public static class APIConfig {
             callback(account);
         } else {
             Debug.Log("error: " + http.Error());
-
-            GooglePlayManager.instance.onAnyErrorOccured?.Invoke(GooglePlayManager.Errors.GET_ACCOUNT_DATA);
-            callback(account);
         }
     }
 
     public static IEnumerator IGuestLoginPostMethod(GuestSessionRequest data, Action<AuthResponse> callback) {
+        Debug.Log(ATTEMP_TO_GET_GUEST_SESSION);
+
         AuthResponse authResponse = new AuthResponse();
 
         Request request = new Request(URL_GuestLogin)
@@ -99,9 +131,6 @@ public static class APIConfig {
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
-
-            GooglePlayManager.instance.onAnyErrorOccured?.Invoke(GooglePlayManager.Errors.GET_GUEST_SESSION);
-            callback(authResponse);
         }
     }
 
@@ -124,9 +153,6 @@ public static class APIConfig {
             callback(createCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
-
-            //GooglePlayManager.instance.onAnyErrorOccured?.Invoke(GooglePlayManager.Errors.GET_ID_TOKEN);
-            callback(createCharacterResponse);
         }
     }
 

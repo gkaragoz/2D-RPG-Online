@@ -76,7 +76,7 @@ public class LoadingManager : Menu {
     }
 
     private float GetPerProgressFilledAmount() {
-        return (100 / _checkList.Length);
+        return (100 / (_checkList.Length == 0 ? 1 : _checkList.Length));
     }
 
 }
