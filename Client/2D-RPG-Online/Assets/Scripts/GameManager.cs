@@ -1,6 +1,4 @@
-﻿using ShiftServer.Proto.Models;
-using System;
-using System.Collections.Generic;
+﻿using ShiftServer.Proto.RestModels;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;

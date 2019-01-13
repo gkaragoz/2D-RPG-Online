@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using SimpleHTTP;
 using System;
 using System.Collections;
@@ -49,10 +49,10 @@ public static class APIConfig {
     public static string SUCCESS_TO_CREATE_CHARACTER = "SUCCESS to create new character!";
     public static string SUCCESS_TO_SELECT_CHARACTER = "SUCCESS to select a character!";
 
-    public static IEnumerator ISessionIDPostMethod(AuthRequest data, Action<AuthResponse> callback) {
+    public static IEnumerator ISessionIDPostMethod(RequestAuth data, Action<Auth> callback) {
         Debug.Log(ATTEMP_TO_GET_SESSION_ID);
 
-        AuthResponse authResponse = new AuthResponse();
+        Auth authResponse = new Auth();
 
         Request request = new Request(URL_SessionID)
             .Post(RequestBody.From(data));
@@ -66,17 +66,17 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            authResponse = JsonUtility.FromJson<Auth>(resp.Body());
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator IAccountDataPostMethod(AccountDataRequest data, Action<AccountModel> callback) {
+    public static IEnumerator IAccountDataPostMethod(RequestAccountData data, Action<ShiftServer.Proto.RestModels.AccountData> callback) {
         Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
 
-        AccountModel accountModel = new AccountModel();
+        ShiftServer.Proto.RestModels.AccountData accountModel = new ShiftServer.Proto.RestModels.AccountData();
 
         Request request = new Request(URL_AccountData)
             .Post(RequestBody.From(data));
@@ -91,17 +91,17 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            accountModel = JsonUtility.FromJson<AccountModel>(resp.Body());
+            accountModel = JsonUtility.FromJson<ShiftServer.Proto.RestModels.AccountData>(resp.Body());
             callback(accountModel);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator IGuestLoginPostMethod(GuestAuthRequest data, Action<AuthResponse> callback) {
+    public static IEnumerator IGuestLoginPostMethod(RequestGuestAuth data, Action<Auth> callback) {
         Debug.Log(ATTEMP_TO_GET_GUEST_SESSION);
 
-        AuthResponse authResponse = new AuthResponse();
+        Auth authResponse = new Auth();
 
         Request request = new Request(URL_GuestLogin)
             .Post(RequestBody.From(data));
@@ -115,17 +115,17 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonUtility.FromJson<AuthResponse>(resp.Body());
+            authResponse = JsonUtility.FromJson<Auth>(resp.Body());
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator ICreateCharacterPostMethod(CharAddRequest data, Action<CharAddResponse> callback) {
+    public static IEnumerator ICreateCharacterPostMethod(RequestCharAdd data, Action<CharAdd> callback) {
         Debug.Log(ATTEMP_TO_CREATE_CHARACTER);
 
-        CharAddResponse createCharacterResponse = new CharAddResponse();
+        CharAdd createCharacterResponse = new CharAdd();
 
         Request request = new Request(URL_CreateCharacter)
             .Post(RequestBody.From(data));
@@ -139,17 +139,17 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            createCharacterResponse = JsonUtility.FromJson<CharAddResponse>(resp.Body());
+            createCharacterResponse = JsonUtility.FromJson<CharAdd>(resp.Body());
             callback(createCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator ISelectCharacterPostMethod(CharSelectRequest data, Action<CharSelectResponse> callback) {
+    public static IEnumerator ISelectCharacterPostMethod(RequestCharSelect data, Action<CharSelect> callback) {
         Debug.Log(ATTEMP_TO_SELECT_CHARACTER);
 
-        CharSelectResponse selectCharacterResponse = new CharSelectResponse();
+        CharSelect selectCharacterResponse = new CharSelect();
 
         Request request = new Request(URL_SelectCharacter)
             .Post(RequestBody.From(data));
@@ -163,7 +163,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            selectCharacterResponse = JsonUtility.FromJson<CharSelectResponse>(resp.Body());
+            selectCharacterResponse = JsonUtility.FromJson<CharSelect>(resp.Body());
             callback(selectCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());

@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using System;
 using UnityEngine;
 
@@ -25,9 +25,9 @@ public class AccountManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField]
-    private AccountModel _account;
+    private ShiftServer.Proto.RestModels.AccountData _account;
 
-    public AccountModel Account {
+    public ShiftServer.Proto.RestModels.AccountData Account {
         get {
             return _account;
         }
@@ -41,10 +41,10 @@ public class AccountManager : MonoBehaviour {
         CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
     }
 
-    public void Initialize(AccountModel account) {
+    public void Initialize(ShiftServer.Proto.RestModels.AccountData account) {
         this.Account = account;
 
-        CharacterManager.instance.Initialize(account.characters, account.selected_char_name);
+        CharacterManager.instance.Initialize(account.characters, CharacterManager.instance.GetCharacterModel(account.selected_char_name));
 
         initializationProgress?.Invoke();
         onAccountUpdated?.Invoke();

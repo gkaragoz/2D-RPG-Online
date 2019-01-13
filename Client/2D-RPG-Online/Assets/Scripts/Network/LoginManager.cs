@@ -1,7 +1,5 @@
-﻿using ShiftServer.Proto.Models;
-using SimpleHTTP;
+﻿using ShiftServer.Proto.RestModels;
 using System;
-using System.Collections;
 using UnityEngine;
 
 public class LoginManager : MonoBehaviour {
@@ -51,21 +49,21 @@ public class LoginManager : MonoBehaviour {
     }
 
     private void LoginAsAGuest() {
-        GuestAuthRequest guestAuthRequest = new GuestAuthRequest();
+        RequestGuestAuth guestAuthRequest = new RequestGuestAuth();
         guestAuthRequest.guest_id = "";
 
         StartCoroutine(APIConfig.IGuestLoginPostMethod(guestAuthRequest, OnSessionIDResponse));
     }
 
     private void RequestSessionID() {
-        AuthRequest authRequest = new AuthRequest();
+        RequestAuth authRequest = new RequestAuth();
         authRequest.id_token = GooglePlayManager.ID_TOKEN;
 
         StartCoroutine(APIConfig.ISessionIDPostMethod(authRequest, OnSessionIDResponse));
     }
 
     private void RequestAccountData() {
-        AccountDataRequest accountDataRequest = new AccountDataRequest();
+        RequestAccountData accountDataRequest = new RequestAccountData();
         accountDataRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
@@ -132,7 +130,7 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void OnSessionIDResponse(AuthResponse authResponse) {
+    private void OnSessionIDResponse(Auth authResponse) {
         if (authResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_SESSION_ID + authResponse.session_id);
 
@@ -147,16 +145,9 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void OnAccountDataResponse(AccountDataResponse accountDataResponse) {
+    private void OnAccountDataResponse(ShiftServer.Proto.RestModels.AccountData accountDataResponse) {
         if (accountDataResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
-
-            AccountModel accountModel = new AccountModel();
-            accountModel.characters = accountDataResponse.characters;
-            accountModel.characters = accountDataResponse.characters;
-            accountModel.characters = accountDataResponse.characters;
-            accountModel.characters = accountDataResponse.characters;
-            accountModel.characters = accountDataResponse.characters;
 
             AccountManager.instance.Initialize(accountDataResponse);
 

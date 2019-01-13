@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -27,16 +27,16 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _imageClassIcon.color = Color.white;
         _imageClassAnimation.color = Color.white;
 
-        if (character.char_class == 0) {
+        if (character.class_index == 0) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassIcon;
-        } else if (character.char_class == 1) {
+        } else if (character.class_index == 1) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassIcon;
-        } else if (character.char_class == 2) {
+        } else if (character.class_index == 2) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassIcon;
-        } else if (character.char_class == 3) {
+        } else if (character.class_index == 3) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassIcon;
         }

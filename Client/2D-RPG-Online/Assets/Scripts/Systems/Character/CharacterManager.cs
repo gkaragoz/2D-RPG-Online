@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,6 +26,7 @@ public class CharacterManager : MonoBehaviour {
     public Action<CharacterModel> onCharacterSelected;
 
     public List<CharacterModel> AllCharacters { get { return _allCharacters; } }
+    public CharacterModel SelectedCharacter { get { return _selectedCharacter; } }
 
     [Header("Initialization")]
     [SerializeField]
@@ -35,13 +36,13 @@ public class CharacterManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField]
-    private string _selectedCharacterName;
+    private CharacterModel _selectedCharacter;
     [SerializeField]
     private List<CharacterModel> _allCharacters = new List<CharacterModel>();
 
-    public void Initialize(List<CharacterModel> characters, string selectedCharacterName) {
-        _allCharacters = characters;
-        _selectedCharacterName = selectedCharacterName;
+    public void Initialize(List<CharacterModel> characters, CharacterModel _selectedCharacter) {
+        this._allCharacters = characters;
+        this._selectedCharacter = _selectedCharacter;
 
         _characterSelection.Initialize();
 
@@ -65,9 +66,9 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void SelectCharacter(CharacterModel selectedCharacter) {
-        _selectedCharacterName = selectedCharacter.name;
+        this._selectedCharacter = selectedCharacter;
 
-        onCharacterSelected?.Invoke(GetCharacterModel(_selectedCharacterName));
+        onCharacterSelected?.Invoke(_selectedCharacter);
     }
 
     public void AddCharacter(CharacterModel newCharacter) {

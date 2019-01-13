@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -36,14 +36,14 @@ public class CharacterSelection : Menu {
     }
 
     public void SelectCharacter() {
-        CharSelectRequest selectCharacterRequest = new CharSelectRequest();
+        RequestCharSelect selectCharacterRequest = new RequestCharSelect();
         selectCharacterRequest.char_name = SelectedCharacterName;
         selectCharacterRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ISelectCharacterPostMethod(selectCharacterRequest, OnSelectCharacterResponse));
     }
 
-    private void OnSelectCharacterResponse(CharSelectResponse selectCharacterResponse) {
+    private void OnSelectCharacterResponse(CharSelect selectCharacterResponse) {
         if (selectCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 

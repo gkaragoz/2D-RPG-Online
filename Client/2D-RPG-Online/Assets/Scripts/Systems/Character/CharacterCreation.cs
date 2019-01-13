@@ -1,5 +1,4 @@
-﻿using System;
-using ShiftServer.Proto.Models;
+﻿using ShiftServer.Proto.RestModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -61,15 +60,15 @@ public class CharacterCreation : Menu {
     }
 
     public void CreateCharacter() {
-        CharAddRequest createCharacterRequest = new CharAddRequest();
-        createCharacterRequest.char_class = SelectedClassID;
+        RequestCharAdd createCharacterRequest = new RequestCharAdd();
+        createCharacterRequest.class_index = SelectedClassID;
         createCharacterRequest.char_name = CharacterName;
         createCharacterRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ICreateCharacterPostMethod(createCharacterRequest, OnCreateCharacterResponse));
     }
 
-    private void OnCreateCharacterResponse(CharAddResponse createCharacterResponse) {
+    private void OnCreateCharacterResponse(CharAdd createCharacterResponse) {
         if (createCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_CREATE_CHARACTER);
 

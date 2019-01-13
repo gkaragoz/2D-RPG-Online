@@ -292,7 +292,6 @@
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\PingStatus.cs" />
-    <Compile Include="Assets\Scripts\Network\SignupManager.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Client.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Example.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\FormData.cs" />
