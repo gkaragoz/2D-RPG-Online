@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Proto.Models
 {
-    [Serializable]
-    public class AddCharResponse
+    public class CharAddRequest
     {
-        public string error_message;
-        public bool success;
-        public Character character;
+        public string session_id;
+        public string char_name;
+        public int char_class;
     }
 }

@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 namespace ShiftServer.Proto.Models
 {
     [Serializable]
-    public class GuestLoginRequest
+    public class CharSelectRequest
     {
-        public string guest_id;
+        public string session_id;
+        public string char_name;
     }
 }
