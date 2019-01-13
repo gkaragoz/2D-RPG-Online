@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +33,8 @@ public class LoadingManager : Menu {
     [Header("Settings")]
     [SerializeField]
     private float _lerpSpeed;
+    [SerializeField]
+    private float _delay;
 
     [Header("Debug")]
     [SerializeField]
@@ -74,8 +78,15 @@ public class LoadingManager : Menu {
         }
 
         if (_completedProgressAmount >= 100) {
-            onLoadingCompleted?.Invoke();
+            StartCoroutine(Delay(() => {
+                onLoadingCompleted?.Invoke();
+            }));
         }
+    }
+
+    private IEnumerator Delay(Action callback) {
+        yield return new WaitForSeconds(_delay);
+        callback();
     }
 
     private float GetPerProgressFilledAmount() {
