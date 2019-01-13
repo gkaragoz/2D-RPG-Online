@@ -49,30 +49,7 @@ public static class APIConfig {
     public static string SUCCESS_TO_CREATE_CHARACTER = "SUCCESS to create new character!";
     public static string SUCCESS_TO_SELECT_CHARACTER = "SUCCESS to select a character!";
 
-    public class SessionIDRequest {
-        public string id_token;
-    }
-
-    public class AccountDataRequest {
-        public string session_id;
-    }
-
-    public class GuestSessionRequest {
-        public string guest_id;
-    }
-
-    public class CreateCharacterRequest {
-        public string session_id;
-        public string char_name;
-        public int char_class;
-    }
-
-    public class SelectCharacterRequest {
-        public string session_id;
-        public int slot_id;
-    }
-
-    public static IEnumerator ISessionIDPostMethod(SessionIDRequest data, Action<AuthResponse> callback) {
+    public static IEnumerator ISessionIDPostMethod(AuthRequest data, Action<AuthResponse> callback) {
         Debug.Log(ATTEMP_TO_GET_SESSION_ID);
 
         AuthResponse authResponse = new AuthResponse();
@@ -96,10 +73,10 @@ public static class APIConfig {
         }
     }
 
-    public static IEnumerator IAccountDataPostMethod(AccountDataRequest data, Action<Account> callback) {
+    public static IEnumerator IAccountDataPostMethod(AccountDataRequest data, Action<AccountModel> callback) {
         Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
 
-        Account account = new Account();
+        AccountModel accountModel = new AccountModel();
 
         Request request = new Request(URL_AccountData)
             .Post(RequestBody.From(data));
@@ -114,14 +91,14 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            account = JsonUtility.FromJson<Account>(resp.Body());
-            callback(account);
+            accountModel = JsonUtility.FromJson<AccountModel>(resp.Body());
+            callback(accountModel);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator IGuestLoginPostMethod(GuestSessionRequest data, Action<AuthResponse> callback) {
+    public static IEnumerator IGuestLoginPostMethod(GuestAuthRequest data, Action<AuthResponse> callback) {
         Debug.Log(ATTEMP_TO_GET_GUEST_SESSION);
 
         AuthResponse authResponse = new AuthResponse();
@@ -145,10 +122,10 @@ public static class APIConfig {
         }
     }
 
-    public static IEnumerator ICreateCharacterPostMethod(CreateCharacterRequest data, Action<AddCharResponse> callback) {
+    public static IEnumerator ICreateCharacterPostMethod(CharAddRequest data, Action<CharAddResponse> callback) {
         Debug.Log(ATTEMP_TO_CREATE_CHARACTER);
 
-        AddCharResponse createCharacterResponse = new AddCharResponse();
+        CharAddResponse createCharacterResponse = new CharAddResponse();
 
         Request request = new Request(URL_CreateCharacter)
             .Post(RequestBody.From(data));
@@ -162,17 +139,17 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            createCharacterResponse = JsonUtility.FromJson<AddCharResponse>(resp.Body());
+            createCharacterResponse = JsonUtility.FromJson<CharAddResponse>(resp.Body());
             callback(createCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
         }
     }
 
-    public static IEnumerator ISelectCharacterPostMethod(SelectCharacterRequest data, Action<SelectCharResponse> callback) {
+    public static IEnumerator ISelectCharacterPostMethod(CharSelectRequest data, Action<CharSelectResponse> callback) {
         Debug.Log(ATTEMP_TO_SELECT_CHARACTER);
 
-        SelectCharacterRequest selectCharacterRequest = new SelectCharacterRequest();
+        CharSelectResponse selectCharacterResponse = new CharSelectResponse();
 
         Request request = new Request(URL_SelectCharacter)
             .Post(RequestBody.From(data));
@@ -186,8 +163,8 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            selectCharacterRequest = JsonUtility.FromJson<SelectCharResponse>(resp.Body());
-            callback(selectCharacterRequest);
+            selectCharacterResponse = JsonUtility.FromJson<CharSelectResponse>(resp.Body());
+            callback(selectCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
         }

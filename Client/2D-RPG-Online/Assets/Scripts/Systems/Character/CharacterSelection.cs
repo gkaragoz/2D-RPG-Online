@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using ShiftServer.Proto.Models;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
@@ -13,10 +14,10 @@ public class CharacterSelection : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private int _selectedCharacterSlotID;
+    private int _selectedCharacterName;
 
-    public int SelectedCharacterSlotID {
-        get { return _selectedCharacterSlotID; }
+    public int SelectedCharacterName {
+        get { return _selectedCharacterName; }
     }
 
     private void Start() {
@@ -29,20 +30,20 @@ public class CharacterSelection : Menu {
         }
     }
 
-    public void SelectClass(int classID) {
-        _selectedCharacterSlotID = classID;
+    public void SelectCharacter(string characterName) {
+        _selectedCharacterName = characterName;
         _btnSelectCharacter.interactable = true;
     }
 
     public void SelectCharacter() {
-        APIConfig.SelectCharacterRequest selectCharacterRequest = new APIConfig.SelectCharacterRequest();
-        selectCharacterRequest.slot_id = SelectedCharacterSlotID;
+        CharSelectRequest selectCharacterRequest = new CharSelectRequest();
+        selectCharacterRequest.char_name = SelectedCharacterName;
         selectCharacterRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ISelectCharacterPostMethod(selectCharacterRequest, OnSelectCharacterResponse));
     }
 
-    private void OnSelectCharacterResponse(SelectCharResponse selectCharacterResponse) {
+    private void OnSelectCharacterResponse(CharSelectResponse selectCharacterResponse) {
         if (selectCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 
@@ -50,7 +51,7 @@ public class CharacterSelection : Menu {
         } else {
             Debug.Log(APIConfig.ERROR_SELECT_CHARACTER);
 
-            PopupManager.instance.ShowPopupMessage("ERROR", selectCharacterResponse.error_message, PopupMessage.Type.Error);
+            PopupManager.instance.ShowPopupMessage("ERROR", "Unknown", PopupMessage.Type.Error);
         }
     }
 

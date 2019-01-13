@@ -25,9 +25,9 @@ public class AccountManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField]
-    private Account _account;
+    private AccountModel _account;
 
-    public Account Account {
+    public AccountModel Account {
         get {
             return _account;
         }
@@ -41,30 +41,30 @@ public class AccountManager : MonoBehaviour {
         CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
     }
 
-    public void Initialize(Account account) {
+    public void Initialize(AccountModel account) {
         this.Account = account;
 
-        CharacterManager.instance.Initialize(account.characters, account.selectedCharacter);
+        CharacterManager.instance.Initialize(account.characters, account.selected_char_name);
 
         initializationProgress?.Invoke();
         onAccountUpdated?.Invoke();
     }
 
-    private void AddCharacter(Character newCharacter) {
+    private void AddCharacter(CharacterModel newCharacter) {
         _account.characters.Add(newCharacter);
 
         onAccountUpdated?.Invoke();
     }
 
-    private void SelectCharacter(Character selectedCharacter) {
-        _account.selectedCharacter = selectedCharacter;
+    private void SelectCharacter(CharacterModel selectedCharacter) {
+        _account.selected_char_name = selectedCharacter.name;
     }
 
-    private void OnCharacterCreated(Character newCharacter) {
+    private void OnCharacterCreated(CharacterModel newCharacter) {
         AddCharacter(newCharacter);
     }
 
-    private void OnCharacterSelected(Character selectedCharacter) {
+    private void OnCharacterSelected(CharacterModel selectedCharacter) {
         SelectCharacter(selectedCharacter);
     }
 

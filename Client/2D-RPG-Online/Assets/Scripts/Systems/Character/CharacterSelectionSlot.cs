@@ -23,20 +23,20 @@ public class CharacterSelectionSlot : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI _txtCharacterMana;
 
-    public void Initialize(Character character) {
+    public void Initialize(CharacterModel character) {
         _imageClassIcon.color = Color.white;
         _imageClassAnimation.color = Color.white;
 
-        if (character.class_id == 0) {
+        if (character.char_class == 0) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassIcon;
-        } else if (character.class_id == 1) {
+        } else if (character.char_class == 1) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassIcon;
-        } else if (character.class_id == 2) {
+        } else if (character.char_class == 2) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassIcon;
-        } else if (character.class_id == 3) {
+        } else if (character.char_class == 3) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
             _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassIcon;
         }

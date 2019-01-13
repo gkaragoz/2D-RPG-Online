@@ -51,21 +51,21 @@ public class LoginManager : MonoBehaviour {
     }
 
     private void LoginAsAGuest() {
-        APIConfig.GuestSessionRequest guestSessionRequest = new APIConfig.GuestSessionRequest();
-        guestSessionRequest.guest_id = "";
+        GuestAuthRequest guestAuthRequest = new GuestAuthRequest();
+        guestAuthRequest.guest_id = "";
 
-        StartCoroutine(APIConfig.IGuestLoginPostMethod(guestSessionRequest, OnSessionIDResponse));
+        StartCoroutine(APIConfig.IGuestLoginPostMethod(guestAuthRequest, OnSessionIDResponse));
     }
 
     private void RequestSessionID() {
-        APIConfig.SessionIDRequest sessionIDRequest = new APIConfig.SessionIDRequest();
-        sessionIDRequest.id_token = GooglePlayManager.ID_TOKEN;
+        AuthRequest authRequest = new AuthRequest();
+        authRequest.id_token = GooglePlayManager.ID_TOKEN;
 
-        StartCoroutine(APIConfig.ISessionIDPostMethod(sessionIDRequest, OnSessionIDResponse));
+        StartCoroutine(APIConfig.ISessionIDPostMethod(authRequest, OnSessionIDResponse));
     }
 
     private void RequestAccountData() {
-        APIConfig.AccountDataRequest accountDataRequest = new APIConfig.AccountDataRequest();
+        AccountDataRequest accountDataRequest = new AccountDataRequest();
         accountDataRequest.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.IAccountDataPostMethod(accountDataRequest, OnAccountDataResponse));
@@ -147,7 +147,7 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void OnAccountDataResponse(Account accountDataResponse) {
+    private void OnAccountDataResponse(AccountDataResponse accountDataResponse) {
         if (accountDataResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
 

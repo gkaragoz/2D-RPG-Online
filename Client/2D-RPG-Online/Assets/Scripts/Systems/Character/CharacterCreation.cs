@@ -69,7 +69,7 @@ public class CharacterCreation : Menu {
         StartCoroutine(APIConfig.ICreateCharacterPostMethod(createCharacterRequest, OnCreateCharacterResponse));
     }
 
-    private void OnCreateCharacterResponse(AddCharResponse createCharacterResponse) {
+    private void OnCreateCharacterResponse(CharAddResponse createCharacterResponse) {
         if (createCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_CREATE_CHARACTER);
 

@@ -22,10 +22,10 @@ public class CharacterManager : MonoBehaviour {
 
     public Task initializationProgress;
 
-    public Action<Character> onCharacterCreated;
-    public Action<Character> onCharacterSelected;
+    public Action<CharacterModel> onCharacterCreated;
+    public Action<string> onCharacterSelected;
 
-    public List<Character> AllCharacters { get { return _allCharacters; } }
+    public List<CharacterModel> AllCharacters { get { return _allCharacters; } }
 
     [Header("Initialization")]
     [SerializeField]
@@ -35,13 +35,13 @@ public class CharacterManager : MonoBehaviour {
 
     [Header("Debug")]
     [SerializeField]
-    private Character _selectedCharacter;
+    private string _selectedCharacterName;
     [SerializeField]
-    private List<Character> _allCharacters = new List<Character>();
+    private List<CharacterModel> _allCharacters = new List<CharacterModel>();
 
-    public void Initialize(List<Character> characters, Character selectedCharacter) {
+    public void Initialize(List<CharacterModel> characters, string selectedCharacterName) {
         _allCharacters = characters;
-        _selectedCharacter = selectedCharacter;
+        _selectedCharacterName = selectedCharacterName;
 
         _characterSelection.Initialize();
 
@@ -64,13 +64,13 @@ public class CharacterManager : MonoBehaviour {
         _characterSelection.Hide();
     }
 
-    public void SelectCharacter(Character character) {
-        _selectedCharacter = character;
+    public void SelectCharacter(string characterName) {
+        _selectedCharacterName = characterName;
 
-        onCharacterSelected?.Invoke(character);
+        onCharacterSelected?.Invoke(characterName);
     }
 
-    public void AddCharacter(Character newCharacter) {
+    public void AddCharacter(CharacterModel newCharacter) {
         AllCharacters.Add(newCharacter);
 
         onCharacterCreated?.Invoke(newCharacter);
