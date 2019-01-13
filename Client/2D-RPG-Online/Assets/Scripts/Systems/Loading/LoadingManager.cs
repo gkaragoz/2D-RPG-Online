@@ -79,6 +79,7 @@ public class LoadingManager : Menu {
 
         if (_completedProgressAmount >= 100) {
             StartCoroutine(Delay(() => {
+                ResetTasks();
                 onLoadingCompleted?.Invoke();
             }));
         }
