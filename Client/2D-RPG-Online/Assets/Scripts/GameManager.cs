@@ -54,6 +54,7 @@ public class GameManager : MonoBehaviour {
         LoginManager.instance.onLoginCompleted = OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted = OnLoadingCompleted;
         CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -87,6 +88,7 @@ public class GameManager : MonoBehaviour {
         LoadingManager.instance.Hide();
 
         if (!HasPlayedBefore) {
+            //Go To Tutorial Scene.
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
             TutorialManager.instance.onTutorialCompleted = OnTutorialCompleted;
@@ -96,8 +98,8 @@ public class GameManager : MonoBehaviour {
 
             TutorialManager.instance.PauseTutorial();
         } else {
-            //Open Main Menu.
-            MenuManager.instance.Show();
+            //Open Character Selection Menu.
+            CharacterManager.instance.ShowCharacterSelectionMenu();
         }
     }
 
@@ -109,6 +111,11 @@ public class GameManager : MonoBehaviour {
 
     private void OnCharacterCreated(Character newCharacter) {
         CharacterManager.instance.HideCharacterCreationMenu();
+        MenuManager.instance.Show();
+    }
+
+    private void OnCharacterSelected(Character selectedCharacter) {
+        CharacterManager.instance.HideCharacterSelectionMenu();
         MenuManager.instance.Show();
     }
 

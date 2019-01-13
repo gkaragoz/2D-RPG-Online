@@ -35,12 +35,24 @@ public class CharacterManager : MonoBehaviour {
     [SerializeField]
     private List<Character> _allCharacters = new List<Character>();
 
+    public void Initialize(List<Character> characters) {
+        _allCharacters = characters;
+    }
+
     public void ShowCharacterCreationMenu() {
         _characterCreation.Show();
     }
 
     public void HideCharacterCreationMenu() {
         _characterCreation.Hide();
+    }
+
+    public void ShowCharacterSelectionMenu() {
+        _characterSelection.Show();
+    }
+
+    public void HideCharacterSelectionMenu() {
+        _characterSelection.Hide();
     }
 
     public void SelectCharacter(Character character) {

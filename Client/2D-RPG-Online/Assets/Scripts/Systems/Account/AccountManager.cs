@@ -38,10 +38,13 @@ public class AccountManager : MonoBehaviour {
 
     private void Start() {
         CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
     }
 
     public void Initialize(Account account) {
         this.Account = account;
+
+        CharacterManager.instance.Initialize(account.characters);
 
         initializationProgress?.Invoke();
         onAccountUpdated?.Invoke();
@@ -53,8 +56,16 @@ public class AccountManager : MonoBehaviour {
         onAccountUpdated?.Invoke();
     }
 
+    private void SelectCharacter(Character selectedCharacter) {
+        _account.selectedCharacter = selectedCharacter;
+    }
+
     private void OnCharacterCreated(Character newCharacter) {
         AddCharacter(newCharacter);
+    }
+
+    private void OnCharacterSelected(Character selectedCharacter) {
+        SelectCharacter(selectedCharacter);
     }
 
 }

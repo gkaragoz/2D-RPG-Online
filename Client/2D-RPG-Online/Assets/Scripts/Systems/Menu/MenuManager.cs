@@ -62,9 +62,9 @@ public class MenuManager : Menu {
         _txtAccountGold.text = AccountManager.instance.Account.gold.ToString();
         _txtAccountGem.text = AccountManager.instance.Account.gem.ToString();
 
-        //_txtCharacterName.text = AccountManager.instance.Account.na.ToString();
-        //_txtCharacterLevel.text = AccountManager.instance.Account.gold.ToString();
-        //_txtCharacterExperience.text = AccountManager.instance.Account.gold.ToString();
+        _txtCharacterName.text = AccountManager.instance.Account.selectedCharacter.name.ToString();
+        _txtCharacterLevel.text = AccountManager.instance.Account.selectedCharacter.level.ToString();
+        _txtCharacterExperience.text = AccountManager.instance.Account.selectedCharacter.exp.ToString();
 
         //_txtCharacterStatPoints.text = AccountManager.instance.Account.gold.ToString();
         //_txtCharacterHealth.text = AccountManager.instance.Account.gold.ToString();
