@@ -306,6 +306,7 @@
     <Compile Include="Assets\Scripts\Systems\Character\CharacterCreation.cs" />
     <Compile Include="Assets\Scripts\Systems\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Character\CharacterSelection.cs" />
+    <Compile Include="Assets\Scripts\Systems\Character\CharacterSelectionSlot.cs" />
     <Compile Include="Assets\Scripts\Systems\Facebook\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />

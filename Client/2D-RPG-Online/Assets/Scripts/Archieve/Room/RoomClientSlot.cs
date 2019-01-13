@@ -58,7 +58,7 @@ public class RoomClientSlot : MonoBehaviour {
 
     public void UpdateUI(RoomPlayerInfo playerInfo) {
         this._playerInfo = playerInfo;
-        this._characterClassVisualization = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Warrior);
+        this._characterClassVisualization = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior);
 
         SetCharacterClassVisualize();
         SetToggleIsReady();

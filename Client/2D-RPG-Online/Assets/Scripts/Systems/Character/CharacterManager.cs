@@ -20,8 +20,12 @@ public class CharacterManager : MonoBehaviour {
 
     #endregion
 
+    public Task initializationProgress;
+
     public Action<Character> onCharacterCreated;
     public Action<Character> onCharacterSelected;
+
+    public List<Character> AllCharacters { get { return _allCharacters; } }
 
     [Header("Initialization")]
     [SerializeField]
@@ -35,8 +39,13 @@ public class CharacterManager : MonoBehaviour {
     [SerializeField]
     private List<Character> _allCharacters = new List<Character>();
 
-    public void Initialize(List<Character> characters) {
+    public void Initialize(List<Character> characters, Character selectedCharacter) {
         _allCharacters = characters;
+        _selectedCharacter = selectedCharacter;
+
+        _characterSelection.Initialize();
+
+        initializationProgress?.Invoke();
     }
 
     public void ShowCharacterCreationMenu() {
@@ -62,7 +71,7 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void AddCharacter(Character newCharacter) {
-        _allCharacters.Add(newCharacter);
+        AllCharacters.Add(newCharacter);
 
         onCharacterCreated?.Invoke(newCharacter);
     }

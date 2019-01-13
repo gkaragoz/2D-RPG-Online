@@ -42,17 +42,17 @@ public class CharacterCreation : Menu {
         _selectedClassID = classID;
 
         if (classID == 0) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Warrior).ClassDescription;
+            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
+            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassDescription;
         } else if (classID == 1) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Archer).ClassDescription;
+            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
+            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassDescription;
         } else if (classID == 2) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Mage).ClassDescription;
+            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
+            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassDescription;
         } else if (classID == 3) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Priest).ClassDescription;
+            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
+            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassDescription;
         }
     }
 

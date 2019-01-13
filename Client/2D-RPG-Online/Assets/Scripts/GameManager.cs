@@ -65,6 +65,7 @@ public class GameManager : MonoBehaviour {
             LoadingManager.instance.AddTask(LoginManager.instance.sessionIdResponseProgress);
             LoadingManager.instance.AddTask(LoginManager.instance.accountDataResponseProgress);
             LoadingManager.instance.AddTask(AccountManager.instance.initializationProgress);
+            LoadingManager.instance.AddTask(CharacterManager.instance.initializationProgress);
 
             LoginManager.instance.Initialize();
             LoginManager.instance.Login();

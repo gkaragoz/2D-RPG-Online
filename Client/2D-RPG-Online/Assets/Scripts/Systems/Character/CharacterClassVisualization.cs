@@ -48,7 +48,7 @@ public class CharacterClassVisualization : MonoBehaviour {
     [SerializeField]
     private Properties[] _characterClassVisualization;
 
-    public Properties GetCharacterClassVisualize(Classes characterClass) {
+    public Properties GetVisualizationProperties(Classes characterClass) {
         switch (characterClass) {
             case Classes.Warrior:
                 return _characterClassVisualization[0];

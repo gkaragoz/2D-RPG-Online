@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.Experimental.UIElements;
 
 public class CharacterSelection : Menu {
@@ -6,6 +7,8 @@ public class CharacterSelection : Menu {
     [Header("Initialization")]
     [SerializeField]
     private Button _btnSelectCharacter;
+    [SerializeField]
+    private List<CharacterSelectionSlot> _characterSelectionSlots = new List<CharacterSelectionSlot>();
 
     [Header("Debug")]
     [SerializeField]
@@ -18,6 +21,12 @@ public class CharacterSelection : Menu {
 
     private void Start() {
         _btnSelectCharacter.interactable = false;
+    }
+
+    public void Initialize() {
+        for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
+            _characterSelectionSlots[ii].Initialize(CharacterManager.instance.AllCharacters[ii]);
+        }
     }
 
     public void SelectClass(int classID) {

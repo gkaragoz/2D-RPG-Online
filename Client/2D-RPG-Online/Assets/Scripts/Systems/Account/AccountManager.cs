@@ -44,7 +44,7 @@ public class AccountManager : MonoBehaviour {
     public void Initialize(Account account) {
         this.Account = account;
 
-        CharacterManager.instance.Initialize(account.characters);
+        CharacterManager.instance.Initialize(account.characters, account.selectedCharacter);
 
         initializationProgress?.Invoke();
         onAccountUpdated?.Invoke();
