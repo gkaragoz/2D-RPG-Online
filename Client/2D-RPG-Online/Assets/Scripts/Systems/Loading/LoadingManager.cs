@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,7 +38,7 @@ public class LoadingManager : Menu {
     private float _completedProgressAmount;
     [SerializeField]
     [Utils.ReadOnly]
-    private bool[] _checkList;
+    private List<bool> _checkList = new List<bool>();
 
     private void Start() {
         _imgFilledBar.fillAmount = 0;
@@ -50,8 +49,12 @@ public class LoadingManager : Menu {
         _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, _completedProgressAmount * 0.01f, Time.deltaTime * _lerpSpeed);
     }
 
-    public void SetCheckList(List<Task> tasks) {
-        _checkList = new bool[tasks.Count];
+    public void ResetTasks() {
+        _checkList = new List<bool>();
+    }
+
+    public void AddTask(Task task) {
+        _checkList.Add(false);
     }
 
     public void Progress() {
@@ -59,7 +62,7 @@ public class LoadingManager : Menu {
 
         _completedProgressAmount = 0;
 
-        for (int ii = 0; ii < _checkList.Length; ii++) {
+        for (int ii = 0; ii < _checkList.Count; ii++) {
             _completedProgressAmount += progressFilledAmount;
 
             if (_checkList[ii]) {
@@ -76,7 +79,7 @@ public class LoadingManager : Menu {
     }
 
     private float GetPerProgressFilledAmount() {
-        return (100 / (_checkList.Length == 0 ? 1 : _checkList.Length));
+        return (100 / (_checkList.Count == 0 ? 1 : _checkList.Count));
     }
 
 }

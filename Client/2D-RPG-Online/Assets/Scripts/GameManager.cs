@@ -51,26 +51,23 @@ public class GameManager : MonoBehaviour {
 
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
 
-        List<Task> tasks = new List<Task>();
+        Debug.Log("First time play? " + !HasPlayedBefore);
 
         if (HasPlayedBefore) {
-            tasks.Add(LoginManager.instance.initializationProgress);
-            tasks.Add(LoginManager.instance.googlePlaySignInResponseProgress);
-            tasks.Add(LoginManager.instance.sessionIdResponseProgress);
-            tasks.Add(LoginManager.instance.accountDataResponseProgress);
-
-            LoadingManager.instance.SetCheckList(tasks);
+            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.googlePlaySignInResponseProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.sessionIdResponseProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.accountDataResponseProgress);
 
             LoginManager.instance.Initialize();
             LoginManager.instance.Login();
         } else {
-            tasks.Add(LoginManager.instance.initializationProgress);
-
-            LoadingManager.instance.SetCheckList(tasks);
+            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
 
             LoginManager.instance.Initialize();
         }
-
     }
 
     private void OnLoadingCompleted() {
