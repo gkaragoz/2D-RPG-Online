@@ -73,7 +73,6 @@
     <Compile Include="Db\AccountStats.cs" />
     <Compile Include="Models\AccountDataRequest.cs" />
     <Compile Include="Models\AccountDataResponse.cs" />
-    <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CharAddRequest.cs" />
     <Compile Include="Models\CharAddResponse.cs" />
     <Compile Include="Models\AuthRequest.cs" />
