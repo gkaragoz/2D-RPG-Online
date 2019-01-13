@@ -52,13 +52,13 @@ public class RoomClientSlot : MonoBehaviour {
         }
     }
 
-    private ClassManager.CharacterClassVisualization _characterClassVisualization;
+    private CharacterClassVisualization.Properties _characterClassVisualization;
 
     private RoomPlayerInfo _playerInfo;
 
     public void UpdateUI(RoomPlayerInfo playerInfo) {
         this._playerInfo = playerInfo;
-        this._characterClassVisualization = ClassManager.instance.GetCharacterClassVisualize(ClassManager.Classes.Warrior);
+        this._characterClassVisualization = CharacterClassVisualization.instance.GetCharacterClassVisualize(CharacterClassVisualization.Classes.Warrior);
 
         SetCharacterClassVisualize();
         SetToggleIsReady();
@@ -108,19 +108,19 @@ public class RoomClientSlot : MonoBehaviour {
     }
 
     private void SetTxtCharacterName() {
-        _txtPlayerName.text = _characterClassVisualization.className;
+        _txtPlayerName.text = _characterClassVisualization.ClassName;
     }
 
     private void SetImgFrameColor() {
-        _imgFrame.color = _characterClassVisualization.classFrameColor;
+        _imgFrame.color = _characterClassVisualization.ClassFrameColor;
     }
 
     private void SetImgCharacter() {
-        _imgCharacter.sprite = _characterClassVisualization.classSprite;
+        _imgCharacter.sprite = _characterClassVisualization.ClassSprite;
     }
 
     private void SetImgClassIcon() {
-        _imgClassIcon.sprite = _characterClassVisualization.classIcon;
+        _imgClassIcon.sprite = _characterClassVisualization.ClassIcon;
     }
 
 }
