@@ -10,6 +10,6 @@ namespace ShiftServer.Proto.Models
     {
         public string session_id;
         public string char_name;
-        public int char_class;
+        public int class_index;
     }
 }
