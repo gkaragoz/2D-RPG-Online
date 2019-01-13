@@ -4,11 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Proto.Models
+namespace ShiftServer.Proto.RestModels
 {
     [Serializable]
-    public class CharSelectResponse
+    public class RequestCharSelect
     {
-        public bool success;
+        public string session_id;
+        public string char_name;
     }
 }

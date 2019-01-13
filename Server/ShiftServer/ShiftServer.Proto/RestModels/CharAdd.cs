@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ShiftServer.Proto.Models
+namespace ShiftServer.Proto.RestModels
 {
     [Serializable]
-    public class CharAddResponse
+    public class CharAdd
     {
         public string error_message;
         public bool success;

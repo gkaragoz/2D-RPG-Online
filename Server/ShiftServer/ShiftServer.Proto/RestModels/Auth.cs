@@ -1,9 +1,9 @@
 ﻿using System;
 
-namespace ShiftServer.Proto.Models
+namespace ShiftServer.Proto.RestModels
 {
     [Serializable]
-    public class AuthResponse
+    public class Auth
     {
         public string session_id;
         public string user_id;
