@@ -71,6 +71,8 @@
     <Compile Include="Db\AccountFriendRequests.cs" />
     <Compile Include="Db\AccountSession.cs" />
     <Compile Include="Db\AccountStats.cs" />
+    <Compile Include="Models\AccountDataRequest.cs" />
+    <Compile Include="Models\AccountDataResponse.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\CharAddRequest.cs" />
     <Compile Include="Models\CharAddResponse.cs" />
