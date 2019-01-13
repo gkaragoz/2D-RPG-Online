@@ -300,6 +300,7 @@
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Request.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\RequestBody.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Response.cs" />
+    <Compile Include="Assets\Scripts\Systems\Account\AccountManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\Sound.cs" />
     <Compile Include="Assets\Scripts\Systems\Facebook\FacebookManager.cs" />
@@ -311,6 +312,7 @@
     <Compile Include="Assets\Scripts\Systems\Log\Log.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\Menu\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupLoading.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupMessage.cs" />

@@ -145,16 +145,8 @@ public class LoginManager : MonoBehaviour {
     private void OnAccountDataResponse(Account accountDataResponse) {
         if (accountDataResponse.success) {
             Debug.Log(APIConfig.SUCCESS_GET_ACCOUNT_INFO);
-            Debug.Log(accountDataResponse.gem);
-            Debug.Log(accountDataResponse.gold);
-            for (int ii = 0; ii < accountDataResponse.characters.Count; ii++) {
-                Debug.Log("ACC Email: " + accountDataResponse.characters[ii].account_email);
-                Debug.Log("ACC ID: " + accountDataResponse.characters[ii].account_id);
-                Debug.Log("ACC ClassID: " + accountDataResponse.characters[ii].class_id);
-                Debug.Log("ACC EXP: " + accountDataResponse.characters[ii].exp);
-                Debug.Log("ACC Level: " + accountDataResponse.characters[ii].level);
-                Debug.Log("ACC Name: " + accountDataResponse.characters[ii].name);
-            }
+
+            AccountManager.instance.Initialize(accountDataResponse);
 
             onLoginResult.Invoke(APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA);
         } else {

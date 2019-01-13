@@ -30,18 +30,21 @@ public static class APIConfig {
     public static string ATTEMP_TO_GET_SESSION_ID = "ATTEMP to get sessionID!";
     public static string ATTEMP_TO_GET_ACCOUNT_INFO = "ATTEMP to get account informations!";
     public static string ATTEMP_TO_GET_GOOGLE_PLAY_ID_TOKEN = "ATTEMP to get Google Play ID Token!";
+    public static string ATTEMP_TO_CREATE_CHARACTER = "ATTEMP to create new character!";
 
     public static string ERROR_GOOGLE_PLAY_SIGN_IN = "ERROR on Google Play sign in!";
     public static string ERROR_GOOGLE_PLAY_SIGN_OUT = "ERROR on Google Play sign out!";
     public static string ERROR_GET_SESSION_ID = "ERROR on getting sessionID!";
     public static string ERROR_GET_ACCOUNT_INFO = "ERROR on getting account informations!";
     public static string ERROR_GET_GOOGLE_PLAY_ID_TOKEN = "ERROR on getting Google Play ID Token!";
+    public static string ERROR_CREATE_CHARACTER = "ERROR on create new character!";
 
     public static string SUCCESS_GOOGLE_PLAY_SIGN_IN = "SUCCESS on Google Play sign in!";
     public static string SUCCESS_GOOGLE_PLAY_SIGN_OUT = "SUCCESS on Google Play sign out!";
     public static string SUCCESS_GET_SESSION_ID = "SUCCESS on getting sessionID!";
     public static string SUCCESS_GET_ACCOUNT_INFO = "SUCCESS on getting account informations!";
     public static string SUCCESS_GET_GOOGLE_PLAY_ID_TOKEN = "SUCCESS on getting Google Play ID Token!";
+    public static string SUCCESS_TO_CREATE_CHARACTER = "SUCCESS to create new character!";
 
     public class SessionIDRequest {
         public string id_token;
@@ -62,7 +65,7 @@ public static class APIConfig {
     }
 
     public static IEnumerator ISessionIDPostMethod(SessionIDRequest data, Action<AuthResponse> callback) {
-        Debug.Log(APIConfig.ATTEMP_TO_GET_SESSION_ID);
+        Debug.Log(ATTEMP_TO_GET_SESSION_ID);
 
         AuthResponse authResponse = new AuthResponse();
 
@@ -86,6 +89,8 @@ public static class APIConfig {
     }
 
     public static IEnumerator IAccountDataPostMethod(AccountDataRequest data, Action<Account> callback) {
+        Debug.Log(ATTEMP_TO_GET_ACCOUNT_INFO);
+
         Account account = new Account();
 
         Request request = new Request(URL_AccountData)
@@ -133,6 +138,8 @@ public static class APIConfig {
     }
 
     public static IEnumerator ICreateCharacterPostMethod(CreateCharacterRequest data, Action<AddCharResponse> callback) {
+        Debug.Log(ATTEMP_TO_CREATE_CHARACTER);
+
         AddCharResponse createCharacterResponse = new AddCharResponse();
 
         Request request = new Request(URL_CreateCharacter)
