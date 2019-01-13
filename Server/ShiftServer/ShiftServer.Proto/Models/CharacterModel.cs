@@ -10,6 +10,7 @@ namespace ShiftServer.Proto.Models
         public string account_email;
         public string name;
         public int class_index;
+
         public int level;
         public int exp;
     }
