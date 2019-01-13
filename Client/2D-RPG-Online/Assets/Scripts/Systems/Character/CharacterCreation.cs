@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class CharacterCreation : Menu {
 
-    public Action onCharacterCreated;
-
     [Header("Initialization")]
     [SerializeField]
     private TextMeshProUGUI _txtClassDescription;
@@ -75,7 +73,8 @@ public class CharacterCreation : Menu {
         if (createCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_CREATE_CHARACTER);
 
-            onCharacterCreated?.Invoke();
+            CharacterManager.instance.AddCharacter(createCharacterResponse.character);
+            CharacterManager.instance.SelectCharacter(createCharacterResponse.character);
         } else {
             Debug.Log(APIConfig.ERROR_CREATE_CHARACTER);
 
