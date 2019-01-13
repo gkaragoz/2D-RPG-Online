@@ -5,11 +5,12 @@ namespace ShiftServer.Proto.Models
 {
 
     [Serializable]
-    public class Account
+    public class AccountModel
     {
         public bool success;
         public int gem;
         public int gold;
-        public List<Character> characters;
+        public string selected_char_name;
+        public List<CharacterModel> characters;
     }
 }

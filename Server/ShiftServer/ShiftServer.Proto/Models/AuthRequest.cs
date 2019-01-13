@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Proto.Models
 {
-    public class AddCharRequest
+    [Serializable]
+    public class AuthRequest
     {
-        public string session_id;
-        public string char_name;
-        public int char_class;
+        public string id_token;
     }
 }
