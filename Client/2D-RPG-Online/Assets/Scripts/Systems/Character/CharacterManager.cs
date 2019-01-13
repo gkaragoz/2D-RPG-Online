@@ -21,10 +21,13 @@ public class CharacterManager : MonoBehaviour {
     #endregion
 
     public Action<Character> onCharacterCreated;
+    public Action<Character> onCharacterSelected;
 
     [Header("Initialization")]
     [SerializeField]
     private CharacterCreation _characterCreation;
+    [SerializeField]
+    private CharacterSelection _characterSelection;
 
     [Header("Debug")]
     [SerializeField]
@@ -41,7 +44,9 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void SelectCharacter(Character character) {
-        //_characterSelection.Select(character);
+        _selectedCharacter = character;
+
+        onCharacterSelected?.Invoke(character);
     }
 
     public void AddCharacter(Character newCharacter) {
