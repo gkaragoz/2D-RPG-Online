@@ -48,6 +48,10 @@ public class MenuManager : Menu {
     [SerializeField]
     private TextMeshProUGUI _txtCharacterDexterity;
 
+    private void Start() {
+        AccountManager.instance.onAccountUpdated += UpdateUI;
+    }
+
     public void Initialize() {
         UpdateUI();
 
