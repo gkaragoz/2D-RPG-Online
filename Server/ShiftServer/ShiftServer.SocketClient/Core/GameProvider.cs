@@ -104,8 +104,10 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-                if (client.Connected
-                    || client == null)
+                if (client == null)
+                    return;
+
+                if (client.Connected)
                 {
                     // grab all new messages. do this in your Update loop.
                     Telepathy.Message msg;
@@ -131,7 +133,7 @@ namespace ShiftServer.Client.Core
                 else
                 {
                     client.Connect(_address, _port);
-                    TickrateUtil.SafeDelay(5);
+                    TickrateUtil.SafeDelay(1000);
                 }
             }
             catch (SocketException socketException)

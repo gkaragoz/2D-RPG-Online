@@ -10,6 +10,8 @@ namespace ShiftServer.Proto.Db
 {
     public class Account
     {
+        [BsonId]
+        public ObjectId ID { get; set; }
 
         [BsonElement("email")]
         public string Email { get; set; }

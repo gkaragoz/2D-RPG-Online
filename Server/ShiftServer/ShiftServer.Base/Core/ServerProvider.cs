@@ -139,7 +139,7 @@ namespace ShiftServer.Base.Core
                                     IsJoinedToWorld = false,
                                     UserSession = new Session()
                                 };
-                                //shift.SendPacket(MSServerEvent.Connection, null);
+                                shift.SendPacket(MSServerEvent.Connection, null);
                                 world.Clients.Add(msg.connectionId, shift);
 
                                 log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
@@ -304,21 +304,32 @@ namespace ShiftServer.Base.Core
 
         public void OnAccountJoin(ShiftServerData data, ShiftClient shift)
         {
-            if (data.ClientInfo == null)
+            //if (data.ClientInfo == null)
+            //{
+            //    ShiftServerData errorData = new ShiftServerData();
+            //    errorData.ErrorReason = ShiftServerError.WrongClientData;
+            //    log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+            //    shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
+            //    return;
+            //}
+
+            try
             {
+                if (!this.SessionCheck(data, shift))
+                    return;
+
+                if (!this.FillAccountData(data, shift))
+                    return;
+            }
+            catch (Exception err)
+            {
+
                 ShiftServerData errorData = new ShiftServerData();
-                errorData.ErrorReason = ShiftServerError.WrongClientData;
-                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                errorData.ErrorReason = ShiftServerError.NoRespondServer;
+                log.Error($"[Failed Login] Internal DB Error Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}", err);
                 shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
                 return;
             }
-
-            if(!this.SessionCheck(data, shift))
-                return;
-
-            if (!this.FillAccountData(data, shift))
-                return;
-
 
             //Checking the client has only one player character under control
             shift.UserSession.SetSid(data);
