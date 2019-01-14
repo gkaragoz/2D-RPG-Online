@@ -337,9 +337,9 @@ namespace ShiftServer.Base.Core
             string sessionId = shift.UserSession.GetSid();
             data.Session = new SessionData();
             data.Session.Sid = sessionId;
-        
 
-            shift.SendPacket(MSServerEvent.AccountJoin, data);
+            ShiftServerData newData = new ShiftServerData();
+            shift.SendPacket(MSServerEvent.Connection, newData);
             shift.UserName = data.AccountData.Username;
             world.SocketIdSessionLookup.Add(sessionId, shift.connectionId);
             log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
@@ -395,11 +395,14 @@ namespace ShiftServer.Base.Core
                 AccountSession session = this.ctx.Sessions.FindBySessionID(data.SessionID);
                 Account acc = this.ctx.Accounts.GetByUserID(session.UserID);
 
+
+
                 data.Account = null;
                 data.AccountData = new CommonAccountData();
                 data.AccountData.Username = acc.Email;
                 data.AccountData.VirtualMoney = acc.Gold;
                 data.AccountData.VirtualSpecialMoney = acc.Gem;
+                data.AccountData.Username = acc.SelectedCharName;
                 return true;
             }
             catch (Exception err)

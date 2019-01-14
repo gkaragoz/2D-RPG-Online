@@ -133,7 +133,7 @@ namespace ShiftServer.Client.Core
                 else
                 {
                     client.Connect(_address, _port);
-                    TickrateUtil.SafeDelay(1000);
+                    TickrateUtil.SafeDelay(5);
                 }
             }
             catch (SocketException socketException)
