@@ -139,9 +139,7 @@ namespace ShiftServer.Base.Core
                                     IsJoinedToWorld = false,
                                     UserSession = new Session()
                                 };
-                                shift.SendPacket(MSServerEvent.Connection, null);
                                 world.Clients.Add(msg.connectionId, shift);
-
                                 log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
                                 break;
 
