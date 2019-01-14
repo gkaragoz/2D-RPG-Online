@@ -232,7 +232,6 @@ namespace ShiftServer.Base.Core
                 return;
             }
         }
-
         public void OnMatchMaking(ShiftServerData data, ShiftClient shift)
         {
             try
@@ -252,7 +251,6 @@ namespace ShiftServer.Base.Core
 
             }
         }
-
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
             try
@@ -346,7 +344,6 @@ namespace ShiftServer.Base.Core
             log.Info($"ClientNO: {shift.connectionId} ------> RoomGameStart");
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomGameStart, data);
         }
-
         public void OnRoomLeaderChange(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomLeaderChange");

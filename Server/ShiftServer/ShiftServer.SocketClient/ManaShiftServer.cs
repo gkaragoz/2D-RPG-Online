@@ -149,7 +149,7 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.ServerEvent;
             data.Svevtid = evt;
-
+            data.SessionID = _sessionID;
 
             byte[] bb = data.ToByteArray();
 
@@ -168,6 +168,7 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.PlayerEvent;
             data.Plevtid = evt;
+            data.SessionID = _sessionID;
 
             byte[] bb = data.ToByteArray();
 
