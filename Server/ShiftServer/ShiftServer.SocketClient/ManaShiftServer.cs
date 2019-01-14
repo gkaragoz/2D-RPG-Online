@@ -74,6 +74,16 @@ namespace ShiftServer.Client
             TickrateUtil.SafeDelay(500);
             return gameProvider.dataHandler.roomProvider.RoomList;
         }
+
+        /// <summary>
+        /// join server with session id provided from auth server
+        /// </summary>
+        public void JoinServer(string sessionID)
+        {
+            ShiftServerData data = new ShiftServerData();
+            data.SessionID = sessionID;            
+            this.SendMessage(MSServerEvent.AccountJoin, data);
+        }
         /// <summary>
         /// Fixed Update
         /// </summary>

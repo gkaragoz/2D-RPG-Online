@@ -13,9 +13,6 @@ namespace ShiftServer.Base.Core
 
         public void SetSid(ShiftServerData data)
         {
-            if (data.ClientInfo == null)
-                return;
-
             sid = data.SessionID;
         }
 

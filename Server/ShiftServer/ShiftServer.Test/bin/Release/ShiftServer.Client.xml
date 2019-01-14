@@ -92,6 +92,11 @@
             Get Room List
             </summary>
         </member>
+        <member name="M:ShiftServer.Client.ManaShiftServer.JoinServer(System.String)">
+            <summary>
+            join server with session id provided from auth server
+            </summary>
+        </member>
         <member name="M:ShiftServer.Client.ManaShiftServer.Listen">
             <summary>
             Fixed Update
