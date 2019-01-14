@@ -1,9 +1,11 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Client.Core;
 using ShiftServer.Client.Data.Entities;
+using ShiftServer.Proto.Helper;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -20,8 +22,13 @@ namespace ShiftServer.Client
         private static ManaShiftServer _mss = null;
         private static GameProvider gameProvider = null;
         public bool IsConnected { get => gameProvider.client.Connected; }
+        public bool IsConnecting { get => gameProvider.client.Connecting; }
+        public bool HasPlayerRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
+        public MSSRoom JoinedRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom; }
+        public CommonAccountData AccountData { get => gameProvider.dataHandler.accountData; }
 
-        public bool IsConnecting{ get => gameProvider.client.Connecting; }
+        private Stopwatch _stopwatch;
+        private long _currentPingValue;
 
         /// <summary>
         /// Constructor method of game client object
@@ -30,6 +37,7 @@ namespace ShiftServer.Client
         {
             _mss = this;
             gameProvider = new GameProvider();
+            _stopwatch = new Stopwatch();
         }
 
         /// <summary>
@@ -40,13 +48,30 @@ namespace ShiftServer.Client
         public void Connect(ConfigData cfg)
         {
             gameProvider.Connect(cfg.Host, cfg.Port);
-        }   
-        
+            this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
+        }
+
+        private void OnPingResponse(ShiftServerData data)
+        {
+            _stopwatch.Stop();
+            _currentPingValue = _stopwatch.Elapsed.Milliseconds;
+        }
+
+        private void SendPingRequest()
+        {
+            _stopwatch = new Stopwatch();
+            _stopwatch.Start();
+
+            this.SendMessage(MSServerEvent.PingRequest);
+        }
+
         /// <summary>
         /// Get Room List
         /// </summary>
         public List<Room> GetRoomList()
         {
+            this.SendMessage(MSServerEvent.LobbyRefresh);
+            TickrateUtil.SafeDelay(500);
             return gameProvider.dataHandler.roomProvider.RoomList;
         }
         /// <summary>
@@ -104,7 +129,6 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.ServerEvent;
             data.Svevtid = evt;
-
 
 
             byte[] bb = data.ToByteArray();

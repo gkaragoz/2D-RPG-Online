@@ -1,26 +1,14 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using ShiftServer.Proto.RestModels;
+using UnityEditor;
 using UnityEngine;
-using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
-/// <summary>
-/// This class is responsible to manage the game main states.
-/// </summary>
-/// <remarks>
-/// <para>Current available states are: PREGAME, LOADING, RUNNING, PAUSED</para>
-/// </remarks>
 public class GameManager : MonoBehaviour {
 
     #region Singleton
 
-    /// <summary>
-    /// Instance of this class.
-    /// </summary>
     public static GameManager instance;
 
-    /// <summary>
-    /// Initialize Singleton pattern.
-    /// </summary>
     void Awake() {
         if (instance == null)
             instance = this;
@@ -32,111 +20,128 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    /// <summary>
-    /// Used on game state changed.
-    /// </summary>
-    [System.Serializable] public class EventGameState : UnityEvent<GameState, GameState> { }
+    public Task accountDataResponseProgress;
 
-    /// <summary>
-    /// Game states
-    /// </summary>
-    public enum GameState {
-        PREGAME,
-        LOADING,
-        RUNNING,
-        PAUSED
+    public const string HAS_PLAYED_BEFORE = "HAS_PLAYED_BEFORE";
+
+    public bool HasPlayedBefore {
+        get {
+            return PlayerPrefs.GetInt(HAS_PLAYED_BEFORE) == 1 ? true : false;
+        }
     }
 
-    /// <summary>
-    /// Called on game state changed for any reason.
-    /// </summary>
-    public EventGameState onGameStateChanged;
+    private const string ATTEMP_TO_CREATE_CHARACTER = "ATTEMP to create character!";
+    private const string ERROR_CREATE_CHARACTER = "ERROR on create character!";
+    private const string SUCCESS_CREATE_CHARACTER = "SUCCESS on create character!";
 
-    /// <summary>
-    /// Stores current level name.
-    /// </summary>
-    private string _currentLevelName;
+    private const string ERROR_SIGN_IN_TITLE = "Ups! Google Play!";
+    private const string ERROR_SIGN_IN_MESSAGE = "You must logged in your Google account to save your account informations!";
 
-    /// <summary>
-    /// Stores current game state.
-    /// </summary>
-    private GameState _currentGameState = GameState.PREGAME;
+    private const string ERROR_GET_SESSION_ID_TITLE = "Authorization Problem!";
+    private const string ERROR_GET_SESSION_ID_MESSAGE = "Some problem occured on server!";
 
-    /// <summary>
-    /// Public accessor to currentGameState variable.
-    /// </summary>
-    public GameState CurrentGameState {
-        get { return _currentGameState; }
-        private set { _currentGameState = value; }
-    }
+    private const string ERROR_GET_ACCOUNT_DATA_TITLE = "Ups! Account!";
+    private const string ERROR_GET_ACCOUNT_DATA_MESSAGE = "Some problem occured on server!";
 
-    /// <summary>
-    /// Initializing game to PREGAME state. 
-    /// </summary>
+    private const string ERROR_GET_ID_TOKEN_TITLE = "Wow!";
+    private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
+
     private void Start() {
-        onGameStateChanged.Invoke(GameState.PREGAME, _currentGameState);
+        Application.targetFrameRate = 60;
+
+        LoginManager.instance.onLoginCompleted = OnLoginCompleted;
+        LoadingManager.instance.onLoadingCompleted = OnLoadingCompleted;
+        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
+
+        Debug.Log("First time play? " + !HasPlayedBefore);
+
+        if (HasPlayedBefore) {
+            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.googlePlaySignInResponseProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.sessionIdResponseProgress);
+            LoadingManager.instance.AddTask(LoginManager.instance.accountDataResponseProgress);
+            LoadingManager.instance.AddTask(AccountManager.instance.initializationProgress);
+            LoadingManager.instance.AddTask(CharacterManager.instance.initializationProgress);
+
+            LoginManager.instance.Initialize();
+            LoginManager.instance.Login();
+        } else {
+            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
+
+            LoginManager.instance.Initialize();
+        }
     }
 
-    /// <summary>
-    /// This function does toggles between PAUSE and RUNNING game states.
-    /// </summary>
-    public void TogglePause() {
-        UpdateState(_currentGameState == GameState.RUNNING ? GameState.PAUSED : GameState.RUNNING);
+    private void OnTutorialCompleted() {
+        PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
+
+        SceneManager.UnloadSceneAsync("Tutorial");
+
+        CharacterManager.instance.ShowCharacterCreationMenu();
     }
 
-    /// <summary>
-    /// This function does restarting the game. Basically sets the GameState to PREGAME.
-    /// </summary>
-    public void RestartGame() {
-        UpdateState(GameState.PREGAME);
+    private void OnLoadingCompleted() {
+        LoadingManager.instance.Hide();
+
+        if (!HasPlayedBefore) {
+            //Go To Tutorial Scene.
+            SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
+
+            TutorialManager.instance.onTutorialCompleted = OnTutorialCompleted;
+            TutorialManager.instance.StartTutorial();
+
+            LoginManager.instance.Login();
+
+            TutorialManager.instance.PauseTutorial();
+        } else {
+            //Open Character Selection Menu.
+            CharacterManager.instance.ShowCharacterSelectionMenu();
+        }
     }
 
-    /// <summary>
-    /// This function does Application.Quit() event.
-    /// </summary>
-    /// <remarks>
-    /// <para>You might be clean up application datas if its necessary.</para>
-    /// <para>You might be saving player datas to local database.</para>
-    /// </remarks>
-    public void QuitGame() {
-        // Clean up application as necessary
-        // Maybe save the players game
-
-        Debug.Log("[GameManager] Quit Game.");
-        Application.Quit();
+    private void OnLoginCompleted() {
+        if (!HasPlayedBefore) {
+            TutorialManager.instance.ResumeTutorial();
+        }
     }
 
-    /// <summary>
-    /// Updating currentState of game.
-    /// </summary>
-    /// <param name="state"></param>
-    private void UpdateState(GameState state) {
-        GameState previousGameState = CurrentGameState;
-        CurrentGameState = state;
+    private void OnCharacterCreated(CharacterModel newCharacter) {
+        CharacterManager.instance.HideCharacterCreationMenu();
+        MenuManager.instance.Show();
+    }
 
-        switch (CurrentGameState) {
-            case GameState.PREGAME:
-                // Initialize any systems that need to be reset
-                Time.timeScale = 1.0f;
-                break;
-            case GameState.LOADING:
-                // Initialize loading stuff.
-                Time.timeScale = 1.0f;
-                break;
-            case GameState.RUNNING:
-                // Unlock player, enemies and input in other systems, update tick if you are managing time
-                Time.timeScale = 1.0f;
-                break;
-            case GameState.PAUSED:
-                // Pause player, enemies etc, Lock other input in other systems
-                Time.timeScale = 0.0f;
-                break;
+    private void OnCharacterSelected(CharacterModel selectedCharacter) {
+        CharacterManager.instance.HideCharacterSelectionMenu();
+        MenuManager.instance.Show();
+    }
 
-            default:
-                break;
+#if UNITY_EDITOR
+    [CustomEditor(typeof(GameManager))]
+    public class ExampleScriptEditor : Editor {
+        public GameManager gameManager;
+
+        public void OnEnable() {
+            gameManager = (GameManager)target;
         }
 
-        onGameStateChanged.Invoke(_currentGameState, previousGameState);
+        public override void OnInspectorGUI() {
+            GUI.backgroundColor = PlayerPrefs.HasKey(HAS_PLAYED_BEFORE) ? Color.red : Color.green;
+            GUILayout.Space(10f);
+            GUILayout.Label("Player Prefs");
+            if (GUILayout.Button("RESET")) {
+                PlayerPrefs.DeleteAll();
+
+                EditorWindow view = EditorWindow.GetWindow<SceneView>();
+                view.Repaint();
+            }
+            GUI.backgroundColor = Color.white;
+
+            base.OnInspectorGUI();
+        }
     }
+#endif
 
 }

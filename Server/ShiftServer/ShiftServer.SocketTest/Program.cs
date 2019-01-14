@@ -18,7 +18,6 @@ namespace ShiftServer.SocketTest
         {
 
 
-            TestFunctions funcs = new TestFunctions();
             Console.WriteLine("--- SHIFT SERVER TEST CLIENT ---");
             networkClient = new ManaShiftServer();
             ConfigData _cfg = new ConfigData();
@@ -27,14 +26,13 @@ namespace ShiftServer.SocketTest
             networkClient.Connect(_cfg);
             //networkClient.AddEventListener(MSServerEvent.c, funcs.OnConnected);
             //networkClient.AddEventListener(MSServerEvent.PingRequest, funcs.OnPing);
-
-            while (true)
-            {
-                networkClient.Listen();
-                funcs.PingRequestedTick = DateTime.UtcNow.Millisecond;
-                networkClient.SendMessage(MSServerEvent.PingRequest, null);
-                System.Threading.Thread.Sleep(1000);
-            }
+            //while (true)
+            //{
+            //    networkClient.Listen();
+            //    funcs.PingRequestedTick = DateTime.UtcNow.Millisecond;
+            //    networkClient.SendMessage(MSServerEvent.PingRequest, null);
+            //    System.Threading.Thread.Sleep(1000);
+            //}
 
             //bool runForever = true;
             //while (runForever)

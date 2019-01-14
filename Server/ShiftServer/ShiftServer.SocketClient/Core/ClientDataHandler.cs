@@ -18,12 +18,13 @@ namespace ShiftServer.Client.Core
     {
         public List<ClientEventCallback> clientEvents = null;
         public List<PlayerEventCallback> playerEvents = null;
-
+        public CommonAccountData accountData  { get; private set; }
         public RoomProvider roomProvider = null;
 
         public ClientDataHandler()
         {
             roomProvider = new RoomProvider();
+            accountData = new CommonAccountData();
             clientEvents = new List<ClientEventCallback>();
             playerEvents = new List<PlayerEventCallback>();
         }
@@ -42,10 +43,25 @@ namespace ShiftServer.Client.Core
                 case MSBaseEventId.ServerEvent:
                     switch (data.Svevtid)
                     {
-                        case MSServerEvent.Login:
+                        case MSServerEvent.AccountJoin:
+                            accountData = data.AccountData;
+                            break;
+                        case MSServerEvent.LobbyRefresh:
                             roomProvider.AddOrUpdate(data);
                             break;
                         case MSServerEvent.RoomJoin:
+                            roomProvider.SetCurrentJoinedRoom(data);
+                            roomProvider.AddOrUpdate(data);
+                            break;
+                        case MSServerEvent.RoomCreate:
+                            roomProvider.SetCreatedRoom(data);
+                            roomProvider.AddOrUpdate(data);
+                            break;
+                        case MSServerEvent.RoomLeave:
+                            roomProvider.DisposeRoom(data);
+                            break;
+                        case MSServerEvent.RoomDelete:
+                            roomProvider.DisposeRoom(data);
                             break;
                         case MSServerEvent.Connection:
                             break;
@@ -65,12 +81,10 @@ namespace ShiftServer.Client.Core
         public void HandleServerFailure(MSServerEvent evt, ShiftServerError err)
         {
             ClientEventInvoker.FireServerFailed(clientEvents, evt, err);
-
         }
         public void HandleServerSuccess(MSServerEvent evt)
         {
             ClientEventInvoker.FireSuccess(clientEvents, evt);
-
         }
     }
 }

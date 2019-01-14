@@ -1,7 +1,7 @@
-using ShiftServer.Server.Core;
-using ShiftServer.Server.Factory.Movement;
-using ShiftServer.Server.Helper;
-using ShiftServer.Server.Worlds;
+using ShiftServer.Base.Core;
+using ShiftServer.Base.Helper;
+using ShiftServer.Base.Rooms;
+using ShiftServer.Base.Worlds;
 
 
 namespace ShiftServer.Server
@@ -11,7 +11,9 @@ namespace ShiftServer.Server
         private static readonly log4net.ILog log
               = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        private static ServerProvider serverProvider = null;
+        private static ServerProvider _serverProvider = null;
+        private static RoomProvider _roomProvider = null;
+        private static GroupProvider _groupProvider = null;
         /// <summary>
         /// Main entry of shift server
         /// </summary>
@@ -20,21 +22,33 @@ namespace ShiftServer.Server
         {
 
 
-            RPGWorld world = new RPGWorld();
+            GameZone zone = new GameZone();
+            _serverProvider = new ServerProvider(zone);
+            _roomProvider = new RoomProvider(_serverProvider);
+            _groupProvider = new GroupProvider(_roomProvider);
 
-            serverProvider = new ServerProvider(world);
+            Battleground bgRoom = new Battleground(2, 4);
+            bgRoom.Name = "MANASHIFT BattleRoyale #1 ( OFFICIAL )";
+            bgRoom.MaxUser = 8;
+            _roomProvider.CreateRoom(bgRoom);
 
-            serverProvider.AddServerEventListener(MSServerEvent.PingRequest, serverProvider.OnPing);
+            _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
+            _serverProvider.AddServerEventListener(MSServerEvent.AccountJoin, _serverProvider.OnAccountJoin);
+            _serverProvider.AddServerEventListener(MSServerEvent.LobbyMatchmaking, _serverProvider.OnMatchmaking);
 
-            serverProvider.AddServerEventListener(MSServerEvent.Login, world.OnAccountLogin);
-            serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, world.OnPlayerJoin);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, _roomProvider.OnRoomJoin);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomLeave, _roomProvider.OnRoomLeave);
+            _serverProvider.AddServerEventListener(MSServerEvent.RoomChangeLeader, _roomProvider.OnRoomLeaderChange);
+            _serverProvider.AddServerEventListener(MSServerEvent.LobbyRefresh, _roomProvider.OnLobbyRefresh);
 
-            serverProvider.AddServerEventListener(MSPlayerEvent.Use, world.OnObjectUse);
-            serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, world.OnPlayerCreate);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 
-            serverProvider.Listen(tickrate : 15, port : 2000);
+            _serverProvider.Listen(tickrate : 30, port : 2000);
 
-            ConsoleUI.Run(serverProvider);
+            ConsoleUI.Run(_serverProvider);
             //Run Server Simulation
         } 
 

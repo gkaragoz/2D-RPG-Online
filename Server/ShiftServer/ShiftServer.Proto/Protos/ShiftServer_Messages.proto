@@ -14,10 +14,11 @@ message ShiftServerData {
 
 	repeated sGameObject WorldState = 9; // GameObjects list
 	ObjectAction Interaction = 10;
-
 	PlayerObject sPlayerObject = 11;
-
 	ShiftServerError ErrorReason = 12;
+
+	string AccessToken = 13;
+	MatchmakingData MatchmakingData = 14;
 
 }
 
@@ -32,6 +33,7 @@ enum MSBaseEventId
 enum MSPlayerEvent
 {
 
+
 	//Interaction events
 	WORLD_UPDATE = 0;
 	MOVE = 1;
@@ -44,30 +46,69 @@ enum MSPlayerEvent
 
 enum MSServerEvent
 {
-	LOGIN = 0;	
-	LOGIN_FAILED = 1;
-	PUBLIC_MESSAGE = 2;						
-	ROOM_JOIN = 3;						
-	ROOM_CREATE = 4;						
-	ROOM_DELETE = 5;						
-	ROOM_GET_INFO = 6;						
-	ROOM_JOIN_FAILED = 7;		
-	CONNECTION = 8;			
-	CONNECTION_FAILED = 9;			
-	CONNECTION_LOST = 10;			
-	PING_REQUEST = 11;				
+	ACCOUNT_JOIN = 0;	
+	ACCOUNT_JOIN_FAILED = 1;
+	PUBLIC_MESSAGE = 2;			
+	
+	ROOM_JOIN = 3;
+	ROOM_LEAVE = 4;
+	ROOM_LEAVE_FAILED = 5;
+	ROOM_CREATE = 6;
+	ROOM_DELETE = 7;
+	ROOM_PLAYER_LEFT = 8;
+	ROOM_PLAYER_JOINED = 9;
+	ROOM_JOIN_FAILED = 10;		
+	ROOM_CREATE_FAILED = 11;		
+	ROOM_DELETE_FAILED = 12;		
+	ROOM_GET_PLAYERS = 13;		
+	ROOM_GAME_START = 14;		
+	ROOM_CHANGE_LEADER = 15;		
+
+	MESSAGE_SEND = 16;
+	MESSAGE_RECIEVE = 17;	
+
+	LOBBY_MATCHMAKING = 18;	
+	LOBBY_REFRESH = 21;
+	
+	CONNECTION = 22;			
+	CONNECTION_FAILED = 23;			
+	CONNECTION_LOST = 24;			
+	PING_REQUEST = 25;				
 }
+
+enum MatchmakingRoom
+{
+		BG_2 = 0;
+		BG_4 = 1;
+
+}
+
 enum ShiftServerError
 {
 	CLIENT_VER_OLD = 0; // Application.version
 	BAD_SESSION = 1;		  // Session
-	WRONG_LOGIN_CREDENTIALS = 2; // Wrong login credentials
-	WRONG_CLIENT_DATA = 3; // Wrong client credentials
-	NO_RESPOND_SERVER = 4; // Connection lost
+	ROOM_NOT_FOUND = 2;		
+	ALREADY_IN_ROOM = 3;		
+	WRONG_LOGIN_CREDENTIALS = 4; // Wrong login credentials
+	WRONG_CLIENT_DATA = 5; 
+	NO_RESPOND_SERVER = 6; 
+	ROOM_AUTH_PROBLEM = 7; 
+	NOT_IN_ANY_ROOM = 8; 
+	ROOM_FULL = 9; 
+	MATCHMAKING_FAILED = 10; 
 
+}
+enum ShiftRoomType
+{
+	LOBBY = 0; 
+	MMO = 1;
+	ACTIONBATTLE = 2;
 }
 message SessionData {
 	string sid = 2;
+}
+message MatchmakingData {
+	MatchmakingRoom Type = 1;
 }
 
 message CommonAccountData {
@@ -77,18 +118,34 @@ message CommonAccountData {
 }
 
 message RoomData {
-
-	repeated ServerRoom rooms = 1;
-
+	MSSRoom CreatedRoom = 1;
+	MSSRoom JoinedRoom = 2;
+	MSSRoom DeletedRoom = 3;
+	MSSRoom LeavedRoom = 4;
+	RoomPlayerInfo PlayerInfo = 5;
+	repeated RoomPlayerInfo PlayerList = 6;
+	repeated MSSRoom rooms = 7;
 }
 
-message ServerRoom {
+message MSSRoom {
 
-	int32 roomId = 1;
-	string name = 2;
-	int32 maxUser = 3;
-	int32 currentUser = 4;
+	string Id = 1;
+	int64 createdTime = 2;
+	int64 updatedTime = 3;
+	bool isPrivate = 4;
+	bool isOwner = 5;
+	string name = 6;
+	int32 maxUserCount = 7;
+	int32 currentUserCount = 8;
+	repeated string Teams = 9;
 
+}
+message RoomPlayerInfo {
+	string Username = 1;
+	string TeamId = 2;
+	bool IsJoinedToTeam = 3;
+	bool IsReady = 4;
+	bool IsLeader = 5;
 }
 
 message AccountData {
