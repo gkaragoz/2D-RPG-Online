@@ -23,6 +23,8 @@ public class RoomManager : Menu {
     [SerializeField]
     private TextMeshProUGUI _txtRoomName;
     [SerializeField]
+    private TMP_InputField _inputFieldRoomID;
+    [SerializeField]
     private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
 
     private List<MSSRoom> _roomList = new List<MSSRoom>();
@@ -89,9 +91,9 @@ public class RoomManager : Menu {
         RoomData roomData = new RoomData();
         roomData.CreatedRoom = new MSSRoom();
 
-        roomData.CreatedRoom.Name = System.Guid.NewGuid().ToString().Substring(0, 10);
+        roomData.CreatedRoom.Name = CharacterManager.instance.SelectedCharacter.name + "\'s Room";
         roomData.CreatedRoom.IsPrivate = false;
-        roomData.CreatedRoom.MaxUserCount = 5;
+        roomData.CreatedRoom.MaxUserCount = 2;
 
         data.RoomData = roomData;
 
@@ -102,46 +104,9 @@ public class RoomManager : Menu {
         this.Show();
     }
 
-    public void JoinRoom(string id) {
+    public void JoinRoom() {
         MenuManager.instance.SetInteractionOfNormalGameButton(false);
-        StartCoroutine(IJoinRoom(id));
-    }
-
-    public IEnumerator IJoinRoom(string id) {
-        NetworkManager.instance.ConnectToGameplayServer();
-
-        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
-
-        ShiftServerData data = new ShiftServerData();
-
-        RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new MSSRoom();
-        roomData.JoinedRoom.Id = id;
-
-        data.RoomData = roomData;
-
-        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
-    }
-
-    public void JoinFirstRoom() {
-        MenuManager.instance.SetInteractionOfNormalGameButton(false);
-        StartCoroutine(IJoinFirstRoom());
-    }
-
-    public IEnumerator IJoinFirstRoom() {
-        NetworkManager.instance.ConnectToGameplayServer();
-
-        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
-
-        ShiftServerData data = new ShiftServerData();
-
-        RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new MSSRoom();
-        roomData.JoinedRoom.Id = _roomList[0].Id;
-
-        data.RoomData = roomData;
-
-        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
+        StartCoroutine(IJoinRoom(_inputFieldRoomID.text));
     }
 
     public void WatchRoom(string id) {
@@ -163,6 +128,38 @@ public class RoomManager : Menu {
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomDelete, data);
+    }
+
+    private IEnumerator IJoinRoom(string id) {
+        NetworkManager.instance.ConnectToGameplayServer();
+
+        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
+
+        RefreshRoomList();
+
+        yield return new WaitUntil(OnLobbyRefreshed);
+
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new MSSRoom();
+        roomData.JoinedRoom.Id = id;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
+    }
+
+    private void SendJoinRoomEvent() {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new MSSRoom();
+        roomData.JoinedRoom.Id = _roomList[0].Id;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
     }
 
     private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
@@ -222,6 +219,10 @@ public class RoomManager : Menu {
                 _slotList[ii].TeamID = teamIds[1];
             }
         }
+    }
+
+    private bool OnLobbyRefreshed() {
+        return true;
     }
 
     private bool OnGameplayServerConnectionSuccess() {
@@ -349,6 +350,8 @@ public class RoomManager : Menu {
 
             _roomList.Add(data.RoomData.Rooms[ii]);
         }
+
+        OnLobbyRefreshed();
     }
 
 }
