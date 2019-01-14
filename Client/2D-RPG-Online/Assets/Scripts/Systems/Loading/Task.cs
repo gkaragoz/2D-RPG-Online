@@ -10,7 +10,6 @@ public class Task : MonoBehaviour {
     }
 
     public void Invoke() {
-        Debug.Log("One task completed!");
         taskAction?.Invoke();
     }
 
