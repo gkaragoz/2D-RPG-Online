@@ -2,6 +2,7 @@
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
 using System.Net.NetworkInformation;
+using System;
 
 public class NetworkManager : MonoBehaviour {
     
@@ -42,24 +43,14 @@ public class NetworkManager : MonoBehaviour {
 
         DontDestroyOnLoad(instance);
 
-        //InitNetwork();
+        InitializeGameplayServer();
     }
 
-    public static string GetMacAddress() {
-        string macAddresses = "";
-        foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces()) {
-            // Only consider Ethernet network interfaces, thereby ignoring any
-            // loopback devices etc.
-            if (nic.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
-            if (nic.OperationalStatus == OperationalStatus.Up) {
-                macAddresses += nic.GetPhysicalAddress().ToString();
-                break;
-            }
-        }
-        return macAddresses;
+    public void ConnectToGameplayServer() {
+        mss.Connect(_cfg);
     }
 
-    private void InitNetwork() {
+    private void InitializeGameplayServer() {
         mss = new ManaShiftServer();
         mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
         mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
@@ -68,9 +59,6 @@ public class NetworkManager : MonoBehaviour {
         _cfg = new ConfigData();
         _cfg.Host = _hostName;
         _cfg.Port = _port;
-
-        //LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
-        mss.Connect(_cfg);
     }
 
     private void Update() {
@@ -80,15 +68,15 @@ public class NetworkManager : MonoBehaviour {
     }
 
     private void OnConnectionSuccess(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_SUCCESS, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_SUCCESS + data);
     }
 
     private void OnConnectionFailed(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_FAILED, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_FAILED + data);
     }
 
     private void OnConnectionLost(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_LOST, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_LOST + data);
     }
 
     private void OnApplicationQuit() {

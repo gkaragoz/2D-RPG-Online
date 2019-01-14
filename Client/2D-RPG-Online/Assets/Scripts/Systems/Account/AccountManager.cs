@@ -36,9 +36,15 @@ public class AccountManager : MonoBehaviour {
         }
     }
 
+    private const string ON_ACCOUNT_JOIN = "Trying to get account infos!";
+    private const string ON_ACCOUNT_JOIN_FAILED = "Account join failed!";
+
     private void Start() {
         CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
         CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
+
+        NetworkManager.mss.AddEventListener(MSServerEvent.AccountJoin, OnAccountJoined);
+        NetworkManager.mss.AddEventListener(MSServerEvent.AccountJoinFailed, OnAccountJoinFailed);
     }
 
     public void Initialize(Account account) {
@@ -66,6 +72,14 @@ public class AccountManager : MonoBehaviour {
 
     private void OnCharacterSelected(CharacterModel selectedCharacter) {
         SelectCharacter(selectedCharacter);
+    }
+
+    private void OnAccountJoined(ShiftServerData data) {
+        Debug.Log(ON_ACCOUNT_JOIN + data);
+    }
+
+    private void OnAccountJoinFailed(ShiftServerData data) {
+        Debug.Log(ON_ACCOUNT_JOIN_FAILED + data);
     }
 
 }

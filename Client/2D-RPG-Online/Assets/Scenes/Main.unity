@@ -7744,7 +7744,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 382018980}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1045909616}
+        m_MethodName: ConnectToGameplayServer
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &499368867
@@ -17115,8 +17126,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c09798ce980645488be944e6181f2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostName: 127.0.0.0
-  _port: 1337
+  _hostName: 192.168.1.2
+  _port: 2000
 --- !u!4 &1045909617
 Transform:
   m_ObjectHideFlags: 0
@@ -30827,7 +30838,18 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1002728383}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1820584311
