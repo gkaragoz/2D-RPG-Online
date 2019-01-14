@@ -31,7 +31,7 @@ namespace ShiftServer.Base.Core
             {
                 if (data.RoomData.CreatedRoom != null)
                 {
-                    log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate" + data.RoomData.CreatedRoom.Name);
+                    log.Info($"ClientNO: {shift.connectionId} ------> RoomCreate: " + data.RoomData.CreatedRoom.Name);
 
                     data.RoomData.CreatedRoom.Id = newRoom.Id;
                     newRoom.MaxUser = data.RoomData.CreatedRoom.MaxUserCount;
