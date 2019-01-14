@@ -17,7 +17,9 @@ public class RoomClientSlot : MonoBehaviour {
     [SerializeField]
     private Image _imgClassIcon;
     [SerializeField]
-    private Toggle _toggleIsReady;
+    private Image _imgReadyIcon;
+    [SerializeField]
+    private Image _imgNotReadyIcon;
     [SerializeField]
     private Image _imgLeader;
     [SerializeField]
@@ -42,6 +44,18 @@ public class RoomClientSlot : MonoBehaviour {
         }
     }
 
+    public bool IsLeader {
+        get {
+            return _playerInfo.IsLeader;
+        }
+    }
+
+    public bool IsReady {
+        get {
+            return _playerInfo.IsReady;
+        }
+    }
+
     public string TeamID {
         get {
             return _teamID;
@@ -61,7 +75,7 @@ public class RoomClientSlot : MonoBehaviour {
         this._characterClassVisualization = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior);
 
         SetCharacterClassVisualize();
-        SetToggleIsReady();
+        SetIsReady();
         SetImgLeader();
         SetTxtPlayerName();
 
@@ -95,12 +109,24 @@ public class RoomClientSlot : MonoBehaviour {
         SetTxtCharacterName();
     }
 
-    private void SetToggleIsReady() {
-        _toggleIsReady.isOn = _playerInfo.IsReady;
+    private void SetIsReady() {
+        if (IsLeader) {
+            _imgNotReadyIcon.gameObject.SetActive(false);
+            _imgReadyIcon.gameObject.SetActive(false);
+            return;
+        }
+
+        if (IsReady) {
+            _imgNotReadyIcon.gameObject.SetActive(false);
+            _imgReadyIcon.gameObject.SetActive(true);
+        } else {
+            _imgReadyIcon.gameObject.SetActive(false);
+            _imgNotReadyIcon.gameObject.SetActive(true);
+        }
     }
 
     private void SetImgLeader() {
-        _imgLeader.gameObject.SetActive(_playerInfo.IsLeader);
+        _imgLeader.gameObject.SetActive(IsLeader);
     }
 
     private void SetTxtPlayerName() {

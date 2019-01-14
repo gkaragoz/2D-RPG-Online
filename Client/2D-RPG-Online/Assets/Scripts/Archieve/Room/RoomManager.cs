@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RoomManager : Menu {
 
@@ -23,10 +24,17 @@ public class RoomManager : Menu {
     [SerializeField]
     private TextMeshProUGUI _txtRoomName;
     [SerializeField]
+    private Button _btnStartGame;
+    [SerializeField]
+    private Button _btnReady;
+    [SerializeField]
+    private Button _btnNotReady;
+    [SerializeField]
     private TMP_InputField _inputFieldRoomID;
     [SerializeField]
     private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
 
+    private RoomPlayerInfo _leaderPlayerInfo;
     private List<MSSRoom> _roomList = new List<MSSRoom>();
 
     private void Start() {
@@ -52,6 +60,9 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomChangeLeader, OnRoomLeaderChanged);
+
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatus, OnPlayerReadyStatusChanged);
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
     public void Initialize() {
@@ -68,6 +79,8 @@ public class RoomManager : Menu {
         } else {
             PlaceToNewSlot(playerInfo);
         }
+
+        UpdateActionButtons();
     }
 
     public void ClearSlots() {
@@ -128,6 +141,42 @@ public class RoomManager : Menu {
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomDelete, data);
+    }
+
+    public void SetReadyStatus(RoomClientSlot slot) {
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.PlayerReadyStatusInfo.IsReady = !slot.IsReady;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
+    }
+
+    private void UpdateActionButtons() {
+        if (CharacterManager.instance.SelectedCharacter.name == _leaderPlayerInfo.Username) {
+            if (IsRoomAvailableToStart()) {
+                _btnReady.gameObject.SetActive(false);
+                _btnNotReady.gameObject.SetActive(false);
+                _btnStartGame.gameObject.SetActive(true);
+                _btnStartGame.interactable = true;
+            } else {
+                _btnReady.gameObject.SetActive(false);
+                _btnNotReady.gameObject.SetActive(false);
+                _btnStartGame.gameObject.SetActive(true);
+                _btnStartGame.interactable = false;
+            }
+        }
+    }
+
+    private bool IsRoomAvailableToStart() {
+        for (int ii = 0; ii < _slotList.Count; ii++) {
+            if (!_slotList[ii].IsReady || _slotList.Count < 2) {
+                return false;
+            }
+        }
+        return true;
     }
 
     private IEnumerator IJoinRoom(string id) {
@@ -276,6 +325,10 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
+        if (playerInfo.IsLeader) {
+            _leaderPlayerInfo = playerInfo;
+        }
+
         TeamManager.instance.CreateTeam(data.RoomData.CreatedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
 
@@ -337,7 +390,23 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
+        if (playerInfo.IsLeader) {
+            _leaderPlayerInfo = playerInfo;
+        }
+
         UpdateUI(playerInfo);
+    }
+
+    private void OnPlayerReadyStatusChanged(ShiftServerData data) {
+        Debug.Log("OnPlayerReadyStatusChanged: " + data);
+
+        RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
+
+        UpdateUI(playerInfo);
+    }
+
+    private void OnPlayerReadyStatusChangeFailed(ShiftServerData data) {
+        Debug.Log("OnPlayerReadyStatusChangeFailed: " + data);
     }
 
     private void OnLobbyRefreshed(ShiftServerData data) {
