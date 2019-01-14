@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RoomManager : Menu {
 
@@ -22,8 +20,6 @@ public class RoomManager : Menu {
 
     #endregion
 
-    [SerializeField]
-    private Button _btnLeaveRoom;
     [SerializeField]
     private TextMeshProUGUI _txtRoomName;
     [SerializeField]
@@ -54,8 +50,6 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomChangeLeader, OnRoomLeaderChanged);
-
-        _btnLeaveRoom.onClick.AddListener(LeaveRoom);
     }
 
     public void Initialize() {
@@ -155,6 +149,7 @@ public class RoomManager : Menu {
     }
 
     public void LeaveRoom() {
+        Debug.Log("Attemp to leave room!");
         NetworkManager.mss.SendMessage(MSServerEvent.RoomLeave);
     }
 
@@ -324,6 +319,9 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomLeaveSuccess: " + data);
         MenuManager.instance.SetInteractionOfCreateRoomButton(true);
         MenuManager.instance.SetInteractionOfNormalGameButton(true);
+
+        this.Hide();
+        MenuManager.instance.Show();
 
         TeamManager.instance.ClearTeamList();
         ClearSlots();
