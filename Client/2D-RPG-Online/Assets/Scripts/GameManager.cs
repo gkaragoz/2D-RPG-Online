@@ -49,10 +49,10 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         Application.targetFrameRate = 60;
 
-        LoginManager.instance.onLoginCompleted = OnLoginCompleted;
-        LoadingManager.instance.onLoadingCompleted = OnLoadingCompleted;
-        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
-        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
+        LoginManager.instance.onLoginCompleted += OnLoginCompleted;
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+        CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -90,7 +90,7 @@ public class GameManager : MonoBehaviour {
             //Go To Tutorial Scene.
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
-            TutorialManager.instance.onTutorialCompleted = OnTutorialCompleted;
+            TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
 
             LoginManager.instance.Login();

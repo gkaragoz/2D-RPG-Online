@@ -1120,6 +1120,8 @@ MonoBehaviour:
   _imageClassAnimation: {fileID: 4121499668836219312}
   _imageExpFill: {fileID: 4121499668166358946}
   _imageExpBackground: {fileID: 4121499668129244472}
+  _imageHealthBackground: {fileID: 4121499668401898634}
+  _imageManaBackground: {fileID: 4121499669401897248}
   _txtCharacterName: {fileID: 4121499669819669930}
   _txtCharacterLevel: {fileID: 4121499669619470380}
   _txtCharacterExperience: {fileID: 4121499668095579251}
@@ -1127,6 +1129,8 @@ MonoBehaviour:
   _txtCharacterMana: {fileID: 4121499668329079791}
   _expFillColor: {r: 0.98039216, g: 0.7176471, b: 0.22745098, a: 1}
   _expBackgroundColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
+  _healthBgColor: {r: 0.8392157, g: 0.1882353, b: 0.19215687, a: 1}
+  _manaBgColor: {r: 0.03529412, g: 0.5176471, b: 0.8901961, a: 1}
 --- !u!1 &4121499669002410923
 GameObject:
   m_ObjectHideFlags: 0

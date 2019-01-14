@@ -33,7 +33,7 @@ public class LoginManager : MonoBehaviour {
     public static string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
 
     public void Initialize() {
-        GooglePlayManager.instance.onGooglePlaySignInResult = OnGooglePlaySignInResult;
+        GooglePlayManager.instance.onGooglePlaySignInResult += OnGooglePlaySignInResult;
         onLoginResult = OnLoginResult;
 
         initializationProgress.Invoke();

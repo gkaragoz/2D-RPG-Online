@@ -19,6 +19,10 @@ public class CharacterSelectionSlot : MonoBehaviour {
     [SerializeField]
     private Image _imageExpBackground;
     [SerializeField]
+    private Image _imageHealthBackground;
+    [SerializeField]
+    private Image _imageManaBackground;
+    [SerializeField]
     private TextMeshProUGUI _txtCharacterName;
     [SerializeField]
     private TextMeshProUGUI _txtCharacterLevel;
@@ -32,6 +36,10 @@ public class CharacterSelectionSlot : MonoBehaviour {
     private Color _expFillColor;
     [SerializeField]
     private Color _expBackgroundColor;
+    [SerializeField]
+    private Color _healthBgColor;
+    [SerializeField]
+    private Color _manaBgColor;
 
     public void Initialize(CharacterModel character) {
         _imageClassIcon.color = Color.white;
@@ -43,6 +51,8 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _imageExpFill.color = _expFillColor;
         _imageExpBackground.color = _expBackgroundColor;
         _imageExpFill.fillAmount = character.exp;
+        _imageHealthBackground.color = _healthBgColor;
+        _imageManaBackground.color = _manaBgColor;
 
         if (character.class_index == 0) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
@@ -61,8 +71,8 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _txtCharacterName.text = character.name;
         _txtCharacterLevel.text = character.level + " Lv.";
         _txtCharacterExperience.text = "Exp: " + character.exp;
-        _txtCharacterHealth.text = "HP: " + character.stats.health;
-        _txtCharacterMana.text = "MP: " + character.stats.mana;
+        _txtCharacterHealth.text = "HP: " + character.stat.health;
+        _txtCharacterMana.text = "MP: " + character.stat.mana;
     }
 
     public void SetInteractable(bool interactable) {

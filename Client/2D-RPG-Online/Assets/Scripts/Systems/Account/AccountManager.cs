@@ -37,8 +37,8 @@ public class AccountManager : MonoBehaviour {
     }
 
     private void Start() {
-        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
-        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
+        CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
     }
 
     public void Initialize(Account account) {

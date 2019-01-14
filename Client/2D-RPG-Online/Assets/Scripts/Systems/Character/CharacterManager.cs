@@ -42,7 +42,7 @@ public class CharacterManager : MonoBehaviour {
     private List<CharacterModel> _allCharacters = new List<CharacterModel>();
 
     private void Start() {
-        AccountManager.instance.onAccountUpdated = OnAccountManagerUpdated;
+        AccountManager.instance.onAccountUpdated += OnAccountManagerUpdated;
     }
 
     public void Initialize(List<CharacterModel> characters, CharacterModel _selectedCharacter) {
