@@ -16,11 +16,7 @@ namespace ShiftServer.Base.Core
             if (data.ClientInfo == null)
                 return;
 
-            string guid = Guid.NewGuid().ToString();
-            string machineName = data.ClientInfo.MachineName;
-            string machineID = data.ClientInfo.MachineId;
-            string salt = guid + machineName + machineID;
-            sid = Crypto.MD5Hash(salt);
+            sid = data.SessionID;
         }
 
         public string GetSid()

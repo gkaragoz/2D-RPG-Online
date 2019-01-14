@@ -68,9 +68,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Db\Account.cs" />
-    <Compile Include="Db\AccountFriendRequests.cs" />
     <Compile Include="Db\AccountSession.cs" />
-    <Compile Include="Db\AccountStats.cs" />
     <Compile Include="RestModels\RequestAccountData.cs" />
     <Compile Include="RestModels\Account.cs" />
     <Compile Include="RestModels\RequestCharAdd.cs" />
