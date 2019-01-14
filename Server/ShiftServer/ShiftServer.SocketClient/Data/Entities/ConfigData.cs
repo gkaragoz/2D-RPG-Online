@@ -10,6 +10,7 @@ namespace ShiftServer.Client.Data.Entities
     {
         public string Host { get; set; }
         public int Port { get; set; }
+        public string SessionID { get; set; }
 
         public ConfigData() {}
     }
