@@ -9,8 +9,8 @@ namespace ShiftServer.Proto.RestModels
         public string account_id;
         public string account_email;
         public string name;
-        public CharacterStats stats;
-        public CharacterAttributes attributes;
+        public CharacterStats stat;
+        public CharacterAttributes attribute;
         public int class_index;
         public int level;
         public int exp;
