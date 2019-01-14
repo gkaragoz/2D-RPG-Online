@@ -13,6 +13,7 @@ namespace ShiftServer.Proto.RestModels
         public int gem;
         public int gold;
         public string selected_char_name;
-        public List<CharacterModel> characters;
+
+        public IList<CharacterModel> characters;
     }
 }

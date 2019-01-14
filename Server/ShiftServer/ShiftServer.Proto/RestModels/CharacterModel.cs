@@ -12,5 +12,6 @@ namespace ShiftServer.Proto.RestModels
         public int class_index;
         public int level;
         public int exp;
+        public DateTime created_at;
     }
 }
