@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,15 +23,19 @@ public class RoomManager : Menu {
     #endregion
 
     [SerializeField]
-    private Button _btnGoToLobby;
-    [SerializeField]
     private Button _btnLeaveRoom;
     [SerializeField]
     private TextMeshProUGUI _txtRoomName;
     [SerializeField]
     private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
 
-    public void Initialize() {
+    private List<MSSRoom> _roomList = new List<MSSRoom>();
+
+    private void Start() {
+        NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
+
+        NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
+
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
 
@@ -49,8 +55,15 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomChangeLeader, OnRoomLeaderChanged);
 
-        _btnGoToLobby.onClick.AddListener(GoToLobby);
         _btnLeaveRoom.onClick.AddListener(LeaveRoom);
+    }
+
+    public void Initialize() {
+        RefreshRoomList();
+    }
+
+    public void RefreshRoomList() {
+        NetworkManager.mss.GetRoomList();
     }
 
     public void UpdateUI(RoomPlayerInfo playerInfo) {
@@ -68,6 +81,14 @@ public class RoomManager : Menu {
     }
 
     public void CreateRoom() {
+        StartCoroutine(ICreateRoom());
+    }
+
+    public IEnumerator ICreateRoom() {
+        NetworkManager.instance.ConnectToGameplayServer();
+
+        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
+
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
@@ -82,17 +103,44 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
     }
 
-    public void ReturnRoom(string id) {
-        LobbyManager.instance.Hide();
+    public void ReturnRoom() {
         this.Show();
     }
 
     public void JoinRoom(string id) {
+        StartCoroutine(IJoinRoom(id));
+    }
+
+    public IEnumerator IJoinRoom(string id) {
+        NetworkManager.instance.ConnectToGameplayServer();
+
+        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
+
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
         roomData.JoinedRoom = new MSSRoom();
         roomData.JoinedRoom.Id = id;
+
+        data.RoomData = roomData;
+
+        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
+    }
+
+    public void JoinFirstRoom() {
+        StartCoroutine(IJoinFirstRoom());
+    }
+
+    public IEnumerator IJoinFirstRoom() {
+        NetworkManager.instance.ConnectToGameplayServer();
+
+        yield return new WaitUntil(OnGameplayServerConnectionSuccess);
+
+        ShiftServerData data = new ShiftServerData();
+
+        RoomData roomData = new RoomData();
+        roomData.JoinedRoom = new MSSRoom();
+        roomData.JoinedRoom.Id = _roomList[0].Id;
 
         data.RoomData = roomData;
 
@@ -117,13 +165,6 @@ public class RoomManager : Menu {
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomDelete, data);
-    }
-
-    public void GoToLobby() {
-        LobbyManager.instance.RefreshLobby();
-
-        this.Hide();
-        LobbyManager.instance.Show();
     }
 
     private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
@@ -185,8 +226,12 @@ public class RoomManager : Menu {
         }
     }
 
+    private bool OnGameplayServerConnectionSuccess() {
+        return true;
+    }
+
     private void OnRoomJoinSuccess(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomJoinSuccess: " + data, Log.Type.Server);
+        Debug.Log("OnRoomJoinSuccess: " + data);
 
         SetTxtRoomName(data.RoomData.JoinedRoom.Name);
         SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
@@ -199,16 +244,16 @@ public class RoomManager : Menu {
 
         UpdateUI(playerInfo);
 
-        LobbyManager.instance.Hide();
+        MenuManager.instance.Hide();
         this.Show();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomJoinFailed: " + data, Log.Type.Server);
+        Debug.Log("OnRoomJoinFailed: " + data);
     }
 
     private void OnRoomGetPlayers(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomGetPlayers: " + data, Log.Type.Server);
+        Debug.Log("OnRoomGetPlayers: " + data);
 
         SetTxtRoomName(data.RoomData.JoinedRoom.Name);
         SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
@@ -222,7 +267,7 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomCreated(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomCreated: " + data, Log.Type.Server);
+        Debug.Log("OnRoomCreated: " + data);
 
         SetTxtRoomName(data.RoomData.CreatedRoom.Name);
         SetSlotsTeamIds(data.RoomData.CreatedRoom.Teams);
@@ -235,24 +280,24 @@ public class RoomManager : Menu {
 
         UpdateUI(playerInfo);
 
-        LobbyManager.instance.Hide();
+        MenuManager.instance.Hide();
         this.Show();
     }
 
     private void OnRoomCreateFailed(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomCreateFailed: " + data, Log.Type.Server);
+        Debug.Log("OnRoomCreateFailed: " + data);
     }
 
     private void OnRoomDeleted(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomDeleted: " + data, Log.Type.Server);
+        Debug.Log("OnRoomDeleted: " + data);
     }
 
     private void OnRoomDeleteFailed(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomDeleteFailed: " + data, Log.Type.Server);
+        Debug.Log("OnRoomDeleteFailed: " + data);
     }
 
     private void OnRoomPlayerJoined(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomPlayerJoined: " + data, Log.Type.Server);
+        Debug.Log("OnRoomPlayerJoined: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
@@ -261,7 +306,7 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomPlayerLeft: " + data, Log.Type.Server);
+        Debug.Log("OnRoomPlayerLeft: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
@@ -270,24 +315,34 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomLeaveSuccess: " + data, Log.Type.Server);
+        Debug.Log("OnRoomLeaveSuccess: " + data);
 
         TeamManager.instance.ClearTeamList();
         ClearSlots();
-
-        GoToLobby();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomLeaveFailed: " + data, Log.Type.Server);
+        Debug.Log("OnRoomLeaveFailed: " + data);
     }
 
     private void OnRoomLeaderChanged(ShiftServerData data) {
-        LogManager.instance.AddLog("OnRoomLeaderChanged: " + data, Log.Type.Server);
+        Debug.Log("OnRoomLeaderChanged: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         UpdateUI(playerInfo);
+    }
+
+    private void OnLobbyRefreshed(ShiftServerData data) {
+        Debug.Log("OnLobbyRefreshed: " + data);
+
+        _roomList = new List<MSSRoom>();
+
+        for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
+            MSSRoom MSSRoom = data.RoomData.Rooms[ii];
+
+            _roomList.Add(data.RoomData.Rooms[ii]);
+        }
     }
 
 }

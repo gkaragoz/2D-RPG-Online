@@ -5,7 +5,7 @@ using System;
 
 public class NetworkManager : MonoBehaviour {
 
-    public Action<ShiftServerData> onGameplayServerConnectionSuccess;
+    public Func<bool> onGameplayServerConnectionSuccess;
 
     public static ManaShiftServer mss;
     public static string SessionID { get; set; }
@@ -73,7 +73,7 @@ public class NetworkManager : MonoBehaviour {
     private void OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
 
-        onGameplayServerConnectionSuccess?.Invoke(data);
+        onGameplayServerConnectionSuccess?.Invoke();
     }
 
     private void OnConnectionFailed(ShiftServerData data) {

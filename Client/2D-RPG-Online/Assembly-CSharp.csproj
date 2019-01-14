@@ -262,8 +262,6 @@
     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Lobby\LobbyManager.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Lobby\LobbyRow.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\RoomClientSlot.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\RoomManager.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\Team\Team.cs" />
