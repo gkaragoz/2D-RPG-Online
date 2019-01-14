@@ -17,7 +17,7 @@ message ShiftServerData {
 	PlayerObject sPlayerObject = 11;
 	ShiftServerError ErrorReason = 12;
 
-	string AccessToken = 13;
+	string SessionID = 13;
 	MatchmakingData MatchmakingData = 14;
 
 }

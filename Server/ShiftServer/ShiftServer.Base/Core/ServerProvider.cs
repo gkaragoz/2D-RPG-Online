@@ -316,24 +316,17 @@ namespace ShiftServer.Base.Core
             if(!this.SessionCheck(data, shift))
                 return;
 
-            
-            //check account
-            string accUsername = data.Account.Username;
-            string accPassword = data.Account.Password;
-            //QUERY TO SOMEWHERE ELSE
+            if (!this.FillAccountData(data, shift))
+                return;
+
 
             //Checking the client has only one player character under control
             shift.UserSession.SetSid(data);
+
             string sessionId = shift.UserSession.GetSid();
             data.Session = new SessionData();
             data.Session.Sid = sessionId;
-            //check login data
-            data.AccessToken = null;
-            data.Account = null;
-            data.AccountData = new CommonAccountData();
-            data.AccountData.Username = accUsername;
-            data.AccountData.VirtualMoney = 100;
-            data.AccountData.VirtualSpecialMoney = 100;
+        
 
             shift.SendPacket(MSServerEvent.AccountJoin, data);
             shift.UserName = data.AccountData.Username;
@@ -362,12 +355,12 @@ namespace ShiftServer.Base.Core
         {
             bool result = false;
             //session check
-            if (data.AccessToken != null)
+            if (data.SessionID != null)
             {
-                AccountSession session = ctx.Sessions.FindByAccessToken(data.AccessToken);
+                AccountSession session = ctx.Sessions.FindBySessionID(data.SessionID);
                 if (session != null)
                 {
-                    if (session.AccountID == data.Account.Username && session.SessionID == data.AccessToken)
+                    if (session.SessionID == data.SessionID)
                         result = true;
                 }
               
@@ -382,6 +375,30 @@ namespace ShiftServer.Base.Core
                 shift.Client.Close();
                 return result;
             }
+        }
+
+        public bool FillAccountData(ShiftServerData data, ShiftClient shift)
+        {
+            try
+            {
+                AccountSession session = this.ctx.Sessions.FindBySessionID(data.SessionID);
+                Account acc = this.ctx.Accounts.GetByUserID(session.UserID);
+
+                data.Account = null;
+                data.AccountData = new CommonAccountData();
+                data.AccountData.Username = acc.Email;
+                data.AccountData.VirtualMoney = acc.Gold;
+                data.AccountData.VirtualSpecialMoney = acc.Gem;
+                return true;
+            }
+            catch (Exception err)
+            {
+                log.Error($"[Login Failed] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}", err);
+                return false;
+                
+            }
+        
+
         }
     }
 }
