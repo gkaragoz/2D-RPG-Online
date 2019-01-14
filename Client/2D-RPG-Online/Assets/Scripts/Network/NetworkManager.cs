@@ -1,11 +1,12 @@
 ﻿using UnityEngine;
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
-using System.Net.NetworkInformation;
 using System;
 
 public class NetworkManager : MonoBehaviour {
-    
+
+    public Action<ShiftServerData> onGameplayServerConnectionSuccess;
+
     public static ManaShiftServer mss;
     public static string SessionID { get; set; }
 
@@ -47,6 +48,8 @@ public class NetworkManager : MonoBehaviour {
     }
 
     public void ConnectToGameplayServer() {
+        Debug.Log(CONNECT);
+
         mss.Connect(_cfg);
     }
 
@@ -69,6 +72,8 @@ public class NetworkManager : MonoBehaviour {
 
     private void OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
+
+        onGameplayServerConnectionSuccess?.Invoke(data);
     }
 
     private void OnConnectionFailed(ShiftServerData data) {
