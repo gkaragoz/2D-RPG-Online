@@ -22,7 +22,7 @@ namespace ShiftServer.Client
         private static ManaShiftServer _mss = null;
         private static GameProvider _gameProvider = null;
         private static string _sessionID = null;
-        public bool IsConnected { get => _gameProvider.IsClientConnected() ? true : false; }
+        public bool IsConnected { get => _gameProvider.IsClientConnected(); }
         public bool IsConnecting { get => _gameProvider.client.Connecting; }
         public bool HasPlayerRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
         public MSSRoom JoinedRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom; }
