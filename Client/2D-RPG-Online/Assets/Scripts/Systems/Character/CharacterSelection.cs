@@ -25,8 +25,10 @@ public class CharacterSelection : Menu {
     }
 
     public void Initialize() {
-        for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
-            _characterSelectionSlots[ii].Initialize(CharacterManager.instance.AllCharacters[ii]);
+        if (CharacterManager.instance.HasCharacter) {
+            for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
+                _characterSelectionSlots[ii].Initialize(CharacterManager.instance.AllCharacters[ii]);
+            }
         }
     }
 

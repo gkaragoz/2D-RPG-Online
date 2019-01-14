@@ -1,13 +1,21 @@
 ﻿using UnityEngine;
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
-using System;
 using System.Net.NetworkInformation;
 
 public class NetworkManager : MonoBehaviour {
     
     public static ManaShiftServer mss;
     public static string SessionID { get; set; }
+
+    public static string UserID {
+        get {
+            return PlayerPrefs.GetString(USER_ID);
+        }
+        set {
+            PlayerPrefs.SetString(USER_ID, value);
+        }
+    }
 
     [SerializeField]
     private string _hostName = "127.0.0.0";
@@ -16,6 +24,8 @@ public class NetworkManager : MonoBehaviour {
     private int _port = 1337;
 
     private ConfigData _cfg;
+
+    private const string USER_ID = "USER_ID";
 
     private const string CONNECT = "Trying connect to the server... ";
     private const string ON_CONNECTION_SUCCESS = "Connection success!";

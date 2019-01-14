@@ -44,9 +44,7 @@ public class AccountManager : MonoBehaviour {
     public void Initialize(Account account) {
         this.Account = account;
 
-        CharacterManager.instance.Initialize(account.characters, CharacterManager.instance.GetCharacterModel(account.selected_char_name));
-
-        initializationProgress?.Invoke();
+        initializationProgress.Invoke();
         onAccountUpdated?.Invoke();
     }
 
@@ -58,6 +56,8 @@ public class AccountManager : MonoBehaviour {
 
     private void SelectCharacter(CharacterModel selectedCharacter) {
         _account.selected_char_name = selectedCharacter.name;
+
+        onAccountUpdated?.Invoke();
     }
 
     private void OnCharacterCreated(CharacterModel newCharacter) {

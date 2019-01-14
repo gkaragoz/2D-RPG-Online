@@ -39,7 +39,13 @@ public class LoadingManager : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
+    private float _progressFilledAmount;
+    [SerializeField]
+    [Utils.ReadOnly]
     private float _completedProgressAmount;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _divisionProblemAmount;
     [SerializeField]
     [Utils.ReadOnly]
     private List<bool> _checkList = new List<bool>();
@@ -49,8 +55,8 @@ public class LoadingManager : Menu {
     }
 
     private void Update() {
-        _txtFilledAmount.text = "Loading! %" + _completedProgressAmount;
-        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, _completedProgressAmount * 0.01f, Time.deltaTime * _lerpSpeed);
+        _txtFilledAmount.text = "Loading! %" + (_completedProgressAmount + _divisionProblemAmount);
+        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, (_completedProgressAmount + _divisionProblemAmount) * 0.01f, Time.deltaTime * _lerpSpeed);
     }
 
     public void ResetTasks() {
@@ -59,15 +65,14 @@ public class LoadingManager : Menu {
 
     public void AddTask(Task task) {
         _checkList.Add(false);
+        _progressFilledAmount = GetPerProgressFilledAmount();
     }
 
     public void Progress() {
-        float progressFilledAmount = GetPerProgressFilledAmount();
-
         _completedProgressAmount = 0;
 
         for (int ii = 0; ii < _checkList.Count; ii++) {
-            _completedProgressAmount += progressFilledAmount;
+            _completedProgressAmount += _progressFilledAmount;
 
             if (_checkList[ii]) {
                 continue;
@@ -77,7 +82,7 @@ public class LoadingManager : Menu {
             }
         }
 
-        if (_completedProgressAmount >= 100) {
+        if (_completedProgressAmount + _divisionProblemAmount >= 100) {
             StartCoroutine(Delay(() => {
                 ResetTasks();
                 onLoadingCompleted?.Invoke();
@@ -91,7 +96,10 @@ public class LoadingManager : Menu {
     }
 
     private float GetPerProgressFilledAmount() {
-        return (100 / (_checkList.Count == 0 ? 1 : _checkList.Count));
+        float amount = (100 / (_checkList.Count == 0 ? 1 : _checkList.Count));
+        _divisionProblemAmount = 100 - (amount * _checkList.Count);
+
+        return amount;
     }
 
 }

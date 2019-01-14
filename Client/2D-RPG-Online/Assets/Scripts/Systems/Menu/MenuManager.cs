@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
 using TMPro;
 using UnityEngine;
 
@@ -49,22 +48,26 @@ public class MenuManager : Menu {
     private TextMeshProUGUI _txtCharacterDexterity;
 
     private void Start() {
-        AccountManager.instance.onAccountUpdated += UpdateUI;
+        AccountManager.instance.onAccountUpdated = UpdateUI;
     }
 
     public void Initialize() {
-        UpdateUI();
+        if (CharacterManager.instance.HasCharacter) {
+            UpdateUI();
+        }
 
-        initializationProgress?.Invoke();
+        initializationProgress.Invoke();
     }
 
     private void UpdateUI() {
         _txtAccountGold.text = AccountManager.instance.Account.gold.ToString();
         _txtAccountGem.text = AccountManager.instance.Account.gem.ToString();
 
-        _txtCharacterName.text = CharacterManager.instance.SelectedCharacter.name.ToString();
-        _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level.ToString();
-        _txtCharacterExperience.text = CharacterManager.instance.SelectedCharacter.exp.ToString();
+        if (CharacterManager.instance.HasCharacter) {
+            _txtCharacterName.text = CharacterManager.instance.SelectedCharacter.name.ToString();
+            _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level.ToString();
+            _txtCharacterExperience.text = CharacterManager.instance.SelectedCharacter.exp.ToString();
+        }
 
         //_txtCharacterStatPoints.text = AccountManager.instance.Account.gold.ToString();
         //_txtCharacterHealth.text = AccountManager.instance.Account.gold.ToString();

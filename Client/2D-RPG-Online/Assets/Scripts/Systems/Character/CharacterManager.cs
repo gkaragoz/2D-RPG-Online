@@ -27,6 +27,7 @@ public class CharacterManager : MonoBehaviour {
 
     public List<CharacterModel> AllCharacters { get { return _allCharacters; } }
     public CharacterModel SelectedCharacter { get { return _selectedCharacter; } }
+    public bool HasCharacter { get { return _allCharacters.Count > 0 ? true : false; } }
 
     [Header("Initialization")]
     [SerializeField]
@@ -40,13 +41,17 @@ public class CharacterManager : MonoBehaviour {
     [SerializeField]
     private List<CharacterModel> _allCharacters = new List<CharacterModel>();
 
+    private void Start() {
+        AccountManager.instance.onAccountUpdated = OnAccountManagerUpdated;
+    }
+
     public void Initialize(List<CharacterModel> characters, CharacterModel _selectedCharacter) {
         this._allCharacters = characters;
         this._selectedCharacter = _selectedCharacter;
 
         _characterSelection.Initialize();
 
-        initializationProgress?.Invoke();
+        initializationProgress.Invoke();
     }
 
     public void ShowCharacterCreationMenu() {
@@ -84,6 +89,10 @@ public class CharacterManager : MonoBehaviour {
             }
         }
         return null;
+    }
+
+    private void OnAccountManagerUpdated() {
+        Initialize(AccountManager.instance.Account.characters, GetCharacterModel(AccountManager.instance.Account.selected_char_name));
     }
 
 }

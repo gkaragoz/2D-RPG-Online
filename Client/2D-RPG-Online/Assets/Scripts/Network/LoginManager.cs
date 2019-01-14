@@ -36,7 +36,7 @@ public class LoginManager : MonoBehaviour {
         GooglePlayManager.instance.onGooglePlaySignInResult = OnGooglePlaySignInResult;
         onLoginResult = OnLoginResult;
 
-        initializationProgress?.Invoke();
+        initializationProgress.Invoke();
     }
 
     public void Login() {
@@ -50,7 +50,12 @@ public class LoginManager : MonoBehaviour {
 
     private void LoginAsAGuest() {
         RequestGuestAuth requestGuestAuth = new RequestGuestAuth();
-        requestGuestAuth.guest_id = "";
+
+        if (GameManager.instance.HasPlayedBefore) {
+            requestGuestAuth.guest_id = NetworkManager.UserID;
+        } else {
+            requestGuestAuth.guest_id = "";
+        }
 
         StartCoroutine(APIConfig.IGuestLoginPostMethod(requestGuestAuth, OnSessionIDResponse));
     }
@@ -81,13 +86,13 @@ public class LoginManager : MonoBehaviour {
                 PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_SESSION_ID:
-                sessionIdResponseProgress?.Invoke();
+                sessionIdResponseProgress.Invoke();
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_GUEST_SESSION:
-                sessionIdResponseProgress?.Invoke();
+                sessionIdResponseProgress.Invoke();
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA:
-                accountDataResponseProgress?.Invoke();
+                accountDataResponseProgress.Invoke();
                 onLoginCompleted?.Invoke();
                 break;
             default:
@@ -96,20 +101,8 @@ public class LoginManager : MonoBehaviour {
         }
     }
 
-    private void OnGooglePlaySignInError(GooglePlayManager.Results result) {
-        switch (result) {
-            case GooglePlayManager.Results.ERROR_SIGN_IN:
-                break;
-            case GooglePlayManager.Results.ERROR_SIGN_OUT:
-                break;
-            default:
-                PopupManager.instance.ShowPopupMessage("ERROR", "Unknown", PopupMessage.Type.Error);
-                break;
-        }
-    }
-
     private void OnGooglePlaySignInResult(GooglePlayManager.Results result) {
-        googlePlaySignInResponseProgress?.Invoke();
+        googlePlaySignInResponseProgress.Invoke();
 
         switch (result) {
             case GooglePlayManager.Results.SUCCESS_SIGN_IN:
@@ -135,6 +128,7 @@ public class LoginManager : MonoBehaviour {
             Debug.Log(APIConfig.SUCCESS_GET_SESSION_ID + authResponse.session_id);
 
             NetworkManager.SessionID = authResponse.session_id;
+            NetworkManager.UserID = authResponse.user_id;
 
             RequestAccountData();
 
