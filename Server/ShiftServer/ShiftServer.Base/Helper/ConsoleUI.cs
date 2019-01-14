@@ -41,7 +41,7 @@ namespace ShiftServer.Base.Helper
                         var roomList = serverProvider.world.Rooms.GetValues();
                         foreach (var room in roomList)
                         {
-                            Console.WriteLine(string.Format("Room Name: {0} , User: {1}/{2}", room.Name, room.SocketIdSessionLookup.Count, room.MaxUser));
+                            Console.WriteLine(string.Format("ID: {0} Room Name: {1} , User: {2}/{3}", room.Id, room.Name, room.SocketIdSessionLookup.Count, room.MaxUser));
                         }
                         break;
                     case "playerlist":
