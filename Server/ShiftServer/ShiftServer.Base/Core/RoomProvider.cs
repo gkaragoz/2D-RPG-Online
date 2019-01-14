@@ -389,7 +389,7 @@ namespace ShiftServer.Base.Core
                             newData.RoomData.PlayerReadyStatusInfo.IsReady = data.RoomData.PlayerReadyStatusInfo.IsReady;
                             newData.RoomData.PlayerReadyStatusInfo.Username = acc.SelectedCharName;
 
-                            result.BroadcastDataToRoom(shift, MSServerEvent.RoomPlayerReadyStatusChanged, newData);
+                            result.BroadcastDataToRoom(shift, MSServerEvent.RoomPlayerReadyStatus, newData);
                         }
                     }
                     else
@@ -397,7 +397,7 @@ namespace ShiftServer.Base.Core
                         log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem);
                         ShiftServerData errdata = new ShiftServerData();
                         errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
-                        shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusChangedFailed, errdata);
+                        shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
                     }
                   
 
@@ -408,7 +408,7 @@ namespace ShiftServer.Base.Core
                 log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem);
                 ShiftServerData errdata = new ShiftServerData();
                 errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
-                shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusChangedFailed, errdata);
+                shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
             }
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomGameStart, data);
         }
