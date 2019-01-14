@@ -81,6 +81,7 @@ public class RoomManager : Menu {
     }
 
     public void CreateRoom() {
+        MenuManager.instance.SetInteractionOfCreateRoomButton(false);
         StartCoroutine(ICreateRoom());
     }
 
@@ -108,6 +109,7 @@ public class RoomManager : Menu {
     }
 
     public void JoinRoom(string id) {
+        MenuManager.instance.SetInteractionOfNormalGameButton(false);
         StartCoroutine(IJoinRoom(id));
     }
 
@@ -128,6 +130,7 @@ public class RoomManager : Menu {
     }
 
     public void JoinFirstRoom() {
+        MenuManager.instance.SetInteractionOfNormalGameButton(false);
         StartCoroutine(IJoinFirstRoom());
     }
 
@@ -232,6 +235,7 @@ public class RoomManager : Menu {
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
         Debug.Log("OnRoomJoinSuccess: " + data);
+        MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
         SetTxtRoomName(data.RoomData.JoinedRoom.Name);
         SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
@@ -268,6 +272,7 @@ public class RoomManager : Menu {
 
     private void OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
+        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
 
         SetTxtRoomName(data.RoomData.CreatedRoom.Name);
         SetSlotsTeamIds(data.RoomData.CreatedRoom.Teams);
@@ -286,6 +291,7 @@ public class RoomManager : Menu {
 
     private void OnRoomCreateFailed(ShiftServerData data) {
         Debug.Log("OnRoomCreateFailed: " + data);
+        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
     }
 
     private void OnRoomDeleted(ShiftServerData data) {
@@ -316,6 +322,8 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
+        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
+        MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
         TeamManager.instance.ClearTeamList();
         ClearSlots();

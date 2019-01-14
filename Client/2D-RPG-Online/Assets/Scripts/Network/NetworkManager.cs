@@ -50,6 +50,11 @@ public class NetworkManager : MonoBehaviour {
     public void ConnectToGameplayServer() {
         Debug.Log(CONNECT);
 
+        _cfg = new ConfigData();
+        _cfg.Host = _hostName;
+        _cfg.Port = _port;
+        _cfg.SessionID = SessionID;
+
         mss.Connect(_cfg);
     }
 
@@ -58,10 +63,6 @@ public class NetworkManager : MonoBehaviour {
         mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
         mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
         mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
-
-        _cfg = new ConfigData();
-        _cfg.Host = _hostName;
-        _cfg.Port = _port;
     }
 
     private void Update() {
