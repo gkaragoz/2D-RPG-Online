@@ -7,6 +7,8 @@ public class CharacterSelectionSlot : MonoBehaviour {
 
     [Header("Initialization")]
     [SerializeField]
+    private Toggle _toggle;
+    [SerializeField]
     private Image _imageClassHighlight;
     [SerializeField]
     private Image _imageClassIcon;
@@ -46,6 +48,10 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _txtCharacterExperience.text = "Exp: " + character.exp;
         //_txtCharacterHealth.text = "HP: " + character.hp;
         //_txtCharacterMana.text = "MP: " + character.mp;
+    }
+
+    public void SetInteractable(bool interactable) {
+        _toggle.interactable = interactable;
     }
 
 }

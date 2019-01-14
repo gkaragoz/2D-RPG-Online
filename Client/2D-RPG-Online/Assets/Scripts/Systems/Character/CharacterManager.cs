@@ -91,6 +91,10 @@ public class CharacterManager : MonoBehaviour {
         return null;
     }
 
+    public string GetCharacterName(int index) {
+        return _allCharacters[index].name;
+    } 
+
     private void OnAccountManagerUpdated() {
         Initialize(AccountManager.instance.Account.characters, GetCharacterModel(AccountManager.instance.Account.selected_char_name));
     }

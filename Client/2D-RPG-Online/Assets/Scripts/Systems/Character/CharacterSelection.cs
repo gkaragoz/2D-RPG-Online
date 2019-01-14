@@ -25,19 +25,21 @@ public class CharacterSelection : Menu {
     }
 
     public void Initialize() {
-        if (CharacterManager.instance.HasCharacter) {
-            for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
+        for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
+            if (_characterSelectionSlots[ii] != null) {
                 _characterSelectionSlots[ii].Initialize(CharacterManager.instance.AllCharacters[ii]);
+            } else {
+                _characterSelectionSlots[ii].SetInteractable(false);
             }
         }
     }
 
-    public void SelectCharacter(string characterName) {
-        _selectedCharacterName = characterName;
+    public void SelectCharacter(int selectedIndex) {
+        _selectedCharacterName = CharacterManager.instance.GetCharacterName(selectedIndex);
         _btnSelectCharacter.interactable = true;
     }
 
-    public void SelectCharacter() {
+    public void SubmitSelectCharacter() {
         RequestCharSelect RequestSelectCharacter = new RequestCharSelect();
         RequestSelectCharacter.char_name = SelectedCharacterName;
         RequestSelectCharacter.session_id = NetworkManager.SessionID;
