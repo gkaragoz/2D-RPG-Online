@@ -381,7 +381,7 @@ namespace ShiftServer.Base.Core
                     {
                         if (shift.JoinedRoomId == result.Id)
                         {
-                            shift.IsReady = true;
+                            shift.IsReady = data.RoomData.PlayerReadyStatusInfo.IsReady;
 
                             ShiftServerData newData = new ShiftServerData();
                             newData.RoomData = new RoomData();
