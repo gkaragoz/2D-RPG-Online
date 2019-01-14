@@ -59,12 +59,20 @@ namespace ShiftServer.Client.Core
         {
             return client.Connected;
         }
+        public bool IsClientConnected()
+        {
+            if (this.client == null)
+                return false;
+
+            return client.Connected;
+        }
         public void Disconnect()
         {
             try
             {
                 // disconnect from the server when we are done
                 client.Disconnect();
+                client = null;
             }
             catch (Exception err)
             {
