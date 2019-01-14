@@ -1,4 +1,5 @@
-﻿using ShiftServer.Proto.RestModels;
+﻿using Newtonsoft.Json;
+using ShiftServer.Proto.RestModels;
 using SimpleHTTP;
 using System;
 using System.Collections;
@@ -66,7 +67,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonUtility.FromJson<Auth>(resp.Body());
+            authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
@@ -91,7 +92,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            accountDataResponse = JsonUtility.FromJson<Account>(resp.Body());
+            accountDataResponse = JsonConvert.DeserializeObject<Account>(resp.Body());
             callback(accountDataResponse);
         } else {
             Debug.Log("error: " + http.Error());
@@ -115,7 +116,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonUtility.FromJson<Auth>(resp.Body());
+            authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
             callback(authResponse);
         } else {
             Debug.Log("error: " + http.Error());
@@ -139,7 +140,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            createdCharacterResponse = JsonUtility.FromJson<CharAdd>(resp.Body());
+            createdCharacterResponse = JsonConvert.DeserializeObject<CharAdd>(resp.Body());
             callback(createdCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
@@ -163,7 +164,7 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            selectedCharacterResponse = JsonUtility.FromJson<CharSelect>(resp.Body());
+            selectedCharacterResponse = JsonConvert.DeserializeObject<CharSelect>(resp.Body());
             callback(selectedCharacterResponse);
         } else {
             Debug.Log("error: " + http.Error());
