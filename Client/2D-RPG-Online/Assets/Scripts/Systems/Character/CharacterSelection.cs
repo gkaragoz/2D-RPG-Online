@@ -26,7 +26,7 @@ public class CharacterSelection : Menu {
 
     public void Initialize() {
         for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
-            if (_characterSelectionSlots[ii] != null) {
+            if (ii < CharacterManager.instance.AllCharacters.Count) {
                 _characterSelectionSlots[ii].Initialize(CharacterManager.instance.AllCharacters[ii]);
             } else {
                 _characterSelectionSlots[ii].SetInteractable(false);
