@@ -57,6 +57,10 @@ namespace ShiftServer.Client
             _currentPingValue = _stopwatch.Elapsed.Milliseconds;
         }
 
+        private void OnAccountJoinSuccess(ShiftServerData data)
+        {
+
+        }
         private void SendPingRequest()
         {
             _stopwatch = new Stopwatch();
