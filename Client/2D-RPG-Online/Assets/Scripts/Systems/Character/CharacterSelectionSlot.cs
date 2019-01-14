@@ -15,6 +15,10 @@ public class CharacterSelectionSlot : MonoBehaviour {
     [SerializeField]
     private Image _imageClassAnimation;
     [SerializeField]
+    private Image _imageExpFill;
+    [SerializeField]
+    private Image _imageExpBackground;
+    [SerializeField]
     private TextMeshProUGUI _txtCharacterName;
     [SerializeField]
     private TextMeshProUGUI _txtCharacterLevel;
@@ -24,10 +28,21 @@ public class CharacterSelectionSlot : MonoBehaviour {
     private TextMeshProUGUI _txtCharacterHealth;
     [SerializeField]
     private TextMeshProUGUI _txtCharacterMana;
+    [SerializeField]
+    private Color _expFillColor;
+    [SerializeField]
+    private Color _expBackgroundColor;
 
     public void Initialize(CharacterModel character) {
         _imageClassIcon.color = Color.white;
         _imageClassAnimation.color = Color.white;
+        _txtCharacterLevel.color = Color.white;
+        _txtCharacterExperience.color = Color.white;
+        _txtCharacterHealth.color = Color.white;
+        _txtCharacterMana.color = Color.white;
+        _imageExpFill.color = _expFillColor;
+        _imageExpBackground.color = _expBackgroundColor;
+        _imageExpFill.fillAmount = character.exp;
 
         if (character.class_index == 0) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;

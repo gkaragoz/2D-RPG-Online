@@ -1114,14 +1114,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 382df6c1a7ad0d84e9c1912179b076ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _toggle: {fileID: 6466538859807150404}
   _imageClassHighlight: {fileID: 4121499668631075026}
   _imageClassIcon: {fileID: 4121499668744244261}
   _imageClassAnimation: {fileID: 4121499668836219312}
+  _imageExpFill: {fileID: 4121499668166358946}
+  _imageExpBackground: {fileID: 4121499668129244472}
   _txtCharacterName: {fileID: 4121499669819669930}
   _txtCharacterLevel: {fileID: 4121499669619470380}
   _txtCharacterExperience: {fileID: 4121499668095579251}
   _txtCharacterHealth: {fileID: 4121499669092683696}
   _txtCharacterMana: {fileID: 4121499668329079791}
+  _expFillColor: {r: 0.98039216, g: 0.7176471, b: 0.22745098, a: 1}
+  _expBackgroundColor: {r: 0.99215686, g: 0.79607844, b: 0.43137255, a: 1}
 --- !u!1 &4121499669002410923
 GameObject:
   m_ObjectHideFlags: 0
