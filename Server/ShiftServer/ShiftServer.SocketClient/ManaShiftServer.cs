@@ -48,6 +48,9 @@ namespace ShiftServer.Client
         /// <returns></returns>
         public void Connect(ConfigData cfg)
         {
+            if (string.IsNullOrEmpty(cfg.SessionID))
+                throw new ArgumentNullException("Session ID is null");
+            
             _sessionID = cfg.SessionID;
             _gameProvider.Connect(cfg.Host, cfg.Port);
             this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
