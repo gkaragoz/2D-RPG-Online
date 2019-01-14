@@ -14,6 +14,6 @@ namespace ShiftServer.Proto.RestModels
         public int gold;
         public string selected_char_name;
 
-        public IList<CharacterModel> characters;
+        public List<CharacterModel> characters;
     }
 }
