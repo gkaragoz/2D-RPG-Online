@@ -61,8 +61,8 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _txtCharacterName.text = character.name;
         _txtCharacterLevel.text = character.level + " Lv.";
         _txtCharacterExperience.text = "Exp: " + character.exp;
-        //_txtCharacterHealth.text = "HP: " + character.hp;
-        //_txtCharacterMana.text = "MP: " + character.mp;
+        _txtCharacterHealth.text = "HP: " + character.stats.health;
+        _txtCharacterMana.text = "MP: " + character.stats.mana;
     }
 
     public void SetInteractable(bool interactable) {
