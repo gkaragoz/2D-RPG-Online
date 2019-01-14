@@ -32,13 +32,22 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-                _port = port;
-                _address = address;
+                if (client == null)
+                {
+                    _port = port;
+                    _address = address;
 
-                // create and connect the client
-                client = new Telepathy.Client();
-                //this.SetFixedUpdateInterval();
-                client.Connect(address, port);
+                    // create and connect the client
+                    client = new Telepathy.Client();
+
+                    //this.SetFixedUpdateInterval();
+                    client.Connect(address, port);
+                }
+                else
+                {
+                    throw new Exception("Already connected");
+                }
+
             }
             catch (Exception)
             {
