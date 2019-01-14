@@ -1,5 +1,6 @@
 ﻿using ShiftServer.Base.Auth;
 using ShiftServer.Base.Rooms;
+using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
 
@@ -25,6 +26,10 @@ namespace ShiftServer.Base.Core
             if (!_sp.SessionCheck(data, shift))
                 return;
 
+            AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
+            Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+
+
             Battleground newRoom = new Battleground(2, 5);
 
             if (!shift.IsJoinedToRoom)
@@ -49,12 +54,12 @@ namespace ShiftServer.Base.Core
                     shift.JoinedRoomId = newRoom.Id;
                     newRoom.ServerLeaderId = shift.connectionId;
                     newRoom.Clients.Add(shift.connectionId, shift);
-                    newRoom.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                    newRoom.SocketIdSessionLookup.Add(data.SessionID, shift.connectionId);
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
                     IGroup group = newRoom.GetRandomTeam();
 
                     data.RoomData.PlayerInfo.TeamId = group.Id;
-                    data.RoomData.PlayerInfo.Username = shift.UserName;
+                    data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
                     data.RoomData.PlayerInfo.IsReady = shift.IsReady;
 
 
@@ -108,6 +113,9 @@ namespace ShiftServer.Base.Core
             if (!_sp.SessionCheck(data, shift))
                 return;
 
+            AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
+            Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+
             if (shift.IsJoinedToRoom)
             {
                 _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
@@ -128,7 +136,7 @@ namespace ShiftServer.Base.Core
                 }
 
                 prevRoom.Clients.Remove(shift.connectionId);
-                prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
+                prevRoom.SocketIdSessionLookup.Remove(data.SessionID);
                 prevRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerLeft);
 
             }
@@ -181,7 +189,7 @@ namespace ShiftServer.Base.Core
 
 
 
-                    data.RoomData.PlayerInfo.Username = shift.UserName;
+                    data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
 
                     ShiftClient cl = null;
 
@@ -217,8 +225,8 @@ namespace ShiftServer.Base.Core
                 else
                 {
                     ShiftServerData oData = new ShiftServerData();
-                    log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.AlreadyInRoom);
-                    oData.ErrorReason = ShiftServerError.AlreadyInRoom;
+                    log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomNotFound);
+                    oData.ErrorReason = ShiftServerError.RoomNotFound;
                     shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                     return;
                 }
@@ -226,8 +234,8 @@ namespace ShiftServer.Base.Core
             else
             {
                 ShiftServerData oData = new ShiftServerData();
-                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomNotFound);
-                oData.ErrorReason = ShiftServerError.RoomNotFound;
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.AlreadyInRoom);
+                oData.ErrorReason = ShiftServerError.AlreadyInRoom;
                 shift.SendPacket(MSServerEvent.RoomJoinFailed, oData);
                 return;
             }
@@ -239,7 +247,7 @@ namespace ShiftServer.Base.Core
                 if (!_sp.SessionCheck(data, shift))
                     return;
 
-                
+
 
             }
             catch (Exception err)
@@ -262,11 +270,12 @@ namespace ShiftServer.Base.Core
                 if (!_sp.SessionCheck(data, shift))
                     return;
 
+
                 if (shift.IsJoinedToRoom)
                 {
                     _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
                     prevRoom.Clients.Remove(shift.connectionId);
-                    prevRoom.SocketIdSessionLookup.Remove(shift.UserSession.GetSid());
+                    prevRoom.SocketIdSessionLookup.Remove(data.SessionID);
                     shift.IsJoinedToRoom = false;
                     shift.JoinedRoomId = null;
                     ShiftServerData leavedRoom = new ShiftServerData();
@@ -286,16 +295,17 @@ namespace ShiftServer.Base.Core
                     else if (shift.connectionId == prevRoom.ServerLeaderId)
                     {
 
-
-
                         prevRoom.ServerLeaderId = -1;
                         ShiftClient selectedLeader = prevRoom.SetRandomNewLeader();
                         selectedLeader.IsJoinedToRoom = true;
                         selectedLeader.JoinedRoomId = prevRoom.Id;
 
+                        AccountSession session = _sp.ctx.Sessions.FindBySessionID(selectedLeader.UserSession.GetSid());
+                        Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+
                         data.RoomData = new RoomData();
                         RoomPlayerInfo pInfo = new RoomPlayerInfo();
-                        pInfo.Username = selectedLeader.UserName;
+                        pInfo.Username = acc.SelectedCharName;
 
                         if (selectedLeader.JoinedTeamId != null)
                             pInfo.TeamId = selectedLeader.JoinedTeamId;
@@ -342,6 +352,64 @@ namespace ShiftServer.Base.Core
         public void OnRoomGameStart(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomGameStart");
+            _sp.SendMessage(shift.connectionId, MSServerEvent.RoomGameStart, data);
+        }
+
+        public void OnRoomPlayerReadyStatusChanged(ShiftServerData data, ShiftClient shift)
+        {
+            IRoom result = null;
+
+            log.Info($"ClientNO: {shift.connectionId} ------> PlayerReady StatusChanged");
+
+            if (!_sp.SessionCheck(data, shift))
+                return;
+
+            AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
+            Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+
+            try
+            {
+
+                if (!_sp.SessionCheck(data, shift))
+                    return;
+
+                if (shift.IsJoinedToRoom)
+                {
+                    _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out result);
+
+                    if (result != null && data.RoomData.PlayerReadyStatusInfo != null)
+                    {
+                        if (shift.JoinedRoomId == result.Id)
+                        {
+                            shift.IsReady = true;
+
+                            ShiftServerData newData = new ShiftServerData();
+                            newData.RoomData = new RoomData();
+                            newData.RoomData.PlayerReadyStatusInfo = new RoomPlayerInfo();
+                            newData.RoomData.PlayerReadyStatusInfo.IsReady = data.RoomData.PlayerReadyStatusInfo.IsReady;
+                            newData.RoomData.PlayerReadyStatusInfo.Username = acc.SelectedCharName;
+
+                            result.BroadcastDataToRoom(shift, MSServerEvent.RoomPlayerReadyStatusChanged, newData);
+                        }
+                    }
+                    else
+                    {
+                        log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem);
+                        ShiftServerData errdata = new ShiftServerData();
+                        errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
+                        shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusChangedFailed, errdata);
+                    }
+                  
+
+                }
+            }
+            catch (Exception err)
+            {
+                log.Error($"ClientNO: {shift.connectionId} ------>" + ShiftServerError.RoomAuthProblem);
+                ShiftServerData errdata = new ShiftServerData();
+                errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
+                shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusChangedFailed, errdata);
+            }
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomGameStart, data);
         }
         public void OnRoomLeaderChange(ShiftServerData data, ShiftClient shift)

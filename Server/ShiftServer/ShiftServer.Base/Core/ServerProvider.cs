@@ -139,14 +139,18 @@ namespace ShiftServer.Base.Core
                                     IsJoinedToWorld = false,
                                     UserSession = new Session()
                                 };
-                                world.Clients.Add(msg.connectionId, shift);
-                                log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
-                                break;
+                                if (client != null)
+                                {
+                                    world.Clients.Add(msg.connectionId, shift);
+                                    log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
+                                    break;
 
+                                }
+                                break;
                             }
                             catch (Exception err)
                             {
-                                log.Error("Error on connection : " + client.Client.RemoteEndPoint.ToString(), err);
+                                log.Error("Error on connection ", err);
                                 continue;
                             }
 
@@ -392,7 +396,7 @@ namespace ShiftServer.Base.Core
             {
                 AccountSession session = this.ctx.Sessions.FindBySessionID(data.SessionID);
                 Account acc = this.ctx.Accounts.GetByUserID(session.UserID);
-
+                shift.UserSession.SetSid(data);
 
 
                 data.Account = null;
