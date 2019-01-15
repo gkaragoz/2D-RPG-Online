@@ -79,7 +79,12 @@ public class CharacterManager : MonoBehaviour {
     public void AddCharacter(CharacterModel newCharacter) {
         AllCharacters.Add(newCharacter);
 
-        onCharacterCreated?.Invoke(newCharacter);
+        //First time character creation.
+        if (AllCharacters.Count == 1) {
+            SelectCharacter(newCharacter);
+        } else {
+            onCharacterCreated?.Invoke(newCharacter);
+        }
     }
 
     public CharacterModel GetCharacterModel(string name) {
