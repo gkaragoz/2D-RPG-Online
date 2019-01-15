@@ -34,7 +34,6 @@ namespace ShiftServer.Base.Worlds
             Rooms = new SafeDictionary<string, IRoom>();
             RoomGameThreadList = new SafeDictionary<string, Thread>();
         }
-
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)
         {
             log.Debug($"[ATTACK] Remote:{client.Client.Client.RemoteEndPoint.ToString()} ClientNo:{client.connectionId}");
@@ -43,12 +42,10 @@ namespace ShiftServer.Base.Worlds
             if (clientSessionId == null)
                 return;
         }
-
         public void OnObjectCreate(IGameObject gameObject)
         {
             GameObjects.Add(Interlocked.Increment(ref ObjectCounter), gameObject);
         }
-
         public void OnPlayerCreate(ShiftServerData data, ShiftClient shift)
         {
             string clientSessionId = shift.UserSession.GetSid();
@@ -122,9 +119,8 @@ namespace ShiftServer.Base.Worlds
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-            string clientSessionId = shift.UserSession.GetSid();
-            if (clientSessionId == null)
-                return;
+
+
             log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
         }
         public void OnObjectUse(ShiftServerData data, ShiftClient shift)
@@ -154,7 +150,6 @@ namespace ShiftServer.Base.Worlds
                 }
             }
         }
-
         public void SendWorldState()
         {
             List<ShiftClient> clientList = Clients.GetValues();

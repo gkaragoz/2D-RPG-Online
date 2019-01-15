@@ -80,8 +80,7 @@ namespace ShiftServer.Client
         /// </summary>
         public List<Room> GetRoomList()
         {
-            this.SendMessage(MSServerEvent.LobbyRefresh);
-            TickrateUtil.SafeDelay(500);
+            //sthis.SendMessage(MSServerEvent.LobbyRefresh);
             return _gameProvider.dataHandler.roomProvider.RoomList;
         }
 

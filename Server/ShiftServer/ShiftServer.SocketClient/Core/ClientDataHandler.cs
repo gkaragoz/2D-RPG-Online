@@ -46,9 +46,6 @@ namespace ShiftServer.Client.Core
                         case MSServerEvent.AccountJoin:
                             accountData = data.AccountData;
                             break;
-                        case MSServerEvent.LobbyRefresh:
-                            roomProvider.AddOrUpdate(data);
-                            break;
                         case MSServerEvent.RoomJoin:
                             roomProvider.SetCurrentJoinedRoom(data);
                             roomProvider.AddOrUpdate(data);

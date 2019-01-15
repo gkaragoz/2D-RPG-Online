@@ -120,6 +120,11 @@ namespace ShiftServer.Base.Auth
             else
                 return false;
         }
+
+        public void LeaveFromWorld()
+        {
+
+        }
         private bool Send(byte[] bb)
         {
             if (this.Client != null)
@@ -131,7 +136,7 @@ namespace ShiftServer.Base.Auth
                 }
                 catch (Exception exception)
                 {
-                    Console.WriteLine("Server.SendMessage exception: " + exception);
+                    log.Error($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}  Cant access because client is null", exception);
                     return false;
                 }
             }

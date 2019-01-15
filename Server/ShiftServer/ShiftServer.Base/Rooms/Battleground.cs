@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Telepathy;
 
@@ -22,6 +23,7 @@ namespace ShiftServer.Base.Rooms
         public string Id { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public DateTime GameStartDate { get; set; }
         public bool IsPrivate { get; set; }
         public int CreatedUserId { get; set; }
         public int ServerLeaderId { get; set; }
@@ -31,6 +33,10 @@ namespace ShiftServer.Base.Rooms
         public SafeDictionary<string, IGroup> Teams { get; set; }
         public List<string> TeamIdList { get; set; }
         public string LastActiveTeam { get; set; }
+
+        public int ObjectCounter = 0;
+        public int PlayerCounter = 0;
+
 
         public Battleground(int groupCount, int maxUserPerTeam)
         {
@@ -68,10 +74,13 @@ namespace ShiftServer.Base.Rooms
 
         public void OnObjectCreate(IGameObject gameObject)
         {
+            gameObject.ObjectId = Interlocked.Increment(ref ObjectCounter);
+            GameObjects.Add(gameObject.ObjectId, gameObject);
         }
 
         public void OnObjectDestroy(IGameObject gameObject)
         {
+            GameObjects.Remove(gameObject.ObjectId);
         }
 
         public void OnObjectMove(ShiftServerData data, ShiftClient client)
@@ -145,14 +154,32 @@ namespace ShiftServer.Base.Rooms
         }
         public void SendRoomState()
         {
+            List<ShiftClient> clientList = Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSession == null)
+                    continue;
 
+                ShiftServerData data = new ShiftServerData();
+
+                clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
+            }
         }
-
         public void OnRoomUpdate()
         {
-
+            IGameObject gObject = null;
+            for (int i = 0; i < ObjectCounter; i++)
+            {
+                GameObjects.TryGetValue(i, out gObject);
+                IGameInput gInput = null;
+                PlayerInput pInput = null;
+                for (int kk = 0; kk < gObject.GameInputs.Count; kk++)
+                {
+                    gObject.GameInputs.TryDequeue(out gInput);
+                    //pInput = (PlayerInput)gInput;
+                }
+            }
         }
-
         public IGroup GetRandomTeam()
         {
             var RoomTeams = this.Teams.GetValues();
