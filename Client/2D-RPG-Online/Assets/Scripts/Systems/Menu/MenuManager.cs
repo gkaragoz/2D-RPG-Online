@@ -66,7 +66,7 @@ public class MenuManager : Menu {
     }
 
     public void Initialize() {
-        if (CharacterManager.instance.HasCharacter) {
+        if (AccountManager.instance.HasCharacter) {
             UpdateUI();
         }
 
@@ -86,10 +86,10 @@ public class MenuManager : Menu {
     }
 
     private void UpdateUI() {
-        _txtAccountGold.text = AccountManager.instance.Account.gold.ToString();
-        _txtAccountGem.text = AccountManager.instance.Account.gem.ToString();
+        _txtAccountGold.text = AccountManager.instance.Gold.ToString();
+        _txtAccountGem.text = AccountManager.instance.Gem.ToString();
 
-        if (CharacterManager.instance.HasCharacter) {
+        if (AccountManager.instance.HasCharacter) {
             _txtCharacterName.text = CharacterManager.instance.SelectedCharacter.name.ToString();
             _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level + " Lv.";
             _txtCharacterExperience.text = "Exp: " + CharacterManager.instance.SelectedCharacter.exp;

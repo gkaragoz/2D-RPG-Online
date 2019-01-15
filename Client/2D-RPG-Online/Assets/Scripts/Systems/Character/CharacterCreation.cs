@@ -73,7 +73,6 @@ public class CharacterCreation : Menu {
             Debug.Log(APIConfig.SUCCESS_TO_CREATE_CHARACTER);
 
             CharacterManager.instance.AddCharacter(createdCharacterResponse.character);
-            CharacterManager.instance.SelectCharacter(createdCharacterResponse.character);
         } else {
             Debug.Log(APIConfig.ERROR_CREATE_CHARACTER);
 

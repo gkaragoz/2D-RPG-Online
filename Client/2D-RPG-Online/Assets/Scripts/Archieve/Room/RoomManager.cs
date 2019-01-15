@@ -288,6 +288,10 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
+        if (playerInfo.IsLeader) {
+            _leaderPlayerInfo = playerInfo;
+        }
+
         TeamManager.instance.CreateTeam(data.RoomData.JoinedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
 

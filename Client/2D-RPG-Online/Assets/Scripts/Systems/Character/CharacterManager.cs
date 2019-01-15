@@ -1,6 +1,5 @@
 ﻿using ShiftServer.Proto.RestModels;
 using System;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterManager : MonoBehaviour {
@@ -25,9 +24,7 @@ public class CharacterManager : MonoBehaviour {
     public Action<CharacterModel> onCharacterCreated;
     public Action<CharacterModel> onCharacterSelected;
 
-    public List<CharacterModel> AllCharacters { get { return _allCharacters; } }
     public CharacterModel SelectedCharacter { get { return _selectedCharacter; } }
-    public bool HasCharacter { get { return _allCharacters.Count > 0 ? true : false; } }
 
     [Header("Initialization")]
     [SerializeField]
@@ -38,17 +35,12 @@ public class CharacterManager : MonoBehaviour {
     [Header("Debug")]
     [SerializeField]
     private CharacterModel _selectedCharacter;
-    [SerializeField]
-    private List<CharacterModel> _allCharacters = new List<CharacterModel>();
 
     private void Start() {
-        AccountManager.instance.onAccountUpdated += OnAccountManagerUpdated;
+        AccountManager.instance.onAccountManagerInitialized += Initialize;
     }
 
-    public void Initialize(List<CharacterModel> characters, CharacterModel _selectedCharacter) {
-        this._allCharacters = characters;
-        this._selectedCharacter = _selectedCharacter;
-
+    public void Initialize() {
         _characterSelection.Initialize();
 
         initializationProgress.Invoke();
@@ -77,31 +69,24 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void AddCharacter(CharacterModel newCharacter) {
-        AllCharacters.Add(newCharacter);
-
-        //First time character creation.
-        if (AllCharacters.Count == 1) {
+        if (AccountManager.instance.AllCharacters.Count == 0) {
             SelectCharacter(newCharacter);
-        } else {
-            onCharacterCreated?.Invoke(newCharacter);
         }
+
+        onCharacterCreated?.Invoke(newCharacter);
     }
 
     public CharacterModel GetCharacterModel(string name) {
-        for (int ii = 0; ii < _allCharacters.Count; ii++) {
-            if (_allCharacters[ii].name == name) {
-                return _allCharacters[ii];
+        for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
+            if (AccountManager.instance.AllCharacters[ii].name == name) {
+                return AccountManager.instance.AllCharacters[ii];
             }
         }
         return null;
     }
 
     public string GetCharacterName(int index) {
-        return _allCharacters[index].name;
+        return AccountManager.instance.AllCharacters[index].name;
     } 
-
-    private void OnAccountManagerUpdated() {
-        Initialize(AccountManager.instance.Account.characters, GetCharacterModel(AccountManager.instance.Account.selected_char_name));
-    }
 
 }
