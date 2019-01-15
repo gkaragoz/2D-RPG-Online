@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using TMPro;
@@ -23,7 +24,7 @@ public class RoomManager : Menu {
     #endregion
 
     [SerializeField]
-    private TextMeshProUGUI _txtRoomName;
+    private GameObject _playerPrefab;
     [SerializeField]
     private Button _btnStartGame;
     [SerializeField]
@@ -31,9 +32,9 @@ public class RoomManager : Menu {
     [SerializeField]
     private Button _btnNotReady;
     [SerializeField]
-    private TMP_InputField _inputFieldRoomID;
+    private Button _btnLeave;
     [SerializeField]
-    private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
+    private TMP_InputField _inputFieldRoomID;
     [SerializeField]
     private List<RoomPlayerInfo> _playerList = new List<RoomPlayerInfo>();
 
@@ -56,6 +57,8 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeave, OnRoomLeaveSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomLeaveFailed, OnRoomLeaveFailed);
+
+        NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetPlayers, OnRoomGetPlayers);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomChangeLeader, OnRoomLeaderChanged);
 
@@ -87,17 +90,9 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
     }
 
-    public void ReturnRoom() {
-        this.Show();
-    }
-
     public void JoinRoom() {
         MenuManager.instance.SetInteractionOfNormalGameButton(false);
         StartCoroutine(IJoinRoom(_inputFieldRoomID.text));
-    }
-
-    public void WatchRoom(string id) {
-
     }
 
     public void LeaveRoom() {
@@ -128,6 +123,13 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
+    private void CreatePlayer(RoomPlayerInfo playerInfo) {
+        GameObject player = Instantiate(_playerPrefab);
+
+        player.transform.position = new Vector2(UnityEngine.Random.Range(-1f, 1f), 0f);
+        player.GetComponent<PlayerHUD>().SetName(playerInfo.Username);
+    }
+
     private IEnumerator IJoinRoom(string id) {
         NetworkManager.instance.ConnectToGameplayServer();
 
@@ -156,28 +158,6 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
     }
 
-    private bool IsPlayerExists(RoomPlayerInfo playerInfo) {
-        for (int ii = 0; ii < _playerList.Count; ii++) {
-            if (_playerList[ii] == playerInfo) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private void SetTxtRoomName(string name) {
-        _txtRoomName.text = name;
-    }
-
-    private RoomPlayerInfo GetRoomLeader(List<RoomPlayerInfo> players) {
-        for (int ii = 0; ii < players.Count; ii++) {
-            if (players[ii].IsLeader) {
-                return players[ii];
-            }
-        }
-        return null;
-    }
-
     private bool OnGameplayServerConnectionSuccess() {
         return true;
     }
@@ -190,6 +170,8 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
+
+        _playerList = data.RoomData.PlayerList.ToList();
 
         MenuManager.instance.Hide();
         this.Show();
@@ -204,6 +186,13 @@ public class RoomManager : Menu {
     private void OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
         MenuManager.instance.SetInteractionOfCreateRoomButton(true);
+
+        RoomPlayerInfo playerInfo = new RoomPlayerInfo();
+        playerInfo = data.RoomData.PlayerInfo;
+
+        //playerInfo = data.RoomData.CreatedRoom.Teams;
+
+        CreatePlayer(playerInfo);
 
         MenuManager.instance.Hide();
         this.Show();
@@ -226,6 +215,7 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomPlayerJoined: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
+        CreatePlayer(playerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
@@ -245,6 +235,10 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
         Debug.Log("OnRoomLeaveFailed: " + data);
+    }
+
+    private void OnRoomGetPlayers(ShiftServerData data) {
+        Debug.Log("OnRoomGetPlayers: " + data);
     }
 
     private void OnRoomLeaderChanged(ShiftServerData data) {

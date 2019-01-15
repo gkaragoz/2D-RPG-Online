@@ -285,6 +285,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Menu.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Portal.cs" />
     <Compile Include="Assets\Scripts\Network\APIConfig.cs" />
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
