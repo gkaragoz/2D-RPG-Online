@@ -367,6 +367,7 @@ namespace ShiftServer.Base.Core
                 AccountSession session = ctx.Sessions.FindBySessionID(data.SessionID);
                 if (session != null)
                 {
+                    shift.UserSession.SetSid(data.SessionID);
                     Account acc = this.ctx.Accounts.GetByUserID(session.UserID);
                     if (acc != null)
                     {

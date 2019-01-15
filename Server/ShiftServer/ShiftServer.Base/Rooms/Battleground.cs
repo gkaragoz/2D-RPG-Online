@@ -92,6 +92,7 @@ namespace ShiftServer.Base.Rooms
 
         public void OnObjectMove(ShiftServerData data, ShiftClient client)
         {
+
         }
 
         public void OnObjectUse(ShiftServerData data, ShiftClient client)
@@ -162,10 +163,10 @@ namespace ShiftServer.Base.Rooms
                     }
                 };
             }
-
+            shift.CurrentObject = currentPlayer;
+            shift.Inputs = new SafeQueue<IGameInput>();
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
-
         public void BroadcastToRoom(ShiftClient currentClient, MSServerEvent evt)
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();

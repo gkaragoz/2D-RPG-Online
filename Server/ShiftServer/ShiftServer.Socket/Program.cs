@@ -42,6 +42,9 @@ namespace ShiftServer.Server
             _serverProvider.AddServerEventListener(MSServerEvent.RoomLeave, _roomProvider.OnRoomLeave);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomChangeLeader, _roomProvider.OnRoomLeaderChange);
 
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Move, _roomProvider.OnObjectMove);
+
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 

@@ -7,4 +7,5 @@ namespace ShiftServer.Base.Core
     {
         Vector3 vector3 { get; set; }
     }
+
 }

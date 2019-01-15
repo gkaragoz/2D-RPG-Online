@@ -15,7 +15,10 @@ namespace ShiftServer.Base.Core
         {
             sid = data.SessionID;
         }
-
+        public void SetSid(string data)
+        {
+            sid = data;
+        }
         public string GetSid()
         {
             return sid;
