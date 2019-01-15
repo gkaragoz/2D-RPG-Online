@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -33,19 +34,16 @@ public class RoomManager : Menu {
     private TMP_InputField _inputFieldRoomID;
     [SerializeField]
     private List<RoomClientSlot> _slotList = new List<RoomClientSlot>();
+    [SerializeField]
+    private List<RoomPlayerInfo> _playerList = new List<RoomPlayerInfo>();
 
     private RoomPlayerInfo _leaderPlayerInfo;
-    private List<MSSRoom> _roomList = new List<MSSRoom>();
 
     private void Start() {
         NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
 
-        NetworkManager.mss.AddEventListener(MSServerEvent.LobbyRefresh, OnLobbyRefreshed);
-
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
-
-        NetworkManager.mss.AddEventListener(MSServerEvent.RoomGetPlayers, OnRoomGetPlayers);
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreate, OnRoomCreated);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomCreateFailed, OnRoomCreateFailed);
@@ -63,30 +61,6 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatus, OnPlayerReadyStatusChanged);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
-    }
-
-    public void Initialize() {
-        RefreshRoomList();
-    }
-
-    public void RefreshRoomList() {
-        NetworkManager.mss.GetRoomList();
-    }
-
-    public void UpdateUI(RoomPlayerInfo playerInfo) {
-        if (IsPlayerExists(playerInfo.Username)) {
-            UpdateSlot(playerInfo);
-        } else {
-            PlaceToNewSlot(playerInfo);
-        }
-
-        UpdateActionButtons();
-    }
-
-    public void ClearSlots() {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            _slotList[ii].Clear();
-        }
     }
 
     public void CreateRoom() {
@@ -154,39 +128,10 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
-    private void UpdateActionButtons() {
-        if (AccountManager.instance.SelectedCharacterName == _leaderPlayerInfo.Username) {
-            if (IsRoomAvailableToStart()) {
-                _btnReady.gameObject.SetActive(false);
-                _btnNotReady.gameObject.SetActive(false);
-                _btnStartGame.gameObject.SetActive(true);
-                _btnStartGame.interactable = true;
-            } else {
-                _btnReady.gameObject.SetActive(false);
-                _btnNotReady.gameObject.SetActive(false);
-                _btnStartGame.gameObject.SetActive(true);
-                _btnStartGame.interactable = false;
-            }
-        }
-    }
-
-    private bool IsRoomAvailableToStart() {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (!_slotList[ii].IsReady || _slotList.Count < 2) {
-                return false;
-            }
-        }
-        return true;
-    }
-
     private IEnumerator IJoinRoom(string id) {
         NetworkManager.instance.ConnectToGameplayServer();
 
         yield return new WaitUntil(OnGameplayServerConnectionSuccess);
-
-        RefreshRoomList();
-
-        yield return new WaitUntil(OnLobbyRefreshed);
 
         ShiftServerData data = new ShiftServerData();
 
@@ -204,53 +149,17 @@ public class RoomManager : Menu {
 
         RoomData roomData = new RoomData();
         roomData.JoinedRoom = new MSSRoom();
-        roomData.JoinedRoom.Id = _roomList[0].Id;
+        roomData.JoinedRoom.Id = _inputFieldRoomID.text;
 
         data.RoomData = roomData;
 
         NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
     }
 
-    private void PlaceToNewSlot(RoomPlayerInfo playerInfo) {
-        GetAvailableSlot(playerInfo.TeamId).UpdateUI(playerInfo);
-    }
-
-    private void UpdateSlot(RoomPlayerInfo playerInfo) {
-        GetSlot(playerInfo.Username).UpdateUI(playerInfo);
-    }
-
-    private void ClearSlot(RoomPlayerInfo playerInfo) {
-        GetSlot(playerInfo.Username).Clear();
-    }
-
-    private RoomClientSlot GetAvailableSlot(string teamId) {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (!_slotList[ii].IsFilledSlot && _slotList[ii].TeamID == teamId) {
-                return _slotList[ii];
-            }
-        }
-
-        return null;
-    }
-
-    private RoomClientSlot GetSlot(string username) {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (_slotList[ii].IsFilledSlot) {
-                if (_slotList[ii].Username == username) {
-                    return _slotList[ii];
-                }
-            }
-        }
-
-        return null;
-    }
-
-    private bool IsPlayerExists(string username) {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (_slotList[ii].IsFilledSlot) {
-                if (username == _slotList[ii].Username) {
-                    return true;
-                }
+    private bool IsPlayerExists(RoomPlayerInfo playerInfo) {
+        for (int ii = 0; ii < _playerList.Count; ii++) {
+            if (_playerList[ii] == playerInfo) {
+                return true;
             }
         }
         return false;
@@ -260,18 +169,13 @@ public class RoomManager : Menu {
         _txtRoomName.text = name;
     }
 
-    private void SetSlotsTeamIds(Google.Protobuf.Collections.RepeatedField<string> teamIds) {
-        for (int ii = 0; ii < _slotList.Count; ii++) {
-            if (ii % 2 == 0) {
-                _slotList[ii].TeamID = teamIds[0];
-            } else {
-                _slotList[ii].TeamID = teamIds[1];
+    private RoomPlayerInfo GetRoomLeader(List<RoomPlayerInfo> players) {
+        for (int ii = 0; ii < players.Count; ii++) {
+            if (players[ii].IsLeader) {
+                return players[ii];
             }
         }
-    }
-
-    private bool OnLobbyRefreshed() {
-        return true;
+        return null;
     }
 
     private bool OnGameplayServerConnectionSuccess() {
@@ -282,16 +186,10 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomJoinSuccess: " + data);
         MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
-        SetTxtRoomName(data.RoomData.JoinedRoom.Name);
-        SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
+        MSSRoom joinedRoom = data.RoomData.JoinedRoom;
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
-
-        TeamManager.instance.CreateTeam(data.RoomData.JoinedRoom.Teams);
-        TeamManager.instance.AddPlayerToTeam(playerInfo);
-
-        UpdateUI(playerInfo);
 
         MenuManager.instance.Hide();
         this.Show();
@@ -303,42 +201,9 @@ public class RoomManager : Menu {
         MenuManager.instance.SetInteractionOfNormalGameButton(true);
     }
 
-    private void OnRoomGetPlayers(ShiftServerData data) {
-        Debug.Log("OnRoomGetPlayers: " + data);
-
-        SetTxtRoomName(data.RoomData.JoinedRoom.Name);
-        SetSlotsTeamIds(data.RoomData.JoinedRoom.Teams);
-
-        for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
-            RoomPlayerInfo playerInfo = data.RoomData.PlayerList[ii];
-
-            if (playerInfo.IsLeader) {
-                _leaderPlayerInfo = playerInfo;
-            }
-
-            TeamManager.instance.AddPlayerToTeam(playerInfo);
-            UpdateUI(playerInfo);
-        }
-    }
-
     private void OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
         MenuManager.instance.SetInteractionOfCreateRoomButton(true);
-
-        SetTxtRoomName(data.RoomData.CreatedRoom.Name);
-        SetSlotsTeamIds(data.RoomData.CreatedRoom.Teams);
-
-        RoomPlayerInfo playerInfo = new RoomPlayerInfo();
-        playerInfo = data.RoomData.PlayerInfo;
-
-        if (playerInfo.IsLeader) {
-            _leaderPlayerInfo = playerInfo;
-        }
-
-        TeamManager.instance.CreateTeam(data.RoomData.CreatedRoom.Teams);
-        TeamManager.instance.AddPlayerToTeam(playerInfo);
-
-        UpdateUI(playerInfo);
 
         MenuManager.instance.Hide();
         this.Show();
@@ -361,18 +226,12 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomPlayerJoined: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
-
-        TeamManager.instance.AddPlayerToTeam(playerInfo);
-        UpdateUI(playerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
         Debug.Log("OnRoomPlayerLeft: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
-
-        TeamManager.instance.RemovePlayerFromTeam(playerInfo);
-        ClearSlot(playerInfo);
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
@@ -382,9 +241,6 @@ public class RoomManager : Menu {
 
         this.Hide();
         MenuManager.instance.Show();
-
-        TeamManager.instance.ClearTeamList();
-        ClearSlots();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {
@@ -395,38 +251,16 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomLeaderChanged: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
-
-        if (playerInfo.IsLeader) {
-            _leaderPlayerInfo = playerInfo;
-        }
-
-        UpdateUI(playerInfo);
     }
 
     private void OnPlayerReadyStatusChanged(ShiftServerData data) {
         Debug.Log("OnPlayerReadyStatusChanged: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
-
-        UpdateUI(playerInfo);
     }
 
     private void OnPlayerReadyStatusChangeFailed(ShiftServerData data) {
         Debug.Log("OnPlayerReadyStatusChangeFailed: " + data);
-    }
-
-    private void OnLobbyRefreshed(ShiftServerData data) {
-        Debug.Log("OnLobbyRefreshed: " + data);
-
-        _roomList = new List<MSSRoom>();
-
-        for (int ii = 0; ii < data.RoomData.Rooms.Count; ii++) {
-            MSSRoom MSSRoom = data.RoomData.Rooms[ii];
-
-            _roomList.Add(data.RoomData.Rooms[ii]);
-        }
-
-        OnLobbyRefreshed();
     }
 
 }
