@@ -75,7 +75,8 @@ namespace ShiftServer.Base.Core
             }
             catch (Exception err)
             {
-                log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                if (shift.Client.Client.Connected)
+                    log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
                 return;
             }
 

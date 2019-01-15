@@ -28,9 +28,9 @@ namespace ShiftServer.Base.Core
 
             AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
             Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+            shift.UserName = acc.SelectedCharName;
 
-
-            Battleground newRoom = new Battleground(2, 5);
+            Battleground newRoom = new Battleground(2, 4, _sp.ctx);
 
             if (!shift.IsJoinedToRoom)
             {
@@ -91,7 +91,7 @@ namespace ShiftServer.Base.Core
                 _sp.world.Rooms.Add(newRoom.Id, newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
-                //newRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
+                this.SpawnCharacterToRoom(shift, newRoom);
             }
             else
             {
@@ -213,10 +213,9 @@ namespace ShiftServer.Base.Core
                     }
 
                     //if (result.SocketIdSessionLookup.Count > 1)
-                        //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
-
+                    //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
                     shift.SendPacket(MSServerEvent.RoomJoin, data);
-
+                    this.SpawnCharacterToRoom(shift, result);
                 }
                 else
                 {
@@ -510,6 +509,12 @@ namespace ShiftServer.Base.Core
                 });
             }
             //shift.SendPacket(MSServerEvent.LobbyRefresh, data);
+        }
+
+        private void SpawnCharacterToRoom(ShiftClient shift, IRoom room)
+        {
+            Character character = _sp.ctx.Characters.FindByCharName(shift.UserName);
+            room.OnPlayerJoin(character, shift);
         }
     }
 }

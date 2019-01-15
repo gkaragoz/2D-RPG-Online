@@ -56,7 +56,8 @@ namespace ShiftServer.Base.Auth
             }
             catch (Exception err)
             {
-                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
+                if (this.Client.Client.Connected)
+                    log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
                 return false;
             }
 
