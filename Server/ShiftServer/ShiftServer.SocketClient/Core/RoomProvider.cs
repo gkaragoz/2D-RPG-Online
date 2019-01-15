@@ -18,16 +18,16 @@ namespace ShiftServer.Client.Core
         }
         public void AddOrUpdate(ShiftServerData data)
         {
-            if (data.RoomData.Rooms != null)
+            if (data.RoomData.RoomList != null)
             {
-                for (int i = 0; i < data.RoomData.Rooms.Count; i++)
+                for (int i = 0; i < data.RoomData.RoomList.Count; i++)
                 {
                     bool isNew = true;
                     for (int kk = 0; kk < RoomList.Count; kk++)
                     {
-                        if (RoomList[kk].Id == data.RoomData.Rooms[i].Id)
+                        if (RoomList[kk].Id == data.RoomData.RoomList[i].Id)
                         {
-                            UpdateRoom(kk, data.RoomData.Rooms[i]);
+                            UpdateRoom(kk, data.RoomData.RoomList[i]);
                             isNew = false;
                             break;
                         }
@@ -36,11 +36,11 @@ namespace ShiftServer.Client.Core
                     if (isNew)
                     {
                         Room room = new Room();
-                        room.CurrentUser = data.RoomData.Rooms[i].CurrentUserCount;
-                        room.MaxUser = data.RoomData.Rooms[i].MaxUserCount;
-                        room.Name = data.RoomData.Rooms[i].Name;
-                        room.Id = data.RoomData.Rooms[i].Id;
-                        room.IsOwner = data.RoomData.Rooms[i].IsOwner;
+                        room.CurrentUser = data.RoomData.RoomList[i].CurrentUserCount;
+                        room.MaxUser = data.RoomData.RoomList[i].MaxUserCount;
+                        room.Name = data.RoomData.RoomList[i].Name;
+                        room.Id = data.RoomData.RoomList[i].Id;
+                        room.IsOwner = data.RoomData.RoomList[i].IsOwner;
                         room.IsAvailable = IsRoomAvailableToJoin(room);
 
                         AddRoom(room);
@@ -54,9 +54,9 @@ namespace ShiftServer.Client.Core
         {
             if (data.RoomData != null)
             {
-                if (data.RoomData.JoinedRoom != null)
+                if (data.RoomData.Room != null)
                 {
-                    JoinedRoom = data.RoomData.JoinedRoom;
+                    JoinedRoom = data.RoomData.Room;
                 }
             }
         }
@@ -64,9 +64,9 @@ namespace ShiftServer.Client.Core
         {
             if (data.RoomData != null)
             {
-                if (data.RoomData.CreatedRoom != null)
+                if (data.RoomData.Room != null)
                 {
-                    JoinedRoom = data.RoomData.CreatedRoom;
+                    JoinedRoom = data.RoomData.Room;
                 }
             }
         }
