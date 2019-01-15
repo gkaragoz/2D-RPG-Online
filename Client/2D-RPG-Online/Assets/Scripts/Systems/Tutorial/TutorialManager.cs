@@ -27,12 +27,12 @@ public class TutorialManager : Menu {
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            onTutorialCompleted?.Invoke();
-        }
+        Invoke("CompleteTutorial", 5f);
+    }
+    
+    public void CompleteTutorial() {
+        onTutorialCompleted?.Invoke();
     }
 
     public void StartTutorial() {

@@ -63,6 +63,10 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void SetJoystick(FixedJoystick joystick) {
+        this._joystick = joystick;
+    }
+
     public void Attack() {
         _characterController.Attack();
     }

@@ -390,8 +390,8 @@ MonoBehaviour:
   _xInput: 0
   _yInput: 0
   _joystick: {fileID: 0}
-  _controllerInput: 0
-  _joystickInput: 0
+  _controllerInput: 1
+  _joystickInput: 1
 --- !u!114 &114223277982226578
 MonoBehaviour:
   m_ObjectHideFlags: 0

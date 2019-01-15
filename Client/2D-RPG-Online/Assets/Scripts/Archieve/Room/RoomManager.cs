@@ -39,8 +39,11 @@ public class RoomManager : Menu {
 
     private List<RoomPlayerInfo> _otherPlayers = new List<RoomPlayerInfo>();
     private RoomPlayerInfo _myPlayerInfo = new RoomPlayerInfo();
+    private PlayerController _myPlayerController;
 
     private RoomPlayerInfo _leaderPlayerInfo;
+    private FixedJoystick _joystick;
+    private Button _btnAttack;
 
     private void Start() {
         NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
@@ -76,6 +79,11 @@ public class RoomManager : Menu {
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
+
+        _joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
+        _btnAttack = GameObject.Find("btnAttack").GetComponent<Button>();
+        _myPlayerController.SetJoystick(_joystick);
+        _btnAttack.onClick.AddListener(_myPlayerController.Attack);
     }
 
     public void CreateRoom() {
@@ -143,6 +151,7 @@ public class RoomManager : Menu {
         GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PObject.PosX, playerObject.PObject.PosY), Quaternion.identity);
 
         player.GetComponent<PlayerHUD>().SetName(_myPlayerInfo.Username);
+        _myPlayerController = player.GetComponent<PlayerController>();
     }
 
     private IEnumerator IJoinRoom(string id) {
