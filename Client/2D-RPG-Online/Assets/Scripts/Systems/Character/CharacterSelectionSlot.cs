@@ -40,6 +40,8 @@ public class CharacterSelectionSlot : MonoBehaviour {
     private Color _healthBgColor;
     [SerializeField]
     private Color _manaBgColor;
+    [SerializeField]
+    private Button _btnCreateCharacter;
 
     public void Initialize(CharacterModel character) {
         _imageClassIcon.color = Color.white;
@@ -53,6 +55,7 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _imageExpFill.fillAmount = character.exp;
         _imageHealthBackground.color = _healthBgColor;
         _imageManaBackground.color = _manaBgColor;
+        _btnCreateCharacter.gameObject.SetActive(false);
 
         if (character.class_index == 0) {
             _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;

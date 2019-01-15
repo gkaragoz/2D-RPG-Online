@@ -37,7 +37,7 @@ public class RoomManager : Menu {
     [SerializeField]
     private Button _btnLeave;
 
-    private Dictionary<RoomPlayerInfo, bool> _playerList = new Dictionary<RoomPlayerInfo, bool>();
+    private List<RoomPlayerInfo> _playerList = new List<RoomPlayerInfo>();
 
     private RoomPlayerInfo _leaderPlayerInfo;
 
@@ -72,13 +72,10 @@ public class RoomManager : Menu {
             GameObject.Find("DummyCamera").SetActive(false);
         }
 
-        CreatePlayers();
-
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public void CreateRoom() {
-        MenuManager.instance.SetInteractionOfCreateRoomButton(false);
         StartCoroutine(ICreateRoom());
     }
 
@@ -102,7 +99,6 @@ public class RoomManager : Menu {
     }
 
     public void JoinRoom() {
-        MenuManager.instance.SetInteractionOfNormalGameButton(false);
         StartCoroutine(IJoinRoom("123"));
     }
 
@@ -134,25 +130,10 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
-    private RoomPlayerInfo GetPlayerInfo(int index) {
-        return _playerList.ElementAt(index).Key;
-    }
-
-    private void CreatePlayers() {
-        for (int ii = 0; ii < _playerList.Count; ii++) {
-            if (_playerList[GetPlayerInfo(ii)]) {
-                continue;
-            } else {
-                CreatePlayer(GetPlayerInfo(ii));
-            }
-        }
-    }
-
     private void CreatePlayer(RoomPlayerInfo playerInfo) {
         GameObject player = Instantiate(_playerPrefab);
 
-
-        player.transform.position = new Vector2(UnityEngine.Random.Range(-1f, 1f), 0f);
+        player.transform.position = new Vector2(UnityEngine.Random.Range(-5f, 5f), UnityEngine.Random.Range(-3f, 3f));
         player.GetComponent<PlayerHUD>().SetName(playerInfo.Username);
     }
 
@@ -178,17 +159,16 @@ public class RoomManager : Menu {
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
         Debug.Log("OnRoomJoinSuccess: " + data);
-        MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
         MSSRoom joinedRoom = data.RoomData.Room;
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
-        _playerList.Add(playerInfo, false);
+        _playerList.Add(playerInfo);
 
         for (int ii = 0; ii < _playerList.Count; ii++) {
-            _playerList.Add(data.RoomData.PlayerList[ii], false);
+            _playerList.Add(data.RoomData.PlayerList[ii]);
         }
 
         Initialize();
@@ -196,18 +176,15 @@ public class RoomManager : Menu {
 
     private void OnRoomJoinFailed(ShiftServerData data) {
         Debug.Log("OnRoomJoinFailed: " + data);
-
-        MenuManager.instance.SetInteractionOfNormalGameButton(true);
     }
 
     private void OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
-        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
-        _playerList.Add(playerInfo, false);
+        _playerList.Add(playerInfo);
 
         //playerInfo = data.RoomData.CreatedRoom.Teams;
 
@@ -216,13 +193,12 @@ public class RoomManager : Menu {
 
     private void OnRoomCreateFailed(ShiftServerData data) {
         Debug.Log("OnRoomCreateFailed: " + data);
-        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
     }
 
     private void OnRoomDeleted(ShiftServerData data) {
         Debug.Log("OnRoomDeleted: " + data);
 
-        _playerList = new Dictionary<RoomPlayerInfo, bool>();
+        _playerList = new List<RoomPlayerInfo>();
     }
 
     private void OnRoomDeleteFailed(ShiftServerData data) {
@@ -234,7 +210,7 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        _playerList.Add(playerInfo, false);
+        _playerList.Add(playerInfo);
 
         Initialize();
     }
@@ -251,8 +227,6 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
-        MenuManager.instance.SetInteractionOfCreateRoomButton(true);
-        MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
         this.Hide();
         MenuManager.instance.Show();

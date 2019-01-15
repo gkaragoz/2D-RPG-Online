@@ -23,13 +23,6 @@ public class MenuManager : Menu {
     public Task initializationProgress;
 
     [SerializeField]
-    private Button _btnCreateRoom;
-    [SerializeField]
-    private Button _btnNormalGame;
-    [SerializeField]
-    private Button _btnRankedGame;
-
-    [SerializeField]
     private Image _imgClassBg;
 
     [SerializeField]
@@ -68,18 +61,6 @@ public class MenuManager : Menu {
         }
 
         initializationProgress.Invoke();
-    }
-
-    public void SetInteractionOfCreateRoomButton(bool interactable) {
-        _btnCreateRoom.interactable = interactable;
-    }
-
-    public void SetInteractionOfNormalGameButton(bool interactable) {
-        _btnNormalGame.interactable = interactable;
-    }
-
-    public void SetInteractionOfRankedGameButton(bool interactable) {
-        _btnRankedGame.interactable = interactable;
     }
 
     private void UpdateUI() {

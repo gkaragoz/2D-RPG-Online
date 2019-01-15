@@ -14,6 +14,8 @@ public class TeamManager : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+
+        DontDestroyOnLoad(instance);
     }
 
     #endregion

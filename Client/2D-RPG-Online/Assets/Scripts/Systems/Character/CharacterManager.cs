@@ -47,19 +47,19 @@ public class CharacterManager : MonoBehaviour {
     }
 
     public void ShowCharacterCreationMenu() {
-        _characterCreation.Show();
+        _characterCreation.Show(true);
     }
 
     public void HideCharacterCreationMenu() {
-        _characterCreation.Hide();
+        _characterCreation.Hide(true);
     }
 
     public void ShowCharacterSelectionMenu() {
-        _characterSelection.Show();
+        _characterSelection.Show(true);
     }
 
     public void HideCharacterSelectionMenu() {
-        _characterSelection.Hide();
+        _characterSelection.Hide(true);
     }
 
     public void SelectCharacter(CharacterModel selectedCharacter) {
