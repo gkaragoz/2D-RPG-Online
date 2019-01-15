@@ -119,8 +119,6 @@ namespace ShiftServer.Base.Worlds
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-
-
             log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
         }
         public void OnObjectUse(ShiftServerData data, ShiftClient shift)

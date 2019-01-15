@@ -120,14 +120,11 @@ message CommonAccountData {
 }
 
 message RoomData {
-	MSSRoom CreatedRoom = 1;
-	MSSRoom JoinedRoom = 2;
-	MSSRoom DeletedRoom = 3;
-	MSSRoom LeavedRoom = 4;
-	RoomPlayerInfo PlayerInfo = 5;
-	RoomPlayerInfo PlayerReadyStatusInfo = 6;
-	repeated RoomPlayerInfo PlayerList = 7;
-	repeated MSSRoom rooms = 8;
+	MSSRoom Room = 1;
+	RoomPlayerInfo PlayerInfo = 2;
+	RoomPlayerInfo PlayerReadyStatusInfo = 3;
+	repeated RoomPlayerInfo PlayerList = 4;
+	repeated MSSRoom RoomList = 5;
 }
 
 message MSSRoom {
