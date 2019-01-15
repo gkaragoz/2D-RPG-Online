@@ -57,8 +57,8 @@ public class PopupMessage : Menu {
         SetMessage(message);
     }
 
-    public override void Hide(bool sub = false) {
-        base.Hide(sub);
+    public override void Hide() {
+        base.Hide();
     }
 
     private void SetSuccessUI() {

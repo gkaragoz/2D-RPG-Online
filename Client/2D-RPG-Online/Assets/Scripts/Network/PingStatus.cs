@@ -33,16 +33,26 @@ public class PingStatus : MonoBehaviour {
     private void Start() {
         NetworkManager.mss.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
 
+        NetworkManager.instance.onGameplayServerConnectionSuccess = OnGamePlayServerConnectionSuccess;
+    }
+
+    private bool OnGamePlayServerConnectionSuccess() {
         StartCoroutine(SendPingRequest());
+        return true;
     }
 
     private IEnumerator SendPingRequest() {
         while (true) {
-            if (NetworkManager.mss.IsConnected) {
-                _stopwatch = new Stopwatch();
-                _stopwatch.Start();
+            if (NetworkManager.mss != null) {
+                if (NetworkManager.mss.IsConnected) {
+                    _stopwatch = new Stopwatch();
+                    _stopwatch.Start();
 
-                NetworkManager.mss.SendMessage(MSServerEvent.PingRequest);
+                    NetworkManager.mss.SendMessage(MSServerEvent.PingRequest);
+                }
+            } else {
+                StopAllCoroutines();
+                break;
             }
 
             yield return new WaitForSeconds(1f);

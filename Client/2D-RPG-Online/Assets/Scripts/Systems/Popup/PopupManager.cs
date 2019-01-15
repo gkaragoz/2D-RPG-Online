@@ -28,7 +28,7 @@ public class PopupManager : MonoBehaviour {
 
     public void HidePopupLoading(string message, float seconds = 0f, bool error = false) {
         _popupLoading.SetMessage(message);
-        _popupLoading.HideAfter(seconds, error);
+        _popupLoading.HideAfter(seconds);
     }
 
     public void ShowPopupMessage(string title, string message, PopupMessage.Type popupType) {

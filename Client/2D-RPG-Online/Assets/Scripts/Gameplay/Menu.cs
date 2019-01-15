@@ -14,35 +14,35 @@ public abstract class Menu : MonoBehaviour {
         }
     }
 
-    public virtual void Show(bool sub = false) {
+    public virtual void Show() {
         container.SetActive(true);
         isOpen = true;
 
-        if (sub) {
+        if (subContainer != null) {
             ShowSub();
         }
     }
 
-    public virtual void Hide(bool sub = false) {
+    public virtual void Hide() {
         container.SetActive(false);
         isOpen = false;
 
-        if (sub) {
+        if (subContainer != null) {
             HideSub();
         }
-    }
-
-    public virtual void ShowSub() {
-        subContainer.SetActive(true);
-    }
-
-    public virtual void HideSub() {
-        subContainer.SetActive(false);
     }
 
     public virtual void Toggle() {
         container.SetActive(!container.activeSelf);
         isOpen = container.activeSelf;
+    }
+
+    private void ShowSub() {
+        subContainer.SetActive(true);
+    }
+
+    private void HideSub() {
+        subContainer.SetActive(false);
     }
 
 }
