@@ -155,7 +155,7 @@ public class RoomManager : Menu {
     }
 
     private void UpdateActionButtons() {
-        if (CharacterManager.instance.SelectedCharacter.name == _leaderPlayerInfo.Username) {
+        if (AccountManager.instance.SelectedCharacterName == _leaderPlayerInfo.Username) {
             if (IsRoomAvailableToStart()) {
                 _btnReady.gameObject.SetActive(false);
                 _btnNotReady.gameObject.SetActive(false);
@@ -288,10 +288,6 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
-        if (playerInfo.IsLeader) {
-            _leaderPlayerInfo = playerInfo;
-        }
-
         TeamManager.instance.CreateTeam(data.RoomData.JoinedRoom.Teams);
         TeamManager.instance.AddPlayerToTeam(playerInfo);
 
@@ -303,6 +299,8 @@ public class RoomManager : Menu {
 
     private void OnRoomJoinFailed(ShiftServerData data) {
         Debug.Log("OnRoomJoinFailed: " + data);
+
+        MenuManager.instance.SetInteractionOfNormalGameButton(true);
     }
 
     private void OnRoomGetPlayers(ShiftServerData data) {
@@ -313,6 +311,10 @@ public class RoomManager : Menu {
 
         for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
             RoomPlayerInfo playerInfo = data.RoomData.PlayerList[ii];
+
+            if (playerInfo.IsLeader) {
+                _leaderPlayerInfo = playerInfo;
+            }
 
             TeamManager.instance.AddPlayerToTeam(playerInfo);
             UpdateUI(playerInfo);
