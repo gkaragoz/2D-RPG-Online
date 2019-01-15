@@ -115,6 +115,7 @@ namespace ShiftServer.Base.Core
 
             AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
             Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
+            shift.UserName = acc.SelectedCharName;
 
             if (shift.IsJoinedToRoom)
             {
@@ -168,7 +169,7 @@ namespace ShiftServer.Base.Core
                         log.Info($"ClientNO: {shift.connectionId} ------> Already in a team");
                     }
                     result.Clients.Add(shift.connectionId, shift);
-                    result.SocketIdSessionLookup.Add(shift.UserSession.GetSid(), shift.connectionId);
+                    result.SocketIdSessionLookup.Add(data.SessionID, shift.connectionId);
                     shift.JoinedRoomId = result.Id;
                     shift.IsJoinedToRoom = true;
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
@@ -183,11 +184,9 @@ namespace ShiftServer.Base.Core
                     foreach (var item in result.TeamIdList)
                     {
                         data.RoomData.JoinedRoom.Teams.Add(item);
-                        listData.RoomData.JoinedRoom.Teams.Add(item);
+                        //listData.RoomData.JoinedRoom.Teams.Add(item);
 
                     }
-
-
 
                     data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
 
@@ -202,22 +201,27 @@ namespace ShiftServer.Base.Core
                             if (cl.connectionId == shift.connectionId)
                                 continue;
 
+                            AccountSession charSession = _sp.ctx.Sessions.FindBySessionID(cl.UserSession.GetSid());
+                            if (charSession == null)
+                                continue;
+                            Account charAcc = _sp.ctx.Accounts.GetByUserID(charSession.UserID);
+
                             RoomPlayerInfo pInfo = new RoomPlayerInfo();
-                            pInfo.Username = cl.UserName;
+                            pInfo.Username = charAcc.SelectedCharName;
                             pInfo.IsReady = cl.IsReady;
-                            pInfo.TeamId = cl.JoinedTeamId;
+                            pInfo.TeamId = cl.JoinedTeamId; 
 
                             if (result.ServerLeaderId == cl.connectionId)
                                 pInfo.IsLeader = true;
                             else
                                 pInfo.IsLeader = false;
 
-                            listData.RoomData.PlayerList.Add(pInfo);
+                            data.RoomData.PlayerList.Add(pInfo);
                         }
                     }
 
-                    if (result.SocketIdSessionLookup.Count > 1)
-                        shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
+                    //if (result.SocketIdSessionLookup.Count > 1)
+                        //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
 
                     shift.SendPacket(MSServerEvent.RoomJoin, data);
 
@@ -352,9 +356,10 @@ namespace ShiftServer.Base.Core
         public void OnRoomGameStart(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.connectionId} ------> RoomGameStart");
+
+
             _sp.SendMessage(shift.connectionId, MSServerEvent.RoomGameStart, data);
         }
-
         public void OnRoomPlayerReadyStatusChanged(ShiftServerData data, ShiftClient shift)
         {
             IRoom result = null;
@@ -512,7 +517,7 @@ namespace ShiftServer.Base.Core
                     Id = room.Id
                 });
             }
-            shift.SendPacket(MSServerEvent.LobbyRefresh, data);
+            //shift.SendPacket(MSServerEvent.LobbyRefresh, data);
         }
     }
 }

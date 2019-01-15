@@ -136,12 +136,16 @@ namespace ShiftServer.Base.Core
                                 {
                                     connectionId = msg.connectionId,
                                     Client = client,
-                                    IsJoinedToWorld = false,
+                                    IsJoinedToWorld = true,
+                                    IsJoinedToTeam = false,
+                                    IsJoinedToRoom = false,
+                                    IsReady = false,
+
                                     UserSession = new Session()
                                 };
+                                world.Clients.Add(shift.connectionId, shift);
                                 if (client != null)
                                 {
-                                    world.Clients.Add(msg.connectionId, shift);
                                     log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
                                     break;
 
@@ -156,40 +160,11 @@ namespace ShiftServer.Base.Core
 
 
                         case Telepathy.EventType.Data:
-
                             world.Clients.TryGetValue(msg.connectionId, out shift);
                             int registeredSocketId = 0;
-                            string sessionId = shift.UserSession.GetSid();
-                            if (sessionId != null)
-                            {
-                                if (world.SocketIdSessionLookup.TryGetValue(sessionId, out registeredSocketId))
-                                {
-                                    if (registeredSocketId == msg.connectionId)
-                                    {
-                                        dataHandler.HandleMessage(msg.data, shift, log);
-
-                                    }
-                                    else
-                                    {
-                                        //possible attack vector
-                                        client.Close();
-                                    }
-                                }
-                                else
-                                {
-                                    //RESTRICTED
-                                    dataHandler.HandleMessage(msg.data, shift, log);
-
-                                }
-                            }
-                            else
-                            {
-                                dataHandler.HandleMessage(msg.data, shift, log);
-
-                            }
-
-
-
+                        
+                            dataHandler.HandleMessage(msg.data, shift, log);
+                             
                             break;
                         case Telepathy.EventType.Disconnected:
                             try
@@ -197,52 +172,11 @@ namespace ShiftServer.Base.Core
                                 ShiftClient dcedClient = null;
                                 string userSessionId = string.Empty;
                                 List<ShiftClient> clientList = world.Clients.GetValues();
+
                                 world.Clients.TryGetValue(msg.connectionId, out dcedClient);
 
-                                if (dcedClient.UserSession != null && dcedClient != null)
-                                {
-                                    userSessionId = dcedClient.UserSession.GetSid();
-                                    if (!string.IsNullOrEmpty(userSessionId))
-                                    {
-                                        IRoom room = null;
-                                        if (!string.IsNullOrEmpty(dcedClient.JoinedRoomId))
-                                        {
-                                            world.Rooms.TryGetValue(dcedClient.JoinedRoomId, out room);
-
-                                            if (room != null)
-                                            {
-                                                if(room.SocketIdSessionLookup.Count == 1) 
-                                                {
-                                                    // make some other ppl to leader
-                                                    room.DisposeInMilliseconds = 50;
-                                                }
-                                                dcedClient.IsJoinedToRoom = false;
-                                                dcedClient.JoinedRoomId = null;
-                                                room.Clients.Remove(dcedClient.connectionId);
-                                                room.SocketIdSessionLookup.Remove(dcedClient.UserSession.GetSid());
-                                            }
-
-                                            IGroup group = null;
-                                            room.Teams.TryGetValue(dcedClient.JoinedTeamId, out group);
-
-                                            if (group != null)
-                                            {
-                                             
-                                                dcedClient.IsJoinedToRoom = false;
-                                                dcedClient.JoinedRoomId = null;
-                                                group.Clients.Remove(dcedClient.connectionId);
-                                            }
-
-
-                                        }
-                                        world.SocketIdSessionLookup.Remove(userSessionId);
-                                    }
-                                }
-                                if (dcedClient != null)
-                                {
-                                    world.Clients.Remove(dcedClient.connectionId);
-                               
-                                }
+                                this.DisposeShift(dcedClient);
+                                
                                 log.Info($"ClientNO: {msg.connectionId} Disconnected");
                             }
                             catch (Exception err)
@@ -262,6 +196,62 @@ namespace ShiftServer.Base.Core
 
         }
 
+        public void DisposeShift(ShiftClient DcedClient)
+        {
+            string userSessionId = string.Empty;
+
+            if (DcedClient != null)
+            {
+                userSessionId = DcedClient.UserSession.GetSid();
+                if (!string.IsNullOrEmpty(userSessionId))
+                {
+                    IRoom room = null;
+                    if (!string.IsNullOrEmpty(DcedClient.JoinedRoomId))
+                    {
+                        world.Rooms.TryGetValue(DcedClient.JoinedRoomId, out room);
+
+                        if (room != null)
+                        {
+                            if (room.SocketIdSessionLookup.Count == 1)
+                            {
+                                // make some other ppl to leader
+                                room.DisposeInMilliseconds = 50;
+                            }
+                            DcedClient.IsJoinedToRoom = false;
+                            DcedClient.JoinedRoomId = null;
+                            room.Clients.Remove(DcedClient.connectionId);
+                            room.SocketIdSessionLookup.Remove(DcedClient.UserSession.GetSid());
+                            bool isDestroyed = false;
+                            if (room.Clients.Count == 0)
+                            {
+                                this.world.Rooms.Remove(room.Id);
+                                isDestroyed = true;
+                            }
+
+                            if (!isDestroyed)
+                                room.BroadcastToRoom(DcedClient, MSServerEvent.RoomPlayerLeft);
+
+                        }
+
+                        IGroup group = null;
+                        room.Teams.TryGetValue(DcedClient.JoinedTeamId, out group);
+
+                        if (group != null)
+                        {
+
+                            DcedClient.IsJoinedToRoom = false;
+                            DcedClient.JoinedRoomId = null;
+                            group.Clients.Remove(DcedClient.connectionId);
+                        }
+
+
+                    }
+                    world.SocketIdSessionLookup.Remove(userSessionId);
+                }
+
+                world.Clients.Remove(DcedClient.connectionId);
+            }
+        }
         public void SendDataByConnId(int connId, ShiftServerData data)
         {
 
@@ -301,7 +291,8 @@ namespace ShiftServer.Base.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
-            shift.SendPacket(MSServerEvent.PingRequest, data);
+            if (shift != null || shift.Client != null)
+                shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
         public void OnAccountJoin(ShiftServerData data, ShiftClient shift)
@@ -318,10 +309,16 @@ namespace ShiftServer.Base.Core
             try
             {
                 if (!this.SessionCheck(data, shift))
+                {
+                    this.DisposeShift(shift);
                     return;
+                }
 
                 if (!this.FillAccountData(data, shift))
+                {
+                    this.DisposeShift(shift);
                     return;
+                }
             }
             catch (Exception err)
             {
@@ -333,17 +330,14 @@ namespace ShiftServer.Base.Core
                 return;
             }
 
-            //Checking the client has only one player character under control
-            shift.UserSession.SetSid(data);
-
             string sessionId = shift.UserSession.GetSid();
             data.Session = new SessionData();
             data.Session.Sid = sessionId;
 
+            world.SocketIdSessionLookup.Add(sessionId, shift.connectionId);
+            shift.IsJoinedToWorld = true;
             ShiftServerData newData = new ShiftServerData();
             shift.SendPacket(MSServerEvent.Connection, newData);
-            shift.UserName = data.AccountData.Username;
-            world.SocketIdSessionLookup.Add(sessionId, shift.connectionId);
             log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
         }
@@ -373,8 +367,25 @@ namespace ShiftServer.Base.Core
                 AccountSession session = ctx.Sessions.FindBySessionID(data.SessionID);
                 if (session != null)
                 {
-                    if (session.SessionID == data.SessionID)
-                        result = true;
+                    Account acc = this.ctx.Accounts.GetByUserID(session.UserID);
+                    if (acc != null)
+                    {
+                        //check if already logged in
+                        List<ShiftClient> clients = this.world.Clients.GetValues();
+                        var client = clients.Find(x => x.UserSession.GetSid() == session.SessionID);
+                        
+                        if (session.SessionID == data.SessionID)
+                            result = true;
+
+                        if (client != null && shift.IsJoinedToWorld != true)
+                            result = false;
+
+                    }
+                    else
+                    {
+                        result = false;
+                    }
+                 
                 }
               
             }
@@ -385,7 +396,7 @@ namespace ShiftServer.Base.Core
             else
             {
                 shift.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
-                shift.Client.Close();
+                this.DisposeShift(shift);
                 return result;
             }
         }
@@ -401,10 +412,20 @@ namespace ShiftServer.Base.Core
 
                 data.Account = null;
                 data.AccountData = new CommonAccountData();
-                data.AccountData.Username = acc.Email;
                 data.AccountData.VirtualMoney = acc.Gold;
                 data.AccountData.VirtualSpecialMoney = acc.Gem;
-                data.AccountData.Username = acc.SelectedCharName;
+
+                if (string.IsNullOrEmpty(acc.SelectedCharName))
+                {
+                    shift.UserName = data.AccountData.Username;
+                }                  
+                else
+                {
+                    data.AccountData.Username = acc.SelectedCharName;
+                    shift.UserName = acc.SelectedCharName;
+                }
+
+
                 return true;
             }
             catch (Exception err)
