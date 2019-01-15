@@ -30,6 +30,9 @@ public class MenuManager : Menu {
     private Button _btnRankedGame;
 
     [SerializeField]
+    private Image _imgClassBg;
+
+    [SerializeField]
     private TextMeshProUGUI _txtAccountGold;
     [SerializeField]
     private TextMeshProUGUI _txtAccountGem;
@@ -90,6 +93,8 @@ public class MenuManager : Menu {
         _txtAccountGem.text = AccountManager.instance.Gem.ToString();
 
         if (AccountManager.instance.HasCharacter) {
+            _imgClassBg.color = CharacterClassVisualization.instance.GetVisualizationProperties((CharacterClassVisualization.Classes)CharacterManager.instance.SelectedCharacter.class_index).ClassFrameColor;
+
             _txtCharacterName.text = CharacterManager.instance.SelectedCharacter.name.ToString();
             _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level + " Lv.";
             _txtCharacterExperience.text = "Exp: " + CharacterManager.instance.SelectedCharacter.exp;
