@@ -57,12 +57,6 @@ public class MenuManager : Menu {
     private TextMeshProUGUI _txtCharacterIntelligence;
     [SerializeField]
     private TextMeshProUGUI _txtCharacterDexterity;
-    [SerializeField]
-    private Image _imgCharacterStrengthBar;
-    [SerializeField]
-    private Image _imgCharacterIntelligenceBar;
-    [SerializeField]
-    private Image _imgCharacterDexterityBar;
 
     private void Start() {
         AccountManager.instance.onAccountUpdated += UpdateUI;
@@ -107,9 +101,6 @@ public class MenuManager : Menu {
             _txtCharacterStrength.text = CharacterManager.instance.SelectedCharacter.attribute.strength.ToString();
             _txtCharacterIntelligence.text = CharacterManager.instance.SelectedCharacter.attribute.intelligence.ToString();
             _txtCharacterDexterity.text = CharacterManager.instance.SelectedCharacter.attribute.dexterity.ToString();
-            _imgCharacterStrengthBar.fillAmount = CharacterManager.instance.SelectedCharacter.attribute.strength * 0.01f;
-            _imgCharacterIntelligenceBar.fillAmount = CharacterManager.instance.SelectedCharacter.attribute.intelligence * 0.01f;
-            _imgCharacterDexterityBar.fillAmount = CharacterManager.instance.SelectedCharacter.attribute.dexterity * 0.01f;
         }
     }
 
