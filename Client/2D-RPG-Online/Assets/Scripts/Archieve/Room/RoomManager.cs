@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomManager : Menu {
@@ -23,6 +24,8 @@ public class RoomManager : Menu {
 
     #endregion
 
+    public Action onRoomCreated;
+
     [SerializeField]
     private GameObject _playerPrefab;
     [SerializeField]
@@ -33,10 +36,8 @@ public class RoomManager : Menu {
     private Button _btnNotReady;
     [SerializeField]
     private Button _btnLeave;
-    [SerializeField]
-    private TMP_InputField _inputFieldRoomID;
-    [SerializeField]
-    private List<RoomPlayerInfo> _playerList = new List<RoomPlayerInfo>();
+
+    private Dictionary<RoomPlayerInfo, bool> _playerList = new Dictionary<RoomPlayerInfo, bool>();
 
     private RoomPlayerInfo _leaderPlayerInfo;
 
@@ -66,6 +67,16 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
+    public void Initialize() {
+        if (GameObject.Find("DummyCamera") != null) {
+            GameObject.Find("DummyCamera").SetActive(false);
+        }
+
+        CreatePlayers();
+
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+
     public void CreateRoom() {
         MenuManager.instance.SetInteractionOfCreateRoomButton(false);
         StartCoroutine(ICreateRoom());
@@ -79,11 +90,11 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.CreatedRoom = new MSSRoom();
+        roomData.Room = new MSSRoom();
 
-        roomData.CreatedRoom.Name = CharacterManager.instance.SelectedCharacter.name + "\'s Room";
-        roomData.CreatedRoom.IsPrivate = false;
-        roomData.CreatedRoom.MaxUserCount = 2;
+        roomData.Room.Name = CharacterManager.instance.SelectedCharacter.name + "\'s Room";
+        roomData.Room.IsPrivate = false;
+        roomData.Room.MaxUserCount = 2;
 
         data.RoomData = roomData;
 
@@ -92,7 +103,7 @@ public class RoomManager : Menu {
 
     public void JoinRoom() {
         MenuManager.instance.SetInteractionOfNormalGameButton(false);
-        StartCoroutine(IJoinRoom(_inputFieldRoomID.text));
+        StartCoroutine(IJoinRoom("123"));
     }
 
     public void LeaveRoom() {
@@ -104,8 +115,8 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.DeletedRoom = new MSSRoom();
-        roomData.DeletedRoom.Id = NetworkManager.mss.JoinedRoom.Id;
+        roomData.Room = new MSSRoom();
+        roomData.Room.Id = NetworkManager.mss.JoinedRoom.Id;
 
         data.RoomData = roomData;
 
@@ -123,8 +134,23 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
+    private RoomPlayerInfo GetPlayerInfo(int index) {
+        return _playerList.ElementAt(index).Key;
+    }
+
+    private void CreatePlayers() {
+        for (int ii = 0; ii < _playerList.Count; ii++) {
+            if (_playerList[GetPlayerInfo(ii)]) {
+                continue;
+            } else {
+                CreatePlayer(GetPlayerInfo(ii));
+            }
+        }
+    }
+
     private void CreatePlayer(RoomPlayerInfo playerInfo) {
         GameObject player = Instantiate(_playerPrefab);
+
 
         player.transform.position = new Vector2(UnityEngine.Random.Range(-1f, 1f), 0f);
         player.GetComponent<PlayerHUD>().SetName(playerInfo.Username);
@@ -138,20 +164,8 @@ public class RoomManager : Menu {
         ShiftServerData data = new ShiftServerData();
 
         RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new MSSRoom();
-        roomData.JoinedRoom.Id = id;
-
-        data.RoomData = roomData;
-
-        NetworkManager.mss.SendMessage(MSServerEvent.RoomJoin, data);
-    }
-
-    private void SendJoinRoomEvent() {
-        ShiftServerData data = new ShiftServerData();
-
-        RoomData roomData = new RoomData();
-        roomData.JoinedRoom = new MSSRoom();
-        roomData.JoinedRoom.Id = _inputFieldRoomID.text;
+        roomData.Room = new MSSRoom();
+        roomData.Room.Id = "123";
 
         data.RoomData = roomData;
 
@@ -166,15 +180,18 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomJoinSuccess: " + data);
         MenuManager.instance.SetInteractionOfNormalGameButton(true);
 
-        MSSRoom joinedRoom = data.RoomData.JoinedRoom;
+        MSSRoom joinedRoom = data.RoomData.Room;
 
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
-        _playerList = data.RoomData.PlayerList.ToList();
+        _playerList.Add(playerInfo, false);
 
-        MenuManager.instance.Hide();
-        this.Show();
+        for (int ii = 0; ii < _playerList.Count; ii++) {
+            _playerList.Add(data.RoomData.PlayerList[ii], false);
+        }
+
+        Initialize();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
@@ -190,12 +207,11 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = new RoomPlayerInfo();
         playerInfo = data.RoomData.PlayerInfo;
 
+        _playerList.Add(playerInfo, false);
+
         //playerInfo = data.RoomData.CreatedRoom.Teams;
 
-        CreatePlayer(playerInfo);
-
-        MenuManager.instance.Hide();
-        this.Show();
+        onRoomCreated?.Invoke();
     }
 
     private void OnRoomCreateFailed(ShiftServerData data) {
@@ -205,6 +221,8 @@ public class RoomManager : Menu {
 
     private void OnRoomDeleted(ShiftServerData data) {
         Debug.Log("OnRoomDeleted: " + data);
+
+        _playerList = new Dictionary<RoomPlayerInfo, bool>();
     }
 
     private void OnRoomDeleteFailed(ShiftServerData data) {
@@ -215,13 +233,20 @@ public class RoomManager : Menu {
         Debug.Log("OnRoomPlayerJoined: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
-        CreatePlayer(playerInfo);
+
+        _playerList.Add(playerInfo, false);
+
+        Initialize();
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
         Debug.Log("OnRoomPlayerLeft: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
+
+        _playerList.Remove(playerInfo);
+
+        Initialize();
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
@@ -257,4 +282,13 @@ public class RoomManager : Menu {
         Debug.Log("OnPlayerReadyStatusChangeFailed: " + data);
     }
 
+    private void OnEnable() {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
+        if (scene.name == "Gameplay") {
+            Initialize();
+        }
+    }
 }

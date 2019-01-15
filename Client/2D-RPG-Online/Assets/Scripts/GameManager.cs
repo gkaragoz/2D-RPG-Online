@@ -1,4 +1,5 @@
-﻿using ShiftServer.Proto.RestModels;
+﻿using System;
+using ShiftServer.Proto.RestModels;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -53,6 +54,7 @@ public class GameManager : MonoBehaviour {
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
         CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
         CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
+        RoomManager.instance.onRoomCreated += OnRoomCreated;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -116,6 +118,14 @@ public class GameManager : MonoBehaviour {
     private void OnCharacterSelected(CharacterModel selectedCharacter) {
         CharacterManager.instance.HideCharacterSelectionMenu();
         MenuManager.instance.Show();
+    }
+
+    private void OnRoomCreated() {
+        //Go To Gameplay Scene.
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+
+        MenuManager.instance.Hide();
+        RoomManager.instance.Show();
     }
 
 #if UNITY_EDITOR
