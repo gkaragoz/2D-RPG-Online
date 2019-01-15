@@ -6,6 +6,7 @@ namespace ShiftServer.Base.Core
     {
         public AccountService Accounts { get; set; }
         public SessionService Sessions { get; set; }
+        public CharacterService Characters { get; set; }
         public DBServiceProvider()
         {
             string dbName = System.Configuration.ConfigurationManager.AppSettings.Get("MongoDBName");
@@ -13,6 +14,7 @@ namespace ShiftServer.Base.Core
 
             Accounts = new AccountService(conStr, dbName);
             Sessions = new SessionService(conStr, dbName);
+            Characters = new CharacterService(conStr, dbName);
 
             
         }

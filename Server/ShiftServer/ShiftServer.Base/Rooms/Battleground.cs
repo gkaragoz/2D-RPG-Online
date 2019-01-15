@@ -1,10 +1,14 @@
 ﻿using Google.Protobuf.WellKnownTypes;
 using ShiftServer.Base.Auth;
 using ShiftServer.Base.Core;
+using ShiftServer.Base.Factory.Entities;
 using ShiftServer.Base.Groups;
+using ShiftServer.Proto.Db;
+using ShiftServer.Proto.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -14,6 +18,8 @@ namespace ShiftServer.Base.Rooms
 {
     public class Battleground : IRoom
     {
+        private static readonly log4net.ILog log
+          = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
@@ -33,22 +39,23 @@ namespace ShiftServer.Base.Rooms
         public SafeDictionary<string, IGroup> Teams { get; set; }
         public List<string> TeamIdList { get; set; }
         public string LastActiveTeam { get; set; }
+        public DBServiceProvider _ctx { get; set; }
 
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
 
-        public Battleground(int groupCount, int maxUserPerTeam)
+        public Battleground(int groupCount, int maxUserPerTeam, DBServiceProvider ctx)
         {
+            _ctx = ctx;
             MaxUserPerTeam = maxUserPerTeam;
-
             Clients = new SafeDictionary<int, ShiftClient>();
             SocketIdSessionLookup = new SafeDictionary<string, int>();
             GameObjects = new SafeDictionary<int, IGameObject>();
             Teams = new SafeDictionary<string, IGroup>();
             TeamIdList = new List<string>();
 
-            Id = Guid.NewGuid().ToString();
+            Id = "123";
             DisposeInMilliseconds = 10000;
 
             MaxConnId = 0;
@@ -95,9 +102,68 @@ namespace ShiftServer.Base.Rooms
         {
         }
 
-        public void OnPlayerJoin(ShiftServerData data, ShiftClient client)
+        public void OnPlayerJoin(Character chardata, ShiftClient shift)
         {
+            ShiftServerData sendData = new ShiftServerData();
+            string clientSessionId = shift.UserSession.GetSid();
+            if (clientSessionId == null)
+                return;
 
+            List<IGameObject> gameObjectList = GameObjects.GetValues();
+            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
+            
+            // if already exist in world
+            if (currentPlayer != null)
+            {
+                sendData.SPlayerObject = new PlayerObject
+                {
+                    PClass = currentPlayer.Class,
+                    CurrentHp = currentPlayer.CurrentHP,
+                    MaxHp = currentPlayer.MaxHP,
+                    PObject = new sGameObject
+                    {
+                        Oid = currentPlayer.ObjectId,
+                        PosX = currentPlayer.Position.X,
+                        PosY = currentPlayer.Position.Y,
+                        PosZ = currentPlayer.Position.Z
+                    }
+                };
+
+
+            }
+            else
+            {
+                Player player = new Player();
+                player.OwnerConnectionId = shift.connectionId;
+                player.OwnerSessionId = shift.UserSession.GetSid();
+                player.ObjectId = Interlocked.Increment(ref ObjectCounter);
+                player.Name = chardata.Name;
+                player.MaxHP = chardata.Stats.Health;
+                player.CurrentHP = chardata.Stats.Health;
+                player.Position = new Vector3(0, 0, 0);
+                player.Rotation = new Vector3(0, 0, 0);
+                player.Scale = new Vector3(1, 1, 1);
+
+                this.OnObjectCreate(player);
+                log.Info($"[CreatePlayer] OnRoom:{this.Id} Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+
+                sendData.SPlayerObject = new PlayerObject
+                {
+                    CurrentHp = player.CurrentHP,
+                    MaxHp = player.MaxHP,
+                    PClass = player.Class,
+                    PObject = new sGameObject
+                    {
+                        Oid = player.ObjectId,
+
+                        PosX = player.Position.X,
+                        PosY = player.Position.Y,
+                        PosZ = player.Position.Z,
+                    }
+                };
+            }
+
+            shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
 
         public void BroadcastToRoom(ShiftClient currentClient, MSServerEvent evt)
@@ -224,7 +290,6 @@ namespace ShiftServer.Base.Rooms
 
             return null;
         }
-
         public ShiftClient SetRandomNewLeader()
         {
             ShiftClient shift = null;

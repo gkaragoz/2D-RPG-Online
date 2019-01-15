@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Base.Auth;
+using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
 using Telepathy;
@@ -23,7 +24,7 @@ namespace ShiftServer.Base.Core
         SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
 
         int MaxUser { get; set; }
-        void OnPlayerJoin(ShiftServerData data, ShiftClient client);
+        void OnPlayerJoin(Character ch, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
         void OnObjectCreate(IGameObject gameObject);

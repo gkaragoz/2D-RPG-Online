@@ -91,6 +91,7 @@
     <Compile Include="Factory\Entities\Player.cs" />
     <Compile Include="Factory\Entities\PlayerInput.cs" />
     <Compile Include="Factory\Movement\MotionMaster.cs" />
+    <Compile Include="Factory\Movement\MoveInput.cs" />
     <Compile Include="Groups\TeamGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
     <Compile Include="Helper\ConsoleUI.cs" />

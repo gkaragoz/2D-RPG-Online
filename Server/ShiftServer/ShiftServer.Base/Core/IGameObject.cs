@@ -8,6 +8,7 @@ namespace ShiftServer.Base.Core
     {
         string Name { get; set; }
         int OwnerConnectionId { get; set; }
+        string OwnerSessionId { get; set; }
         int ObjectId { get; set; }
         List<IGameObject> OwnedObjects { get; set; }
         SafeQueue<IGameInput> GameInputs { get; set; }
