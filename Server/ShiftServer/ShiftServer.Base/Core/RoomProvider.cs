@@ -1,4 +1,5 @@
 ﻿using ShiftServer.Base.Auth;
+using ShiftServer.Base.Factory.Movement;
 using ShiftServer.Base.Rooms;
 using ShiftServer.Proto.Db;
 using System;
@@ -29,7 +30,7 @@ namespace ShiftServer.Base.Core
             AccountSession session = _sp.ctx.Sessions.FindBySessionID(data.SessionID);
             Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
             shift.UserName = acc.SelectedCharName;
-
+            shift.UserSession.SetSid(session.SessionID);
             Battleground newRoom = new Battleground(2, 4, _sp.ctx);
 
             if (!shift.IsJoinedToRoom)
@@ -510,11 +511,18 @@ namespace ShiftServer.Base.Core
             }
             //shift.SendPacket(MSServerEvent.LobbyRefresh, data);
         }
-
+        public void OnObjectMove(ShiftServerData data, ShiftClient shift)
+        {
+            MoveInput MoveInput = new MoveInput();
+            MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, data.PlayerInput.PosZ);
+            shift.Inputs.Enqueue(MoveInput);
+        }
         private void SpawnCharacterToRoom(ShiftClient shift, IRoom room)
         {
             Character character = _sp.ctx.Characters.FindByCharName(shift.UserName);
             room.OnPlayerJoin(character, shift);
         }
+
+     
     }
 }

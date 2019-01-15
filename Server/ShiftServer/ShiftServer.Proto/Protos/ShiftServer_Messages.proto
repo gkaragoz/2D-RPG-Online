@@ -14,11 +14,12 @@ message ShiftServerData {
 
 	repeated sGameObject WorldState = 9; // GameObjects list
 	ObjectAction Interaction = 10;
-	PlayerObject sPlayerObject = 11;
-	ShiftServerError ErrorReason = 12;
+	SPlayerInput PlayerInput = 11;
+	PlayerObject sPlayerObject = 12;
+	ShiftServerError ErrorReason = 13;
 
-	string SessionID = 13;
-	MatchmakingData MatchmakingData = 14;
+	string SessionID = 14;
+	MatchmakingData MatchmakingData = 15;
 
 }
 
@@ -185,7 +186,7 @@ message PlayerObject {
 	PlayerClass pClass = 2;
 	int32 currentHp = 3;
 	int32 maxHp = 4;
-	repeated PlayerInput playerInputs = 5;
+	repeated SPlayerInput playerInputs = 5;
 
 }
 
@@ -197,7 +198,7 @@ enum PlayerClass {
 	Priest = 3;
 }
 
-message PlayerInput {
+message SPlayerInput {
 	
 	float pos_x = 1;
 	float pos_y = 2;

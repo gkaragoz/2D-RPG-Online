@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Telepathy;
 
 namespace ShiftServer.Base.Auth
 {
@@ -16,6 +17,8 @@ namespace ShiftServer.Base.Auth
 
         public Session UserSession { get; set; }
         public TcpClient Client { get; set; }
+        public IGameObject CurrentObject { get; set; }
+        public SafeQueue<IGameInput> Inputs { get; set; }
         public string UserName { get; set; }
         public int connectionId { get; set; }
         public bool IsJoinedToWorld { get; set; }

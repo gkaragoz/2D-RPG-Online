@@ -22,7 +22,7 @@ public static partial class ShiftServerMessagesReflection {
   static ShiftServerMessagesReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLsAwoPU2hpZnRTZXJ2ZXJE",
+          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byKQBAoPU2hpZnRTZXJ2ZXJE",
           "YXRhEiAKCGJhc2V2dGlkGAEgASgOMg4uTVNCYXNlRXZlbnRJZBIfCgdzdmV2",
           "dGlkGAIgASgOMg4uTVNTZXJ2ZXJFdmVudBIfCgdwbGV2dGlkGAMgASgOMg4u",
           "TVNQbGF5ZXJFdmVudBIdCgdTZXNzaW9uGAQgASgLMgwuU2Vzc2lvbkRhdGES",
@@ -30,64 +30,65 @@ public static partial class ShiftServerMessagesReflection {
           "dGEYBiABKAsyEi5Db21tb25BY2NvdW50RGF0YRIbCghSb29tRGF0YRgHIAEo",
           "CzIJLlJvb21EYXRhEh0KB0FjY291bnQYCCABKAsyDC5BY2NvdW50RGF0YRIg",
           "CgpXb3JsZFN0YXRlGAkgAygLMgwuc0dhbWVPYmplY3QSIgoLSW50ZXJhY3Rp",
-          "b24YCiABKAsyDS5PYmplY3RBY3Rpb24SJAoNc1BsYXllck9iamVjdBgLIAEo",
-          "CzINLlBsYXllck9iamVjdBImCgtFcnJvclJlYXNvbhgMIAEoDjIRLlNoaWZ0",
-          "U2VydmVyRXJyb3ISEQoJU2Vzc2lvbklEGA0gASgJEikKD01hdGNobWFraW5n",
-          "RGF0YRgOIAEoCzIQLk1hdGNobWFraW5nRGF0YSIaCgtTZXNzaW9uRGF0YRIL",
-          "CgNzaWQYAiABKAkiMQoPTWF0Y2htYWtpbmdEYXRhEh4KBFR5cGUYASABKA4y",
-          "EC5NYXRjaG1ha2luZ1Jvb20iWAoRQ29tbW9uQWNjb3VudERhdGESEAoIdXNl",
-          "cm5hbWUYASABKAkSFAoMdmlydHVhbE1vbmV5GAIgASgFEhsKE3ZpcnR1YWxT",
-          "cGVjaWFsTW9uZXkYAyABKAUiuAEKCFJvb21EYXRhEhYKBFJvb20YASABKAsy",
-          "CC5NU1NSb29tEiMKClBsYXllckluZm8YAiABKAsyDy5Sb29tUGxheWVySW5m",
-          "bxIuChVQbGF5ZXJSZWFkeVN0YXR1c0luZm8YAyABKAsyDy5Sb29tUGxheWVy",
-          "SW5mbxIjCgpQbGF5ZXJMaXN0GAQgAygLMg8uUm9vbVBsYXllckluZm8SGgoI",
-          "Um9vbUxpc3QYBSADKAsyCC5NU1NSb29tIrABCgdNU1NSb29tEgoKAklkGAEg",
-          "ASgJEhMKC2NyZWF0ZWRUaW1lGAIgASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgD",
-          "EhEKCWlzUHJpdmF0ZRgEIAEoCBIPCgdpc093bmVyGAUgASgIEgwKBG5hbWUY",
-          "BiABKAkSFAoMbWF4VXNlckNvdW50GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291",
-          "bnQYCCABKAUSDQoFVGVhbXMYCSADKAkibQoOUm9vbVBsYXllckluZm8SEAoI",
-          "VXNlcm5hbWUYASABKAkSDgoGVGVhbUlkGAIgASgJEhYKDklzSm9pbmVkVG9U",
-          "ZWFtGAMgASgIEg8KB0lzUmVhZHkYBCABKAgSEAoISXNMZWFkZXIYBSABKAgi",
-          "MQoLQWNjb3VudERhdGESEAoIdXNlcm5hbWUYASABKAkSEAoIcGFzc3dvcmQY",
-          "AiABKAkiXAoMT2JqZWN0QWN0aW9uEiMKDWN1cnJlbnRPYmplY3QYASABKAsy",
-          "DC5zR2FtZU9iamVjdBInChFpbnRlcmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNH",
-          "YW1lT2JqZWN0IkMKCkNsaWVudERhdGESCwoDdmVyGAEgASgJEhQKDG1hY2hp",
-          "bmVfbmFtZRgCIAEoCRISCgptYWNoaW5lX2lkGAMgASgJIkcKC3NHYW1lT2Jq",
-          "ZWN0EgsKA29pZBgBIAEoBRINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEo",
-          "AhINCgVwb3NfehgEIAEoAiKRAQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QY",
-          "ASABKAsyDC5zR2FtZU9iamVjdBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJD",
-          "bGFzcxIRCgljdXJyZW50SHAYAyABKAUSDQoFbWF4SHAYBCABKAUSIgoMcGxh",
-          "eWVySW5wdXRzGAUgAygLMgwuUGxheWVySW5wdXQiOgoLUGxheWVySW5wdXQS",
-          "DQoFcG9zX3gYASABKAISDQoFcG9zX3kYAiABKAISDQoFcG9zX3oYAyABKAIq",
-          "MQoNTVNCYXNlRXZlbnRJZBIPCgtQbGF5ZXJFdmVudBAAEg8KC1NlcnZlckV2",
-          "ZW50EAEqXQoNTVNQbGF5ZXJFdmVudBIQCgxXT1JMRF9VUERBVEUQABIICgRN",
-          "T1ZFEAESCgoGQVRUQUNLEAISCAoEREVBRBADEgcKA1VTRRAEEhEKDUNSRUFU",
-          "RV9QTEFZRVIQBSqsBAoNTVNTZXJ2ZXJFdmVudBIQCgxBQ0NPVU5UX0pPSU4Q",
-          "ABIXChNBQ0NPVU5UX0pPSU5fRkFJTEVEEAESEgoOUFVCTElDX01FU1NBR0UQ",
-          "AhINCglST09NX0pPSU4QAxIOCgpST09NX0xFQVZFEAQSFQoRUk9PTV9MRUFW",
-          "RV9GQUlMRUQQBRIPCgtST09NX0NSRUFURRAGEg8KC1JPT01fREVMRVRFEAcS",
-          "FAoQUk9PTV9QTEFZRVJfTEVGVBAIEhYKElJPT01fUExBWUVSX0pPSU5FRBAJ",
-          "EhQKEFJPT01fSk9JTl9GQUlMRUQQChIWChJST09NX0NSRUFURV9GQUlMRUQQ",
-          "CxIWChJST09NX0RFTEVURV9GQUlMRUQQDBIUChBST09NX0dFVF9QTEFZRVJT",
-          "EA0SEwoPUk9PTV9HQU1FX1NUQVJUEA4SFgoSUk9PTV9DSEFOR0VfTEVBREVS",
-          "EA8SHAoYUk9PTV9QTEFZRVJfUkVBRFlfU1RBVFVTEBASIwofUk9PTV9QTEFZ",
-          "RVJfUkVBRFlfU1RBVFVTX0ZBSUxFRBAREhAKDE1FU1NBR0VfU0VORBASEhMK",
-          "D01FU1NBR0VfUkVDSUVWRRATEhUKEUxPQkJZX01BVENITUFLSU5HEBQSDgoK",
-          "Q09OTkVDVElPThAWEhUKEUNPTk5FQ1RJT05fRkFJTEVEEBcSEwoPQ09OTkVD",
-          "VElPTl9MT1NUEBgSEAoMUElOR19SRVFVRVNUEBkqJQoPTWF0Y2htYWtpbmdS",
-          "b29tEggKBEJHXzIQABIICgRCR180EAEq/gEKEFNoaWZ0U2VydmVyRXJyb3IS",
-          "EgoOQ0xJRU5UX1ZFUl9PTEQQABIPCgtCQURfU0VTU0lPThABEhIKDlJPT01f",
-          "Tk9UX0ZPVU5EEAISEwoPQUxSRUFEWV9JTl9ST09NEAMSGwoXV1JPTkdfTE9H",
-          "SU5fQ1JFREVOVElBTFMQBBIVChFXUk9OR19DTElFTlRfREFUQRAFEhUKEU5P",
-          "X1JFU1BPTkRfU0VSVkVSEAYSFQoRUk9PTV9BVVRIX1BST0JMRU0QBxITCg9O",
-          "T1RfSU5fQU5ZX1JPT00QCBINCglST09NX0ZVTEwQCRIWChJNQVRDSE1BS0lO",
-          "R19GQUlMRUQQCio1Cg1TaGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1P",
-          "EAESEAoMQUNUSU9OQkFUVExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2Fycmlv",
-          "chAAEgoKBkFyY2hlchABEggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJvdG8z"));
+          "b24YCiABKAsyDS5PYmplY3RBY3Rpb24SIgoLUGxheWVySW5wdXQYCyABKAsy",
+          "DS5TUGxheWVySW5wdXQSJAoNc1BsYXllck9iamVjdBgMIAEoCzINLlBsYXll",
+          "ck9iamVjdBImCgtFcnJvclJlYXNvbhgNIAEoDjIRLlNoaWZ0U2VydmVyRXJy",
+          "b3ISEQoJU2Vzc2lvbklEGA4gASgJEikKD01hdGNobWFraW5nRGF0YRgPIAEo",
+          "CzIQLk1hdGNobWFraW5nRGF0YSIaCgtTZXNzaW9uRGF0YRILCgNzaWQYAiAB",
+          "KAkiMQoPTWF0Y2htYWtpbmdEYXRhEh4KBFR5cGUYASABKA4yEC5NYXRjaG1h",
+          "a2luZ1Jvb20iWAoRQ29tbW9uQWNjb3VudERhdGESEAoIdXNlcm5hbWUYASAB",
+          "KAkSFAoMdmlydHVhbE1vbmV5GAIgASgFEhsKE3ZpcnR1YWxTcGVjaWFsTW9u",
+          "ZXkYAyABKAUiuAEKCFJvb21EYXRhEhYKBFJvb20YASABKAsyCC5NU1NSb29t",
+          "EiMKClBsYXllckluZm8YAiABKAsyDy5Sb29tUGxheWVySW5mbxIuChVQbGF5",
+          "ZXJSZWFkeVN0YXR1c0luZm8YAyABKAsyDy5Sb29tUGxheWVySW5mbxIjCgpQ",
+          "bGF5ZXJMaXN0GAQgAygLMg8uUm9vbVBsYXllckluZm8SGgoIUm9vbUxpc3QY",
+          "BSADKAsyCC5NU1NSb29tIrABCgdNU1NSb29tEgoKAklkGAEgASgJEhMKC2Ny",
+          "ZWF0ZWRUaW1lGAIgASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgDEhEKCWlzUHJp",
+          "dmF0ZRgEIAEoCBIPCgdpc093bmVyGAUgASgIEgwKBG5hbWUYBiABKAkSFAoM",
+          "bWF4VXNlckNvdW50GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291bnQYCCABKAUS",
+          "DQoFVGVhbXMYCSADKAkibQoOUm9vbVBsYXllckluZm8SEAoIVXNlcm5hbWUY",
+          "ASABKAkSDgoGVGVhbUlkGAIgASgJEhYKDklzSm9pbmVkVG9UZWFtGAMgASgI",
+          "Eg8KB0lzUmVhZHkYBCABKAgSEAoISXNMZWFkZXIYBSABKAgiMQoLQWNjb3Vu",
+          "dERhdGESEAoIdXNlcm5hbWUYASABKAkSEAoIcGFzc3dvcmQYAiABKAkiXAoM",
+          "T2JqZWN0QWN0aW9uEiMKDWN1cnJlbnRPYmplY3QYASABKAsyDC5zR2FtZU9i",
+          "amVjdBInChFpbnRlcmFjdGVkT2JqZWN0cxgCIAMoCzIMLnNHYW1lT2JqZWN0",
+          "IkMKCkNsaWVudERhdGESCwoDdmVyGAEgASgJEhQKDG1hY2hpbmVfbmFtZRgC",
+          "IAEoCRISCgptYWNoaW5lX2lkGAMgASgJIkcKC3NHYW1lT2JqZWN0EgsKA29p",
+          "ZBgBIAEoBRINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3Nf",
+          "ehgEIAEoAiKSAQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QYASABKAsyDC5z",
+          "R2FtZU9iamVjdBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJDbGFzcxIRCglj",
+          "dXJyZW50SHAYAyABKAUSDQoFbWF4SHAYBCABKAUSIwoMcGxheWVySW5wdXRz",
+          "GAUgAygLMg0uU1BsYXllcklucHV0IjsKDFNQbGF5ZXJJbnB1dBINCgVwb3Nf",
+          "eBgBIAEoAhINCgVwb3NfeRgCIAEoAhINCgVwb3NfehgDIAEoAioxCg1NU0Jh",
+          "c2VFdmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQASpd",
+          "Cg1NU1BsYXllckV2ZW50EhAKDFdPUkxEX1VQREFURRAAEggKBE1PVkUQARIK",
+          "CgZBVFRBQ0sQAhIICgRERUFEEAMSBwoDVVNFEAQSEQoNQ1JFQVRFX1BMQVlF",
+          "UhAFKqwECg1NU1NlcnZlckV2ZW50EhAKDEFDQ09VTlRfSk9JThAAEhcKE0FD",
+          "Q09VTlRfSk9JTl9GQUlMRUQQARISCg5QVUJMSUNfTUVTU0FHRRACEg0KCVJP",
+          "T01fSk9JThADEg4KClJPT01fTEVBVkUQBBIVChFST09NX0xFQVZFX0ZBSUxF",
+          "RBAFEg8KC1JPT01fQ1JFQVRFEAYSDwoLUk9PTV9ERUxFVEUQBxIUChBST09N",
+          "X1BMQVlFUl9MRUZUEAgSFgoSUk9PTV9QTEFZRVJfSk9JTkVEEAkSFAoQUk9P",
+          "TV9KT0lOX0ZBSUxFRBAKEhYKElJPT01fQ1JFQVRFX0ZBSUxFRBALEhYKElJP",
+          "T01fREVMRVRFX0ZBSUxFRBAMEhQKEFJPT01fR0VUX1BMQVlFUlMQDRITCg9S",
+          "T09NX0dBTUVfU1RBUlQQDhIWChJST09NX0NIQU5HRV9MRUFERVIQDxIcChhS",
+          "T09NX1BMQVlFUl9SRUFEWV9TVEFUVVMQEBIjCh9ST09NX1BMQVlFUl9SRUFE",
+          "WV9TVEFUVVNfRkFJTEVEEBESEAoMTUVTU0FHRV9TRU5EEBISEwoPTUVTU0FH",
+          "RV9SRUNJRVZFEBMSFQoRTE9CQllfTUFUQ0hNQUtJTkcQFBIOCgpDT05ORUNU",
+          "SU9OEBYSFQoRQ09OTkVDVElPTl9GQUlMRUQQFxITCg9DT05ORUNUSU9OX0xP",
+          "U1QQGBIQCgxQSU5HX1JFUVVFU1QQGSolCg9NYXRjaG1ha2luZ1Jvb20SCAoE",
+          "QkdfMhAAEggKBEJHXzQQASr+AQoQU2hpZnRTZXJ2ZXJFcnJvchISCg5DTElF",
+          "TlRfVkVSX09MRBAAEg8KC0JBRF9TRVNTSU9OEAESEgoOUk9PTV9OT1RfRk9V",
+          "TkQQAhITCg9BTFJFQURZX0lOX1JPT00QAxIbChdXUk9OR19MT0dJTl9DUkVE",
+          "RU5USUFMUxAEEhUKEVdST05HX0NMSUVOVF9EQVRBEAUSFQoRTk9fUkVTUE9O",
+          "RF9TRVJWRVIQBhIVChFST09NX0FVVEhfUFJPQkxFTRAHEhMKD05PVF9JTl9B",
+          "TllfUk9PTRAIEg0KCVJPT01fRlVMTBAJEhYKEk1BVENITUFLSU5HX0ZBSUxF",
+          "RBAKKjUKDVNoaWZ0Um9vbVR5cGUSCQoFTE9CQlkQABIHCgNNTU8QARIQCgxB",
+          "Q1RJT05CQVRUTEUQAio8CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoG",
+          "QXJjaGVyEAESCAoETWFnZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::MatchmakingRoom), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "WorldState", "Interaction", "SPlayerObject", "ErrorReason", "SessionID", "MatchmakingData" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "WorldState", "Interaction", "PlayerInput", "SPlayerObject", "ErrorReason", "SessionID", "MatchmakingData" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MatchmakingData), global::MatchmakingData.Parser, new[]{ "Type" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
@@ -99,7 +100,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::sGameObject), global::sGameObject.Parser, new[]{ "Oid", "PosX", "PosY", "PosZ" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PObject", "PClass", "CurrentHp", "MaxHp", "PlayerInputs" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerInput), global::PlayerInput.Parser, new[]{ "PosX", "PosY", "PosZ" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::SPlayerInput), global::SPlayerInput.Parser, new[]{ "PosX", "PosY", "PosZ" }, null, null, null)
         }));
   }
   #endregion
@@ -236,6 +237,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     account_ = other.account_ != null ? other.account_.Clone() : null;
     worldState_ = other.worldState_.Clone();
     interaction_ = other.interaction_ != null ? other.interaction_.Clone() : null;
+    playerInput_ = other.playerInput_ != null ? other.playerInput_.Clone() : null;
     sPlayerObject_ = other.sPlayerObject_ != null ? other.sPlayerObject_.Clone() : null;
     errorReason_ = other.errorReason_;
     sessionID_ = other.sessionID_;
@@ -372,8 +374,19 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
   }
 
+  /// <summary>Field number for the "PlayerInput" field.</summary>
+  public const int PlayerInputFieldNumber = 11;
+  private global::SPlayerInput playerInput_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public global::SPlayerInput PlayerInput {
+    get { return playerInput_; }
+    set {
+      playerInput_ = value;
+    }
+  }
+
   /// <summary>Field number for the "sPlayerObject" field.</summary>
-  public const int SPlayerObjectFieldNumber = 11;
+  public const int SPlayerObjectFieldNumber = 12;
   private global::PlayerObject sPlayerObject_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public global::PlayerObject SPlayerObject {
@@ -384,7 +397,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
   }
 
   /// <summary>Field number for the "ErrorReason" field.</summary>
-  public const int ErrorReasonFieldNumber = 12;
+  public const int ErrorReasonFieldNumber = 13;
   private global::ShiftServerError errorReason_ = 0;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public global::ShiftServerError ErrorReason {
@@ -395,7 +408,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
   }
 
   /// <summary>Field number for the "SessionID" field.</summary>
-  public const int SessionIDFieldNumber = 13;
+  public const int SessionIDFieldNumber = 14;
   private string sessionID_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string SessionID {
@@ -406,7 +419,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
   }
 
   /// <summary>Field number for the "MatchmakingData" field.</summary>
-  public const int MatchmakingDataFieldNumber = 14;
+  public const int MatchmakingDataFieldNumber = 15;
   private global::MatchmakingData matchmakingData_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public global::MatchmakingData MatchmakingData {
@@ -439,6 +452,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (!object.Equals(Account, other.Account)) return false;
     if(!worldState_.Equals(other.worldState_)) return false;
     if (!object.Equals(Interaction, other.Interaction)) return false;
+    if (!object.Equals(PlayerInput, other.PlayerInput)) return false;
     if (!object.Equals(SPlayerObject, other.SPlayerObject)) return false;
     if (ErrorReason != other.ErrorReason) return false;
     if (SessionID != other.SessionID) return false;
@@ -459,6 +473,7 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (account_ != null) hash ^= Account.GetHashCode();
     hash ^= worldState_.GetHashCode();
     if (interaction_ != null) hash ^= Interaction.GetHashCode();
+    if (playerInput_ != null) hash ^= PlayerInput.GetHashCode();
     if (sPlayerObject_ != null) hash ^= SPlayerObject.GetHashCode();
     if (ErrorReason != 0) hash ^= ErrorReason.GetHashCode();
     if (SessionID.Length != 0) hash ^= SessionID.GetHashCode();
@@ -513,20 +528,24 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
       output.WriteRawTag(82);
       output.WriteMessage(Interaction);
     }
-    if (sPlayerObject_ != null) {
+    if (playerInput_ != null) {
       output.WriteRawTag(90);
+      output.WriteMessage(PlayerInput);
+    }
+    if (sPlayerObject_ != null) {
+      output.WriteRawTag(98);
       output.WriteMessage(SPlayerObject);
     }
     if (ErrorReason != 0) {
-      output.WriteRawTag(96);
+      output.WriteRawTag(104);
       output.WriteEnum((int) ErrorReason);
     }
     if (SessionID.Length != 0) {
-      output.WriteRawTag(106);
+      output.WriteRawTag(114);
       output.WriteString(SessionID);
     }
     if (matchmakingData_ != null) {
-      output.WriteRawTag(114);
+      output.WriteRawTag(122);
       output.WriteMessage(MatchmakingData);
     }
     if (_unknownFields != null) {
@@ -564,6 +583,9 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     size += worldState_.CalculateSize(_repeated_worldState_codec);
     if (interaction_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(Interaction);
+    }
+    if (playerInput_ != null) {
+      size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerInput);
     }
     if (sPlayerObject_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(SPlayerObject);
@@ -633,6 +655,12 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
         interaction_ = new global::ObjectAction();
       }
       Interaction.MergeFrom(other.Interaction);
+    }
+    if (other.playerInput_ != null) {
+      if (playerInput_ == null) {
+        playerInput_ = new global::SPlayerInput();
+      }
+      PlayerInput.MergeFrom(other.PlayerInput);
     }
     if (other.sPlayerObject_ != null) {
       if (sPlayerObject_ == null) {
@@ -722,21 +750,28 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
           break;
         }
         case 90: {
+          if (playerInput_ == null) {
+            playerInput_ = new global::SPlayerInput();
+          }
+          input.ReadMessage(playerInput_);
+          break;
+        }
+        case 98: {
           if (sPlayerObject_ == null) {
             sPlayerObject_ = new global::PlayerObject();
           }
           input.ReadMessage(sPlayerObject_);
           break;
         }
-        case 96: {
+        case 104: {
           errorReason_ = (global::ShiftServerError) input.ReadEnum();
           break;
         }
-        case 106: {
+        case 114: {
           SessionID = input.ReadString();
           break;
         }
-        case 114: {
+        case 122: {
           if (matchmakingData_ == null) {
             matchmakingData_ = new global::MatchmakingData();
           }
@@ -2815,11 +2850,11 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
 
   /// <summary>Field number for the "playerInputs" field.</summary>
   public const int PlayerInputsFieldNumber = 5;
-  private static readonly pb::FieldCodec<global::PlayerInput> _repeated_playerInputs_codec
-      = pb::FieldCodec.ForMessage(42, global::PlayerInput.Parser);
-  private readonly pbc::RepeatedField<global::PlayerInput> playerInputs_ = new pbc::RepeatedField<global::PlayerInput>();
+  private static readonly pb::FieldCodec<global::SPlayerInput> _repeated_playerInputs_codec
+      = pb::FieldCodec.ForMessage(42, global::SPlayerInput.Parser);
+  private readonly pbc::RepeatedField<global::SPlayerInput> playerInputs_ = new pbc::RepeatedField<global::SPlayerInput>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public pbc::RepeatedField<global::PlayerInput> PlayerInputs {
+  public pbc::RepeatedField<global::SPlayerInput> PlayerInputs {
     get { return playerInputs_; }
   }
 
@@ -2970,11 +3005,11 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
 
 }
 
-public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
-  private static readonly pb::MessageParser<PlayerInput> _parser = new pb::MessageParser<PlayerInput>(() => new PlayerInput());
+public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
+  private static readonly pb::MessageParser<SPlayerInput> _parser = new pb::MessageParser<SPlayerInput>(() => new SPlayerInput());
   private pb::UnknownFieldSet _unknownFields;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public static pb::MessageParser<PlayerInput> Parser { get { return _parser; } }
+  public static pb::MessageParser<SPlayerInput> Parser { get { return _parser; } }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public static pbr::MessageDescriptor Descriptor {
@@ -2987,14 +3022,14 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public PlayerInput() {
+  public SPlayerInput() {
     OnConstruction();
   }
 
   partial void OnConstruction();
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public PlayerInput(PlayerInput other) : this() {
+  public SPlayerInput(SPlayerInput other) : this() {
     posX_ = other.posX_;
     posY_ = other.posY_;
     posZ_ = other.posZ_;
@@ -3002,8 +3037,8 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public PlayerInput Clone() {
-    return new PlayerInput(this);
+  public SPlayerInput Clone() {
+    return new SPlayerInput(this);
   }
 
   /// <summary>Field number for the "pos_x" field.</summary>
@@ -3041,11 +3076,11 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override bool Equals(object other) {
-    return Equals(other as PlayerInput);
+    return Equals(other as SPlayerInput);
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public bool Equals(PlayerInput other) {
+  public bool Equals(SPlayerInput other) {
     if (ReferenceEquals(other, null)) {
       return false;
     }
@@ -3113,7 +3148,7 @@ public sealed partial class PlayerInput : pb::IMessage<PlayerInput> {
   }
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public void MergeFrom(PlayerInput other) {
+  public void MergeFrom(SPlayerInput other) {
     if (other == null) {
       return;
     }
