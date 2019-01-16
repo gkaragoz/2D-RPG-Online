@@ -81,7 +81,7 @@ namespace ShiftServer.Base.Rooms
         }
         private void StartGameRoom()
         {
-            int timerInterval = TickrateUtil.Set(10);
+            int timerInterval = TickrateUtil.Set(3);
 
 
             while (!IsStopTriggered)
@@ -207,6 +207,8 @@ namespace ShiftServer.Base.Rooms
 
             pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
             pInfo.IsReady = currentClient.IsReady;
+            if (currentClient.CurrentObject != null)
+                pInfo.ObjectId = currentClient.CurrentObject.ObjectId;
 
             if (this.ServerLeaderId == currentClient.connectionId)
             {
@@ -278,12 +280,13 @@ namespace ShiftServer.Base.Rooms
                 data.GoUpdatePacket.PlayerList.Add(new PlayerObject
                 {
                     Oid = gObject.ObjectId,
-                    PosX = (float)gObject.Position.X,
-                    PosY = (float)gObject.Position.Y,
-                    PosZ = (float)gObject.Position.Z,
+                    PosX = gObject.Position.X,
+                    PosY = gObject.Position.Y,
+                    PosZ = gObject.Position.Z,
                     MovementSpeed = (float)gObject.MovementSpeed,
                     AttackSpeed = (float)gObject.AttackSpeed,
-                    CurrentHp = gObject.CurrentHP
+                    CurrentHp = gObject.CurrentHP,
+                    LastProcessedSequenceID = gObject.LastProcessedSequenceID
                 });
             }
 
