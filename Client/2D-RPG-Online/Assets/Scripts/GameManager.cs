@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour {
         CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
         CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
         RoomManager.instance.onRoomCreated += OnRoomCreated;
+        RoomManager.instance.onRoomJoined += OnRoomJoined;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -121,6 +122,14 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnRoomCreated() {
+        //Go To Gameplay Scene.
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+
+        MenuManager.instance.Hide();
+        RoomManager.instance.Show();
+    }
+
+    private void OnRoomJoined() {
         //Go To Gameplay Scene.
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
 

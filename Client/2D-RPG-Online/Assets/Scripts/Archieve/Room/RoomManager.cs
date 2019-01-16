@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,6 +23,8 @@ public class RoomManager : Menu {
     #endregion
 
     public Action onRoomCreated;
+    public Action onRoomJoined;
+    
 
     [SerializeField]
     private GameObject _playerPrefab;
@@ -47,6 +47,8 @@ public class RoomManager : Menu {
 
     private void Start() {
         NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
+
+        NetworkManager.mss.AddEventListener(MSPlayerEvent.RoomUpdate, OnRoomUpdated);
 
         NetworkManager.mss.AddEventListener(MSPlayerEvent.CreatePlayer, OnPlayerCreated);
 
@@ -79,11 +81,6 @@ public class RoomManager : Menu {
         }
 
         SceneManager.sceneLoaded -= OnSceneLoaded;
-
-        _joystick = GameObject.Find("Fixed Joystick").GetComponent<FixedJoystick>();
-        _btnAttack = GameObject.Find("btnAttack").GetComponent<Button>();
-        _myPlayerController.SetJoystick(_joystick);
-        _btnAttack.onClick.AddListener(_myPlayerController.Attack);
     }
 
     public void CreateRoom() {
@@ -141,17 +138,14 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
-    private void CreatePlayer(PlayerObject playerObject, RoomPlayerInfo playerInfo) {
-        GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PObject.PosX, playerObject.PObject.PosY), Quaternion.identity);
-
-        player.GetComponent<PlayerHUD>().SetName(playerInfo.Username);
-    }
-
     private void CreateMyPlayer(PlayerObject playerObject) {
         GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PObject.PosX, playerObject.PObject.PosY), Quaternion.identity);
 
         player.GetComponent<PlayerHUD>().SetName(_myPlayerInfo.Username);
+        _myPlayerInfo.ObjectId = playerObject.PObject.Oid;
+
         _myPlayerController = player.GetComponent<PlayerController>();
+        _myPlayerController.Initialize(_myPlayerInfo);
     }
 
     private IEnumerator IJoinRoom(string id) {
@@ -174,12 +168,28 @@ public class RoomManager : Menu {
         return true;
     }
 
+    private void OnRoomUpdated(ShiftServerData data) {
+        Debug.Log("OnRoomUpdated: " + data);
+
+        for (int ii = 0; ii < data.GoUpdatePacket.ObjectList.Count; ii++) {
+            Debug.Log(data.GoUpdatePacket.ObjectList[ii]);
+
+            sGameObject gameObject = data.GoUpdatePacket.ObjectList[ii];
+
+            if (data.GoUpdatePacket.ObjectList[ii].Oid == _myPlayerInfo.ObjectId) {
+                _myPlayerController.transform.position = new Vector2(data.GoUpdatePacket.ObjectList[ii].PosX, data.GoUpdatePacket.ObjectList[ii].PosY);
+            }
+        }
+    }
+
     private void OnPlayerCreated(ShiftServerData data) {
         Debug.Log("OnPlayerCreated: " + data);
 
         PlayerObject playerObject = data.SPlayerObject;
 
-        CreateMyPlayer(playerObject);
+        if (_myPlayerInfo.ObjectId == 0) {
+            CreateMyPlayer(playerObject);
+        }
     }
 
     private void OnRoomJoinSuccess(ShiftServerData data) {
@@ -197,6 +207,8 @@ public class RoomManager : Menu {
         }
 
         Initialize();
+
+        onRoomJoined?.Invoke();
     }
 
     private void OnRoomJoinFailed(ShiftServerData data) {
@@ -252,6 +264,8 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
+
+        SceneManager.UnloadSceneAsync("Gameplay");
 
         this.Hide();
         MenuManager.instance.Show();

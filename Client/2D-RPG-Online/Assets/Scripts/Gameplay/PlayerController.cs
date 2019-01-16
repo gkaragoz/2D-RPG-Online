@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
@@ -19,24 +20,37 @@ public class PlayerController : MonoBehaviour {
     private float _xInput, _yInput;
     [SerializeField]
     private Joystick _joystick;
+    [SerializeField]
+    private Button _btnAttack;
 
     private CharacterController _characterController;
+    private PlayerHUD _playerHUD;
+    private RoomPlayerInfo _playerInfo;
 
     private void Start() {
         _characterController = GetComponent<CharacterController>();
+        _playerHUD = GetComponent<PlayerHUD>();
     }
 
     private void FixedUpdate() {
         LastInput = CurrentInput;
-
-        Debug.Log(_joystick.Direction);
 
         _xInput = _joystick.Horizontal;
         _yInput = _joystick.Vertical;
 
         CurrentInput = new Vector2(_xInput, _yInput);
 
-        if (HasInput) { 
+        if (HasInput && NetworkManager.mss != null) {
+            ShiftServerData data = new ShiftServerData();
+
+            data.PlayerInput = new SPlayerInput();
+            data.PlayerInput.PosX = CurrentInput.x;
+            data.PlayerInput.PosY = CurrentInput.y;
+
+            NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
+        }
+
+        if (HasInput) {
             Move();
         } else {
             Stop();
@@ -49,6 +63,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void Initialize(RoomPlayerInfo playerInfo) {
+        this._playerInfo = playerInfo;
+
+        _playerHUD.SetName(this._playerInfo.Username);
+    }
+
     public void SetJoystick(FixedJoystick joystick) {
         this._joystick = joystick;
     }
@@ -59,6 +79,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Move() {
         _characterController.Move(CurrentInput);
+    }
+
+    public void Move(Vector2 input) {
+        _characterController.Move(input);
     }
 
     public void Stop() {
