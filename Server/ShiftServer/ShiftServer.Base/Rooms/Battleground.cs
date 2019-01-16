@@ -282,10 +282,10 @@ namespace ShiftServer.Base.Rooms
                     gObject.GameInputs.TryDequeue(out gInput);
                     if (gInput != null)
                     {
-                        switch (gInput.evt)
+                        switch (gInput.eventType)
                         {                           
                             case MSPlayerEvent.Move:
-                                gObject.Position += Vector3.Normalize(gInput.vector3) * gObject.MovementSpeed;
+                                gObject.Position += Vector3.Normalize(gInput.vector3) * (float)gObject.MovementSpeed;
                                 break;
                             case MSPlayerEvent.Attack:
                                 break;

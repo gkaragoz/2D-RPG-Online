@@ -534,7 +534,7 @@ namespace ShiftServer.Base.Core
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
             MoveInput MoveInput = new MoveInput();
-            MoveInput.evt = data.Plevtid;
+            MoveInput.eventType = data.Plevtid;
             MoveInput.sensivity = data.PlayerInput.Sensivity;
             MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, data.PlayerInput.PosZ);
             shift.Inputs.Enqueue(MoveInput);

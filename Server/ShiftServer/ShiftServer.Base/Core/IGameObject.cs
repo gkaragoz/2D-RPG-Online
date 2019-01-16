@@ -15,8 +15,8 @@ namespace ShiftServer.Base.Core
         Vector3 Position { get; set; }
         Vector3 Rotation { get; set; }
         Vector3 Scale { get; set; }
-        float MovementSpeed { get; set; }
-        float AttackSpeed { get; set; }
+        double MovementSpeed { get; set; }
+        double AttackSpeed { get; set; }
         void OnAttack();
         void OnHit();
         void OnMove(Vector3 rotation);
