@@ -318,7 +318,6 @@ namespace ShiftServer.Base.Rooms
                             case MSPlayerEvent.Move:
                                 gObject.OnMove(gInput.vector3);
                                 log.Debug($"gObject: {gObject.ObjectId} Move  {gInput.vector3.ToString()}!");
-
                                 break;
                             case MSPlayerEvent.Attack:
                                 break;
@@ -329,6 +328,8 @@ namespace ShiftServer.Base.Rooms
                             default:
                                 break;
                         }
+
+                        gObject.LastProcessedSequenceID = gInput.sequenceID;
                     }
                     //pInput = (PlayerInput)gInput;
                 }

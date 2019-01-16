@@ -296,6 +296,9 @@ namespace ShiftServer.Base.Core
                     _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out prevRoom);
                     prevRoom.Clients.Remove(shift.connectionId);
                     prevRoom.SocketIdSessionLookup.Remove(data.SessionID);
+                    if (shift.CurrentObject != null)
+                        prevRoom.GameObjects.Remove(shift.CurrentObject.ObjectId);
+                    shift.CurrentObject = null;
                     shift.IsJoinedToRoom = false;
                     shift.JoinedRoomId = null;
                     ShiftServerData leavedRoom = new ShiftServerData();
@@ -538,10 +541,10 @@ namespace ShiftServer.Base.Core
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-            MoveInput MoveInput = new MoveInput();
-            MoveInput.eventType = data.Plevtid;
-            MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, 0);
-            log.Debug($"{shift.CurrentObject.ObjectId} wants to move to {MoveInput.vector3.ToString()}");
+            MoveInput moveInput = new MoveInput();
+            moveInput.eventType = data.Plevtid;
+            moveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, 0);
+            log.Debug($"{shift.CurrentObject.ObjectId} wants to move to {moveInput.vector3.ToString()}");
 
             IRoom room = null;
             _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out room);
@@ -551,7 +554,8 @@ namespace ShiftServer.Base.Core
                 room.GameObjects.TryGetValue(shift.CurrentObject.ObjectId, out go);
                 if (go != null)
                 {
-                    go.GameInputs.Enqueue(MoveInput);
+                    moveInput.sequenceID = data.PlayerInput.SequenceID;
+                    go.GameInputs.Enqueue(moveInput);
                 }
             }
         }

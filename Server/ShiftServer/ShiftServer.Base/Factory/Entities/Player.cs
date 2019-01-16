@@ -31,6 +31,7 @@ namespace ShiftServer.Base.Factory.Entities
         public string OwnerSessionId { get; set; }
         public double MovementSpeed { get; set; }
         public double AttackSpeed { get; set; }
+        public int LastProcessedSequenceID { get; set; }
 
         public void OnAttack()
         {
