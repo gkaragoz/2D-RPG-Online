@@ -192,6 +192,7 @@ message sGameObject {
 message PlayerObject {
 
 	PlayerClass pClass = 1;
+
 	int32 currentHp = 2;
 	int32 maxHp = 3;
 	int32 strength = 4;
@@ -205,7 +206,7 @@ message PlayerObject {
 	float movementSpeed = 12;
 	repeated SPlayerInput playerInputs = 13;
 	int32 Oid = 14;
-
+	string Name = 15;
 }
 
 enum PlayerClass {

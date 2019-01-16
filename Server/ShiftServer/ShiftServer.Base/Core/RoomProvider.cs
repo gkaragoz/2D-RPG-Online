@@ -82,6 +82,19 @@ namespace ShiftServer.Base.Core
                     data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
                     data.RoomData.PlayerInfo.IsReady = shift.IsReady;
 
+                    this.SpawnCharacterToRoom(shift, newRoom);
+
+                    data.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
+                    {
+                        AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                        MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
+                        CurrentHp = shift.CurrentObject.CurrentHP,
+                        MaxHp = shift.CurrentObject.MaxHP,
+                        PosX = shift.CurrentObject.Position.X,
+                        PosY = shift.CurrentObject.Position.Y,
+                        PosZ = shift.CurrentObject.Position.Z
+                    };
+                    data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
 
                     if (newRoom.ServerLeaderId == shift.connectionId)
                         data.RoomData.PlayerInfo.IsLeader = true;
@@ -108,10 +121,10 @@ namespace ShiftServer.Base.Core
                 newRoom.ServerLeaderId = shift.connectionId;
                 data.RoomData.Room.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
                 newRoom.MaxConnId = shift.connectionId;
-
+              
                 this.CreateRoom(newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
-                this.SpawnCharacterToRoom(shift, newRoom);
+               
                 shift.IsJoinedToRoom = true;
             }
             else
