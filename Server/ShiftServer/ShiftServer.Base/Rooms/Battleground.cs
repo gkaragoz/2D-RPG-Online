@@ -47,6 +47,8 @@ namespace ShiftServer.Base.Rooms
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
+        public UpdateGOList GOUpdatePacket = new UpdateGOList();
+
 
         public Battleground(int groupCount, int maxUserPerTeam, DBServiceProvider ctx)
         {
@@ -99,11 +101,20 @@ namespace ShiftServer.Base.Rooms
         {
             gameObject.ObjectId = Interlocked.Increment(ref ObjectCounter);
             GameObjects.Add(gameObject.ObjectId, gameObject);
+            GOUpdatePacket.ObjectList.Add(new sGameObject
+            {
+                Oid = gameObject.ObjectId,
+                PosX = gameObject.Position.X,
+                PosY = gameObject.Position.Y,
+                PosZ = gameObject.Position.Z,
+            });
         }
 
         public void OnObjectDestroy(IGameObject gameObject)
         {
             GameObjects.Remove(gameObject.ObjectId);
+            var item = GOUpdatePacket.ObjectList.Where(x => x.Oid == gameObject.ObjectId).FirstOrDefault();
+            GOUpdatePacket.ObjectList.Remove(item);
         }
 
         public void OnObjectMove(ShiftServerData data, ShiftClient client)
@@ -253,13 +264,31 @@ namespace ShiftServer.Base.Rooms
         }
         public void SendRoomState()
         {
+
+            ShiftServerData data = new ShiftServerData();
+            data.GoUpdatePacket = new UpdateGOList();
+
+            IGameObject gObject = null;
+            for (int i = 0; i < ObjectCounter; i++)
+            {
+                GameObjects.TryGetValue(i, out gObject);
+                if (gObject == null)
+                    continue;
+
+                data.GoUpdatePacket.ObjectList.Add(new sGameObject
+                {
+                    Oid = gObject.ObjectId,
+                    PosX = gObject.Position.X,
+                    PosY = gObject.Position.Y,
+                    PosZ = gObject.Position.Z
+                });
+            }
+
             List<ShiftClient> clientList = Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
                 if (clientList[i].UserSession == null)
                     continue;
-
-                ShiftServerData data = new ShiftServerData();
 
                 clientList[i].SendPacket(MSPlayerEvent.RoomUpdate, data);
             }
@@ -283,9 +312,10 @@ namespace ShiftServer.Base.Rooms
                     if (gInput != null)
                     {
                         switch (gInput.eventType)
-                        {                           
+                        {
                             case MSPlayerEvent.Move:
-                                gObject.Position += Vector3.Normalize(gInput.vector3) * (float)gObject.MovementSpeed;
+                                gObject.OnMove(gInput.vector3);
+
                                 break;
                             case MSPlayerEvent.Attack:
                                 break;
@@ -299,11 +329,12 @@ namespace ShiftServer.Base.Rooms
                     }
                     //pInput = (PlayerInput)gInput;
                 }
+
             }
 
             SendRoomState();
         }
-       
+
 
         public IGroup GetRandomTeam()
         {

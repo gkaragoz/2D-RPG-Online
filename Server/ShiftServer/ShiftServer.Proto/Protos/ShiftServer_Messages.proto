@@ -12,7 +12,7 @@ message ShiftServerData {
 	RoomData RoomData = 7;
 	AccountData Account = 8;
 
-	repeated sGameObject WorldState = 9; // GameObjects list
+	UpdateGOList GoUpdatePacket = 9; // GameObjects list
 	ObjectAction Interaction = 10;
 	SPlayerInput PlayerInput = 11;
 	PlayerObject sPlayerObject = 12;
@@ -148,6 +148,7 @@ message RoomPlayerInfo {
 	bool IsJoinedToTeam = 3;
 	bool IsReady = 4;
 	bool IsLeader = 5;
+	int32 ObjectId = 6;
 }
 
 message AccountData {
@@ -157,6 +158,11 @@ message AccountData {
 
 }
 
+message UpdateGOList {
+
+	repeated sGameObject objectList = 1;
+
+}
 message ObjectAction {
 
 	sGameObject currentObject = 1;
@@ -201,8 +207,7 @@ enum PlayerClass {
 
 message SPlayerInput {
 	
-	float sensivity = 1;
-
+	MSPlayerEvent playerEvent = 1;
 	float pos_x = 2;
 	float pos_y = 3;
 	float pos_z = 4;
