@@ -65,19 +65,23 @@ namespace ShiftServer.Base.Core
 
                     newRoom.CreatedUserId = shift.connectionId;
                     newRoom.Name = data.RoomData.Room.Name + " #" + _sp.world.Rooms.Count.ToString();
-                    data.RoomData.Room.Name = newRoom.Name;
                     newRoom.CreatedDate = DateTime.UtcNow;
                     newRoom.UpdateDate = DateTime.UtcNow;
                     shift.JoinedRoomId = newRoom.Id;
+
                     newRoom.ServerLeaderId = shift.connectionId;
                     newRoom.Clients.Add(shift.connectionId, shift);
                     newRoom.SocketIdSessionLookup.Add(data.SessionID, shift.connectionId);
+
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
+                    data.RoomData.Room.Name = newRoom.Name;
+
                     IGroup group = newRoom.GetRandomTeam();
 
                     data.RoomData.PlayerInfo.TeamId = group.Id;
                     data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
                     data.RoomData.PlayerInfo.IsReady = shift.IsReady;
+                    data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
 
 
                     if (newRoom.ServerLeaderId == shift.connectionId)
@@ -219,8 +223,8 @@ namespace ShiftServer.Base.Core
                             RoomPlayerInfo pInfo = new RoomPlayerInfo();
                             pInfo.Username = charAcc.SelectedCharName;
                             pInfo.IsReady = cl.IsReady;
-                            pInfo.TeamId = cl.JoinedTeamId; 
-
+                            pInfo.TeamId = cl.JoinedTeamId;
+                            pInfo.ObjectId = cl.CurrentObject.ObjectId;
                             if (result.ServerLeaderId == cl.connectionId)
                                 pInfo.IsLeader = true;
                             else
@@ -535,7 +539,6 @@ namespace ShiftServer.Base.Core
         {
             MoveInput MoveInput = new MoveInput();
             MoveInput.eventType = data.Plevtid;
-            MoveInput.sensivity = data.PlayerInput.Sensivity;
             MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, data.PlayerInput.PosZ);
             shift.Inputs.Enqueue(MoveInput);
         }
