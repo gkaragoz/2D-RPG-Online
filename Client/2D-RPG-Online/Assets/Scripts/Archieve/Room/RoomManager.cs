@@ -143,6 +143,7 @@ public class RoomManager : Menu {
         GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PosX, playerObject.PosY), Quaternion.identity);
 
         _myPlayerInfo.ObjectId = playerObject.Oid;
+        _myPlayerInfo.CurrentGObject = playerObject;
 
         _myPlayerController = player.GetComponent<PlayerController>();
         _myPlayerController.Initialize(_myPlayerInfo);

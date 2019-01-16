@@ -16,7 +16,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Initiailize(RoomPlayerInfo playerInfo) {
-        _characterMotor.SetMovementSpeed(playerInfo.currentGObject.movementSpeed);
+        _characterMotor.SetMovementSpeed(playerInfo.CurrentGObject.MovementSpeed);
     }
 
     public void Attack() {

@@ -129,7 +129,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void UpdateHUD() {
-        _playerHUD.Update(PlayerInputs.Count);
+        _playerHUD.UpdateHUD(PlayerInputs.Count);
     }
 
 }

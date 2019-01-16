@@ -12,7 +12,7 @@ public class PlayerHUD : Menu {
         _txtName.text = name;
     }
 
-    public void Update(int count) {
+    public void UpdateHUD(int count) {
         _txtNonAckPlayerInputs.text = count.ToString();
     }
 
