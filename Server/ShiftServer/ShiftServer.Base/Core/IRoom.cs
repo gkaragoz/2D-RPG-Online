@@ -2,6 +2,7 @@
 using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
+using System.Timers;
 using Telepathy;
 
 namespace ShiftServer.Base.Core
@@ -17,6 +18,7 @@ namespace ShiftServer.Base.Core
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         bool IsPrivate { get; set; }
+        bool IsStopTriggered { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<string, IGroup> Teams { get; set; }
         List<string> TeamIdList { get; set; }
@@ -31,7 +33,7 @@ namespace ShiftServer.Base.Core
         void OnObjectMove(ShiftServerData data, ShiftClient client);
         void OnObjectAttack(ShiftServerData data, ShiftClient client);
         void OnObjectUse(ShiftServerData data, ShiftClient client);
-        void OnGameStart(ShiftServerData data, ShiftClient client);
+        void OnGameStart();
         void BroadcastToRoom(ShiftClient currentClient, MSServerEvent state);
         void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data);
         IGroup GetRandomTeam();

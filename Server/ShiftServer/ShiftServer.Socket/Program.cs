@@ -23,6 +23,7 @@ namespace ShiftServer.Server
 
 
             GameZone zone = new GameZone();
+
             _serverProvider = new ServerProvider(zone);
             _roomProvider = new RoomProvider(_serverProvider);
             _groupProvider = new GroupProvider(_roomProvider);
@@ -44,7 +45,6 @@ namespace ShiftServer.Server
 
             _serverProvider.AddServerEventListener(MSPlayerEvent.Move, _roomProvider.OnObjectMove);
 
-            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 

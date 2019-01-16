@@ -11,5 +11,7 @@ namespace ShiftServer.Base.Factory.Movement
     class MoveInput : IGameInput
     {
         public Vector3 vector3 { get; set; }
+        public float sensivity { get; set; }
+        public MSPlayerEvent evt { get; set; }
     }
 }

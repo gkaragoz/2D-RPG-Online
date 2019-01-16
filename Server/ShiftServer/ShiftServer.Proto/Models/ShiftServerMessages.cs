@@ -58,33 +58,34 @@ public static partial class ShiftServerMessagesReflection {
           "ehgEIAEoAiKSAQoMUGxheWVyT2JqZWN0Eh0KB3BPYmplY3QYASABKAsyDC5z",
           "R2FtZU9iamVjdBIcCgZwQ2xhc3MYAiABKA4yDC5QbGF5ZXJDbGFzcxIRCglj",
           "dXJyZW50SHAYAyABKAUSDQoFbWF4SHAYBCABKAUSIwoMcGxheWVySW5wdXRz",
-          "GAUgAygLMg0uU1BsYXllcklucHV0IjsKDFNQbGF5ZXJJbnB1dBINCgVwb3Nf",
-          "eBgBIAEoAhINCgVwb3NfeRgCIAEoAhINCgVwb3NfehgDIAEoAioxCg1NU0Jh",
-          "c2VFdmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQASpd",
-          "Cg1NU1BsYXllckV2ZW50EhAKDFdPUkxEX1VQREFURRAAEggKBE1PVkUQARIK",
-          "CgZBVFRBQ0sQAhIICgRERUFEEAMSBwoDVVNFEAQSEQoNQ1JFQVRFX1BMQVlF",
-          "UhAFKqwECg1NU1NlcnZlckV2ZW50EhAKDEFDQ09VTlRfSk9JThAAEhcKE0FD",
-          "Q09VTlRfSk9JTl9GQUlMRUQQARISCg5QVUJMSUNfTUVTU0FHRRACEg0KCVJP",
-          "T01fSk9JThADEg4KClJPT01fTEVBVkUQBBIVChFST09NX0xFQVZFX0ZBSUxF",
-          "RBAFEg8KC1JPT01fQ1JFQVRFEAYSDwoLUk9PTV9ERUxFVEUQBxIUChBST09N",
-          "X1BMQVlFUl9MRUZUEAgSFgoSUk9PTV9QTEFZRVJfSk9JTkVEEAkSFAoQUk9P",
-          "TV9KT0lOX0ZBSUxFRBAKEhYKElJPT01fQ1JFQVRFX0ZBSUxFRBALEhYKElJP",
-          "T01fREVMRVRFX0ZBSUxFRBAMEhQKEFJPT01fR0VUX1BMQVlFUlMQDRITCg9S",
-          "T09NX0dBTUVfU1RBUlQQDhIWChJST09NX0NIQU5HRV9MRUFERVIQDxIcChhS",
-          "T09NX1BMQVlFUl9SRUFEWV9TVEFUVVMQEBIjCh9ST09NX1BMQVlFUl9SRUFE",
-          "WV9TVEFUVVNfRkFJTEVEEBESEAoMTUVTU0FHRV9TRU5EEBISEwoPTUVTU0FH",
-          "RV9SRUNJRVZFEBMSFQoRTE9CQllfTUFUQ0hNQUtJTkcQFBIOCgpDT05ORUNU",
-          "SU9OEBYSFQoRQ09OTkVDVElPTl9GQUlMRUQQFxITCg9DT05ORUNUSU9OX0xP",
-          "U1QQGBIQCgxQSU5HX1JFUVVFU1QQGSolCg9NYXRjaG1ha2luZ1Jvb20SCAoE",
-          "QkdfMhAAEggKBEJHXzQQASr+AQoQU2hpZnRTZXJ2ZXJFcnJvchISCg5DTElF",
-          "TlRfVkVSX09MRBAAEg8KC0JBRF9TRVNTSU9OEAESEgoOUk9PTV9OT1RfRk9V",
-          "TkQQAhITCg9BTFJFQURZX0lOX1JPT00QAxIbChdXUk9OR19MT0dJTl9DUkVE",
-          "RU5USUFMUxAEEhUKEVdST05HX0NMSUVOVF9EQVRBEAUSFQoRTk9fUkVTUE9O",
-          "RF9TRVJWRVIQBhIVChFST09NX0FVVEhfUFJPQkxFTRAHEhMKD05PVF9JTl9B",
-          "TllfUk9PTRAIEg0KCVJPT01fRlVMTBAJEhYKEk1BVENITUFLSU5HX0ZBSUxF",
-          "RBAKKjUKDVNoaWZ0Um9vbVR5cGUSCQoFTE9CQlkQABIHCgNNTU8QARIQCgxB",
-          "Q1RJT05CQVRUTEUQAio8CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoG",
-          "QXJjaGVyEAESCAoETWFnZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
+          "GAUgAygLMg0uU1BsYXllcklucHV0Ik4KDFNQbGF5ZXJJbnB1dBIRCglzZW5z",
+          "aXZpdHkYASABKAISDQoFcG9zX3gYAiABKAISDQoFcG9zX3kYAyABKAISDQoF",
+          "cG9zX3oYBCABKAIqMQoNTVNCYXNlRXZlbnRJZBIPCgtQbGF5ZXJFdmVudBAA",
+          "Eg8KC1NlcnZlckV2ZW50EAEqbgoNTVNQbGF5ZXJFdmVudBIQCgxXT1JMRF9V",
+          "UERBVEUQABIPCgtST09NX1VQREFURRABEggKBE1PVkUQAhIKCgZBVFRBQ0sQ",
+          "AxIICgRERUFEEAQSBwoDVVNFEAUSEQoNQ1JFQVRFX1BMQVlFUhAGKqwECg1N",
+          "U1NlcnZlckV2ZW50EhAKDEFDQ09VTlRfSk9JThAAEhcKE0FDQ09VTlRfSk9J",
+          "Tl9GQUlMRUQQARISCg5QVUJMSUNfTUVTU0FHRRACEg0KCVJPT01fSk9JThAD",
+          "Eg4KClJPT01fTEVBVkUQBBIVChFST09NX0xFQVZFX0ZBSUxFRBAFEg8KC1JP",
+          "T01fQ1JFQVRFEAYSDwoLUk9PTV9ERUxFVEUQBxIUChBST09NX1BMQVlFUl9M",
+          "RUZUEAgSFgoSUk9PTV9QTEFZRVJfSk9JTkVEEAkSFAoQUk9PTV9KT0lOX0ZB",
+          "SUxFRBAKEhYKElJPT01fQ1JFQVRFX0ZBSUxFRBALEhYKElJPT01fREVMRVRF",
+          "X0ZBSUxFRBAMEhQKEFJPT01fR0VUX1BMQVlFUlMQDRITCg9ST09NX0dBTUVf",
+          "U1RBUlQQDhIWChJST09NX0NIQU5HRV9MRUFERVIQDxIcChhST09NX1BMQVlF",
+          "Ul9SRUFEWV9TVEFUVVMQEBIjCh9ST09NX1BMQVlFUl9SRUFEWV9TVEFUVVNf",
+          "RkFJTEVEEBESEAoMTUVTU0FHRV9TRU5EEBISEwoPTUVTU0FHRV9SRUNJRVZF",
+          "EBMSFQoRTE9CQllfTUFUQ0hNQUtJTkcQFBIOCgpDT05ORUNUSU9OEBYSFQoR",
+          "Q09OTkVDVElPTl9GQUlMRUQQFxITCg9DT05ORUNUSU9OX0xPU1QQGBIQCgxQ",
+          "SU5HX1JFUVVFU1QQGSolCg9NYXRjaG1ha2luZ1Jvb20SCAoEQkdfMhAAEggK",
+          "BEJHXzQQASr+AQoQU2hpZnRTZXJ2ZXJFcnJvchISCg5DTElFTlRfVkVSX09M",
+          "RBAAEg8KC0JBRF9TRVNTSU9OEAESEgoOUk9PTV9OT1RfRk9VTkQQAhITCg9B",
+          "TFJFQURZX0lOX1JPT00QAxIbChdXUk9OR19MT0dJTl9DUkVERU5USUFMUxAE",
+          "EhUKEVdST05HX0NMSUVOVF9EQVRBEAUSFQoRTk9fUkVTUE9ORF9TRVJWRVIQ",
+          "BhIVChFST09NX0FVVEhfUFJPQkxFTRAHEhMKD05PVF9JTl9BTllfUk9PTRAI",
+          "Eg0KCVJPT01fRlVMTBAJEhYKEk1BVENITUFLSU5HX0ZBSUxFRBAKKjUKDVNo",
+          "aWZ0Um9vbVR5cGUSCQoFTE9CQlkQABIHCgNNTU8QARIQCgxBQ1RJT05CQVRU",
+          "TEUQAio8CgtQbGF5ZXJDbGFzcxILCgdXYXJyaW9yEAASCgoGQXJjaGVyEAES",
+          "CAoETWFnZRACEgoKBlByaWVzdBADYgZwcm90bzM="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::MatchmakingRoom), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -100,7 +101,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::sGameObject), global::sGameObject.Parser, new[]{ "Oid", "PosX", "PosY", "PosZ" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PObject", "PClass", "CurrentHp", "MaxHp", "PlayerInputs" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::SPlayerInput), global::SPlayerInput.Parser, new[]{ "PosX", "PosY", "PosZ" }, null, null, null)
+          new pbr::GeneratedClrTypeInfo(typeof(global::SPlayerInput), global::SPlayerInput.Parser, new[]{ "Sensivity", "PosX", "PosY", "PosZ" }, null, null, null)
         }));
   }
   #endregion
@@ -123,11 +124,12 @@ public enum MSPlayerEvent {
   ///Interaction events
   /// </summary>
   [pbr::OriginalName("WORLD_UPDATE")] WorldUpdate = 0,
-  [pbr::OriginalName("MOVE")] Move = 1,
-  [pbr::OriginalName("ATTACK")] Attack = 2,
-  [pbr::OriginalName("DEAD")] Dead = 3,
-  [pbr::OriginalName("USE")] Use = 4,
-  [pbr::OriginalName("CREATE_PLAYER")] CreatePlayer = 5,
+  [pbr::OriginalName("ROOM_UPDATE")] RoomUpdate = 1,
+  [pbr::OriginalName("MOVE")] Move = 2,
+  [pbr::OriginalName("ATTACK")] Attack = 3,
+  [pbr::OriginalName("DEAD")] Dead = 4,
+  [pbr::OriginalName("USE")] Use = 5,
+  [pbr::OriginalName("CREATE_PLAYER")] CreatePlayer = 6,
 }
 
 public enum MSServerEvent {
@@ -3030,6 +3032,7 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public SPlayerInput(SPlayerInput other) : this() {
+    sensivity_ = other.sensivity_;
     posX_ = other.posX_;
     posY_ = other.posY_;
     posZ_ = other.posZ_;
@@ -3041,8 +3044,19 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
     return new SPlayerInput(this);
   }
 
+  /// <summary>Field number for the "sensivity" field.</summary>
+  public const int SensivityFieldNumber = 1;
+  private float sensivity_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float Sensivity {
+    get { return sensivity_; }
+    set {
+      sensivity_ = value;
+    }
+  }
+
   /// <summary>Field number for the "pos_x" field.</summary>
-  public const int PosXFieldNumber = 1;
+  public const int PosXFieldNumber = 2;
   private float posX_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosX {
@@ -3053,7 +3067,7 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
   }
 
   /// <summary>Field number for the "pos_y" field.</summary>
-  public const int PosYFieldNumber = 2;
+  public const int PosYFieldNumber = 3;
   private float posY_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosY {
@@ -3064,7 +3078,7 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
   }
 
   /// <summary>Field number for the "pos_z" field.</summary>
-  public const int PosZFieldNumber = 3;
+  public const int PosZFieldNumber = 4;
   private float posZ_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosZ {
@@ -3087,6 +3101,7 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
     if (ReferenceEquals(other, this)) {
       return true;
     }
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(Sensivity, other.Sensivity)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosZ, other.PosZ)) return false;
@@ -3096,6 +3111,7 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public override int GetHashCode() {
     int hash = 1;
+    if (Sensivity != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(Sensivity);
     if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
     if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
     if (PosZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosZ);
@@ -3112,16 +3128,20 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
 
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public void WriteTo(pb::CodedOutputStream output) {
-    if (PosX != 0F) {
+    if (Sensivity != 0F) {
       output.WriteRawTag(13);
+      output.WriteFloat(Sensivity);
+    }
+    if (PosX != 0F) {
+      output.WriteRawTag(21);
       output.WriteFloat(PosX);
     }
     if (PosY != 0F) {
-      output.WriteRawTag(21);
+      output.WriteRawTag(29);
       output.WriteFloat(PosY);
     }
     if (PosZ != 0F) {
-      output.WriteRawTag(29);
+      output.WriteRawTag(37);
       output.WriteFloat(PosZ);
     }
     if (_unknownFields != null) {
@@ -3132,6 +3152,9 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int CalculateSize() {
     int size = 0;
+    if (Sensivity != 0F) {
+      size += 1 + 4;
+    }
     if (PosX != 0F) {
       size += 1 + 4;
     }
@@ -3151,6 +3174,9 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
   public void MergeFrom(SPlayerInput other) {
     if (other == null) {
       return;
+    }
+    if (other.Sensivity != 0F) {
+      Sensivity = other.Sensivity;
     }
     if (other.PosX != 0F) {
       PosX = other.PosX;
@@ -3173,14 +3199,18 @@ public sealed partial class SPlayerInput : pb::IMessage<SPlayerInput> {
           _unknownFields = pb::UnknownFieldSet.MergeFieldFrom(_unknownFields, input);
           break;
         case 13: {
-          PosX = input.ReadFloat();
+          Sensivity = input.ReadFloat();
           break;
         }
         case 21: {
-          PosY = input.ReadFloat();
+          PosX = input.ReadFloat();
           break;
         }
         case 29: {
+          PosY = input.ReadFloat();
+          break;
+        }
+        case 37: {
           PosZ = input.ReadFloat();
           break;
         }

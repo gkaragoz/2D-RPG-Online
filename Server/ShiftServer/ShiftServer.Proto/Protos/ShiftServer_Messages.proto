@@ -37,11 +37,12 @@ enum MSPlayerEvent
 
 	//Interaction events
 	WORLD_UPDATE = 0;
-	MOVE = 1;
-	ATTACK = 2;
-	DEAD = 3;
-	USE = 4;
-	CREATE_PLAYER = 5;
+	ROOM_UPDATE = 1;
+	MOVE = 2;
+	ATTACK = 3;
+	DEAD = 4;
+	USE = 5;
+	CREATE_PLAYER = 6;
 
 };
 
@@ -200,9 +201,11 @@ enum PlayerClass {
 
 message SPlayerInput {
 	
-	float pos_x = 1;
-	float pos_y = 2;
-	float pos_z = 3;
+	float sensivity = 1;
+
+	float pos_x = 2;
+	float pos_y = 3;
+	float pos_z = 4;
 
 }
 

@@ -11,6 +11,12 @@ namespace ShiftServer.Base.Factory.Entities
 {
     public class Player : IGameObject
     {
+        public Player()
+        {
+            GameInputs = new SafeQueue<IGameInput>();
+            OwnedObjects = new List<IGameObject>();
+
+        }
         public string Name { get; set; } = "Warrior";
         public int ObjectId { get; set; }
         public PlayerClass Class { get; set; }
@@ -23,6 +29,8 @@ namespace ShiftServer.Base.Factory.Entities
         public List<IGameObject> OwnedObjects { get; set; }
         public SafeQueue<IGameInput> GameInputs { get; set; }
         public string OwnerSessionId { get; set; }
+        public double MovementSpeed { get; set; }
+        public double AttackSpeed { get; set; }
 
         public void OnAttack()
         {

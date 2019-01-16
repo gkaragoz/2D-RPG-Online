@@ -2,26 +2,42 @@
 using ShiftServer.Base.Factory.Movement;
 using ShiftServer.Base.Rooms;
 using ShiftServer.Proto.Db;
+using ShiftServer.Proto.Helper;
 using System;
 using System.Collections.Generic;
+using System.Threading;
+using System.Timers;
+using Telepathy;
 
 namespace ShiftServer.Base.Core
 {
     public class RoomProvider
     {
+        public static RoomProvider instance = null;
         private static readonly log4net.ILog log
                   = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private ServerProvider _sp = null;
-
+        private SafeDictionary<string, Thread> _roomThreads = new SafeDictionary<string,Thread>();
         public RoomProvider(ServerProvider mainServerProvider)
         {
+            instance = this;
             _sp = mainServerProvider;
         }
         public void CreateRoom(IRoom room)
         {
             _sp.world.Rooms.Add(room.Id, room);
+            room.IsStopTriggered = false;
+            Thread gameRoom = new Thread(room.OnGameStart)
+            {
+                IsBackground = true,
+                Name = "ShiftServer Room Starts " + room.Name
+            };
+            gameRoom.Start();
+
+            _roomThreads.Add(room.Id, gameRoom);
         }
+        
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
             if (!_sp.SessionCheck(data, shift))
@@ -89,7 +105,8 @@ namespace ShiftServer.Base.Core
                 newRoom.ServerLeaderId = shift.connectionId;
                 data.RoomData.Room.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
                 newRoom.MaxConnId = shift.connectionId;
-                _sp.world.Rooms.Add(newRoom.Id, newRoom);
+
+                this.CreateRoom(newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
                 shift.IsJoinedToRoom = true;
                 this.SpawnCharacterToRoom(shift, newRoom);
@@ -325,6 +342,9 @@ namespace ShiftServer.Base.Core
 
                     if (!isDestroyed)
                         prevRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerLeft);
+                    else
+                        this.OnRoomDispose(prevRoom);
+
 
 
                 }
@@ -448,8 +468,8 @@ namespace ShiftServer.Base.Core
 
                         }
                         else
-                        {
-
+                        {   
+                            this.OnRoomDispose(room);
                             _sp.world.Rooms.Remove(data.RoomData.Room.Id);
 
                         }
@@ -514,8 +534,23 @@ namespace ShiftServer.Base.Core
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
             MoveInput MoveInput = new MoveInput();
+            MoveInput.evt = data.Plevtid;
+            MoveInput.sensivity = data.PlayerInput.Sensivity;
             MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, data.PlayerInput.PosZ);
             shift.Inputs.Enqueue(MoveInput);
+        }
+
+        public void OnRoomDispose(IRoom room)
+        {
+            try
+            {
+                room.IsStopTriggered = true;
+              
+            }
+            catch (Exception err)
+            {
+                log.Error("Error occured when stopping game room", err);
+            }
         }
         private void SpawnCharacterToRoom(ShiftClient shift, IRoom room)
         {
