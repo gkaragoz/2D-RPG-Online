@@ -179,11 +179,9 @@ public class RoomManager : Menu {
 
             if (NetworkManager.instance.Reconciliaton) {
                 if (updatedPlayerObject.Oid == _myPlayerInfo.ObjectId) {
-                    for (int jj = 0; jj < _myPlayerController.playerInputs.Count; jj++) {
+                    for (int jj = 0; jj < _myPlayerController.PlayerInputs.Count; jj++) {
                         if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
-                            _myPlayerController.playerInputs.RemoveRange(jj, 1);
-                        } else {
-                            //_myPlayerController.Move(_myPlayerController.GetVectorByInput(jj));
+                            _myPlayerController.RemoveRange(jj, 1);
                         }
                     }
                 }

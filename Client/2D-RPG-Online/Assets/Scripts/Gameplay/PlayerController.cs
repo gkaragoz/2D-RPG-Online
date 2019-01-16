@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public Vector2 CurrentInput { get; private set; }
-    public Vector2 LastInput { get; private set; }
+    public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour {
     private PlayerHUD _playerHUD;
     private RoomPlayerInfo _playerInfo;
 
-    public List<SPlayerInput> playerInputs = new List<SPlayerInput>();
+    private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
     private void Awake() {
@@ -39,8 +39,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        LastInput = CurrentInput;
-
         _xInput = _joystick.Horizontal;
         _yInput = _joystick.Vertical;
 
@@ -57,7 +55,7 @@ public class PlayerController : MonoBehaviour {
 
             NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
-            playerInputs.Add(data.PlayerInput);
+            PlayerInputs.Add(data.PlayerInput);
         }
 
         if (HasInput) {
@@ -92,19 +90,19 @@ public class PlayerController : MonoBehaviour {
     }
 
     public Vector2 GetVectorByInput(int index) {
-        return new Vector2(playerInputs[index].PosX, playerInputs[index].PosY);
+        return new Vector2(PlayerInputs[index].PosX, PlayerInputs[index].PosY);
     }
 
     public void ClearPlayerInputs() {
-        playerInputs = new List<SPlayerInput>();
+        _playerInputs = new List<SPlayerInput>();
     }
 
     public void RemoveRange(int index, int count) {
-        playerInputs.RemoveRange(index, count);
+        _playerInputs.RemoveRange(index, count);
     }
 
     public int GetSequenceID(int index) {
-        return playerInputs[index].SequenceID;
+        return PlayerInputs[index].SequenceID;
     }
 
     public void SetJoystick(FixedJoystick joystick) {
@@ -128,7 +126,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void UpdateHUD() {
-        _playerHUD.Update(playerInputs.Count);
+        _playerHUD.Update(PlayerInputs.Count);
     }
 
 }
