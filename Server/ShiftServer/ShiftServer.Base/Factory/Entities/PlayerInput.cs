@@ -12,5 +12,6 @@ namespace ShiftServer.Base.Factory.Entities
     {
         public MSPlayerEvent eventType { get; set; }
         public Vector3 vector3 { get; set; }
+        public float sensivity { get; set; }
     }
 }

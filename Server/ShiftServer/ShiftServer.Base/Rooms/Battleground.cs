@@ -4,6 +4,7 @@ using ShiftServer.Base.Core;
 using ShiftServer.Base.Factory.Entities;
 using ShiftServer.Base.Groups;
 using ShiftServer.Proto.Db;
+using ShiftServer.Proto.Helper;
 using ShiftServer.Proto.Services;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Numerics;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Timers;
 using Telepathy;
 
 namespace ShiftServer.Base.Rooms
@@ -31,6 +33,7 @@ namespace ShiftServer.Base.Rooms
         public DateTime UpdateDate { get; set; }
         public DateTime GameStartDate { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsStopTriggered { get; set; }
         public int CreatedUserId { get; set; }
         public int ServerLeaderId { get; set; }
         public int DisposeInMilliseconds { get; set; }
@@ -70,8 +73,21 @@ namespace ShiftServer.Base.Rooms
 
         }
 
-        public void OnGameStart(ShiftServerData data, ShiftClient client)
+        public void OnGameStart()
         {
+            this.StartGameRoom();
+        }
+        private void StartGameRoom()
+        {
+            int timerInterval = TickrateUtil.Set(30);
+
+
+            while (!IsStopTriggered)
+            {
+                this.OnRoomUpdate();
+                Thread.Sleep(timerInterval);
+            }
+
 
         }
 
@@ -112,7 +128,7 @@ namespace ShiftServer.Base.Rooms
 
             List<IGameObject> gameObjectList = GameObjects.GetValues();
             Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
-            
+
             // if already exist in world
             if (currentPlayer != null)
             {
@@ -140,6 +156,9 @@ namespace ShiftServer.Base.Rooms
                 player.ObjectId = Interlocked.Increment(ref ObjectCounter);
                 player.Name = chardata.Name;
                 player.MaxHP = chardata.Stats.Health;
+                player.CurrentHP = chardata.Stats.Health;
+                player.AttackSpeed = chardata.Stats.AttackSpeed;
+                player.MovementSpeed = chardata.Stats.MovementSpeed;
                 player.CurrentHP = chardata.Stats.Health;
                 player.Position = new Vector3(0, 0, 0);
                 player.Rotation = new Vector3(0, 0, 0);
@@ -205,8 +224,21 @@ namespace ShiftServer.Base.Rooms
         }
         public void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data)
         {
+            List<ShiftClient> clientList = this.Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSession == null)
+                    continue;
 
+                if (clientList[i].connectionId == currentClient.connectionId)
+                    continue;
 
+                clientList[i].SendPacket(state, data);
+            }
+        }
+
+        public void BroadcastDataToRoom(ShiftClient currentClient, MSPlayerEvent state, ShiftServerData data)
+        {
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
@@ -229,24 +261,50 @@ namespace ShiftServer.Base.Rooms
 
                 ShiftServerData data = new ShiftServerData();
 
-                clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
+                clientList[i].SendPacket(MSPlayerEvent.RoomUpdate, data);
             }
         }
         public void OnRoomUpdate()
         {
+
+            log.Debug("Battleground room update!");
             IGameObject gObject = null;
             for (int i = 0; i < ObjectCounter; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);
+                if (gObject == null)
+                    continue;
+
                 IGameInput gInput = null;
                 PlayerInput pInput = null;
                 for (int kk = 0; kk < gObject.GameInputs.Count; kk++)
                 {
                     gObject.GameInputs.TryDequeue(out gInput);
+                    if (gInput != null)
+                    {
+                        switch (gInput.eventType)
+                        {                           
+                            case MSPlayerEvent.Move:
+                                gObject.Position += Vector3.Normalize(gInput.vector3) * (float)gObject.MovementSpeed;
+                                break;
+                            case MSPlayerEvent.Attack:
+                                break;
+                            case MSPlayerEvent.Dead:
+                                break;
+                            case MSPlayerEvent.Use:
+                                break;
+                            default:
+                                break;
+                        }
+                    }
                     //pInput = (PlayerInput)gInput;
                 }
             }
+
+            SendRoomState();
         }
+       
+
         public IGroup GetRandomTeam()
         {
             var RoomTeams = this.Teams.GetValues();
@@ -312,7 +370,7 @@ namespace ShiftServer.Base.Rooms
 
                 }
             }
-         
+
 
             return null;
         }

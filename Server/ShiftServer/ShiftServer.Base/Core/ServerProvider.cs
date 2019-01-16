@@ -13,6 +13,7 @@ namespace ShiftServer.Base.Core
 {
     public class ServerProvider
     {
+        public static ServerProvider instance = null;
         private static readonly log4net.ILog log
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -23,8 +24,10 @@ namespace ShiftServer.Base.Core
         public Thread listenerThread = null;
 
         public DBServiceProvider ctx = null;
+        public int tickRate = 30;
         public ServerProvider(IZone createdWorld)
         {
+            instance = this;
             world = createdWorld;
             dataHandler = new ServerDataHandler();
 
@@ -57,10 +60,8 @@ namespace ShiftServer.Base.Core
 
             log.Info("SERVER PORT: " + port);
             log.Info("SERVER TICK: " + tickrate);
-
+            tickRate = tickrate;
             int timerInterval = TickrateUtil.Set(tickrate);
-
-
             SetInterval(timerInterval, UpdateWorld);
 
             listenerThread = new Thread(GetMessages);
@@ -224,12 +225,15 @@ namespace ShiftServer.Base.Core
                             bool isDestroyed = false;
                             if (room.Clients.Count == 0)
                             {
+                                
                                 this.world.Rooms.Remove(room.Id);
                                 isDestroyed = true;
                             }
 
                             if (!isDestroyed)
                                 room.BroadcastToRoom(DcedClient, MSServerEvent.RoomPlayerLeft);
+                            else
+                                RoomProvider.instance.OnRoomDispose(room);
 
                         }
 
@@ -401,7 +405,6 @@ namespace ShiftServer.Base.Core
                 return result;
             }
         }
-
         public bool FillAccountData(ShiftServerData data, ShiftClient shift)
         {
             try
