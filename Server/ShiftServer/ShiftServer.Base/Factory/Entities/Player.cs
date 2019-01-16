@@ -44,7 +44,7 @@ namespace ShiftServer.Base.Factory.Entities
 
         public void OnMove(Vector3 input)
         {
-            this.Position += Vector3.Normalize(input) * (float)this.MovementSpeed;
+            this.Position += Vector3.Normalize(input) * (float)this.MovementSpeed * 0.02f;
         }
     }
 }

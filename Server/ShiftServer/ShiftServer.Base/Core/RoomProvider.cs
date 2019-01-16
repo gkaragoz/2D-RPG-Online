@@ -81,7 +81,6 @@ namespace ShiftServer.Base.Core
                     data.RoomData.PlayerInfo.TeamId = group.Id;
                     data.RoomData.PlayerInfo.Username = acc.SelectedCharName;
                     data.RoomData.PlayerInfo.IsReady = shift.IsReady;
-                    data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
 
 
                     if (newRoom.ServerLeaderId == shift.connectionId)
@@ -112,8 +111,8 @@ namespace ShiftServer.Base.Core
 
                 this.CreateRoom(newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
-                shift.IsJoinedToRoom = true;
                 this.SpawnCharacterToRoom(shift, newRoom);
+                shift.IsJoinedToRoom = true;
             }
             else
             {
@@ -206,6 +205,7 @@ namespace ShiftServer.Base.Core
 
 
                     ShiftClient cl = null;
+                    this.SpawnCharacterToRoom(shift, result);
 
 
                     for (int i = 0; i <= result.MaxConnId; i++)
@@ -236,8 +236,11 @@ namespace ShiftServer.Base.Core
 
                     //if (result.SocketIdSessionLookup.Count > 1)
                     //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
+                    data.RoomData.PlayerInfo = new RoomPlayerInfo();
+                    data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
+                    shift.IsJoinedToRoom = true;
                     shift.SendPacket(MSServerEvent.RoomJoin, data);
-                    this.SpawnCharacterToRoom(shift, result);
+
                 }
                 else
                 {
@@ -348,8 +351,6 @@ namespace ShiftServer.Base.Core
                         prevRoom.BroadcastToRoom(shift, MSServerEvent.RoomPlayerLeft);
                     else
                         this.OnRoomDispose(prevRoom);
-
-
 
                 }
                 else
@@ -539,8 +540,20 @@ namespace ShiftServer.Base.Core
         {
             MoveInput MoveInput = new MoveInput();
             MoveInput.eventType = data.Plevtid;
-            MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, data.PlayerInput.PosZ);
-            shift.Inputs.Enqueue(MoveInput);
+            MoveInput.vector3 = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, 0);
+            log.Debug($"{shift.CurrentObject.ObjectId} wants to move to {MoveInput.vector3.ToString()}");
+
+            IRoom room = null;
+            _sp.world.Rooms.TryGetValue(shift.JoinedRoomId, out room);
+            if (room != null)
+            {
+                IGameObject go = null;
+                room.GameObjects.TryGetValue(shift.CurrentObject.ObjectId, out go);
+                if (go != null)
+                {
+                    go.GameInputs.Enqueue(MoveInput);
+                }
+            }
         }
 
         public void OnRoomDispose(IRoom room)

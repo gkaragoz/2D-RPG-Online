@@ -27,7 +27,7 @@ namespace ShiftServer.Base.Core
 
         int MaxUser { get; set; }
         void OnPlayerJoin(Character ch, ShiftClient client);
-        void OnPlayerCreate(ShiftServerData data, ShiftClient client);
+        void OnPlayerCreate(IGameObject gameObject);
         void OnObjectDestroy(IGameObject gameObject);
         void OnObjectCreate(IGameObject gameObject);
         void OnObjectMove(ShiftServerData data, ShiftClient client);

@@ -17,6 +17,8 @@ namespace ShiftServer.Base.Core
         Vector3 Scale { get; set; }
         double MovementSpeed { get; set; }
         double AttackSpeed { get; set; }
+        int CurrentHP { get; set; }
+        int MaxHP { get; set; }
         void OnAttack();
         void OnHit();
         void OnMove(Vector3 rotation);
