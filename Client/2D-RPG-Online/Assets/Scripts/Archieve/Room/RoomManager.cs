@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -139,10 +140,10 @@ public class RoomManager : Menu {
     }
 
     private void CreateMyPlayer(PlayerObject playerObject) {
-        GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PObject.PosX, playerObject.PObject.PosY), Quaternion.identity);
+        GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PosX, playerObject.PosY), Quaternion.identity);
 
         player.GetComponent<PlayerHUD>().SetName(_myPlayerInfo.Username);
-        _myPlayerInfo.ObjectId = playerObject.PObject.Oid;
+        _myPlayerInfo.ObjectId = playerObject.Oid;
 
         _myPlayerController = player.GetComponent<PlayerController>();
         _myPlayerController.Initialize(_myPlayerInfo);
@@ -171,13 +172,11 @@ public class RoomManager : Menu {
     private void OnRoomUpdated(ShiftServerData data) {
         Debug.Log("OnRoomUpdated: " + data);
 
-        for (int ii = 0; ii < data.GoUpdatePacket.ObjectList.Count; ii++) {
-            Debug.Log(data.GoUpdatePacket.ObjectList[ii]);
+        for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
+            Debug.Log(data.GoUpdatePacket.PlayerList[ii]);
 
-            sGameObject gameObject = data.GoUpdatePacket.ObjectList[ii];
-
-            if (data.GoUpdatePacket.ObjectList[ii].Oid == _myPlayerInfo.ObjectId) {
-                _myPlayerController.transform.position = new Vector2(data.GoUpdatePacket.ObjectList[ii].PosX, data.GoUpdatePacket.ObjectList[ii].PosY);
+            if (data.GoUpdatePacket.PlayerList[ii].Oid == _myPlayerInfo.ObjectId) {
+                _myPlayerController.transform.position = new Vector2(data.GoUpdatePacket.PlayerList[ii].PosX, data.GoUpdatePacket.PlayerList[ii].PosY);
             }
         }
     }
