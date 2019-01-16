@@ -142,13 +142,15 @@ message MSSRoom {
 	repeated string Teams = 9;
 
 }
+
 message RoomPlayerInfo {
 	string Username = 1;
 	string TeamId = 2;
 	bool IsJoinedToTeam = 3;
 	bool IsReady = 4;
 	bool IsLeader = 5;
-	int32 ObjectId = 6;
+	PlayerObject CurrentGObject = 6;
+	int32 ObjectId = 7;
 }
 
 message AccountData {

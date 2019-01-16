@@ -192,7 +192,6 @@ namespace ShiftServer.Base.Core
                     shift.IsJoinedToRoom = true;
 
                     result.MaxConnId = result.MaxConnId < shift.connectionId ? shift.connectionId : result.MaxConnId;
-                    result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
 
 
                     data.RoomData.Room.Name = result.Name;
@@ -237,8 +236,19 @@ namespace ShiftServer.Base.Core
                     //if (result.SocketIdSessionLookup.Count > 1)
                     //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
+                    data.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
+                    {
+                         AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                         MovementSpeed = (float)shift.CurrentObject.MovementSpeed, 
+                         CurrentHp = shift.CurrentObject.CurrentHP,
+                         MaxHp = shift.CurrentObject.MaxHP,
+                         PosX = shift.CurrentObject.Position.X,
+                         PosY = shift.CurrentObject.Position.Y,
+                         PosZ = shift.CurrentObject.Position.Z
+                    };
                     data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
                     shift.IsJoinedToRoom = true;
+                    result.BroadcastToRoom(shift, MSServerEvent.RoomPlayerJoined);
                     shift.SendPacket(MSServerEvent.RoomJoin, data);
 
                 }
