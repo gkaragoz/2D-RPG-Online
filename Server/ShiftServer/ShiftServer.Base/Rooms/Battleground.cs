@@ -81,7 +81,7 @@ namespace ShiftServer.Base.Rooms
         }
         private void StartGameRoom()
         {
-            int timerInterval = TickrateUtil.Set(30);
+            int timerInterval = TickrateUtil.Set(10);
 
 
             while (!IsStopTriggered)
@@ -97,11 +97,11 @@ namespace ShiftServer.Base.Rooms
         {
         }
 
-        public void OnObjectCreate(IGameObject gameObject)
+        public void OnPlayerCreate(IGameObject gameObject)
         {
             gameObject.ObjectId = Interlocked.Increment(ref ObjectCounter);
             GameObjects.Add(gameObject.ObjectId, gameObject);
-            GOUpdatePacket.ObjectList.Add(new sGameObject
+            GOUpdatePacket.PlayerList.Add(new PlayerObject
             {
                 Oid = gameObject.ObjectId,
                 PosX = gameObject.Position.X,
@@ -113,8 +113,8 @@ namespace ShiftServer.Base.Rooms
         public void OnObjectDestroy(IGameObject gameObject)
         {
             GameObjects.Remove(gameObject.ObjectId);
-            var item = GOUpdatePacket.ObjectList.Where(x => x.Oid == gameObject.ObjectId).FirstOrDefault();
-            GOUpdatePacket.ObjectList.Remove(item);
+            var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectId).FirstOrDefault();
+            GOUpdatePacket.PlayerList.Remove(item);
         }
 
         public void OnObjectMove(ShiftServerData data, ShiftClient client)
@@ -148,14 +148,13 @@ namespace ShiftServer.Base.Rooms
                     PClass = currentPlayer.Class,
                     CurrentHp = currentPlayer.CurrentHP,
                     MaxHp = currentPlayer.MaxHP,
-                    PObject = new sGameObject
-                    {
-                        Oid = currentPlayer.ObjectId,
-                        PosX = currentPlayer.Position.X,
-                        PosY = currentPlayer.Position.Y,
-                        PosZ = currentPlayer.Position.Z
-                    }
+                    PosX = currentPlayer.Position.X,
+                    PosY = currentPlayer.Position.Y,
+                    PosZ = currentPlayer.Position.Z,
+                    AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                    MovementSpeed = (float)shift.CurrentObject.MovementSpeed
                 };
+
 
 
             }
@@ -171,32 +170,33 @@ namespace ShiftServer.Base.Rooms
                 player.AttackSpeed = chardata.Stats.AttackSpeed;
                 player.MovementSpeed = chardata.Stats.MovementSpeed;
                 player.CurrentHP = chardata.Stats.Health;
-                player.Position = new Vector3(0, 0, 0);
-                player.Rotation = new Vector3(0, 0, 0);
-                player.Scale = new Vector3(1, 1, 1);
+                player.Position = new Vector3(0.0f, 0.0f, 0.0f);
+                player.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
+                player.Scale = new Vector3(1f, 1f, 1f);
 
-                this.OnObjectCreate(player);
+                this.OnPlayerCreate(player);
                 log.Info($"[CreatePlayer] OnRoom:{this.Id} Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
                 sendData.SPlayerObject = new PlayerObject
                 {
                     CurrentHp = player.CurrentHP,
                     MaxHp = player.MaxHP,
-                    PClass = player.Class,
-                    PObject = new sGameObject
-                    {
-                        Oid = player.ObjectId,
-
-                        PosX = player.Position.X,
-                        PosY = player.Position.Y,
-                        PosZ = player.Position.Z,
-                    }
+                    Oid = player.ObjectId,
+                    AttackSpeed = (float)player.AttackSpeed,
+                    MovementSpeed = (float)player.MovementSpeed,
+                    PosX = player.Position.X,
+                    PosY = player.Position.Y,
+                    PosZ = player.Position.Z
                 };
+
+
+                currentPlayer = player;
             }
             shift.CurrentObject = currentPlayer;
             shift.Inputs = new SafeQueue<IGameInput>();
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
+
         public void BroadcastToRoom(ShiftClient currentClient, MSServerEvent evt)
         {
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
@@ -269,18 +269,21 @@ namespace ShiftServer.Base.Rooms
             data.GoUpdatePacket = new UpdateGOList();
 
             IGameObject gObject = null;
-            for (int i = 0; i < ObjectCounter; i++)
+            for (int i = 0; i <= ObjectCounter; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);
                 if (gObject == null)
                     continue;
 
-                data.GoUpdatePacket.ObjectList.Add(new sGameObject
+                data.GoUpdatePacket.PlayerList.Add(new PlayerObject
                 {
                     Oid = gObject.ObjectId,
-                    PosX = gObject.Position.X,
-                    PosY = gObject.Position.Y,
-                    PosZ = gObject.Position.Z
+                    PosX = (float)gObject.Position.X,
+                    PosY = (float)gObject.Position.Y,
+                    PosZ = (float)gObject.Position.Z,
+                    MovementSpeed = (float)gObject.MovementSpeed,
+                    AttackSpeed = (float)gObject.AttackSpeed,
+                    CurrentHp = gObject.CurrentHP
                 });
             }
 
@@ -296,9 +299,8 @@ namespace ShiftServer.Base.Rooms
         public void OnRoomUpdate()
         {
 
-            log.Debug("Battleground room update!");
             IGameObject gObject = null;
-            for (int i = 0; i < ObjectCounter; i++)
+            for (int i = 0; i <= ObjectCounter; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);
                 if (gObject == null)
@@ -306,7 +308,7 @@ namespace ShiftServer.Base.Rooms
 
                 IGameInput gInput = null;
                 PlayerInput pInput = null;
-                for (int kk = 0; kk < gObject.GameInputs.Count; kk++)
+                for (int kk = 0; kk <= gObject.GameInputs.Count; kk++)
                 {
                     gObject.GameInputs.TryDequeue(out gInput);
                     if (gInput != null)
@@ -315,6 +317,7 @@ namespace ShiftServer.Base.Rooms
                         {
                             case MSPlayerEvent.Move:
                                 gObject.OnMove(gInput.vector3);
+                                log.Debug($"gObject: {gObject.ObjectId} Move  {gInput.vector3.ToString()}!");
 
                                 break;
                             case MSPlayerEvent.Attack:
@@ -404,6 +407,10 @@ namespace ShiftServer.Base.Rooms
 
 
             return null;
+        }
+
+        public void OnObjectCreate(IGameObject gameObject)
+        {
         }
     }
 }

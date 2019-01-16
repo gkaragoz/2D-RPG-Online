@@ -62,15 +62,14 @@ namespace ShiftServer.Base.Worlds
                     PClass = currentPlayer.Class,
                     CurrentHp = currentPlayer.CurrentHP,
                     MaxHp = currentPlayer.MaxHP,
-                    PObject = new sGameObject
-                    {
-                        Oid = currentPlayer.ObjectId,                      
-                        PosX = currentPlayer.Position.X,
-                        PosY = currentPlayer.Position.Y,
-                        PosZ = currentPlayer.Position.Z
-                    }
+                    AttackSpeed = (float)currentPlayer.AttackSpeed,
+                    MovementSpeed = (float)currentPlayer.MovementSpeed,
+                    Oid = currentPlayer.ObjectId,
+                    PosX = currentPlayer.Position.X,
+                    PosY = currentPlayer.Position.Y,
+                    PosZ = currentPlayer.Position.Z
                 };
-                
+
 
             }
             else
@@ -93,14 +92,13 @@ namespace ShiftServer.Base.Worlds
                     CurrentHp = player.CurrentHP,
                     MaxHp = player.MaxHP,
                     PClass = player.Class,
-                    PObject = new sGameObject
-                    {
-                        Oid = player.ObjectId,
+                    AttackSpeed = (float)player.AttackSpeed,
+                    MovementSpeed = (float)player.MovementSpeed,
+                    Oid = player.ObjectId,
+                    PosX = player.Position.X,
+                    PosY = player.Position.Y,
+                    PosZ = player.Position.Z,
 
-                        PosX = player.Position.X,
-                        PosY = player.Position.Y,
-                        PosZ = player.Position.Z,
-                    }
                 };
             }
 
@@ -160,7 +158,7 @@ namespace ShiftServer.Base.Worlds
 
                 clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
             }
-  
+
         }
 
     }
