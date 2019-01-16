@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
@@ -9,10 +7,16 @@ public class CharacterController : MonoBehaviour {
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
 
-    private void Start() {
+    private RoomPlayerInfo _playerInfo;
+
+    private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
         _characterAnimator = GetComponent<CharacterAnimator>();
+    }
+
+    public void Initiailize(RoomPlayerInfo playerInfo) {
+        _characterMotor.SetMovementSpeed(playerInfo.currentGObject.movementSpeed);
     }
 
     public void Attack() {

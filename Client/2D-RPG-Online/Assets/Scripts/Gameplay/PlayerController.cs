@@ -28,7 +28,6 @@ public class PlayerController : MonoBehaviour {
 
     private CharacterController _characterController;
     private PlayerHUD _playerHUD;
-    private RoomPlayerInfo _playerInfo;
 
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
@@ -74,9 +73,9 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void Initialize(RoomPlayerInfo playerInfo) {
-        this._playerInfo = playerInfo;
+        _playerHUD.SetName(playerInfo.Username);
 
-        _playerHUD.SetName(this._playerInfo.Username);
+        InitializeCharacter(playerInfo);
     }
 
     public void SetShadowPosition(Vector2 position) {
@@ -107,6 +106,10 @@ public class PlayerController : MonoBehaviour {
 
     public void SetJoystick(FixedJoystick joystick) {
         this._joystick = joystick;
+    }
+
+    public void InitializeCharacter(RoomPlayerInfo playerInfo) {
+        _characterController.Initiailize(playerInfo);
     }
 
     public void Attack() {
