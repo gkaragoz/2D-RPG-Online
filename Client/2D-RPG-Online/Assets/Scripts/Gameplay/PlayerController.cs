@@ -58,15 +58,15 @@ public class PlayerController : MonoBehaviour {
             NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
             playerInputs.Add(data.PlayerInput);
-
         }
+
         if (HasInput) {
             Move();
         } else {
             Stop();
         }
 
-        //Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
+        UpdateHUD();
     }
 
     private void Update() {
@@ -125,6 +125,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Stop() {
         _characterController.Stop();
+    }
+
+    private void UpdateHUD() {
+        _playerHUD.Update(playerInputs.Count);
     }
 
 }
