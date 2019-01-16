@@ -20,12 +20,6 @@ public class PlayerController : MonoBehaviour {
     [SerializeField]
     private Joystick _joystick;
 
-    [Header("Settings")]
-    [SerializeField]
-    private bool _controllerInput;
-    [SerializeField]
-    private bool _joystickInput;
-
     private CharacterController _characterController;
 
     private void Start() {
@@ -35,15 +29,10 @@ public class PlayerController : MonoBehaviour {
     private void FixedUpdate() {
         LastInput = CurrentInput;
 
-        if (_controllerInput) {
-            _xInput = Input.GetAxisRaw("Horizontal");
-            _yInput = Input.GetAxisRaw("Vertical");
-        }
+        Debug.Log(_joystick.Direction);
 
-        if (_joystickInput && (_xInput == 0 || _yInput == 0)) {
-            _xInput = _joystick.Horizontal;
-            _yInput = _joystick.Vertical;
-        }
+        _xInput = _joystick.Horizontal;
+        _yInput = _joystick.Vertical;
 
         CurrentInput = new Vector2(_xInput, _yInput);
 
@@ -52,9 +41,6 @@ public class PlayerController : MonoBehaviour {
         } else {
             Stop();
         }
-
-        _xInput = 0;
-        _yInput = 0;
     }
 
     private void Update() {
