@@ -19,11 +19,16 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
+    public bool Reconciliaton { get { return _reconciliaton; } }
+
     [SerializeField]
     private string _hostName = "127.0.0.0";
 
     [SerializeField]
     private int _port = 1337;
+
+    [SerializeField]
+    private bool _reconciliaton;
 
     private ConfigData _cfg;
 

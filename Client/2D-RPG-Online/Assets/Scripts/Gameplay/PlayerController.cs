@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -22,10 +23,15 @@ public class PlayerController : MonoBehaviour {
     private Joystick _joystick;
     [SerializeField]
     private Button _btnAttack;
+    [SerializeField]
+    private GameObject _shadowObject;
 
     private CharacterController _characterController;
     private PlayerHUD _playerHUD;
     private RoomPlayerInfo _playerInfo;
+
+    public List<SPlayerInput> playerInputs = new List<SPlayerInput>();
+    private int _nonAckInputIndex = 0;
 
     private void Start() {
         _characterController = GetComponent<CharacterController>();
@@ -44,11 +50,17 @@ public class PlayerController : MonoBehaviour {
             ShiftServerData data = new ShiftServerData();
 
             data.PlayerInput = new SPlayerInput();
+            data.PlayerInput.SequenceID = _nonAckInputIndex++;
+
             data.PlayerInput.PosX = CurrentInput.x;
             data.PlayerInput.PosY = CurrentInput.y;
 
             NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
+
+            playerInputs.Add(data.PlayerInput);
         }
+
+        Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
 
         if (HasInput) {
             Move();
@@ -67,6 +79,32 @@ public class PlayerController : MonoBehaviour {
         this._playerInfo = playerInfo;
 
         _playerHUD.SetName(this._playerInfo.Username);
+    }
+
+    public void SetShadowPosition(Vector2 position) {
+        _shadowObject.transform.position = position;
+
+        if (_shadowObject.transform.position == this.transform.position) {
+            _shadowObject.gameObject.SetActive(false);
+        } else {
+            _shadowObject.gameObject.SetActive(true);
+        }
+    }
+
+    public Vector2 GetVectorByInput(int index) {
+        return new Vector2(playerInputs[index].PosX, playerInputs[index].PosY);
+    }
+
+    public void ClearPlayerInputs() {
+        playerInputs = new List<SPlayerInput>();
+    }
+
+    public void RemoveRange(int index, int count) {
+        playerInputs.RemoveRange(index, count);
+    }
+
+    public int GetSequenceID(int index) {
+        return playerInputs[index].SequenceID;
     }
 
     public void SetJoystick(FixedJoystick joystick) {

@@ -175,8 +175,25 @@ public class RoomManager : Menu {
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             Debug.Log(data.GoUpdatePacket.PlayerList[ii]);
 
-            if (data.GoUpdatePacket.PlayerList[ii].Oid == _myPlayerInfo.ObjectId) {
-                _myPlayerController.transform.position = new Vector2(data.GoUpdatePacket.PlayerList[ii].PosX, data.GoUpdatePacket.PlayerList[ii].PosY);
+            PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
+
+            Vector3 shadowPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
+            _myPlayerController.SetShadowPosition(shadowPosition);
+
+            Debug.Log(updatedPlayerObject.LastProcessedSequenceID);
+
+            if (NetworkManager.instance.Reconciliaton) {
+                if (updatedPlayerObject.Oid == _myPlayerInfo.ObjectId) {
+                    for (int jj = 0; jj < _myPlayerController.playerInputs.Count; jj++) {
+                        if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
+                            _myPlayerController.playerInputs.RemoveRange(jj, 1);
+                        } else {
+                            _myPlayerController.Move(_myPlayerController.GetVectorByInput(jj));
+                        }
+                    }
+                }
+            } else {
+                _myPlayerController.ClearPlayerInputs();
             }
         }
     }
