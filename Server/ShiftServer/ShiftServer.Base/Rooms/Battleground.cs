@@ -103,10 +103,14 @@ namespace ShiftServer.Base.Rooms
             GameObjects.Add(gameObject.ObjectId, gameObject);
             GOUpdatePacket.PlayerList.Add(new PlayerObject
             {
+                Name = gameObject.Name,
+                MovementSpeed = (float)gameObject.MovementSpeed,
+                AttackSpeed = (float)gameObject.AttackSpeed,
                 Oid = gameObject.ObjectId,
                 PosX = gameObject.Position.X,
                 PosY = gameObject.Position.Y,
                 PosZ = gameObject.Position.Z,
+
             });
         }
 
@@ -194,6 +198,18 @@ namespace ShiftServer.Base.Rooms
             }
             shift.CurrentObject = currentPlayer;
             shift.Inputs = new SafeQueue<IGameInput>();
+            sendData.RoomData = new RoomData();
+            sendData.RoomData.PlayerInfo = new RoomPlayerInfo();
+            sendData.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
+            {
+                AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
+                CurrentHp = shift.CurrentObject.CurrentHP,
+                MaxHp = shift.CurrentObject.MaxHP,
+                PosX = shift.CurrentObject.Position.X,
+                PosY = shift.CurrentObject.Position.Y,
+                PosZ = shift.CurrentObject.Position.Z
+            };
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
 
