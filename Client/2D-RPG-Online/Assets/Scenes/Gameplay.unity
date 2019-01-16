@@ -712,6 +712,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Worm
       objectReference: {fileID: 0}
+    - target: {fileID: 1582769494782526, guid: 2631d2ceac618ba4c820160b89dd5fcd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4235633334642178, guid: 2631d2ceac618ba4c820160b89dd5fcd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -769,37 +773,37 @@ PrefabInstance:
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 70.725
       objectReference: {fileID: 0}
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -15
       objectReference: {fileID: 0}
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 121.45
       objectReference: {fileID: 0}
     - target: {fileID: 224123526743659710, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 27.31
       objectReference: {fileID: 0}
     - target: {fileID: 224510615195106112, guid: 2631d2ceac618ba4c820160b89dd5fcd,
         type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: -8.550003
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2631d2ceac618ba4c820160b89dd5fcd, type: 3}

@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour {
     public List<SPlayerInput> playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
-    private void Start() {
+    private void Awake() {
         _characterController = GetComponent<CharacterController>();
         _playerHUD = GetComponent<PlayerHUD>();
     }
@@ -57,16 +57,15 @@ public class PlayerController : MonoBehaviour {
 
             NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
-            playerInputs.Add(data.PlayerInput);
+                Move();
+                playerInputs.Add(data.PlayerInput);
+          
         }
-
-        Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
-
-        if (HasInput) {
-            Move();
-        } else {
+        if (!HasInput) {
             Stop();
         }
+        //Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
+
     }
 
     private void Update() {

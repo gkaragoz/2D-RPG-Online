@@ -142,7 +142,6 @@ public class RoomManager : Menu {
     private void CreateMyPlayer(PlayerObject playerObject) {
         GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PosX, playerObject.PosY), Quaternion.identity);
 
-        player.GetComponent<PlayerHUD>().SetName(_myPlayerInfo.Username);
         _myPlayerInfo.ObjectId = playerObject.Oid;
 
         _myPlayerController = player.GetComponent<PlayerController>();
@@ -170,8 +169,6 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomUpdated(ShiftServerData data) {
-        Debug.Log("OnRoomUpdated: " + data);
-
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             Debug.Log(data.GoUpdatePacket.PlayerList[ii]);
 
@@ -180,15 +177,13 @@ public class RoomManager : Menu {
             Vector3 shadowPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
             _myPlayerController.SetShadowPosition(shadowPosition);
 
-            Debug.Log(updatedPlayerObject.LastProcessedSequenceID);
-
             if (NetworkManager.instance.Reconciliaton) {
                 if (updatedPlayerObject.Oid == _myPlayerInfo.ObjectId) {
                     for (int jj = 0; jj < _myPlayerController.playerInputs.Count; jj++) {
                         if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
                             _myPlayerController.playerInputs.RemoveRange(jj, 1);
                         } else {
-                            _myPlayerController.Move(_myPlayerController.GetVectorByInput(jj));
+                            //_myPlayerController.Move(_myPlayerController.GetVectorByInput(jj));
                         }
                     }
                 }
