@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
-    
+
     public bool HasInput {
         get {
             return (CurrentInput != Vector2.zero) ? true : false;
@@ -57,15 +57,16 @@ public class PlayerController : MonoBehaviour {
 
             NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
-                Move();
-                playerInputs.Add(data.PlayerInput);
-          
+            playerInputs.Add(data.PlayerInput);
+
         }
-        if (!HasInput) {
+        if (HasInput) {
+            Move();
+        } else {
             Stop();
         }
-        //Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
 
+        //Debug.Log("NON-Ack Player Inputs: " + playerInputs.Count);
     }
 
     private void Update() {
