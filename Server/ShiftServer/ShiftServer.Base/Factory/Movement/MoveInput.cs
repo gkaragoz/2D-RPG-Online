@@ -13,5 +13,6 @@ namespace ShiftServer.Base.Factory.Movement
         public Vector3 vector3 { get; set; }
         public float sensivity { get; set; }
         public MSPlayerEvent eventType { get; set; }
+        public int sequenceID { get; set; }
     }
 }

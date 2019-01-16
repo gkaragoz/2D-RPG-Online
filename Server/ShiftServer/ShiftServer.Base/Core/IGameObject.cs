@@ -19,6 +19,7 @@ namespace ShiftServer.Base.Core
         double AttackSpeed { get; set; }
         int CurrentHP { get; set; }
         int MaxHP { get; set; }
+        int LastProcessedSequenceID { get; set; }
         void OnAttack();
         void OnHit();
         void OnMove(Vector3 rotation);

@@ -224,10 +224,15 @@ namespace ShiftServer.Base.Core
                             room.SocketIdSessionLookup.Remove(DcedClient.UserSession.GetSid());
                             bool isDestroyed = false;
                             if (room.Clients.Count == 0)
-                            {
-                                
+                            {                               
                                 this.world.Rooms.Remove(room.Id);
                                 isDestroyed = true;
+                            }
+                            else
+                            {
+                                if (DcedClient.CurrentObject != null)
+                                    room.GameObjects.Remove(DcedClient.CurrentObject.ObjectId);
+
                             }
 
                             if (!isDestroyed)
