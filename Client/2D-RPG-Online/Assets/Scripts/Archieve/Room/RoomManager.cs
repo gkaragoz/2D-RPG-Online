@@ -2,6 +2,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -25,7 +26,7 @@ public class RoomManager : Menu {
 
     public Action onRoomCreated;
     public Action onRoomJoined;
-    
+
 
     [SerializeField]
     private GameObject _playerPrefab;
@@ -45,6 +46,8 @@ public class RoomManager : Menu {
     private RoomPlayerInfo _leaderPlayerInfo;
     private FixedJoystick _joystick;
     private Button _btnAttack;
+
+    public long roomUpdateTimeDifference;
 
     private void Start() {
         NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
@@ -74,6 +77,45 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatus, OnPlayerReadyStatusChanged);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
+    }
+
+    private void Update() {
+        DateTime renderTime = DateTime.UtcNow;
+        long unixTime = ((DateTimeOffset)renderTime).ToUnixTimeSeconds();
+
+        //long renderTimestamp = unixTime - (1000 / 3);
+        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0));
+
+        var currInterpolationTime = now.TotalSeconds;
+        //var clientRenderTime = currInterpolationTime - GameManager.timeBetweenTick;
+        var renderTimestamp = currInterpolationTime - 3.0f / 1000.0f;
+
+        for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
+            PlayerController entity = _otherPlayerControllers[ii];
+           
+            // Find the two authoritative positions surrounding the rendering timestamp.
+            List<PlayerController.PositionEntry>  buffer = entity.PositionBuffer;
+
+            // Drop older positions.
+            while (buffer.Count >= 2 && buffer[1].updateTime <= renderTimestamp) {
+                entity.PositionBuffer = entity.PositionBuffer.Skip(1).ToList();
+            }
+
+            // Interpolate between the two surrounding authoritative positions.
+            if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
+                Vector2 firstVector = entity.PositionBuffer[0].vector2;
+                Vector2 secondVector = entity.PositionBuffer[1].vector2;
+
+                double t0 = entity.PositionBuffer[0].updateTime;
+                double t1 = entity.PositionBuffer[1].updateTime;
+                
+                double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
+                double interpY = firstVector.y + (secondVector.y - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
+                
+                Vector2 directionVector = new Vector2((float)interpX, (float)interpY);
+                entity.Move(directionVector);
+            }
+        }
     }
 
     public void Initialize() {
@@ -180,11 +222,13 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomUpdated(ShiftServerData data) {
+
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             Debug.Log(data.GoUpdatePacket.PlayerList[ii]);
 
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
 
+            //Reconciliation
             if (NetworkManager.instance.Reconciliaton) {
                 if (updatedPlayerObject.Oid == _myPlayerController.Oid) {
                     for (int jj = 0; jj < _myPlayerController.PlayerInputs.Count; jj++) {
@@ -197,13 +241,14 @@ public class RoomManager : Menu {
                 _myPlayerController.ClearPlayerInputs();
             }
 
+            //Movement
             for (int jj = 0; jj < _otherPlayerControllers.Count; jj++) {
                 if (_otherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
-
                     Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
-                    if (_otherPlayerControllers[jj].transform.position != updatedPosition) {
-                        _otherPlayerControllers[jj].Move(updatedPosition);
-                    }
+
+                    DateTime updateTime = DateTime.UtcNow;
+                    long unixTime = ((DateTimeOffset)updateTime).ToUnixTimeSeconds();
+                    _otherPlayerControllers[jj].AddPositionToBuffer(unixTime, updatedPosition);
                 }
             }
         }
@@ -283,7 +328,7 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
-        
+
         SceneManager.UnloadSceneAsync("Gameplay");
 
         this.Hide();

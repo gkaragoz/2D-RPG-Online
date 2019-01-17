@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,16 @@ using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
+
+    public class PositionEntry {
+        public Vector2 vector2;
+        public long updateTime;
+
+        public PositionEntry(long updateTime, Vector2 vector2) {
+            this.updateTime = updateTime;
+            this.vector2 = vector2;
+        }
+    }
 
     public bool HasInput {
         get {
@@ -17,6 +28,8 @@ public class PlayerController : MonoBehaviour {
     public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
     public int Oid { get { return _playerData.Oid; } }
     public bool IsMe { get { return _isMe; } }
+
+    public List<PositionEntry> PositionBuffer { get { return _positionBuffer; } set { _positionBuffer = value; } }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -30,6 +43,8 @@ public class PlayerController : MonoBehaviour {
     private CharacterController _characterController;
     private PlayerHUD _playerHUD;
     private PlayerObject _playerData;
+
+    private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
 
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
@@ -89,6 +104,11 @@ public class PlayerController : MonoBehaviour {
             _isMe = false;
             _playerHUD.Hide();
         }
+    }
+
+    public void AddPositionToBuffer(long timestamp, Vector2 position) {
+
+        _positionBuffer.Add(new PositionEntry(timestamp, position));
     }
 
     public Vector2 GetVectorByInput(int index) {
