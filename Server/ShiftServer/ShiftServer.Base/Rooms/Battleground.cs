@@ -32,6 +32,7 @@ namespace ShiftServer.Base.Rooms
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public DateTime GameStartDate { get; set; }
+        public TimeSpan LastGameUpdate { get; set; }
         public bool IsPrivate { get; set; }
         public bool IsStopTriggered { get; set; }
         public int CreatedUserId { get; set; }
@@ -43,6 +44,8 @@ namespace ShiftServer.Base.Rooms
         public List<string> TeamIdList { get; set; }
         public string LastActiveTeam { get; set; }
         public DBServiceProvider _ctx { get; set; }
+        public int TickRate { get; set; }
+        public TimeSpan CurrentServerUptime { get; set; }
 
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
@@ -77,11 +80,14 @@ namespace ShiftServer.Base.Rooms
 
         public void OnGameStart()
         {
+            GameStartDate = DateTime.UtcNow;
+
             this.StartGameRoom();
         }
         private void StartGameRoom()
         {
-            int timerInterval = TickrateUtil.Set(3);
+            TickRate = 3;
+            int timerInterval = TickrateUtil.Set(TickRate);
 
 
             while (!IsStopTriggered)
@@ -181,19 +187,7 @@ namespace ShiftServer.Base.Rooms
                 this.OnPlayerCreate(player);
                 log.Info($"[CreatePlayer] OnRoom:{this.Id} Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
 
-                sendData.SPlayerObject = new PlayerObject
-                {
-                    CurrentHp = player.CurrentHP,
-                    MaxHp = player.MaxHP,
-                    Oid = player.ObjectId,
-                    AttackSpeed = (float)player.AttackSpeed,
-                    MovementSpeed = (float)player.MovementSpeed,
-                    PosX = player.Position.X,
-                    PosY = player.Position.Y,
-                    PosZ = player.Position.Z
-                };
-
-
+              
                 currentPlayer = player;
             }
             shift.CurrentObject = currentPlayer;
@@ -202,6 +196,8 @@ namespace ShiftServer.Base.Rooms
             sendData.RoomData.PlayerInfo = new RoomPlayerInfo();
             sendData.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
             {
+                Name = shift.UserName,
+                Oid = shift.CurrentObject.ObjectId,
                 AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                 MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                 CurrentHp = shift.CurrentObject.CurrentHP,
@@ -210,6 +206,8 @@ namespace ShiftServer.Base.Rooms
                 PosY = shift.CurrentObject.Position.Y,
                 PosZ = shift.CurrentObject.Position.Z
             };
+
+            //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
 
@@ -224,7 +222,21 @@ namespace ShiftServer.Base.Rooms
             pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
             pInfo.IsReady = currentClient.IsReady;
             if (currentClient.CurrentObject != null)
+            {
                 pInfo.ObjectId = currentClient.CurrentObject.ObjectId;
+                pInfo.CurrentGObject = new PlayerObject
+                {
+                    Name = currentClient.UserName,
+                    Oid = currentClient.CurrentObject.ObjectId,
+                    AttackSpeed = (float)currentClient.CurrentObject.AttackSpeed,
+                    MovementSpeed = (float)currentClient.CurrentObject.MovementSpeed,
+                    CurrentHp = currentClient.CurrentObject.CurrentHP,
+                    MaxHp = currentClient.CurrentObject.MaxHP,
+                    PosX = currentClient.CurrentObject.Position.X,
+                    PosY = currentClient.CurrentObject.Position.Y,
+                    PosZ = currentClient.CurrentObject.Position.Z
+                };
+            }
 
             if (this.ServerLeaderId == currentClient.connectionId)
             {
@@ -280,10 +292,13 @@ namespace ShiftServer.Base.Rooms
                 clientList[i].SendPacket(state, data);
             }
         }
-        public void SendRoomState()
+        public void SendRoomState(TimeSpan timespan)
         {
 
             ShiftServerData data = new ShiftServerData();
+            data.SvTickRate = this.TickRate;
+            data.TimeBetweenTicks = timespan.TotalSeconds;
+            data.CurrentServerTime = this.CurrentServerUptime.TotalSeconds;
             data.GoUpdatePacket = new UpdateGOList();
 
             IGameObject gObject = null;
@@ -317,6 +332,9 @@ namespace ShiftServer.Base.Rooms
         }
         public void OnRoomUpdate()
         {
+            CurrentServerUptime = DateTime.UtcNow - this.GameStartDate;
+            TimeSpan updatePassTime = CurrentServerUptime - LastGameUpdate;
+            LastGameUpdate = CurrentServerUptime;
 
             IGameObject gObject = null;
             for (int i = 0; i <= ObjectCounter; i++)
@@ -355,7 +373,7 @@ namespace ShiftServer.Base.Rooms
 
             }
 
-            SendRoomState();
+            SendRoomState(updatePassTime);
         }
 
 

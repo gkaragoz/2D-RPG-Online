@@ -18,7 +18,7 @@ namespace ShiftServer.Base.Core
                   = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         private ServerProvider _sp = null;
-        private SafeDictionary<string, Thread> _roomThreads = new SafeDictionary<string,Thread>();
+        private SafeDictionary<string, Thread> _roomThreads = new SafeDictionary<string, Thread>();
         public RoomProvider(ServerProvider mainServerProvider)
         {
             instance = this;
@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Core
 
             _roomThreads.Add(room.Id, gameRoom);
         }
-        
+
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
             if (!_sp.SessionCheck(data, shift))
@@ -121,10 +121,10 @@ namespace ShiftServer.Base.Core
                 newRoom.ServerLeaderId = shift.connectionId;
                 data.RoomData.Room.CurrentUserCount = newRoom.SocketIdSessionLookup.Count;
                 newRoom.MaxConnId = shift.connectionId;
-              
+
                 this.CreateRoom(newRoom);
                 shift.SendPacket(MSServerEvent.RoomCreate, data);
-               
+
                 shift.IsJoinedToRoom = true;
             }
             else
@@ -224,10 +224,14 @@ namespace ShiftServer.Base.Core
                     {
                         result.Clients.TryGetValue(i, out cl);
                         if (cl != null)
-                        {                          
+                        {
 
                             AccountSession charSession = _sp.ctx.Sessions.FindBySessionID(cl.UserSession.GetSid());
+
                             if (charSession == null)
+                                continue;
+
+                            if (cl.connectionId == shift.connectionId)
                                 continue;
 
                             Account charAcc = _sp.ctx.Accounts.GetByUserID(charSession.UserID);
@@ -237,6 +241,19 @@ namespace ShiftServer.Base.Core
                             pInfo.IsReady = cl.IsReady;
                             pInfo.TeamId = cl.JoinedTeamId;
                             pInfo.ObjectId = cl.CurrentObject.ObjectId;
+                            pInfo.CurrentGObject = new PlayerObject
+                            {
+                                Name = cl.CurrentObject.Name,
+                                Oid = cl.CurrentObject.ObjectId,
+                                AttackSpeed = (float)cl.CurrentObject.AttackSpeed,
+                                MovementSpeed = (float)cl.CurrentObject.MovementSpeed,
+                                CurrentHp = cl.CurrentObject.CurrentHP,
+                                MaxHp = cl.CurrentObject.MaxHP,
+                                PosX = cl.CurrentObject.Position.X,
+                                PosY = cl.CurrentObject.Position.Y,
+                                PosZ = cl.CurrentObject.Position.Z
+                            };
+
                             if (result.ServerLeaderId == cl.connectionId)
                                 pInfo.IsLeader = true;
                             else
@@ -251,13 +268,15 @@ namespace ShiftServer.Base.Core
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
                     data.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
                     {
-                         AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
-                         MovementSpeed = (float)shift.CurrentObject.MovementSpeed, 
-                         CurrentHp = shift.CurrentObject.CurrentHP,
-                         MaxHp = shift.CurrentObject.MaxHP,
-                         PosX = shift.CurrentObject.Position.X,
-                         PosY = shift.CurrentObject.Position.Y,
-                         PosZ = shift.CurrentObject.Position.Z
+                        Oid = shift.CurrentObject.ObjectId,
+                        Name = shift.CurrentObject.Name,
+                        AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                        MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
+                        CurrentHp = shift.CurrentObject.CurrentHP,
+                        MaxHp = shift.CurrentObject.MaxHP,
+                        PosX = shift.CurrentObject.Position.X,
+                        PosY = shift.CurrentObject.Position.Y,
+                        PosZ = shift.CurrentObject.Position.Z
                     };
                     data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectId;
                     shift.IsJoinedToRoom = true;
@@ -447,7 +466,7 @@ namespace ShiftServer.Base.Core
                         errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
                         shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
                     }
-                  
+
 
                 }
             }
@@ -499,7 +518,7 @@ namespace ShiftServer.Base.Core
 
                         }
                         else
-                        {   
+                        {
                             this.OnRoomDispose(room);
                             _sp.world.Rooms.Remove(data.RoomData.Room.Id);
 
@@ -588,7 +607,7 @@ namespace ShiftServer.Base.Core
             try
             {
                 room.IsStopTriggered = true;
-              
+
             }
             catch (Exception err)
             {
@@ -601,6 +620,6 @@ namespace ShiftServer.Base.Core
             room.OnPlayerJoin(character, shift);
         }
 
-     
+
     }
 }

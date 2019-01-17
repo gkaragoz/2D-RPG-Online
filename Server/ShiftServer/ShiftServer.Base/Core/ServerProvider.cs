@@ -25,6 +25,7 @@ namespace ShiftServer.Base.Core
 
         public DBServiceProvider ctx = null;
         public int tickRate = 30;
+        public DateTime startTime;
         public ServerProvider(IZone createdWorld)
         {
             instance = this;
@@ -50,7 +51,7 @@ namespace ShiftServer.Base.Core
                 server.NoDelay = true;
                 server.SendTimeout = 0;
                 server.Start(port);
-
+                this.startTime = DateTime.UtcNow;
             }
             catch (Exception err)
             {

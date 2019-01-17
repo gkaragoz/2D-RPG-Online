@@ -14,6 +14,7 @@ namespace ShiftServer.Base.Core
         int CreatedUserId { get; set; }
         int MaxConnId { get; set; }
         int ServerLeaderId { get; set; }
+        int TickRate { get; set; }
         int DisposeInMilliseconds { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
@@ -39,6 +40,6 @@ namespace ShiftServer.Base.Core
         IGroup GetRandomTeam();
         ShiftClient SetRandomNewLeader();
         void OnRoomUpdate();
-        void SendRoomState();
+        void SendRoomState(TimeSpan timespan);
     }
 }
