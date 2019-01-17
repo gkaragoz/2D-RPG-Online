@@ -38,8 +38,8 @@ public class RoomManager : Menu {
     [SerializeField]
     private Button _btnLeave;
 
-    private List<RoomPlayerInfo> _otherPlayers = new List<RoomPlayerInfo>();
-    private RoomPlayerInfo _myPlayerInfo = new RoomPlayerInfo();
+    private List<PlayerController> _otherPlayerControllers = new List<PlayerController>();
+
     private PlayerController _myPlayerController;
 
     private RoomPlayerInfo _leaderPlayerInfo;
@@ -139,14 +139,24 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
-    private void CreateMyPlayer(PlayerObject playerObject) {
-        GameObject player = Instantiate(_playerPrefab, new Vector2(playerObject.PosX, playerObject.PosY), Quaternion.identity);
-
-        _myPlayerInfo.ObjectId = playerObject.Oid;
-        _myPlayerInfo.CurrentGObject = playerObject;
+    private void CreateMyPlayer(RoomPlayerInfo playerInfo) {
+        GameObject player = Instantiate(_playerPrefab, new Vector2(playerInfo.CurrentGObject.PosX, playerInfo.CurrentGObject.PosY), Quaternion.identity);
 
         _myPlayerController = player.GetComponent<PlayerController>();
-        _myPlayerController.Initialize(_myPlayerInfo);
+        _myPlayerController.Initialize(playerInfo.CurrentGObject);
+    }
+
+
+    private void CreatePlayer(RoomPlayerInfo playerInfo) {
+        PlayerObject tempCurrentObject = playerInfo.CurrentGObject;
+
+        playerInfo.CurrentGObject = new PlayerObject();
+        playerInfo.CurrentGObject = tempCurrentObject;
+
+        PlayerController playerController = Instantiate(_playerPrefab, new Vector2(playerInfo.CurrentGObject.PosX, playerInfo.CurrentGObject.PosY), Quaternion.identity).GetComponent<PlayerController>();
+        playerController.Initialize(playerInfo.CurrentGObject);
+
+        _otherPlayerControllers.Add(playerController);
     }
 
     private IEnumerator IJoinRoom(string id) {
@@ -175,11 +185,8 @@ public class RoomManager : Menu {
 
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
 
-            Vector3 shadowPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
-            _myPlayerController.SetShadowPosition(shadowPosition);
-
             if (NetworkManager.instance.Reconciliaton) {
-                if (updatedPlayerObject.Oid == _myPlayerInfo.ObjectId) {
+                if (updatedPlayerObject.Oid == _myPlayerController.Oid) {
                     for (int jj = 0; jj < _myPlayerController.PlayerInputs.Count; jj++) {
                         if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
                             _myPlayerController.RemoveRange(jj, 1);
@@ -189,16 +196,28 @@ public class RoomManager : Menu {
             } else {
                 _myPlayerController.ClearPlayerInputs();
             }
+
+            for (int jj = 0; jj < _otherPlayerControllers.Count; jj++) {
+                if (_otherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
+
+                    Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
+                    if (_otherPlayerControllers[jj].transform.position != updatedPosition) {
+                        _otherPlayerControllers[jj].Move(updatedPosition);
+                    }
+                }
+            }
         }
     }
 
     private void OnPlayerCreated(ShiftServerData data) {
         Debug.Log("OnPlayerCreated: " + data);
 
-        PlayerObject playerObject = data.SPlayerObject;
+        RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        if (_myPlayerInfo.ObjectId == 0) {
-            CreateMyPlayer(playerObject);
+        if (playerInfo.CurrentGObject.Name == AccountManager.instance.SelectedCharacterName) {
+            CreateMyPlayer(playerInfo);
+        } else {
+            CreatePlayer(playerInfo);
         }
     }
 
@@ -207,16 +226,9 @@ public class RoomManager : Menu {
 
         MSSRoom joinedRoom = data.RoomData.Room;
 
-        RoomPlayerInfo playerInfo = new RoomPlayerInfo();
-        playerInfo = data.RoomData.PlayerInfo;
-
-        _myPlayerInfo = playerInfo;
-
-        for (int ii = 0; ii < _otherPlayers.Count; ii++) {
-            _otherPlayers.Add(data.RoomData.PlayerList[ii]);
+        for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
+            CreatePlayer(data.RoomData.PlayerList[ii]);
         }
-
-        Initialize();
 
         onRoomJoined?.Invoke();
     }
@@ -227,11 +239,6 @@ public class RoomManager : Menu {
 
     private void OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
-
-        RoomPlayerInfo playerInfo = new RoomPlayerInfo();
-        playerInfo = data.RoomData.PlayerInfo;
-
-        _myPlayerInfo = playerInfo;
 
         //playerInfo = data.RoomData.CreatedRoom.Teams;
 
@@ -245,7 +252,7 @@ public class RoomManager : Menu {
     private void OnRoomDeleted(ShiftServerData data) {
         Debug.Log("OnRoomDeleted: " + data);
 
-        _otherPlayers = new List<RoomPlayerInfo>();
+        _otherPlayerControllers = new List<PlayerController>();
     }
 
     private void OnRoomDeleteFailed(ShiftServerData data) {
@@ -257,9 +264,7 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        _otherPlayers.Add(playerInfo);
-
-        Initialize();
+        CreatePlayer(playerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
@@ -267,14 +272,18 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        _otherPlayers.Remove(playerInfo);
-
-        Initialize();
+        for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
+            if (playerInfo.CurrentGObject.Oid == _otherPlayerControllers[ii].Oid) {
+                _otherPlayerControllers.Remove(_otherPlayerControllers[ii]);
+                _otherPlayerControllers[ii].Destroy();
+                break;
+            }
+        }
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
-
+        
         SceneManager.UnloadSceneAsync("Gameplay");
 
         this.Hide();

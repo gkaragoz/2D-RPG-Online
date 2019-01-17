@@ -7,16 +7,14 @@ public class CharacterController : MonoBehaviour {
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
 
-    private RoomPlayerInfo _playerInfo;
-
     private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
         _characterAnimator = GetComponent<CharacterAnimator>();
     }
 
-    public void Initiailize(RoomPlayerInfo playerInfo) {
-        _characterMotor.SetMovementSpeed(playerInfo.CurrentGObject.MovementSpeed);
+    public void Initiailize(PlayerObject playerData) {
+        _characterMotor.SetMovementSpeed(playerData.MovementSpeed);
     }
 
     public void Attack() {

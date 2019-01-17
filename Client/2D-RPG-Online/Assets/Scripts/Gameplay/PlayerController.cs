@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviour {
 
     public Vector2 CurrentInput { get; private set; }
     public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
+    public int Oid { get { return _playerData.Oid; } }
+    public bool IsMe { get { return _isMe; } }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -23,11 +25,11 @@ public class PlayerController : MonoBehaviour {
     private Joystick _joystick;
     [SerializeField]
     private Button _btnAttack;
-    [SerializeField]
-    private GameObject _shadowObject;
 
+    private bool _isMe;
     private CharacterController _characterController;
     private PlayerHUD _playerHUD;
+    private PlayerObject _playerData;
 
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
@@ -38,29 +40,31 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void FixedUpdate() {
-        _xInput = _joystick.Horizontal;
-        _yInput = _joystick.Vertical;
+        if (_isMe) {
+            _xInput = _joystick.Horizontal;
+            _yInput = _joystick.Vertical;
 
-        CurrentInput = new Vector2(_xInput, _yInput);
+            CurrentInput = new Vector2(_xInput, _yInput);
 
-        if (HasInput && NetworkManager.mss != null) {
-            ShiftServerData data = new ShiftServerData();
+            if (HasInput && NetworkManager.mss != null) {
+                ShiftServerData data = new ShiftServerData();
 
-            data.PlayerInput = new SPlayerInput();
-            data.PlayerInput.SequenceID = _nonAckInputIndex++;
+                data.PlayerInput = new SPlayerInput();
+                data.PlayerInput.SequenceID = _nonAckInputIndex++;
 
-            data.PlayerInput.PosX = CurrentInput.x;
-            data.PlayerInput.PosY = CurrentInput.y;
+                data.PlayerInput.PosX = CurrentInput.x;
+                data.PlayerInput.PosY = CurrentInput.y;
 
-            NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
+                NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
-            PlayerInputs.Add(data.PlayerInput);
-        }
+                PlayerInputs.Add(data.PlayerInput);
+            }
 
-        if (HasInput) {
-            Move();
-        } else {
-            Stop();
+            if (HasInput) {
+                Move();
+            } else {
+                Stop();
+            }
         }
 
         UpdateHUD();
@@ -72,19 +76,18 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void Initialize(RoomPlayerInfo playerInfo) {
-        _playerHUD.SetName(playerInfo.Username);
+    public void Initialize(PlayerObject playerData) {
+        this._playerData = playerData;
 
-        InitializeCharacter(playerInfo);
-    }
+        _playerHUD.SetName(_playerData.Name);
 
-    public void SetShadowPosition(Vector2 position) {
-        _shadowObject.transform.position = position;
+        InitializeCharacter(_playerData);
 
-        if (_shadowObject.transform.position == this.transform.position) {
-            _shadowObject.gameObject.SetActive(false);
+        if (_playerData.Name == AccountManager.instance.SelectedCharacterName) {
+            _isMe = true;
         } else {
-            _shadowObject.gameObject.SetActive(true);
+            _isMe = false;
+            _playerHUD.Hide();
         }
     }
 
@@ -108,8 +111,8 @@ public class PlayerController : MonoBehaviour {
         this._joystick = joystick;
     }
 
-    public void InitializeCharacter(RoomPlayerInfo playerInfo) {
-        _characterController.Initiailize(playerInfo);
+    public void InitializeCharacter(PlayerObject playerData) {
+        _characterController.Initiailize(playerData);
     }
 
     public void Attack() {
@@ -126,6 +129,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Stop() {
         _characterController.Stop();
+    }
+
+    public void Destroy() {
+        Destroy(this.gameObject);
     }
 
     private void UpdateHUD() {
