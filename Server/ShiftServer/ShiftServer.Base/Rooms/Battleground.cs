@@ -86,7 +86,7 @@ namespace ShiftServer.Base.Rooms
         }
         private void StartGameRoom()
         {
-            TickRate = 3;
+            TickRate = 15;
             int timerInterval = TickrateUtil.Set(TickRate);
 
 

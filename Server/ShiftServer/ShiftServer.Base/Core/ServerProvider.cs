@@ -24,7 +24,7 @@ namespace ShiftServer.Base.Core
         public Thread listenerThread = null;
 
         public DBServiceProvider ctx = null;
-        public int tickRate = 30;
+        public int tickRate = 15;
         public DateTime startTime;
         public ServerProvider(IZone createdWorld)
         {

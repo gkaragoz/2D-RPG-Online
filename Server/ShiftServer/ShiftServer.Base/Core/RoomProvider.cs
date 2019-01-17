@@ -47,7 +47,7 @@ namespace ShiftServer.Base.Core
             Account acc = _sp.ctx.Accounts.GetByUserID(session.UserID);
             shift.UserName = acc.SelectedCharName;
             shift.UserSession.SetSid(session.SessionID);
-            Battleground newRoom = new Battleground(2, 4, _sp.ctx);
+            Battleground newRoom = new Battleground(2, data.RoomData.Room.MaxUserCount, _sp.ctx);
 
             if (!shift.IsJoinedToRoom)
             {
