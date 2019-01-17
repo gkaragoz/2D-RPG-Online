@@ -47,7 +47,7 @@ public class RoomManager : Menu {
     private FixedJoystick _joystick;
     private Button _btnAttack;
 
-    public long roomUpdateTimeDifference;
+    public int serverTickrate;
 
     private void Start() {
         NetworkManager.instance.onGameplayServerConnectionSuccess += OnGameplayServerConnectionSuccess;
@@ -80,24 +80,14 @@ public class RoomManager : Menu {
     }
 
     private void Update() {
-        DateTime renderTime = DateTime.UtcNow;
-        long unixTime = ((DateTimeOffset)renderTime).ToUnixTimeSeconds();
-
-        //long renderTimestamp = unixTime - (1000 / 3);
-        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, 0));
-
-        var currInterpolationTime = now.TotalSeconds;
-        //var clientRenderTime = currInterpolationTime - GameManager.timeBetweenTick;
-        var renderTimestamp = currInterpolationTime - 3.0f / 1000.0f;
+        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+        var renderTimestamp = now - (1000.0 / serverTickrate);
 
         for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
             PlayerController entity = _otherPlayerControllers[ii];
-           
-            // Find the two authoritative positions surrounding the rendering timestamp.
-            List<PlayerController.PositionEntry>  buffer = entity.PositionBuffer;
 
             // Drop older positions.
-            while (buffer.Count >= 2 && buffer[1].updateTime <= renderTimestamp) {
+            while (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[1].updateTime <= renderTimestamp) {
                 entity.PositionBuffer = entity.PositionBuffer.Skip(1).ToList();
             }
 
@@ -110,10 +100,11 @@ public class RoomManager : Menu {
                 double t1 = entity.PositionBuffer[1].updateTime;
                 
                 double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
-                double interpY = firstVector.y + (secondVector.y - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
-                
-                Vector2 directionVector = new Vector2((float)interpX, (float)interpY);
-                entity.Move(directionVector);
+                double interpY = firstVector.y + (secondVector.y - firstVector.y) * (renderTimestamp - t0) / (t1 - t0);
+
+                Vector2 newPosition = new Vector2((float)interpX, (float)interpY);
+
+                entity.ToNewPosition(newPosition);
             }
         }
     }
@@ -222,10 +213,9 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomUpdated(ShiftServerData data) {
+        serverTickrate = data.SvTickRate;
 
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
-            Debug.Log(data.GoUpdatePacket.PlayerList[ii]);
-
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
 
             //Reconciliation
@@ -247,8 +237,8 @@ public class RoomManager : Menu {
                     Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
                     DateTime updateTime = DateTime.UtcNow;
-                    long unixTime = ((DateTimeOffset)updateTime).ToUnixTimeSeconds();
-                    _otherPlayerControllers[jj].AddPositionToBuffer(unixTime, updatedPosition);
+                    var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                    _otherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition);
                 }
             }
         }

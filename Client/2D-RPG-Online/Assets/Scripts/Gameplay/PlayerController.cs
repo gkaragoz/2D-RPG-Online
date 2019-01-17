@@ -10,9 +10,9 @@ public class PlayerController : MonoBehaviour {
 
     public class PositionEntry {
         public Vector2 vector2;
-        public long updateTime;
+        public double updateTime;
 
-        public PositionEntry(long updateTime, Vector2 vector2) {
+        public PositionEntry(double updateTime, Vector2 vector2) {
             this.updateTime = updateTime;
             this.vector2 = vector2;
         }
@@ -106,7 +106,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void AddPositionToBuffer(long timestamp, Vector2 position) {
+    public void AddPositionToBuffer(double timestamp, Vector2 position) {
 
         _positionBuffer.Add(new PositionEntry(timestamp, position));
     }
@@ -145,6 +145,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Move(Vector2 input) {
         _characterController.Move(input);
+    }
+
+    public void ToNewPosition(Vector2 newPosition) {
+        _characterController.ToNewPosition(newPosition);
     }
 
     public void Stop() {

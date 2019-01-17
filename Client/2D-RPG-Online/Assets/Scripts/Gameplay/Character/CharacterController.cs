@@ -31,6 +31,18 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public void ToNewPosition(Vector2 newPosition) {
+        if (new Vector3(newPosition.x, newPosition.y) == transform.position) {
+            _characterAnimator.OnStop();
+        } else {
+            Vector3 direction = new Vector3(newPosition.x, newPosition.y) - transform.position;
+
+            _characterAnimator.OnMove(direction);
+
+            transform.position = newPosition;
+        }
+    }
+
     public void Stop() {
         _characterAnimator.OnStop();
     }
