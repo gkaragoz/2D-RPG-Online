@@ -20,6 +20,9 @@ message ShiftServerData {
 
 	string SessionID = 14;
 	MatchmakingData MatchmakingData = 15;
+	double TimeBetweenTicks = 16;
+	double CurrentServerTime = 17;
+	int32 svTickRate = 18;
 
 }
 
@@ -223,7 +226,8 @@ message SPlayerInput {
 	float pos_x = 2;
 	float pos_y = 3;
 	float pos_z = 4;
-	int32 sequenceID = 5;
+	float timestamp = 5;
+	int32 sequenceID = 6;
 
 }
 
