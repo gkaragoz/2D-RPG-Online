@@ -10,15 +10,16 @@ namespace ShiftServer.Base.Core
     public interface IRoom
     {
         string Name { get; set; }
-        string Id { get; set; }
-        int CreatedUserId { get; set; }
-        int MaxConnId { get; set; }
-        int ServerLeaderId { get; set; }
+        string ID { get; set; }
+        int CreatedUserID { get; set; }
+        int MaxConnectionID { get; set; }
+        int RoomLeaderID { get; set; }
         int TickRate { get; set; }
         int DisposeInMilliseconds { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         bool IsPrivate { get; set; }
+        bool IsPersistence { get; set; }
         bool IsStopTriggered { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<string, IGroup> Teams { get; set; }

@@ -9,14 +9,14 @@ namespace ShiftServer.Base.Core
 {
     public class ServerEventCallback
     {
-        public MSServerEvent EventId { get; set; }
+        public MSServerEvent EventID { get; set; }
         public Action<ShiftServerData, ShiftClient> CallbackFunc { get; set; }
 
     }
 
     public class PlayerEventCallback
     {
-        public MSPlayerEvent EventId { get; set; }
+        public MSPlayerEvent EventID { get; set; }
         public Action<ShiftServerData, ShiftClient> CallbackFunc { get; set; }
 
     }
@@ -29,13 +29,13 @@ namespace ShiftServer.Base.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient shift, log4net.ILog log)
+        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient shift)
         {
             try
             {
                 for (int i = 0; i < events.Count; i++)
                 {
-                    if (events[i].EventId == data.Plevtid)
+                    if (events[i].EventID == data.Plevtid)
                     {
                         events[i].CallbackFunc.Invoke(data, shift);
                     }
@@ -46,7 +46,11 @@ namespace ShiftServer.Base.Core
             catch (Exception err)
             {
 
-                log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                if (shift.Client != null)
+                {
+                    if (shift.Client.Client.Connected)
+                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectonID} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                }
                 return;
             }
           
@@ -59,13 +63,13 @@ namespace ShiftServer.Base.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<ServerEventCallback> events, ShiftServerData data, ShiftClient shift, log4net.ILog log)
+        public static void Fire(List<ServerEventCallback> events, ShiftServerData data, ShiftClient shift)
         {
             try
             {
                 for (int i = 0; i < events.Count; i++)
                 {
-                    if (events[i].EventId == data.Svevtid)
+                    if (events[i].EventID == data.Svevtid)
                     {
                         events[i].CallbackFunc.Invoke(data, shift);
                     }
@@ -78,7 +82,7 @@ namespace ShiftServer.Base.Core
                 if (shift.Client != null)
                 {
                     if (shift.Client.Client.Connected)
-                        log.Error($"[EXCEPTION] ClientNO: {shift.connectionId} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectonID} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
                 }
                 return;
             }

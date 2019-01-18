@@ -10,9 +10,8 @@ namespace ShiftServer.Base.Factory.Movement
 {
     class MoveInput : IGameInput
     {
-        public Vector3 vector3 { get; set; }
-        public float sensivity { get; set; }
-        public MSPlayerEvent eventType { get; set; }
-        public int sequenceID { get; set; }
+        public Vector3 Vector { get; set; }
+        public MSPlayerEvent EventType { get; set; }
+        public int SequenceID { get; set; }
     }
 }

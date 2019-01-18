@@ -7,9 +7,9 @@ namespace ShiftServer.Base.Core
     public interface IGameObject
     {
         string Name { get; set; }
-        int OwnerConnectionId { get; set; }
-        string OwnerSessionId { get; set; }
-        int ObjectId { get; set; }
+        int OwnerConnectionID { get; set; }
+        string OwnerSessionID { get; set; }
+        int ObjectID { get; set; }
         List<IGameObject> OwnedObjects { get; set; }
         SafeQueue<IGameInput> GameInputs { get; set; }
         Vector3 Position { get; set; }

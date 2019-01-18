@@ -73,24 +73,21 @@
   <ItemGroup>
     <Compile Include="Auth\Crypto.cs" />
     <Compile Include="Auth\ShiftClient.cs" />
-    <Compile Include="Core\ChatProvider.cs" />
-    <Compile Include="Core\DBServiceProvider.cs" />
-    <Compile Include="Core\GroupProvider.cs" />
-    <Compile Include="Core\IClient.cs" />
-    <Compile Include="Core\ICommand.cs" />
+    <Compile Include="Core\PacketManager.cs" />
+    <Compile Include="Core\Providers\DBServiceProvider.cs" />
+    <Compile Include="Core\Providers\GroupProvider.cs" />
     <Compile Include="Core\IGameInput.cs" />
     <Compile Include="Core\IGameObject.cs" />
     <Compile Include="Core\IGroup.cs" />
     <Compile Include="Core\IRoom.cs" />
     <Compile Include="Core\IWorld.cs" />
-    <Compile Include="Core\RoomProvider.cs" />
-    <Compile Include="Core\ServerDataHandler.cs" />
+    <Compile Include="Core\Providers\RoomProvider.cs" />
+    <Compile Include="Core\ServerCore.cs" />
+    <Compile Include="Core\ServerEventHandler.cs" />
     <Compile Include="Core\ServerEventCallback.cs" />
-    <Compile Include="Core\ServerProvider.cs" />
-    <Compile Include="Core\Session.cs" />
+    <Compile Include="Core\Providers\ServerProvider.cs" />
     <Compile Include="Factory\Entities\Player.cs" />
     <Compile Include="Factory\Entities\PlayerInput.cs" />
-    <Compile Include="Factory\Movement\MotionMaster.cs" />
     <Compile Include="Factory\Movement\MoveInput.cs" />
     <Compile Include="Groups\TeamGroup.cs" />
     <Compile Include="Groups\WorldGroup.cs" />
@@ -108,7 +105,6 @@
     <Folder Include="Factory\AI\" />
     <Folder Include="Factory\Combat\" />
     <Folder Include="Factory\Loot\" />
-    <Folder Include="System\Configuration\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">

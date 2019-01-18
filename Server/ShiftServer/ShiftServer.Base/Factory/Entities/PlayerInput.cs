@@ -10,10 +10,9 @@ namespace ShiftServer.Base.Factory.Entities
 {
     public class PlayerInput : IGameInput
     {
-        public MSPlayerEvent eventType { get; set; }
-        public Vector3 vector3 { get; set; }
-        public float sensivity { get; set; }
-        public int sequenceID { get; set; }
-        public int lastSequenceID { get; set; }
+        public MSPlayerEvent EventType { get; set; }
+        public Vector3 Vector { get; set; }
+        public int SequenceID { get; set; }
+        public int LastSequenceID { get; set; }
     }
 }

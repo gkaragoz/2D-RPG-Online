@@ -34,11 +34,12 @@ namespace ShiftServer.Base.Worlds
             Rooms = new SafeDictionary<string, IRoom>();
             RoomGameThreadList = new SafeDictionary<string, Thread>();
         }
+
         public void OnObjectAttack(ShiftServerData data, ShiftClient client)
         {
-            log.Debug($"[ATTACK] Remote:{client.Client.Client.RemoteEndPoint.ToString()} ClientNo:{client.connectionId}");
+            log.Debug($"[ATTACK] Remote:{client.Client.Client.RemoteEndPoint.ToString()} ClientNo:{client.ConnectonID}");
 
-            string clientSessionId = client.UserSession.GetSid();
+            string clientSessionId = client.UserSessionID.GetSid();
             if (clientSessionId == null)
                 return;
         }
@@ -48,12 +49,12 @@ namespace ShiftServer.Base.Worlds
         }
         public void OnPlayerCreate(ShiftServerData data, ShiftClient shift)
         {
-            string clientSessionId = shift.UserSession.GetSid();
+            string clientSessionId = shift.UserSessionID;
             if (clientSessionId == null)
                 return;
 
             List<IGameObject> gameObjectList = GameObjects.GetValues();
-            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
+            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionID == shift.ConnectonID && x.GetType() == typeof(Player)).FirstOrDefault();
             // if already exist in world
             if (currentPlayer != null)
             {
@@ -64,7 +65,7 @@ namespace ShiftServer.Base.Worlds
                     MaxHp = currentPlayer.MaxHP,
                     AttackSpeed = (float)currentPlayer.AttackSpeed,
                     MovementSpeed = (float)currentPlayer.MovementSpeed,
-                    Oid = currentPlayer.ObjectId,
+                    Oid = currentPlayer.ObjectID,
                     PosX = currentPlayer.Position.X,
                     PosY = currentPlayer.Position.Y,
                     PosZ = currentPlayer.Position.Z
@@ -75,8 +76,8 @@ namespace ShiftServer.Base.Worlds
             else
             {
                 Player player = new Player();
-                player.OwnerConnectionId = shift.connectionId;
-                player.ObjectId = Interlocked.Increment(ref ObjectCounter);
+                player.OwnerConnectionID = shift.ConnectonID;
+                player.ObjectID = Interlocked.Increment(ref ObjectCounter);
                 player.Name = data.Account.Username;
                 player.MaxHP = 100;
                 player.CurrentHP = 100;
@@ -85,7 +86,7 @@ namespace ShiftServer.Base.Worlds
                 player.Scale = new Vector3(1, 1, 1);
 
                 this.OnObjectCreate(player);
-                log.Info($"[CreatePlayer] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                log.Info($"[CreatePlayer] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
 
                 data.SPlayerObject = new PlayerObject
                 {
@@ -94,7 +95,7 @@ namespace ShiftServer.Base.Worlds
                     PClass = player.Class,
                     AttackSpeed = (float)player.AttackSpeed,
                     MovementSpeed = (float)player.MovementSpeed,
-                    Oid = player.ObjectId,
+                    Oid = player.ObjectID,
                     PosX = player.Position.X,
                     PosY = player.Position.Y,
                     PosZ = player.Position.Z,
@@ -106,9 +107,70 @@ namespace ShiftServer.Base.Worlds
 
             shift.SendPacket(MSPlayerEvent.CreatePlayer, data);
         }
+
+        public void OnPlayerDispose(ShiftClient client)
+        {
+
+            ServerProvider.instance.world.SocketIdSessionLookup.Remove(client.UserSessionID);
+            ServerProvider.instance.world.Clients.Remove(client.ConnectonID);
+            if (!string.IsNullOrEmpty(client.UserSessionID))
+            {
+                IRoom room = null;
+                if (!string.IsNullOrEmpty(client.JoinedRoomID))
+                {
+                    ServerProvider.instance.world.Rooms.TryGetValue(client.JoinedRoomID, out room);
+
+                    if (room != null)
+                    {
+                        if (room.SocketIdSessionLookup.Count == 1)
+                        {
+                            // make some other ppl to leader
+                            room.DisposeInMilliseconds = 50;
+                        }
+                        client.IsJoinedToRoom = false;
+                        client.JoinedRoomID = null;
+                        room.Clients.Remove(client.ConnectonID);
+                        room.SocketIdSessionLookup.Remove(client.UserSessionID);
+                        bool isDestroyed = false;
+                        if (room.Clients.Count == 0)
+                        {
+                            ServerProvider.instance.world.Rooms.Remove(room.ID);
+                            isDestroyed = true;
+                        }
+                        else
+                        {
+                            if (client.CurrentObject != null)
+                                room.GameObjects.Remove(client.CurrentObject.ObjectID);
+
+                        }
+
+                        IGroup group = null;
+                        room.Teams.TryGetValue(client.JoinedTeamID, out group);
+
+                        if (group != null)
+                        {
+
+                            client.IsJoinedToRoom = false;
+                            client.JoinedRoomID = null;
+                            group.Clients.Remove(client.ConnectonID);
+                        }
+
+                        if (!isDestroyed)
+                            room.BroadcastToRoom(client, MSServerEvent.RoomPlayerLeft);
+                        else
+                            RoomProvider.instance.OnRoomDispose(room);
+
+                    }
+
+
+                }
+
+            }
+
+        }
         public void OnPlayerJoin(ShiftServerData data, ShiftClient shift)
         {
-            string sessionId = shift.UserSession.GetSid();
+            string sessionId = shift.UserSessionID;
             if (sessionId == null)
                 return;
 
@@ -117,19 +179,19 @@ namespace ShiftServer.Base.Worlds
         }
         public void OnObjectMove(ShiftServerData data, ShiftClient shift)
         {
-            log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+            log.Debug($"[MOVE] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
         }
         public void OnObjectUse(ShiftServerData data, ShiftClient shift)
         {
-            string clientSessionId = shift.UserSession.GetSid();
+            string clientSessionId = shift.UserSessionID;
             if (clientSessionId == null)
                 return;
-            log.Debug($"[USE]  Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+            log.Debug($"[USE]  Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
 
         }
         public void OnObjectDestroy(IGameObject gameObject)
         {
-            GameObjects.Remove(gameObject.ObjectId);
+            GameObjects.Remove(gameObject.ObjectID);
         }
         public void OnWorldUpdate()
         {
@@ -151,7 +213,7 @@ namespace ShiftServer.Base.Worlds
             List<ShiftClient> clientList = Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSession == null)
+                if (clientList[i].UserSessionID == null)
                     continue;
 
                 ShiftServerData data = new ShiftServerData();
@@ -160,6 +222,5 @@ namespace ShiftServer.Base.Worlds
             }
 
         }
-
     }
 }

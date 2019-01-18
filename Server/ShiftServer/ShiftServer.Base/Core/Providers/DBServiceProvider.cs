@@ -2,13 +2,15 @@
 
 namespace ShiftServer.Base.Core
 {
-    public class DBServiceProvider
+    public class DBContext
     {
+        public static DBContext ctx { get; set; }
         public AccountService Accounts { get; set; }
         public SessionService Sessions { get; set; }
         public CharacterService Characters { get; set; }
-        public DBServiceProvider()
+        public DBContext()
         {
+            ctx = this;
             string dbName = System.Configuration.ConfigurationManager.AppSettings.Get("MongoDBName");
             string conStr = System.Configuration.ConfigurationManager.ConnectionStrings["ManaMongoSessionServices"].ToString();
 

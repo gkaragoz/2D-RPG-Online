@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Timers;
 
 namespace ShiftServer.Base.Helper
 {
@@ -16,5 +17,19 @@ namespace ShiftServer.Base.Helper
         {
             return (1000 / tickrate);
         }
+
     }
+
+    public static class Interval
+    {
+        public static void Set(int timerInterval, Action<object, ElapsedEventArgs> job)
+        {
+            System.Timers.Timer aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new ElapsedEventHandler(job);
+            aTimer.Interval = timerInterval;
+            aTimer.Enabled = true;
+
+        }
+    }
+   
 }

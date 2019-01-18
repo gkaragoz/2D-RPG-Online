@@ -23,15 +23,17 @@ namespace ShiftServer.Server
 
 
             GameZone zone = new GameZone();
-
             _serverProvider = new ServerProvider(zone);
             _roomProvider = new RoomProvider(_serverProvider);
             _groupProvider = new GroupProvider(_roomProvider);
 
-            //Battleground bgRoom = new Battleground(2, 4);
-            //bgRoom.Name = "MANASHIFT BattleRoyale #1 ( OFFICIAL )";
-            //bgRoom.MaxUser = 8;
-            //_roomProvider.CreateRoom(bgRoom);
+            //default
+            Battleground bgRoom = new Battleground(2, 1500);
+            bgRoom.Name = "MANASHIFT DEFAULT";
+            bgRoom.MaxUser = 3000;
+            bgRoom.IsPersistence = true;
+            bgRoom.ID = "banaismailde";
+            _roomProvider.CreateRoom(bgRoom);
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
             _serverProvider.AddServerEventListener(MSServerEvent.AccountJoin, _serverProvider.OnAccountJoin);
@@ -48,7 +50,7 @@ namespace ShiftServer.Server
             _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
             _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
 
-            _serverProvider.Listen(tickrate : 30, port : 2000);
+            _serverProvider.Listen(tickrate : 15, port : 2000);
 
             ConsoleUI.Run(_serverProvider);
             //Run Server Simulation

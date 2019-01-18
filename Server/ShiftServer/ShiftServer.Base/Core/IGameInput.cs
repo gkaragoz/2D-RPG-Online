@@ -5,10 +5,9 @@ namespace ShiftServer.Base.Core
 {
     public interface IGameInput
     {
-        MSPlayerEvent eventType { get; set; }
-        Vector3 vector3 { get; set; }
-        float sensivity { get; set; }
-        int sequenceID { get; set; }
+        MSPlayerEvent EventType { get; set; }
+        Vector3 Vector { get; set; }
+        int SequenceID { get; set; }
     }
 
 }

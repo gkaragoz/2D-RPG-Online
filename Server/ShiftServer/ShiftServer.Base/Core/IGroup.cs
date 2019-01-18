@@ -5,7 +5,7 @@ namespace ShiftServer.Base.Core
 {
     public interface IGroup
     {
-        string Id { get; set; }
+        string ID { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         int MaxPlayer { get; set; }
         void OnInvite(ShiftClient client, IGameObject gameObject);

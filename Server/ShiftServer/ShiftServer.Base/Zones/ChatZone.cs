@@ -43,7 +43,7 @@ namespace ShiftServer.Base.Zones
             {
                 ShiftServerData errorData = new ShiftServerData();
                 errorData.ErrorReason = ShiftServerError.WrongClientData;
-                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
                 shift.SendPacket(MSServerEvent.AccountJoin, errorData);
                 return;
             }
@@ -55,8 +55,8 @@ namespace ShiftServer.Base.Zones
             //QUERY TO SOMEWHERE ELSE
 
             //Checking the client has only one player character under control
-            shift.UserSession.SetSid(data);
-            string sessionId = shift.UserSession.GetSid();
+            shift.UserSessionID.SetSid(data);
+            string sessionId = shift.UserSessionID;
             data.Session = new SessionData();
             data.Session.Sid = sessionId;
             //check login data
@@ -69,8 +69,8 @@ namespace ShiftServer.Base.Zones
 
             shift.SendPacket(MSServerEvent.AccountJoin, data);
             shift.UserName = data.AccountData.Username;
-            SocketIdSessionLookup.Add(sessionId, shift.connectionId);
-            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+            SocketIdSessionLookup.Add(sessionId, shift.ConnectonID);
+            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
 
         }
     }
