@@ -59,8 +59,8 @@
   <ItemGroup>
     <Compile Include="Core\ClientDataHandler.cs" />
     <Compile Include="Core\ClientEventCallback.cs" />
-    <Compile Include="Core\GameProvider.cs" />
-    <Compile Include="Core\RoomProvider.cs" />
+    <Compile Include="Core\Providers\GameProvider.cs" />
+    <Compile Include="Core\Providers\RoomProvider.cs" />
     <Compile Include="Data\Entities\ConfigData.cs" />
     <Compile Include="Data\Entities\Enums.cs" />
     <Compile Include="ManaShiftServer.cs" />

@@ -12,7 +12,7 @@ namespace ShiftServer.Base.Groups
     public class WorldGroup : IGroup
     {
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
-        public string Id { get; set; }
+        public string ID { get; set; }
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
         public int MaxPlayer { get; set; }
 

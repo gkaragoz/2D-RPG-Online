@@ -15,6 +15,7 @@ namespace ShiftServer.Base.Core
         SafeDictionary<string, Thread> RoomGameThreadList { get; set; }
         void OnPlayerJoin(ShiftServerData data, ShiftClient client);
         void OnPlayerCreate(ShiftServerData data, ShiftClient client);
+        void OnPlayerDispose(ShiftClient client);
         void OnObjectDestroy(IGameObject gameObject);
         void OnObjectCreate(IGameObject gameObject);
         void OnObjectMove(ShiftServerData data, ShiftClient client);

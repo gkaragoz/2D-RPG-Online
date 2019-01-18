@@ -70,7 +70,7 @@ namespace ShiftServer.Client.Core
                 }
             }
         }
-     
+
         public void DisposeRoom(ShiftServerData data)
         {
             JoinedRoom = null;

@@ -28,22 +28,22 @@ namespace ShiftServer.Base.Rooms
         public SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
         public int MaxUser { get; set; }
         public string Name { get; set; }
-        public string Id { get; set; }
+        public string ID { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime UpdateDate { get; set; }
         public DateTime GameStartDate { get; set; }
         public TimeSpan LastGameUpdate { get; set; }
         public bool IsPrivate { get; set; }
+        public bool IsPersistence { get; set; }
         public bool IsStopTriggered { get; set; }
-        public int CreatedUserId { get; set; }
-        public int ServerLeaderId { get; set; }
+        public int CreatedUserID { get; set; }
+        public int RoomLeaderID { get; set; }
         public int DisposeInMilliseconds { get; set; }
-        public int MaxConnId { get; set; }
+        public int MaxConnectionID { get; set; }
         public int MaxUserPerTeam { get; set; }
         public SafeDictionary<string, IGroup> Teams { get; set; }
         public List<string> TeamIdList { get; set; }
         public string LastActiveTeam { get; set; }
-        public DBServiceProvider _ctx { get; set; }
         public int TickRate { get; set; }
         public TimeSpan CurrentServerUptime { get; set; }
 
@@ -53,9 +53,8 @@ namespace ShiftServer.Base.Rooms
         public UpdateGOList GOUpdatePacket = new UpdateGOList();
 
 
-        public Battleground(int groupCount, int maxUserPerTeam, DBServiceProvider ctx)
+        public Battleground(int groupCount, int maxUserPerTeam)
         {
-            _ctx = ctx;
             MaxUserPerTeam = maxUserPerTeam;
             Clients = new SafeDictionary<int, ShiftClient>();
             SocketIdSessionLookup = new SafeDictionary<string, int>();
@@ -63,10 +62,10 @@ namespace ShiftServer.Base.Rooms
             Teams = new SafeDictionary<string, IGroup>();
             TeamIdList = new List<string>();
 
-            Id = "123";
+            ID = Guid.NewGuid().ToString();
             DisposeInMilliseconds = 10000;
 
-            MaxConnId = 0;
+            MaxConnectionID = 0;
 
             for (int i = 0; i < groupCount; i++)
             {
@@ -86,7 +85,7 @@ namespace ShiftServer.Base.Rooms
         }
         private void StartGameRoom()
         {
-            TickRate = 3;
+            TickRate = 15;
             int timerInterval = TickrateUtil.Set(TickRate);
 
 
@@ -105,14 +104,14 @@ namespace ShiftServer.Base.Rooms
 
         public void OnPlayerCreate(IGameObject gameObject)
         {
-            gameObject.ObjectId = Interlocked.Increment(ref ObjectCounter);
-            GameObjects.Add(gameObject.ObjectId, gameObject);
+            gameObject.ObjectID = Interlocked.Increment(ref ObjectCounter);
+            GameObjects.Add(gameObject.ObjectID, gameObject);
             GOUpdatePacket.PlayerList.Add(new PlayerObject
             {
                 Name = gameObject.Name,
                 MovementSpeed = (float)gameObject.MovementSpeed,
                 AttackSpeed = (float)gameObject.AttackSpeed,
-                Oid = gameObject.ObjectId,
+                Oid = gameObject.ObjectID,
                 PosX = gameObject.Position.X,
                 PosY = gameObject.Position.Y,
                 PosZ = gameObject.Position.Z,
@@ -122,8 +121,8 @@ namespace ShiftServer.Base.Rooms
 
         public void OnObjectDestroy(IGameObject gameObject)
         {
-            GameObjects.Remove(gameObject.ObjectId);
-            var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectId).FirstOrDefault();
+            GameObjects.Remove(gameObject.ObjectID);
+            var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectID).FirstOrDefault();
             GOUpdatePacket.PlayerList.Remove(item);
         }
 
@@ -143,12 +142,12 @@ namespace ShiftServer.Base.Rooms
         public void OnPlayerJoin(Character chardata, ShiftClient shift)
         {
             ShiftServerData sendData = new ShiftServerData();
-            string clientSessionId = shift.UserSession.GetSid();
+            string clientSessionId = shift.UserSessionID;
             if (clientSessionId == null)
                 return;
 
             List<IGameObject> gameObjectList = GameObjects.GetValues();
-            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionId == shift.connectionId && x.GetType() == typeof(Player)).FirstOrDefault();
+            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionID == shift.ConnectonID && x.GetType() == typeof(Player)).FirstOrDefault();
 
             // if already exist in world
             if (currentPlayer != null)
@@ -171,9 +170,9 @@ namespace ShiftServer.Base.Rooms
             else
             {
                 Player player = new Player();
-                player.OwnerConnectionId = shift.connectionId;
-                player.OwnerSessionId = shift.UserSession.GetSid();
-                player.ObjectId = Interlocked.Increment(ref ObjectCounter);
+                player.OwnerConnectionID = shift.ConnectonID;
+                player.OwnerSessionID = shift.UserSessionID;
+                player.ObjectID = Interlocked.Increment(ref ObjectCounter);
                 player.Name = chardata.Name;
                 player.MaxHP = chardata.Stats.Health;
                 player.CurrentHP = chardata.Stats.Health;
@@ -185,7 +184,7 @@ namespace ShiftServer.Base.Rooms
                 player.Scale = new Vector3(1f, 1f, 1f);
 
                 this.OnPlayerCreate(player);
-                log.Info($"[CreatePlayer] OnRoom:{this.Id} Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.connectionId}");
+                log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
 
               
                 currentPlayer = player;
@@ -197,7 +196,7 @@ namespace ShiftServer.Base.Rooms
             sendData.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
             {
                 Name = shift.UserName,
-                Oid = shift.CurrentObject.ObjectId,
+                Oid = shift.CurrentObject.ObjectID,
                 AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                 MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                 CurrentHp = shift.CurrentObject.CurrentHP,
@@ -216,18 +215,18 @@ namespace ShiftServer.Base.Rooms
             RoomPlayerInfo pInfo = new RoomPlayerInfo();
             pInfo.Username = currentClient.UserName;
 
-            if (currentClient.JoinedTeamId != null)
-                pInfo.TeamId = currentClient.JoinedTeamId;
+            if (currentClient.JoinedTeamID != null)
+                pInfo.TeamId = currentClient.JoinedTeamID;
 
             pInfo.IsJoinedToTeam = currentClient.IsJoinedToTeam;
             pInfo.IsReady = currentClient.IsReady;
             if (currentClient.CurrentObject != null)
             {
-                pInfo.ObjectId = currentClient.CurrentObject.ObjectId;
+                pInfo.ObjectId = currentClient.CurrentObject.ObjectID;
                 pInfo.CurrentGObject = new PlayerObject
                 {
                     Name = currentClient.UserName,
-                    Oid = currentClient.CurrentObject.ObjectId,
+                    Oid = currentClient.CurrentObject.ObjectID,
                     AttackSpeed = (float)currentClient.CurrentObject.AttackSpeed,
                     MovementSpeed = (float)currentClient.CurrentObject.MovementSpeed,
                     CurrentHp = currentClient.CurrentObject.CurrentHP,
@@ -238,7 +237,7 @@ namespace ShiftServer.Base.Rooms
                 };
             }
 
-            if (this.ServerLeaderId == currentClient.connectionId)
+            if (this.RoomLeaderID == currentClient.ConnectonID)
             {
                 pInfo.IsLeader = true;
             }
@@ -254,10 +253,10 @@ namespace ShiftServer.Base.Rooms
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSession == null)
+                if (clientList[i].UserSessionID == null)
                     continue;
 
-                if (clientList[i].connectionId == currentClient.connectionId)
+                if (clientList[i].ConnectonID == currentClient.ConnectonID)
                     continue;
 
                 clientList[i].SendPacket(evt, data);
@@ -268,10 +267,10 @@ namespace ShiftServer.Base.Rooms
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSession == null)
+                if (clientList[i].UserSessionID == null)
                     continue;
 
-                if (clientList[i].connectionId == currentClient.connectionId)
+                if (clientList[i].ConnectonID == currentClient.ConnectonID)
                     continue;
 
                 clientList[i].SendPacket(state, data);
@@ -283,10 +282,10 @@ namespace ShiftServer.Base.Rooms
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSession == null)
+                if (clientList[i].UserSessionID == null)
                     continue;
 
-                if (clientList[i].connectionId == currentClient.connectionId)
+                if (clientList[i].ConnectonID == currentClient.ConnectonID)
                     continue;
 
                 clientList[i].SendPacket(state, data);
@@ -297,8 +296,6 @@ namespace ShiftServer.Base.Rooms
 
             ShiftServerData data = new ShiftServerData();
             data.SvTickRate = this.TickRate;
-            data.TimeBetweenTicks = timespan.TotalSeconds;
-            data.CurrentServerTime = this.CurrentServerUptime.TotalSeconds;
             data.GoUpdatePacket = new UpdateGOList();
 
             IGameObject gObject = null;
@@ -310,7 +307,7 @@ namespace ShiftServer.Base.Rooms
 
                 data.GoUpdatePacket.PlayerList.Add(new PlayerObject
                 {
-                    Oid = gObject.ObjectId,
+                    Oid = gObject.ObjectID,
                     PosX = gObject.Position.X,
                     PosY = gObject.Position.Y,
                     PosZ = gObject.Position.Z,
@@ -324,7 +321,7 @@ namespace ShiftServer.Base.Rooms
             List<ShiftClient> clientList = Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSession == null)
+                if (clientList[i].UserSessionID == null)
                     continue;
 
                 clientList[i].SendPacket(MSPlayerEvent.RoomUpdate, data);
@@ -350,11 +347,12 @@ namespace ShiftServer.Base.Rooms
                     gObject.GameInputs.TryDequeue(out gInput);
                     if (gInput != null)
                     {
-                        switch (gInput.eventType)
+                        switch (gInput.EventType)
                         {
                             case MSPlayerEvent.Move:
-                                gObject.OnMove(gInput.vector3);
-                                log.Debug($"gObject: {gObject.ObjectId} Move  {gInput.vector3.ToString()}!");
+                                
+                                gObject.OnMove(gInput.Vector);
+                                log.Debug($"gObject: {gObject.ObjectID} Move  {gInput.Vector.ToString()}!");
                                 break;
                             case MSPlayerEvent.Attack:
                                 break;
@@ -366,7 +364,7 @@ namespace ShiftServer.Base.Rooms
                                 break;
                         }
 
-                        gObject.LastProcessedSequenceID = gInput.sequenceID;
+                        gObject.LastProcessedSequenceID = gInput.SequenceID;
                     }
                     //pInput = (PlayerInput)gInput;
                 }
@@ -387,16 +385,16 @@ namespace ShiftServer.Base.Rooms
                 {
                     if (LastActiveTeam != null)
                     {
-                        if (LastActiveTeam == RoomTeams[i].Id)
+                        if (LastActiveTeam == RoomTeams[i].ID)
                         {
                             IGroup otherTeam = null;
-                            var otherTeamId = TeamIdList.Where(x => x != RoomTeams[i].Id).FirstOrDefault();
+                            var otherTeamId = TeamIdList.Where(x => x != RoomTeams[i].ID).FirstOrDefault();
                             Teams.TryGetValue(otherTeamId, out otherTeam);
                             if (otherTeam != null)
                             {
                                 if (otherTeam.MaxPlayer > otherTeam.Clients.Count)
                                 {
-                                    LastActiveTeam = otherTeam.Id;
+                                    LastActiveTeam = otherTeam.ID;
                                     return otherTeam;
                                 }
                                 else
@@ -405,14 +403,14 @@ namespace ShiftServer.Base.Rooms
                             }
                             else
                             {
-                                LastActiveTeam = RoomTeams[i].Id;
+                                LastActiveTeam = RoomTeams[i].ID;
                                 return RoomTeams[i];
                             }
                         }
                     }
                     else
                     {
-                        LastActiveTeam = RoomTeams[i].Id;
+                        LastActiveTeam = RoomTeams[i].ID;
                         return RoomTeams[i];
                     }
 
@@ -427,16 +425,16 @@ namespace ShiftServer.Base.Rooms
             var AllClients = this.Clients.GetValues();
             foreach (var item in AllClients)
             {
-                this.Clients.TryGetValue(item.connectionId, out shift);
+                this.Clients.TryGetValue(item.ConnectonID, out shift);
 
-                if (shift != null && this.ServerLeaderId == -1)
+                if (shift != null && this.RoomLeaderID == -1)
                 {
 
-                    if (this.ServerLeaderId != shift.connectionId)
+                    if (this.RoomLeaderID != shift.ConnectonID)
                     {
-                        this.ServerLeaderId = shift.connectionId;
+                        this.RoomLeaderID = shift.ConnectonID;
                         shift.IsJoinedToRoom = true;
-                        shift.JoinedRoomId = this.Id;
+                        shift.JoinedRoomID = this.ID;
                         return shift;
                     }
 

@@ -1,5 +1,6 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Base.Core;
+using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,27 +11,24 @@ using Telepathy;
 
 namespace ShiftServer.Base.Auth
 {
-    public class ShiftClient : IClient
+    public class ShiftClient
     {
         private static readonly log4net.ILog log
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public Session UserSession { get; set; }
+        public string UserSessionID { get; set; }
         public TcpClient Client { get; set; }
         public IGameObject CurrentObject { get; set; }
         public SafeQueue<IGameInput> Inputs { get; set; }
         public string UserName { get; set; }
-        public int connectionId { get; set; }
+        public int ConnectonID { get; set; }
         public bool IsJoinedToWorld { get; set; }
         public bool IsReady { get; set; }
         public bool IsJoinedToRoom { get; set; }
         public bool IsJoinedToTeam { get; set; }
-        public string JoinedRoomId { get; set; }
-        public string JoinedTeamId { get; set; }
-        public bool IsConnected()
-        {
-            return Client.Connected;
-        }
+        public string JoinedRoomID { get; set; }
+        public string JoinedTeamID { get; set; }
+        public bool IsConnected { get => this.Client.Connected; }
 
         public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
@@ -43,10 +41,14 @@ namespace ShiftServer.Base.Auth
             }
             catch (Exception err)
             {
-                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
+                if (this.Client != null)
+                {
+                    if (this.Client.Connected)
+                        log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
+                }
                 return false;
             }
-                 
+
         }
         public bool SendPacket(MSPlayerEvent eventType, ShiftServerData data)
         {
@@ -60,7 +62,7 @@ namespace ShiftServer.Base.Auth
             catch (Exception err)
             {
                 if (this.Client.Client.Connected)
-                    log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
+                    log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
                 return false;
             }
 
@@ -69,66 +71,51 @@ namespace ShiftServer.Base.Auth
         {
 
             IGroup group = null;
-            if (this.IsJoinedToTeam)
-            {
-                room.Teams.TryGetValue(this.JoinedTeamId, out group);
+            if (!this.IsJoinedToTeam)
+                return null;
 
-                if (group != null)
-                {
-                    return group;
-                }
-                else
-                    return null;
-            }
+            room.Teams.TryGetValue(this.JoinedTeamID, out group);
+
+            if (group != null)
+                return group;
             else
                 return null;
+
         }
 
         public bool JoinTeam(IGroup group)
         {
+            if (group == null)
+                return false;
 
-            if (group != null)
+            if (this.IsJoinedToTeam)
             {
-                if (this.IsJoinedToTeam)
-                {
-                    log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId} Already in a team");
-                    return false;
-                }
-                else
-                {
-                    group.AddPlayer(this);
-                    return true;
-                }
+                log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID} Already in a team");
+                return false;
             }
             else
-                return false;
-       
+            {
+                group.AddPlayer(this);
+                return true;
+            }
+
+
         }
         public bool LeaveFromTeam(IRoom room)
         {
-
             IGroup group = null;
-            if (this.IsJoinedToTeam)
-            {
-                room.Teams.TryGetValue(this.JoinedTeamId, out group);
-
-                if (group != null)
-                {
-                    group.RemovePlayer(this);
-                    this.IsJoinedToTeam = false;
-                    return true;
-                }
-                else
-                    return false;
-            }
-            else
+            if (!this.IsJoinedToTeam)
                 return false;
+
+            room.Teams.TryGetValue(this.JoinedTeamID, out group);
+            if (group == null)
+                return false;
+
+            group.RemovePlayer(this);
+            this.IsJoinedToTeam = false;
+            return true;
         }
 
-        public void LeaveFromWorld()
-        {
-
-        }
         private bool Send(byte[] bb)
         {
             if (this.Client != null)
@@ -140,7 +127,7 @@ namespace ShiftServer.Base.Auth
                 }
                 catch (Exception exception)
                 {
-                    log.Error($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}  Cant access because client is null", exception);
+                    log.Error($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}  Cant access because client is null", exception);
                     return false;
                 }
             }
@@ -169,6 +156,7 @@ namespace ShiftServer.Base.Auth
                 byte[] payload = new byte[header.Length + content.Length];
                 Array.Copy(header, payload, header.Length);
                 Array.Copy(content, 0, payload, header.Length, content.Length);
+
                 stream.Write(payload, 0, payload.Length);
 
                 return true;
@@ -179,13 +167,93 @@ namespace ShiftServer.Base.Auth
                 return false;
             }
         }
+        public void Dispose()
+        {
+            string userSessionId = string.Empty;
 
+            if (this != null)
+            {
+                userSessionId = this.UserSessionID;
+
+            }
+        }
+        public bool SessionCheck(ShiftServerData data)
+        {
+            bool result = false;
+            //session check
+            if (data.SessionID != null)
+                return result;
+
+            AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
+
+            if (session != null)
+                return result;
+
+            this.UserSessionID = data.SessionID;
+            Account acc = DBContext.ctx.Accounts.GetByUserID(session.UserID);
+            if (acc == null)
+                return result;
+
+            //check if already logged in
+            List<ShiftClient> clients = ServerProvider.instance.world.Clients.GetValues();
+            var client = clients.Find(x => x.UserSessionID == session.SessionID);
+
+            if (session.SessionID == data.SessionID)
+                result = true;
+
+            if (client != null && this.IsJoinedToWorld != true)
+                result = false;
+
+            if (result)
+                return result;
+            else
+            {
+                this.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
+                return result;
+            }
+
+
+        }
+        public bool FillAccountData(ShiftServerData data)
+        {
+            try
+            {
+                AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
+                Account acc = DBContext.ctx.Accounts.GetByUserID(session.UserID);
+
+                this.UserSessionID = data.SessionID;
+
+
+                data.Account = null;
+                data.AccountData = new CommonAccountData();
+                data.AccountData.VirtualMoney = acc.Gold;
+                data.AccountData.VirtualSpecialMoney = acc.Gem;
+
+                if (string.IsNullOrEmpty(acc.SelectedCharName))
+                    this.UserName = data.AccountData.Username;
+                else
+                {
+                    data.AccountData.Username = acc.SelectedCharName;
+                    this.UserName = acc.SelectedCharName;
+                }
+
+
+                return true;
+            }
+            catch (Exception err)
+            {
+                log.Error($"[Login Failed] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
+                return false;
+
+            }
+
+        }
     }
 
     public static class ShiftHelper
     {
         public static ShiftClient GetShiftClient(List<ShiftClient> shifts, TcpClient tcpclient)
-        { 
+        {
             return shifts.Where(x => x.Client == tcpclient).FirstOrDefault();
         }
 
@@ -218,6 +286,6 @@ namespace ShiftServer.Base.Auth
 
         }
     }
-   
+
 
 }

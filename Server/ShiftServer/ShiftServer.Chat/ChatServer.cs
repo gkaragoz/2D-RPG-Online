@@ -13,7 +13,6 @@ namespace ShiftServer.Chat
     class ChatServer
     {
 
-        private static ChatProvider _chatProvider = null;
 
         /// <summary>
         /// Main entry of shift server
@@ -27,8 +26,6 @@ namespace ShiftServer.Chat
            
 
            // _chatProvider.AddServerEventListener(MSServerEvent.Login, zone.);
-
-            _chatProvider.Listen(tickrate: 5, port: 2001);
 
             //ConsoleUI.Run(_chatProvider);
             //Run Server Simulation
