@@ -133,7 +133,7 @@ public class RoomManager : Menu {
 
         roomData.Room.Name = CharacterManager.instance.SelectedCharacter.name + "\'s Room";
         roomData.Room.IsPrivate = false;
-        roomData.Room.MaxUserCount = 2;
+        roomData.Room.MaxUserCount = 1000;
 
         data.RoomData = roomData;
 
@@ -141,7 +141,7 @@ public class RoomManager : Menu {
     }
 
     public void JoinRoom() {
-        StartCoroutine(IJoinRoom("123"));
+        StartCoroutine(IJoinRoom("banaismailde"));
     }
 
     public void LeaveRoom() {
