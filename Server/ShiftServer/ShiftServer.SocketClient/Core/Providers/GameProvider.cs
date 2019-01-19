@@ -39,7 +39,10 @@ namespace ShiftServer.Client.Core
 
                     // create and connect the client
                     client = new Mirror.Transport.Tcp.Client();
-
+                    client.ReceivedData += Client_ReceivedData;
+                    client.Connected += Client_Connected;
+                    client.Disconnected += Client_Disconnected;
+                    client.ReceivedError += Client_ReceivedError;
                     //this.SetFixedUpdateInterval();
                     client.Connect(address, port);
                 }

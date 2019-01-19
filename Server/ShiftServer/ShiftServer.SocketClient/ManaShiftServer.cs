@@ -8,7 +8,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 
@@ -58,8 +57,6 @@ namespace ShiftServer.Client
                 _gameProvider.client = null;
             }
             _gameProvider.Connect(cfg.Host, cfg.Port);
-            Thread.Sleep(1000);
-            this.Setup();
             this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
             this.JoinServer(_sessionID);
         }
