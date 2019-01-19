@@ -266,6 +266,7 @@
     <Compile Include="Assets\Scripts\Archieve\Room\RoomManager.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\Team\Team.cs" />
     <Compile Include="Assets\Scripts\Archieve\Room\Team\TeamManager.cs" />
+    <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAnimator.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAttack.cs" />
