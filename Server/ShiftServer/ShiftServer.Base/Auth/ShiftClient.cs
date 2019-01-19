@@ -222,12 +222,12 @@ namespace ShiftServer.Base.Auth
         {
             bool result = false;
             //session check
-            if (data.SessionID != null)
+            if (data.SessionID == null)
                 return result;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
 
-            if (session != null)
+            if (session == null)
                 return result;
 
             this.UserSessionID = data.SessionID;
@@ -242,7 +242,7 @@ namespace ShiftServer.Base.Auth
             if (session.SessionID == data.SessionID)
                 result = true;
 
-            if (client != null && this.IsJoinedToWorld != true)
+            if (client == null && this.IsJoinedToWorld != true)
                 result = false;
 
             if (result)

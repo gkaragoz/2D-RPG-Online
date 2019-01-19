@@ -73,6 +73,7 @@
   <ItemGroup>
     <Compile Include="Auth\Crypto.cs" />
     <Compile Include="Auth\ShiftClient.cs" />
+    <Compile Include="Core\CollisionDetection.cs" />
     <Compile Include="Core\Providers\DBServiceProvider.cs" />
     <Compile Include="Core\Providers\GroupProvider.cs" />
     <Compile Include="Core\IGameInput.cs" />
@@ -86,6 +87,7 @@
     <Compile Include="Core\ServerEventCallback.cs" />
     <Compile Include="Core\Providers\ServerProvider.cs" />
     <Compile Include="Core\ManaSocket.cs" />
+    <Compile Include="Factory\Entities\EntityState.cs" />
     <Compile Include="Factory\Entities\Player.cs" />
     <Compile Include="Factory\Entities\PlayerInput.cs" />
     <Compile Include="Factory\Movement\MoveInput.cs" />

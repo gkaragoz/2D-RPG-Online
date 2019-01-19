@@ -23,6 +23,7 @@ namespace ShiftServer.Base.Core
         void OnAttack();
         void OnHit();
         void OnMove(Vector3 rotation);
-
+        void ResolveInputs();
+        PlayerObject GetPlayerObject();
     }
 }
