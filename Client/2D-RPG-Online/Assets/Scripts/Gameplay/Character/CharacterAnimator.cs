@@ -28,7 +28,6 @@ public class CharacterAnimator : MonoBehaviour {
 
     public void OnDeath() {
         _animator.SetTrigger("Die");
-        _animator.SetBool("IsRunning", false);
     }
 
 }
