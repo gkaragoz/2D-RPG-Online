@@ -23,6 +23,9 @@ public class CharacterMotor : MonoBehaviour {
 
     public void Move(Vector2 direction) {
         Vector2 currentPosition = _rb2D.transform.position;
+        //_rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
+
+        _rb2D.transform.rotation = Quaternion.LookRotation(direction);
         _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
         AudioManager.instance.Play("footstep");

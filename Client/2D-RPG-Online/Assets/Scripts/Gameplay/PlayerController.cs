@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
         _playerHUD = GetComponent<PlayerHUD>();
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (_isMe) {
             _xInput = _joystick.Horizontal;
             _yInput = _joystick.Vertical;
@@ -83,12 +83,6 @@ public class PlayerController : MonoBehaviour {
         }
 
         UpdateHUD();
-    }
-
-    private void Update() {
-        if (Input.GetButton("Fire1")) {
-            Attack();
-        }
     }
 
     public void Initialize(PlayerObject playerData) {

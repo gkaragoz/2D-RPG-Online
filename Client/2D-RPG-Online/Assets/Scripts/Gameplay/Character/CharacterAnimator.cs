@@ -19,11 +19,15 @@ public class CharacterAnimator : MonoBehaviour {
             _animator.transform.localScale = new Vector3(1, _animator.transform.localScale.y, _animator.transform.localScale.z);
         }
 
-        _animator.SetBool("Run", true);
+        if (direction != Vector2.zero) {
+            _animator.SetBool("IsRunning", true);
+        } else {
+            _animator.SetBool("IsRunning", false);
+        }
     }
     
     public void OnStop() {
-        _animator.SetBool("Run", false);
+        _animator.SetBool("IsRunning", false);
     }
     
     public void OnAttack() {
