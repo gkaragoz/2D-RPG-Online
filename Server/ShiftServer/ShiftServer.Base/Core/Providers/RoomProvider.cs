@@ -390,6 +390,7 @@ namespace ShiftServer.Base.Core
                     else
                         this.OnRoomDispose(prevRoom);
 
+                    shift.Dispose();
                 }
                 else
                 {
@@ -521,6 +522,7 @@ namespace ShiftServer.Base.Core
                 newData.RoomData.Room = new MSSRoom();
                 newData.RoomData.Room.Id = room.ID;
                 shift.SendPacket(MSServerEvent.RoomDelete, newData);
+
             }
             else
             {
