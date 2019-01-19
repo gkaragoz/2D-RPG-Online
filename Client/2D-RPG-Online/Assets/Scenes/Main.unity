@@ -26493,6 +26493,7 @@ MonoBehaviour:
   _btnReady: {fileID: 2029559455}
   _btnNotReady: {fileID: 1438094722}
   _btnLeave: {fileID: 611885894}
+  serverTickrate: 0
 --- !u!4 &1672902827
 Transform:
   m_ObjectHideFlags: 0

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Timers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -37,26 +38,25 @@ public class PingStatus : MonoBehaviour {
     }
 
     private bool OnGamePlayServerConnectionSuccess() {
-        StartCoroutine(SendPingRequest());
+        SendPingRequest();
         return true;
     }
 
-    private IEnumerator SendPingRequest() {
-        while (true) {
-            if (NetworkManager.mss != null) {
-                if (NetworkManager.mss.IsConnected) {
-                    _stopwatch = new Stopwatch();
-                    _stopwatch.Start();
+    private void SendPingRequest() {
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        var timer = new Timer(2500.0);
 
-                    NetworkManager.mss.SendMessage(MSServerEvent.PingRequest);
-                }
-            } else {
-                StopAllCoroutines();
-                break;
+        timer.Elapsed += (object sender, ElapsedEventArgs e) => {
+            if (NetworkManager.mss.IsConnected) {
+                _stopwatch = new Stopwatch();
+                _stopwatch.Start();
+
+                NetworkManager.mss.SendMessage(MSServerEvent.PingRequest);
             }
+        };
 
-            yield return new WaitForSeconds(1f);
-        }
+        timer.AutoReset = true;
+        timer.Enabled = true;
     }
 
     private void SetPingColor() {
