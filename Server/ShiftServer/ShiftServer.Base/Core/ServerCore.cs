@@ -25,7 +25,6 @@ namespace ShiftServer.Base.Core
                 Telepathy.Message msg;
                 while (ServerProvider.instance.server.GetNextMessage(out msg))
                 {
-
                     switch (msg.eventType)
                     {
                         case Telepathy.EventType.Connected:
