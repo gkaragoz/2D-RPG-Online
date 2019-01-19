@@ -131,7 +131,7 @@ namespace ShiftServer.Client.Core
         private void Client_Disconnected()
         {
             this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
-            client.Disconnect();
+            //client.Disconnect();
         }
 
         private void Client_Connected()
