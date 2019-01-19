@@ -45,6 +45,8 @@ namespace ShiftServer.Base.Core
                 if (client != null)
                     client.Dispose();
 
+
+                ServerProvider.instance.world.Clients.Remove(connId);
                 ServerProvider.log.Info($"ClientNO: {connId} Disconnected");
             }
             catch (Exception err)
@@ -65,7 +67,7 @@ namespace ShiftServer.Base.Core
             }
         }
 
-        private async void Server_ReceivedDataAsync(int connId, byte[] data)
+        private void Server_ReceivedDataAsync(int connId, byte[] data)
         {
 
             ShiftClient shift = null;

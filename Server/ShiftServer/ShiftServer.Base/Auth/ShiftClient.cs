@@ -127,7 +127,7 @@ namespace ShiftServer.Base.Auth
                 return;
 
             ServerProvider.instance.world.ClientDispose(this);
-
+            ServerProvider.instance.world.Clients.Remove(this.ConnectionID);
             ServerProvider.instance.world.Rooms.TryGetValue(this.JoinedRoomID, out room);
 
             if (room != null)
