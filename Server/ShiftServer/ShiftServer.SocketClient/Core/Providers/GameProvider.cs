@@ -99,11 +99,6 @@ namespace ShiftServer.Client.Core
         /// </summary> 	
         public void SendMessage(byte[] bb)
         {
-            if (client == null)
-            {
-                return;
-            }
-            // send a message to server
             client.Send(bb);
         }
 
@@ -139,7 +134,7 @@ namespace ShiftServer.Client.Core
 
         private void Client_Connected()
         {
-            this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
+            //this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
         }
 
         private void Client_ReceivedData(byte[] obj)

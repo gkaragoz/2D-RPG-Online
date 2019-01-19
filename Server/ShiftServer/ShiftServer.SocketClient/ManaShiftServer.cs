@@ -46,13 +46,26 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Connect(ConfigData cfg)
+        public void Connect(ConfigData cfg, int timeout = 10)
         {
             if (string.IsNullOrEmpty(cfg.SessionID))
                 throw new ArgumentNullException("Session ID is null");
 
             _sessionID = cfg.SessionID;
             _gameProvider.Connect(cfg.Host, cfg.Port);
+
+
+            Stopwatch s = new Stopwatch();
+            s.Start();
+            while (this.IsConnected != true) {
+                if (s.Elapsed > TimeSpan.FromSeconds(timeout))
+                {
+                    throw new TimeoutException("Connection timeout");
+                }
+                Console.WriteLine("connecting...");
+            };
+            s.Stop();
+
             this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
             this.JoinServer(_sessionID);
         }

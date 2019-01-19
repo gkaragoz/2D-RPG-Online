@@ -146,7 +146,7 @@ namespace ShiftServer.Base.Auth
 
                 room.Clients.Remove(this.ConnectionID);
 
-                if (room.Clients.Count == 0)
+                if (room.Clients.Count == 0 && !room.IsPersistence)
                 {
                     ServerProvider.instance.world.Rooms.Remove(room.ID);
                     isDestroyed = true;
