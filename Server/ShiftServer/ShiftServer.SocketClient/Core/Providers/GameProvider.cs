@@ -81,12 +81,11 @@ namespace ShiftServer.Client.Core
             {
                 // disconnect from the server when we are done
                 client.Disconnect();
-                client = null;
             }
             catch (Exception err)
             {
 
-                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
+                //this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
                 return;
             }
         }
