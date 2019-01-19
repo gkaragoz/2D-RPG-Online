@@ -115,7 +115,10 @@ namespace ShiftServer.Base.Auth
         private void HardDisconnect()
         {
             if (this.TCPClient.Connected)
+            {
+                this.TCPClient.Dispose();
                 this.TCPClient.Close();
+            }
         }
         public void Dispose()
         {
