@@ -215,6 +215,8 @@ public class RoomManager : Menu {
     private void OnRoomUpdated(ShiftServerData data) {
         serverTickrate = data.SvTickRate;
 
+        Debug.Log(data);
+
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
 
