@@ -70,12 +70,6 @@ public class NetworkManager : MonoBehaviour {
         mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
     }
 
-    private void Update() {
-        if (mss != null) {
-            mss.Listen();
-        }
-    }
-
     private void OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
 

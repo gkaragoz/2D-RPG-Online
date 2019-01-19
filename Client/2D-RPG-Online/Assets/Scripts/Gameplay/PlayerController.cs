@@ -96,6 +96,7 @@ public class PlayerController : MonoBehaviour {
 
         if (_playerData.Name == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;
+            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
             _playerHUD.Hide();
