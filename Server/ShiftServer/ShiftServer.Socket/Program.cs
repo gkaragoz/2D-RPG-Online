@@ -24,7 +24,7 @@ namespace ShiftServer.Server
 
             GameZone zone = new GameZone();
             _serverProvider = new ServerProvider(zone);
-            _roomProvider = new RoomProvider(_serverProvider);
+            _roomProvider = new RoomProvider();
             _groupProvider = new GroupProvider(_roomProvider);
 
             //default
