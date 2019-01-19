@@ -7,28 +7,28 @@ public class CharacterMotor : MonoBehaviour {
 
     public bool IsMoving {
         get {
-            return _rb2D.velocity.magnitude > 0 ? true : false;
+            return _rb.velocity.magnitude > 0 ? true : false;
         }
     }
 
-    private Rigidbody2D _rb2D;
+    private Rigidbody _rb;
 
     private void Start() {
-        _rb2D = GetComponent<Rigidbody2D>();
+        _rb = GetComponent<Rigidbody>();
     }
 
     public void SetMovementSpeed(float speed) {
         this.speed = speed;
     }
 
-    public void Move(Vector2 direction) {
-        Vector2 currentPosition = _rb2D.transform.position;
+    public void Move(Vector3 direction) {
+        Vector3 currentPosition = _rb.transform.position;
         //_rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
-        _rb2D.transform.rotation = Quaternion.LookRotation(direction);
-        _rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
+        _rb.transform.rotation = Quaternion.LookRotation(direction);
+        _rb.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
-        AudioManager.instance.Play("footstep");
+        //AudioManager.instance.Play("footstep");
     }
 
 }

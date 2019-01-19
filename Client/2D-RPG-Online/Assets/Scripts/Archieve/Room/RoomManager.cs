@@ -93,8 +93,8 @@ public class RoomManager : Menu {
 
             // Interpolate between the two surrounding authoritative positions.
             if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
-                Vector2 firstVector = entity.PositionBuffer[0].vector2;
-                Vector2 secondVector = entity.PositionBuffer[1].vector2;
+                Vector2 firstVector = entity.PositionBuffer[0].vector3;
+                Vector2 secondVector = entity.PositionBuffer[1].vector3;
 
                 double t0 = entity.PositionBuffer[0].updateTime;
                 double t1 = entity.PositionBuffer[1].updateTime;

@@ -10,16 +10,8 @@ public class CharacterAnimator : MonoBehaviour {
         _animator = GetComponentInChildren< Animator>();
     }
 
-    public void OnMove(Vector2 direction) {
-        float xValue = direction.x;
-
-        if (xValue < 0) {
-            _animator.transform.localScale = new Vector3(-1, _animator.transform.localScale.y, _animator.transform.localScale.z);
-        } else {
-            _animator.transform.localScale = new Vector3(1, _animator.transform.localScale.y, _animator.transform.localScale.z);
-        }
-
-        if (direction != Vector2.zero) {
+    public void OnMove(Vector3 direction) {
+        if (direction != Vector3.zero) {
             _animator.SetBool("IsRunning", true);
         } else {
             _animator.SetBool("IsRunning", false);

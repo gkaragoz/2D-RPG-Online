@@ -9,22 +9,22 @@ using UnityEngine.UI;
 public class PlayerController : MonoBehaviour {
 
     public class PositionEntry {
-        public Vector2 vector2;
+        public Vector3 vector3;
         public double updateTime;
 
-        public PositionEntry(double updateTime, Vector2 vector2) {
+        public PositionEntry(double updateTime, Vector3 vector3) {
             this.updateTime = updateTime;
-            this.vector2 = vector2;
+            this.vector3 = vector3;
         }
     }
 
     public bool HasInput {
         get {
-            return (CurrentInput != Vector2.zero) ? true : false;
+            return (CurrentInput != Vector3.zero) ? true : false;
         }
     }
 
-    public Vector2 CurrentInput { get; private set; }
+    public Vector3 CurrentInput { get; private set; }
     public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
     public int Oid { get { return _playerData.Oid; } }
     public bool IsMe { get { return _isMe; } }
@@ -33,11 +33,13 @@ public class PlayerController : MonoBehaviour {
 
     [SerializeField]
     [Utils.ReadOnly]
-    private float _xInput, _yInput;
+    private float _xInput, _zInput;
     [SerializeField]
     private Joystick _joystick;
     [SerializeField]
     private Button _btnAttack;
+    [SerializeField]
+    private bool _isOfflineMode;
 
     private bool _isMe;
     private CharacterController _characterController;
@@ -55,20 +57,20 @@ public class PlayerController : MonoBehaviour {
     }
 
     private void Update() {
-        if (_isMe) {
+        if (_isMe || _isOfflineMode) {
             _xInput = _joystick.Horizontal;
-            _yInput = _joystick.Vertical;
+            _zInput = _joystick.Vertical;
 
-            CurrentInput = new Vector2(_xInput, _yInput);
+            CurrentInput = new Vector3(_xInput, 0, _zInput);
 
-            if (HasInput && NetworkManager.mss != null) {
+            if (!_isOfflineMode && HasInput && NetworkManager.mss != null) {
                 ShiftServerData data = new ShiftServerData();
 
                 data.PlayerInput = new SPlayerInput();
                 data.PlayerInput.SequenceID = _nonAckInputIndex++;
 
                 data.PlayerInput.PosX = CurrentInput.x;
-                data.PlayerInput.PosY = CurrentInput.y;
+                data.PlayerInput.PosZ = CurrentInput.z;
 
                 NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
@@ -137,11 +139,11 @@ public class PlayerController : MonoBehaviour {
         _characterController.Move(CurrentInput);
     }
 
-    public void Move(Vector2 input) {
+    public void Move(Vector3 input) {
         _characterController.Move(input);
     }
 
-    public void ToNewPosition(Vector2 newPosition) {
+    public void ToNewPosition(Vector3 newPosition) {
         _characterController.ToNewPosition(newPosition);
     }
 

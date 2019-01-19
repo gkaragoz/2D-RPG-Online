@@ -24,18 +24,18 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    public void Move(Vector2 direction) {
+    public void Move(Vector3 direction) {
         if (!_characterAttack.IsAttacking) {
             _characterMotor.Move(direction);
             _characterAnimator.OnMove(direction);
         }
     }
 
-    public void ToNewPosition(Vector2 newPosition) {
-        if (new Vector3(newPosition.x, newPosition.y) == transform.position) {
+    public void ToNewPosition(Vector3 newPosition) {
+        if (new Vector3(newPosition.x, newPosition.z) == transform.position) {
             _characterAnimator.OnStop();
         } else {
-            Vector3 direction = new Vector3(newPosition.x, newPosition.y) - transform.position;
+            Vector3 direction = new Vector3(newPosition.x, newPosition.z) - transform.position;
 
             _characterAnimator.OnMove(direction);
 

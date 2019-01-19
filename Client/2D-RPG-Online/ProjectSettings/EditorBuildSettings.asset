@@ -6,15 +6,12 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/PolygonMiniFantasyCharacters/Scenes/Demo.unity
-    guid: 326efdec5027d67438101c98fa0829b1
-  - enabled: 1
     path: Assets/Scenes/Main.unity
     guid: 1609665c35f0d6b4dafbb677e2e2ae37
   - enabled: 1
     path: Assets/Scenes/Tutorial.unity
     guid: 7fd9b2e8f8eb331489f4d9bfecf8b2d8
   - enabled: 1
-    path: Assets/Scenes/Gameplay.unity
-    guid: a4849937910b0e643bebd579a15b0609
+    path: Assets/Scenes/3D_Gameplay.unity
+    guid: b0dad02dc0b51c54a9f62f28f7f6b211
   m_configObjects: {}
