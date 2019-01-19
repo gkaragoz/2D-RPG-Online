@@ -56,7 +56,7 @@ public class PlayerController : MonoBehaviour {
         _playerHUD = GetComponent<PlayerHUD>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if (_isMe || _isOfflineMode) {
             _xInput = _joystick.Horizontal;
             _zInput = _joystick.Vertical;

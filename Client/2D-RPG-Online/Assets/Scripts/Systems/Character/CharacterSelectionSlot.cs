@@ -9,8 +9,6 @@ public class CharacterSelectionSlot : MonoBehaviour {
     [SerializeField]
     private Toggle _toggle;
     [SerializeField]
-    private Image _imageClassHighlight;
-    [SerializeField]
     private Image _imageClassIcon;
     [SerializeField]
     private Image _imageClassAnimation;
@@ -56,20 +54,6 @@ public class CharacterSelectionSlot : MonoBehaviour {
         _imageHealthBackground.color = _healthBgColor;
         _imageManaBackground.color = _manaBgColor;
         _btnCreateCharacter.gameObject.SetActive(false);
-
-        if (character.class_index == 0) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
-            _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassIcon;
-        } else if (character.class_index == 1) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
-            _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassIcon;
-        } else if (character.class_index == 2) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
-            _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassIcon;
-        } else if (character.class_index == 3) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
-            _imageClassIcon.sprite = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassIcon;
-        }
 
         _txtCharacterName.text = character.name;
         _txtCharacterLevel.text = character.level + " Lv.";
