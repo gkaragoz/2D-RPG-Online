@@ -23,7 +23,12 @@ public class CharacterAnimator : MonoBehaviour {
     }
     
     public void OnAttack() {
-        _animator.SetTrigger("Attack");
+        _animator.SetTrigger("BasicAttack");
+    }
+
+    public void OnDeath() {
+        _animator.SetTrigger("Die");
+        _animator.SetBool("IsRunning", false);
     }
 
 }

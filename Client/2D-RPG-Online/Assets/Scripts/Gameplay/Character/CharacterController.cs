@@ -13,6 +13,13 @@ public class CharacterController : MonoBehaviour {
         _characterAnimator = GetComponent<CharacterAnimator>();
     }
 
+    private void Update() {
+        //DEBUG
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            _characterAnimator.OnDeath();
+        }
+    }
+
     public void Initiailize(PlayerObject playerData) {
         _characterMotor.SetMovementSpeed(playerData.MovementSpeed);
     }
