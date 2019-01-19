@@ -98,7 +98,7 @@ namespace ShiftServer.Base.Rooms
             var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectID).FirstOrDefault();
             GOUpdatePacket.PlayerList.Remove(item);
         }
-        public new void OnPlayerJoin(Character chardata, ShiftClient shift)
+        public override void OnPlayerJoin(Character chardata, ShiftClient shift)
         {
             ShiftServerData sendData = new ShiftServerData();
             string clientSessionId = shift.UserSessionID;
@@ -141,11 +141,12 @@ namespace ShiftServer.Base.Rooms
                 player.Position = new Vector3(0.0f, 0.0f, 0.0f);
                 player.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
                 player.Scale = new Vector3(1f, 1f, 1f);
+                player.State = EntityState.NEWSPAWN;
 
                 this.OnPlayerCreate(player);
                 log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
-              
+
                 currentPlayer = player;
             }
             shift.CurrentObject = currentPlayer;
@@ -182,27 +183,14 @@ namespace ShiftServer.Base.Rooms
                 if (gObject == null)
                     continue;
 
-                data.GoUpdatePacket.PlayerList.Add(new PlayerObject
-                {
-                    Oid = gObject.ObjectID,
-                    PosX = gObject.Position.X,
-                    PosY = gObject.Position.Y,
-                    PosZ = gObject.Position.Z,
-                    MovementSpeed = (float)gObject.MovementSpeed,
-                    AttackSpeed = (float)gObject.AttackSpeed,
-                    CurrentHp = gObject.CurrentHP,
-                    LastProcessedSequenceID = gObject.LastProcessedSequenceID
-                });
+
+                PlayerObject pObject = gObject.GetPlayerObject();
+
+                data.GoUpdatePacket.PlayerList.Add(pObject);
             }
 
-            List<ShiftClient> clientList = Clients.GetValues();
-            for (int i = 0; i < clientList.Count; i++)
-            {
-                if (clientList[i].UserSessionID == null)
-                    continue;
-
-                clientList[i].SendPacket(MSPlayerEvent.RoomUpdate, data);
-            }
+            this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
+           
         }
         public void OnRoomUpdate()
         {
@@ -217,35 +205,7 @@ namespace ShiftServer.Base.Rooms
                 if (gObject == null)
                     continue;
 
-                IGameInput gInput = null;
-                PlayerInput pInput = null;
-                for (int kk = 0; kk <= gObject.GameInputs.Count; kk++)
-                {
-                    gObject.GameInputs.TryDequeue(out gInput);
-                    if (gInput != null)
-                    {
-                        switch (gInput.EventType)
-                        {
-                            case MSPlayerEvent.Move:
-                                
-                                gObject.OnMove(gInput.Vector);
-                                log.Debug($"gObject: {gObject.ObjectID} Move  {gInput.Vector.ToString()}!");
-                                break;
-                            case MSPlayerEvent.Attack:
-                                break;
-                            case MSPlayerEvent.Dead:
-                                break;
-                            case MSPlayerEvent.Use:
-                                break;
-                            default:
-                                break;
-                        }
-
-                        gObject.LastProcessedSequenceID = gInput.SequenceID;
-                    }
-                    //pInput = (PlayerInput)gInput;
-                }
-
+                gObject.ResolveInputs();
             }
 
             SendRoomState(updatePassTime);

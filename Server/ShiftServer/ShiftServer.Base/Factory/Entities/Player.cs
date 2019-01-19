@@ -33,19 +33,88 @@ namespace ShiftServer.Base.Factory.Entities
         public double AttackSpeed { get; set; }
         public int LastProcessedSequenceID { get; set; }
 
+        public EntityState State { get; set; }
+
+        public PlayerObject GetPlayerObject()
+        {
+            PlayerObject data = new PlayerObject
+            {
+                Oid = this.ObjectID,
+                LastProcessedSequenceID = this.LastProcessedSequenceID
+            };
+
+            if (State == EntityState.NEWSPAWN)
+            {
+                data.PosX = this.Position.X;
+                data.PosY = this.Position.Y;
+                data.PosZ = this.Position.Z;
+                data.AttackSpeed = (float)this.AttackSpeed;
+                data.MovementSpeed = (float)this.MovementSpeed;
+            }
+
+            if (State == EntityState.MOVE)
+            {
+                data.PosX = this.Position.X;
+                data.PosY = this.Position.Y;
+                data.PosZ = this.Position.Z;
+            }
+
+            if (State == EntityState.GETHIT || State == EntityState.ATTACK)
+            {
+                data.CurrentHp = this.CurrentHP;
+            }
+
+            return data;
+           
+        }
+
+
         public void OnAttack()
         {
-
+            State = EntityState.ATTACK;
         }
 
         public void OnHit()
         {
-
+            State = EntityState.GETHIT;
         }
-
         public void OnMove(Vector3 input)
         {
-            this.Position += Vector3.Normalize(input) * (float)this.MovementSpeed * 0.02f;
+            if (State != EntityState.STUN)
+            {
+                this.Position += Vector3.Normalize(input) * (float)this.MovementSpeed * 0.02f;
+                State = EntityState.MOVE;
+            }
+        }
+
+        public void ResolveInputs()
+        {
+            IGameInput gInput = null;
+            for (int kk = 0; kk <= this.GameInputs.Count; kk++)
+            {
+                this.GameInputs.TryDequeue(out gInput);
+                if (gInput != null)
+                {
+                    switch (gInput.EventType)
+                    {
+                        case MSPlayerEvent.Move:
+                            this.OnMove(gInput.Vector);
+                            break;
+                        case MSPlayerEvent.Attack:
+                            break;
+                        case MSPlayerEvent.Dead:
+                            break;
+                        case MSPlayerEvent.Use:
+                            break;
+                        default:
+                            State = EntityState.IDLE;
+                            break;
+                    }
+
+                    this.LastProcessedSequenceID = gInput.SequenceID;
+                }
+                //pInput = (PlayerInput)gInput;
+            }
         }
     }
 }

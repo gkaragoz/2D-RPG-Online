@@ -44,7 +44,7 @@ namespace ShiftServer.Base.Core
             {
                 server = new Telepathy.Server();
                 server.NoDelay = true;
-                server.SendTimeout = serverMessageTimeout;
+                server.SendTimeout = 0;
                 server.Start(port);
             }
             catch (Exception err)
@@ -119,8 +119,7 @@ namespace ShiftServer.Base.Core
                 return;
             }
 
-            shift.IsJoinedToWorld = true;
-
+            this.world.ClientJoin(shift);
             ShiftServerData newData = new ShiftServerData();
             shift.SendPacket(MSServerEvent.Connection, newData);
             log.Info($"[Login Success] Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");

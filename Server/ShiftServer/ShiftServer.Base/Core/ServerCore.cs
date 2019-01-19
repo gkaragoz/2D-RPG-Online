@@ -69,7 +69,6 @@ namespace ShiftServer.Base.Core
                     }
                 }
 
-                Thread.Sleep(1000 / 60);
             }
         }
 

@@ -134,7 +134,7 @@ namespace ShiftServer.Client.Core
                         {
                             case Telepathy.EventType.Connected:
                                 Console.WriteLine("Connected To Socket");
-                                //this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
+                                this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
                                 break;
                             case Telepathy.EventType.Data:
                                 this.dataHandler.HandleMessage(msg.data);

@@ -131,6 +131,17 @@ namespace ShiftServer.Base.Rooms
                 clientList[i].SendPacket(state, data);
             }
         }
+        public void BroadcastPlayerDataToRoom(MSPlayerEvent state, ShiftServerData data)
+        {
+            List<ShiftClient> clientList = this.Clients.GetValues();
+            for (int i = 0; i < clientList.Count; i++)
+            {
+                if (clientList[i].UserSessionID == null)
+                    continue;
+
+                clientList[i].SendPacket(state, data);
+            }
+        }
         public void BroadcastDataToRoom(ShiftClient currentClient, MSPlayerEvent state, ShiftServerData data)
         {
             List<ShiftClient> clientList = this.Clients.GetValues();
@@ -179,11 +190,11 @@ namespace ShiftServer.Base.Rooms
             this.Clients.Add(client.ConnectionID, client);
             client.IsJoinedToRoom = true;
         }
-        public void OnPlayerJoin(Character character, ShiftClient shift)
+        public virtual void OnPlayerJoin(Character character, ShiftClient shift)
         {
         }
 
-        public void OnGameStart()
+        public virtual void OnGameStart()
         {
         }
 
