@@ -22,84 +22,81 @@ public static partial class ShiftServerMessagesReflection {
   static ShiftServerMessagesReflection() {
     byte[] descriptorData = global::System.Convert.FromBase64String(
         string.Concat(
-          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLeBAoPU2hpZnRTZXJ2ZXJE",
+          "ChpTaGlmdFNlcnZlcl9NZXNzYWdlcy5wcm90byLpAwoPU2hpZnRTZXJ2ZXJE",
           "YXRhEiAKCGJhc2V2dGlkGAEgASgOMg4uTVNCYXNlRXZlbnRJZBIfCgdzdmV2",
           "dGlkGAIgASgOMg4uTVNTZXJ2ZXJFdmVudBIfCgdwbGV2dGlkGAMgASgOMg4u",
-          "TVNQbGF5ZXJFdmVudBIdCgdTZXNzaW9uGAQgASgLMgwuU2Vzc2lvbkRhdGES",
-          "HwoKQ2xpZW50SW5mbxgFIAEoCzILLkNsaWVudERhdGESJwoLQWNjb3VudERh",
-          "dGEYBiABKAsyEi5Db21tb25BY2NvdW50RGF0YRIbCghSb29tRGF0YRgHIAEo",
-          "CzIJLlJvb21EYXRhEh0KB0FjY291bnQYCCABKAsyDC5BY2NvdW50RGF0YRIl",
-          "Cg5Hb1VwZGF0ZVBhY2tldBgJIAEoCzINLlVwZGF0ZUdPTGlzdBIiCgtJbnRl",
-          "cmFjdGlvbhgKIAEoCzINLk9iamVjdEFjdGlvbhIiCgtQbGF5ZXJJbnB1dBgL",
-          "IAEoCzINLlNQbGF5ZXJJbnB1dBIkCg1zUGxheWVyT2JqZWN0GAwgASgLMg0u",
-          "UGxheWVyT2JqZWN0EiYKC0Vycm9yUmVhc29uGA0gASgOMhEuU2hpZnRTZXJ2",
-          "ZXJFcnJvchIRCglTZXNzaW9uSUQYDiABKAkSKQoPTWF0Y2htYWtpbmdEYXRh",
-          "GA8gASgLMhAuTWF0Y2htYWtpbmdEYXRhEhgKEFRpbWVCZXR3ZWVuVGlja3MY",
-          "ECABKAESGQoRQ3VycmVudFNlcnZlclRpbWUYESABKAESEgoKc3ZUaWNrUmF0",
-          "ZRgSIAEoBSIaCgtTZXNzaW9uRGF0YRILCgNzaWQYAiABKAkiMQoPTWF0Y2ht",
-          "YWtpbmdEYXRhEh4KBFR5cGUYASABKA4yEC5NYXRjaG1ha2luZ1Jvb20iWAoR",
-          "Q29tbW9uQWNjb3VudERhdGESEAoIdXNlcm5hbWUYASABKAkSFAoMdmlydHVh",
-          "bE1vbmV5GAIgASgFEhsKE3ZpcnR1YWxTcGVjaWFsTW9uZXkYAyABKAUiuAEK",
-          "CFJvb21EYXRhEhYKBFJvb20YASABKAsyCC5NU1NSb29tEiMKClBsYXllcklu",
-          "Zm8YAiABKAsyDy5Sb29tUGxheWVySW5mbxIuChVQbGF5ZXJSZWFkeVN0YXR1",
-          "c0luZm8YAyABKAsyDy5Sb29tUGxheWVySW5mbxIjCgpQbGF5ZXJMaXN0GAQg",
-          "AygLMg8uUm9vbVBsYXllckluZm8SGgoIUm9vbUxpc3QYBSADKAsyCC5NU1NS",
-          "b29tIrABCgdNU1NSb29tEgoKAklkGAEgASgJEhMKC2NyZWF0ZWRUaW1lGAIg",
-          "ASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgDEhEKCWlzUHJpdmF0ZRgEIAEoCBIP",
-          "Cgdpc093bmVyGAUgASgIEgwKBG5hbWUYBiABKAkSFAoMbWF4VXNlckNvdW50",
-          "GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291bnQYCCABKAUSDQoFVGVhbXMYCSAD",
-          "KAkipgEKDlJvb21QbGF5ZXJJbmZvEhAKCFVzZXJuYW1lGAEgASgJEg4KBlRl",
-          "YW1JZBgCIAEoCRIWCg5Jc0pvaW5lZFRvVGVhbRgDIAEoCBIPCgdJc1JlYWR5",
-          "GAQgASgIEhAKCElzTGVhZGVyGAUgASgIEiUKDkN1cnJlbnRHT2JqZWN0GAYg",
-          "ASgLMg0uUGxheWVyT2JqZWN0EhAKCE9iamVjdElkGAcgASgFIjEKC0FjY291",
-          "bnREYXRhEhAKCHVzZXJuYW1lGAEgASgJEhAKCHBhc3N3b3JkGAIgASgJIjEK",
-          "DFVwZGF0ZUdPTGlzdBIhCgpwbGF5ZXJMaXN0GAEgAygLMg0uUGxheWVyT2Jq",
-          "ZWN0IlwKDE9iamVjdEFjdGlvbhIjCg1jdXJyZW50T2JqZWN0GAEgASgLMgwu",
-          "c0dhbWVPYmplY3QSJwoRaW50ZXJhY3RlZE9iamVjdHMYAiADKAsyDC5zR2Ft",
-          "ZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3ZlchgBIAEoCRIUCgxtYWNoaW5l",
-          "X25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgDIAEoCSJHCgtzR2FtZU9iamVj",
-          "dBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kYAyABKAIS",
-          "DQoFcG9zX3oYBCABKAIiwwIKDFBsYXllck9iamVjdBIcCgZwQ2xhc3MYASAB",
-          "KA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50SHAYAiABKAUSDQoFbWF4SHAY",
-          "AyABKAUSEAoIc3RyZW5ndGgYBCABKAUSEQoJZGV4dGVyaXR5GAUgASgFEhQK",
-          "DGludGVsbGlnZW5jZRgGIAEoBRIfChdsYXN0UHJvY2Vzc2VkU2VxdWVuY2VJ",
-          "RBgHIAEoBRINCgVwb3NfeBgIIAEoAhINCgVwb3NfeRgJIAEoAhINCgVwb3Nf",
-          "ehgKIAEoAhITCgthdHRhY2tTcGVlZBgLIAEoAhIVCg1tb3ZlbWVudFNwZWVk",
-          "GAwgASgCEiMKDHBsYXllcklucHV0cxgNIAMoCzINLlNQbGF5ZXJJbnB1dBIL",
-          "CgNPaWQYDiABKAUSDAoETmFtZRgPIAEoCSKHAQoMU1BsYXllcklucHV0EiMK",
-          "C3BsYXllckV2ZW50GAEgASgOMg4uTVNQbGF5ZXJFdmVudBINCgVwb3NfeBgC",
-          "IAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEoAhIRCgl0aW1lc3Rh",
-          "bXAYBSABKAISEgoKc2VxdWVuY2VJRBgGIAEoBSoxCg1NU0Jhc2VFdmVudElk",
-          "Eg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVyRXZlbnQQASpuCg1NU1BsYXll",
-          "ckV2ZW50EhAKDFdPUkxEX1VQREFURRAAEg8KC1JPT01fVVBEQVRFEAESCAoE",
-          "TU9WRRACEgoKBkFUVEFDSxADEggKBERFQUQQBBIHCgNVU0UQBRIRCg1DUkVB",
-          "VEVfUExBWUVSEAYqrAQKDU1TU2VydmVyRXZlbnQSEAoMQUNDT1VOVF9KT0lO",
-          "EAASFwoTQUNDT1VOVF9KT0lOX0ZBSUxFRBABEhIKDlBVQkxJQ19NRVNTQUdF",
-          "EAISDQoJUk9PTV9KT0lOEAMSDgoKUk9PTV9MRUFWRRAEEhUKEVJPT01fTEVB",
-          "VkVfRkFJTEVEEAUSDwoLUk9PTV9DUkVBVEUQBhIPCgtST09NX0RFTEVURRAH",
-          "EhQKEFJPT01fUExBWUVSX0xFRlQQCBIWChJST09NX1BMQVlFUl9KT0lORUQQ",
-          "CRIUChBST09NX0pPSU5fRkFJTEVEEAoSFgoSUk9PTV9DUkVBVEVfRkFJTEVE",
-          "EAsSFgoSUk9PTV9ERUxFVEVfRkFJTEVEEAwSFAoQUk9PTV9HRVRfUExBWUVS",
-          "UxANEhMKD1JPT01fR0FNRV9TVEFSVBAOEhYKElJPT01fQ0hBTkdFX0xFQURF",
-          "UhAPEhwKGFJPT01fUExBWUVSX1JFQURZX1NUQVRVUxAQEiMKH1JPT01fUExB",
-          "WUVSX1JFQURZX1NUQVRVU19GQUlMRUQQERIQCgxNRVNTQUdFX1NFTkQQEhIT",
-          "Cg9NRVNTQUdFX1JFQ0lFVkUQExIVChFMT0JCWV9NQVRDSE1BS0lORxAUEg4K",
-          "CkNPTk5FQ1RJT04QFhIVChFDT05ORUNUSU9OX0ZBSUxFRBAXEhMKD0NPTk5F",
-          "Q1RJT05fTE9TVBAYEhAKDFBJTkdfUkVRVUVTVBAZKiUKD01hdGNobWFraW5n",
-          "Um9vbRIICgRCR18yEAASCAoEQkdfNBABKv4BChBTaGlmdFNlcnZlckVycm9y",
-          "EhIKDkNMSUVOVF9WRVJfT0xEEAASDwoLQkFEX1NFU1NJT04QARISCg5ST09N",
-          "X05PVF9GT1VORBACEhMKD0FMUkVBRFlfSU5fUk9PTRADEhsKF1dST05HX0xP",
-          "R0lOX0NSRURFTlRJQUxTEAQSFQoRV1JPTkdfQ0xJRU5UX0RBVEEQBRIVChFO",
-          "T19SRVNQT05EX1NFUlZFUhAGEhUKEVJPT01fQVVUSF9QUk9CTEVNEAcSEwoP",
-          "Tk9UX0lOX0FOWV9ST09NEAgSDQoJUk9PTV9GVUxMEAkSFgoSTUFUQ0hNQUtJ",
-          "TkdfRkFJTEVEEAoqNQoNU2hpZnRSb29tVHlwZRIJCgVMT0JCWRAAEgcKA01N",
-          "TxABEhAKDEFDVElPTkJBVFRMRRACKjwKC1BsYXllckNsYXNzEgsKB1dhcnJp",
-          "b3IQABIKCgZBcmNoZXIQARIICgRNYWdlEAISCgoGUHJpZXN0EANiBnByb3Rv",
-          "Mw=="));
+          "TVNQbGF5ZXJFdmVudBInCgtBY2NvdW50RGF0YRgGIAEoCzISLkNvbW1vbkFj",
+          "Y291bnREYXRhEhsKCFJvb21EYXRhGAcgASgLMgkuUm9vbURhdGESHQoHQWNj",
+          "b3VudBgIIAEoCzIMLkFjY291bnREYXRhEiUKDkdvVXBkYXRlUGFja2V0GAkg",
+          "ASgLMg0uVXBkYXRlR09MaXN0EiIKC0ludGVyYWN0aW9uGAogASgLMg0uT2Jq",
+          "ZWN0QWN0aW9uEiIKC1BsYXllcklucHV0GAsgASgLMg0uU1BsYXllcklucHV0",
+          "EiQKDXNQbGF5ZXJPYmplY3QYDCABKAsyDS5QbGF5ZXJPYmplY3QSJgoLRXJy",
+          "b3JSZWFzb24YDSABKA4yES5TaGlmdFNlcnZlckVycm9yEhEKCVNlc3Npb25J",
+          "RBgOIAEoCRIpCg9NYXRjaG1ha2luZ0RhdGEYDyABKAsyEC5NYXRjaG1ha2lu",
+          "Z0RhdGESEgoKc3ZUaWNrUmF0ZRgSIAEoBSIaCgtTZXNzaW9uRGF0YRILCgNz",
+          "aWQYAiABKAkiMQoPTWF0Y2htYWtpbmdEYXRhEh4KBFR5cGUYASABKA4yEC5N",
+          "YXRjaG1ha2luZ1Jvb20iWAoRQ29tbW9uQWNjb3VudERhdGESEAoIdXNlcm5h",
+          "bWUYASABKAkSFAoMdmlydHVhbE1vbmV5GAIgASgFEhsKE3ZpcnR1YWxTcGVj",
+          "aWFsTW9uZXkYAyABKAUiuAEKCFJvb21EYXRhEhYKBFJvb20YASABKAsyCC5N",
+          "U1NSb29tEiMKClBsYXllckluZm8YAiABKAsyDy5Sb29tUGxheWVySW5mbxIu",
+          "ChVQbGF5ZXJSZWFkeVN0YXR1c0luZm8YAyABKAsyDy5Sb29tUGxheWVySW5m",
+          "bxIjCgpQbGF5ZXJMaXN0GAQgAygLMg8uUm9vbVBsYXllckluZm8SGgoIUm9v",
+          "bUxpc3QYBSADKAsyCC5NU1NSb29tIrABCgdNU1NSb29tEgoKAklkGAEgASgJ",
+          "EhMKC2NyZWF0ZWRUaW1lGAIgASgDEhMKC3VwZGF0ZWRUaW1lGAMgASgDEhEK",
+          "CWlzUHJpdmF0ZRgEIAEoCBIPCgdpc093bmVyGAUgASgIEgwKBG5hbWUYBiAB",
+          "KAkSFAoMbWF4VXNlckNvdW50GAcgASgFEhgKEGN1cnJlbnRVc2VyQ291bnQY",
+          "CCABKAUSDQoFVGVhbXMYCSADKAkipgEKDlJvb21QbGF5ZXJJbmZvEhAKCFVz",
+          "ZXJuYW1lGAEgASgJEg4KBlRlYW1JZBgCIAEoCRIWCg5Jc0pvaW5lZFRvVGVh",
+          "bRgDIAEoCBIPCgdJc1JlYWR5GAQgASgIEhAKCElzTGVhZGVyGAUgASgIEiUK",
+          "DkN1cnJlbnRHT2JqZWN0GAYgASgLMg0uUGxheWVyT2JqZWN0EhAKCE9iamVj",
+          "dElkGAcgASgFIjEKC0FjY291bnREYXRhEhAKCHVzZXJuYW1lGAEgASgJEhAK",
+          "CHBhc3N3b3JkGAIgASgJIjEKDFVwZGF0ZUdPTGlzdBIhCgpwbGF5ZXJMaXN0",
+          "GAEgAygLMg0uUGxheWVyT2JqZWN0IlwKDE9iamVjdEFjdGlvbhIjCg1jdXJy",
+          "ZW50T2JqZWN0GAEgASgLMgwuc0dhbWVPYmplY3QSJwoRaW50ZXJhY3RlZE9i",
+          "amVjdHMYAiADKAsyDC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3Zl",
+          "chgBIAEoCRIUCgxtYWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgD",
+          "IAEoCSJHCgtzR2FtZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiAB",
+          "KAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIiwwIKDFBsYXllck9i",
+          "amVjdBIcCgZwQ2xhc3MYASABKA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50",
+          "SHAYAiABKAUSDQoFbWF4SHAYAyABKAUSEAoIc3RyZW5ndGgYBCABKAUSEQoJ",
+          "ZGV4dGVyaXR5GAUgASgFEhQKDGludGVsbGlnZW5jZRgGIAEoBRIfChdsYXN0",
+          "UHJvY2Vzc2VkU2VxdWVuY2VJRBgHIAEoBRINCgVwb3NfeBgIIAEoAhINCgVw",
+          "b3NfeRgJIAEoAhINCgVwb3NfehgKIAEoAhITCgthdHRhY2tTcGVlZBgLIAEo",
+          "AhIVCg1tb3ZlbWVudFNwZWVkGAwgASgCEiMKDHBsYXllcklucHV0cxgNIAMo",
+          "CzINLlNQbGF5ZXJJbnB1dBILCgNPaWQYDiABKAUSDAoETmFtZRgPIAEoCSKH",
+          "AQoMU1BsYXllcklucHV0EiMKC3BsYXllckV2ZW50GAEgASgOMg4uTVNQbGF5",
+          "ZXJFdmVudBINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3Nf",
+          "ehgEIAEoAhIRCgl0aW1lc3RhbXAYBSABKAISEgoKc2VxdWVuY2VJRBgGIAEo",
+          "BSoxCg1NU0Jhc2VFdmVudElkEg8KC1BsYXllckV2ZW50EAASDwoLU2VydmVy",
+          "RXZlbnQQASpuCg1NU1BsYXllckV2ZW50EhAKDFdPUkxEX1VQREFURRAAEg8K",
+          "C1JPT01fVVBEQVRFEAESCAoETU9WRRACEgoKBkFUVEFDSxADEggKBERFQUQQ",
+          "BBIHCgNVU0UQBRIRCg1DUkVBVEVfUExBWUVSEAYqrAQKDU1TU2VydmVyRXZl",
+          "bnQSEAoMQUNDT1VOVF9KT0lOEAASFwoTQUNDT1VOVF9KT0lOX0ZBSUxFRBAB",
+          "EhIKDlBVQkxJQ19NRVNTQUdFEAISDQoJUk9PTV9KT0lOEAMSDgoKUk9PTV9M",
+          "RUFWRRAEEhUKEVJPT01fTEVBVkVfRkFJTEVEEAUSDwoLUk9PTV9DUkVBVEUQ",
+          "BhIPCgtST09NX0RFTEVURRAHEhQKEFJPT01fUExBWUVSX0xFRlQQCBIWChJS",
+          "T09NX1BMQVlFUl9KT0lORUQQCRIUChBST09NX0pPSU5fRkFJTEVEEAoSFgoS",
+          "Uk9PTV9DUkVBVEVfRkFJTEVEEAsSFgoSUk9PTV9ERUxFVEVfRkFJTEVEEAwS",
+          "FAoQUk9PTV9HRVRfUExBWUVSUxANEhMKD1JPT01fR0FNRV9TVEFSVBAOEhYK",
+          "ElJPT01fQ0hBTkdFX0xFQURFUhAPEhwKGFJPT01fUExBWUVSX1JFQURZX1NU",
+          "QVRVUxAQEiMKH1JPT01fUExBWUVSX1JFQURZX1NUQVRVU19GQUlMRUQQERIQ",
+          "CgxNRVNTQUdFX1NFTkQQEhITCg9NRVNTQUdFX1JFQ0lFVkUQExIVChFMT0JC",
+          "WV9NQVRDSE1BS0lORxAUEg4KCkNPTk5FQ1RJT04QFhIVChFDT05ORUNUSU9O",
+          "X0ZBSUxFRBAXEhMKD0NPTk5FQ1RJT05fTE9TVBAYEhAKDFBJTkdfUkVRVUVT",
+          "VBAZKiUKD01hdGNobWFraW5nUm9vbRIICgRCR18yEAASCAoEQkdfNBABKv4B",
+          "ChBTaGlmdFNlcnZlckVycm9yEhIKDkNMSUVOVF9WRVJfT0xEEAASDwoLQkFE",
+          "X1NFU1NJT04QARISCg5ST09NX05PVF9GT1VORBACEhMKD0FMUkVBRFlfSU5f",
+          "Uk9PTRADEhsKF1dST05HX0xPR0lOX0NSRURFTlRJQUxTEAQSFQoRV1JPTkdf",
+          "Q0xJRU5UX0RBVEEQBRIVChFOT19SRVNQT05EX1NFUlZFUhAGEhUKEVJPT01f",
+          "QVVUSF9QUk9CTEVNEAcSEwoPTk9UX0lOX0FOWV9ST09NEAgSDQoJUk9PTV9G",
+          "VUxMEAkSFgoSTUFUQ0hNQUtJTkdfRkFJTEVEEAoqNQoNU2hpZnRSb29tVHlw",
+          "ZRIJCgVMT0JCWRAAEgcKA01NTxABEhAKDEFDVElPTkJBVFRMRRACKjwKC1Bs",
+          "YXllckNsYXNzEgsKB1dhcnJpb3IQABIKCgZBcmNoZXIQARIICgRNYWdlEAIS",
+          "CgoGUHJpZXN0EANiBnByb3RvMw=="));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::MatchmakingRoom), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
-          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "Session", "ClientInfo", "AccountData", "RoomData", "Account", "GoUpdatePacket", "Interaction", "PlayerInput", "SPlayerObject", "ErrorReason", "SessionID", "MatchmakingData", "TimeBetweenTicks", "CurrentServerTime", "SvTickRate" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::ShiftServerData), global::ShiftServerData.Parser, new[]{ "Basevtid", "Svevtid", "Plevtid", "AccountData", "RoomData", "Account", "GoUpdatePacket", "Interaction", "PlayerInput", "SPlayerObject", "ErrorReason", "SessionID", "MatchmakingData", "SvTickRate" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SessionData), global::SessionData.Parser, new[]{ "Sid" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::MatchmakingData), global::MatchmakingData.Parser, new[]{ "Type" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::CommonAccountData), global::CommonAccountData.Parser, new[]{ "Username", "VirtualMoney", "VirtualSpecialMoney" }, null, null, null),
@@ -243,8 +240,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     basevtid_ = other.basevtid_;
     svevtid_ = other.svevtid_;
     plevtid_ = other.plevtid_;
-    session_ = other.session_ != null ? other.session_.Clone() : null;
-    clientInfo_ = other.clientInfo_ != null ? other.clientInfo_.Clone() : null;
     accountData_ = other.accountData_ != null ? other.accountData_.Clone() : null;
     roomData_ = other.roomData_ != null ? other.roomData_.Clone() : null;
     account_ = other.account_ != null ? other.account_.Clone() : null;
@@ -255,8 +250,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     errorReason_ = other.errorReason_;
     sessionID_ = other.sessionID_;
     matchmakingData_ = other.matchmakingData_ != null ? other.matchmakingData_.Clone() : null;
-    timeBetweenTicks_ = other.timeBetweenTicks_;
-    currentServerTime_ = other.currentServerTime_;
     svTickRate_ = other.svTickRate_;
     _unknownFields = pb::UnknownFieldSet.Clone(other._unknownFields);
   }
@@ -302,34 +295,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     get { return plevtid_; }
     set {
       plevtid_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "Session" field.</summary>
-  public const int SessionFieldNumber = 4;
-  private global::SessionData session_;
-  /// <summary>
-  /// SessionData
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::SessionData Session {
-    get { return session_; }
-    set {
-      session_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "ClientInfo" field.</summary>
-  public const int ClientInfoFieldNumber = 5;
-  private global::ClientData clientInfo_;
-  /// <summary>
-  /// ClientData
-  /// </summary>
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public global::ClientData ClientInfo {
-    get { return clientInfo_; }
-    set {
-      clientInfo_ = value;
     }
   }
 
@@ -446,28 +411,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
   }
 
-  /// <summary>Field number for the "TimeBetweenTicks" field.</summary>
-  public const int TimeBetweenTicksFieldNumber = 16;
-  private double timeBetweenTicks_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public double TimeBetweenTicks {
-    get { return timeBetweenTicks_; }
-    set {
-      timeBetweenTicks_ = value;
-    }
-  }
-
-  /// <summary>Field number for the "CurrentServerTime" field.</summary>
-  public const int CurrentServerTimeFieldNumber = 17;
-  private double currentServerTime_;
-  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public double CurrentServerTime {
-    get { return currentServerTime_; }
-    set {
-      currentServerTime_ = value;
-    }
-  }
-
   /// <summary>Field number for the "svTickRate" field.</summary>
   public const int SvTickRateFieldNumber = 18;
   private int svTickRate_;
@@ -495,8 +438,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (Basevtid != other.Basevtid) return false;
     if (Svevtid != other.Svevtid) return false;
     if (Plevtid != other.Plevtid) return false;
-    if (!object.Equals(Session, other.Session)) return false;
-    if (!object.Equals(ClientInfo, other.ClientInfo)) return false;
     if (!object.Equals(AccountData, other.AccountData)) return false;
     if (!object.Equals(RoomData, other.RoomData)) return false;
     if (!object.Equals(Account, other.Account)) return false;
@@ -507,8 +448,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (ErrorReason != other.ErrorReason) return false;
     if (SessionID != other.SessionID) return false;
     if (!object.Equals(MatchmakingData, other.MatchmakingData)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(TimeBetweenTicks, other.TimeBetweenTicks)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.Equals(CurrentServerTime, other.CurrentServerTime)) return false;
     if (SvTickRate != other.SvTickRate) return false;
     return Equals(_unknownFields, other._unknownFields);
   }
@@ -519,8 +458,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (Basevtid != 0) hash ^= Basevtid.GetHashCode();
     if (Svevtid != 0) hash ^= Svevtid.GetHashCode();
     if (Plevtid != 0) hash ^= Plevtid.GetHashCode();
-    if (session_ != null) hash ^= Session.GetHashCode();
-    if (clientInfo_ != null) hash ^= ClientInfo.GetHashCode();
     if (accountData_ != null) hash ^= AccountData.GetHashCode();
     if (roomData_ != null) hash ^= RoomData.GetHashCode();
     if (account_ != null) hash ^= Account.GetHashCode();
@@ -531,8 +468,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (ErrorReason != 0) hash ^= ErrorReason.GetHashCode();
     if (SessionID.Length != 0) hash ^= SessionID.GetHashCode();
     if (matchmakingData_ != null) hash ^= MatchmakingData.GetHashCode();
-    if (TimeBetweenTicks != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(TimeBetweenTicks);
-    if (CurrentServerTime != 0D) hash ^= pbc::ProtobufEqualityComparers.BitwiseDoubleEqualityComparer.GetHashCode(CurrentServerTime);
     if (SvTickRate != 0) hash ^= SvTickRate.GetHashCode();
     if (_unknownFields != null) {
       hash ^= _unknownFields.GetHashCode();
@@ -558,14 +493,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (Plevtid != 0) {
       output.WriteRawTag(24);
       output.WriteEnum((int) Plevtid);
-    }
-    if (session_ != null) {
-      output.WriteRawTag(34);
-      output.WriteMessage(Session);
-    }
-    if (clientInfo_ != null) {
-      output.WriteRawTag(42);
-      output.WriteMessage(ClientInfo);
     }
     if (accountData_ != null) {
       output.WriteRawTag(50);
@@ -607,14 +534,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
       output.WriteRawTag(122);
       output.WriteMessage(MatchmakingData);
     }
-    if (TimeBetweenTicks != 0D) {
-      output.WriteRawTag(129, 1);
-      output.WriteDouble(TimeBetweenTicks);
-    }
-    if (CurrentServerTime != 0D) {
-      output.WriteRawTag(137, 1);
-      output.WriteDouble(CurrentServerTime);
-    }
     if (SvTickRate != 0) {
       output.WriteRawTag(144, 1);
       output.WriteInt32(SvTickRate);
@@ -635,12 +554,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
     if (Plevtid != 0) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Plevtid);
-    }
-    if (session_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(Session);
-    }
-    if (clientInfo_ != null) {
-      size += 1 + pb::CodedOutputStream.ComputeMessageSize(ClientInfo);
     }
     if (accountData_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(AccountData);
@@ -672,12 +585,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     if (matchmakingData_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(MatchmakingData);
     }
-    if (TimeBetweenTicks != 0D) {
-      size += 2 + 8;
-    }
-    if (CurrentServerTime != 0D) {
-      size += 2 + 8;
-    }
     if (SvTickRate != 0) {
       size += 2 + pb::CodedOutputStream.ComputeInt32Size(SvTickRate);
     }
@@ -700,18 +607,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
     }
     if (other.Plevtid != 0) {
       Plevtid = other.Plevtid;
-    }
-    if (other.session_ != null) {
-      if (session_ == null) {
-        session_ = new global::SessionData();
-      }
-      Session.MergeFrom(other.Session);
-    }
-    if (other.clientInfo_ != null) {
-      if (clientInfo_ == null) {
-        clientInfo_ = new global::ClientData();
-      }
-      ClientInfo.MergeFrom(other.ClientInfo);
     }
     if (other.accountData_ != null) {
       if (accountData_ == null) {
@@ -767,12 +662,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
       }
       MatchmakingData.MergeFrom(other.MatchmakingData);
     }
-    if (other.TimeBetweenTicks != 0D) {
-      TimeBetweenTicks = other.TimeBetweenTicks;
-    }
-    if (other.CurrentServerTime != 0D) {
-      CurrentServerTime = other.CurrentServerTime;
-    }
     if (other.SvTickRate != 0) {
       SvTickRate = other.SvTickRate;
     }
@@ -797,20 +686,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
         }
         case 24: {
           plevtid_ = (global::MSPlayerEvent) input.ReadEnum();
-          break;
-        }
-        case 34: {
-          if (session_ == null) {
-            session_ = new global::SessionData();
-          }
-          input.ReadMessage(session_);
-          break;
-        }
-        case 42: {
-          if (clientInfo_ == null) {
-            clientInfo_ = new global::ClientData();
-          }
-          input.ReadMessage(clientInfo_);
           break;
         }
         case 50: {
@@ -875,14 +750,6 @@ public sealed partial class ShiftServerData : pb::IMessage<ShiftServerData> {
             matchmakingData_ = new global::MatchmakingData();
           }
           input.ReadMessage(matchmakingData_);
-          break;
-        }
-        case 129: {
-          TimeBetweenTicks = input.ReadDouble();
-          break;
-        }
-        case 137: {
-          CurrentServerTime = input.ReadDouble();
           break;
         }
         case 144: {

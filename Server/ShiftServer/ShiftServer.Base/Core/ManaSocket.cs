@@ -6,12 +6,7 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Base.Core
 {
-    public class PacketManager
+    public class ManaSocket
     {
-        public static PacketManager instance = null;
-        public PacketManager()
-        {
-            instance = this;
-        }
     }
 }

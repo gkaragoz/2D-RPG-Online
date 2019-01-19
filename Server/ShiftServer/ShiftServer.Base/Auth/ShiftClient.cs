@@ -11,24 +11,24 @@ using Telepathy;
 
 namespace ShiftServer.Base.Auth
 {
-    public class ShiftClient
+    public class ShiftClient : ManaSocket
     {
         private static readonly log4net.ILog log
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public string UserSessionID { get; set; }
-        public TcpClient Client { get; set; }
+        public TcpClient TCPClient { get; set; }
         public IGameObject CurrentObject { get; set; }
         public SafeQueue<IGameInput> Inputs { get; set; }
         public string UserName { get; set; }
-        public int ConnectonID { get; set; }
+        public int ConnectionID { get; set; }
         public bool IsJoinedToWorld { get; set; }
         public bool IsReady { get; set; }
         public bool IsJoinedToRoom { get; set; }
         public bool IsJoinedToTeam { get; set; }
         public string JoinedRoomID { get; set; }
         public string JoinedTeamID { get; set; }
-        public bool IsConnected { get => this.Client.Connected; }
+        public bool IsConnected { get => this.TCPClient.Connected; }
 
         public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
@@ -41,10 +41,10 @@ namespace ShiftServer.Base.Auth
             }
             catch (Exception err)
             {
-                if (this.Client != null)
+                if (this.TCPClient != null)
                 {
-                    if (this.Client.Connected)
-                        log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
+                    if (this.TCPClient.Connected)
+                        log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 }
                 return false;
             }
@@ -61,8 +61,8 @@ namespace ShiftServer.Base.Auth
             }
             catch (Exception err)
             {
-                if (this.Client.Client.Connected)
-                    log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
+                if (this.TCPClient.Client.Connected)
+                    log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 return false;
             }
 
@@ -82,7 +82,6 @@ namespace ShiftServer.Base.Auth
                 return null;
 
         }
-
         public bool JoinTeam(IGroup group)
         {
             if (group == null)
@@ -90,7 +89,7 @@ namespace ShiftServer.Base.Auth
 
             if (this.IsJoinedToTeam)
             {
-                log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID} Already in a team");
+                log.Info($"[JoinTeam] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID} Already in a team");
                 return false;
             }
             else
@@ -115,19 +114,18 @@ namespace ShiftServer.Base.Auth
             this.IsJoinedToTeam = false;
             return true;
         }
-
         private bool Send(byte[] bb)
         {
-            if (this.Client != null)
+            if (this.TCPClient != null)
             {
                 try
                 {
-                    NetworkStream stream = Client.GetStream();
+                    NetworkStream stream = TCPClient.GetStream();
                     return SendMessage(stream, bb);
                 }
                 catch (Exception exception)
                 {
-                    log.Error($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}  Cant access because client is null", exception);
+                    log.Error($"[JoinTeam] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}  Cant access because client is null", exception);
                     return false;
                 }
             }
@@ -169,13 +167,56 @@ namespace ShiftServer.Base.Auth
         }
         public void Dispose()
         {
-            string userSessionId = string.Empty;
+            IRoom room = null;
+            string userSessionId = this.UserSessionID;
 
-            if (this != null)
+            if (this == null)
+                return;
+
+            if (string.IsNullOrEmpty(userSessionId))
+                return;
+
+            if (string.IsNullOrEmpty(this.JoinedRoomID))
+                return;
+
+            ServerProvider.instance.world.ClientDispose(this);
+
+            ServerProvider.instance.world.Rooms.TryGetValue(this.JoinedRoomID, out room);
+
+            if (room != null)
             {
-                userSessionId = this.UserSessionID;
+
+                this.IsJoinedToRoom = false;
+                this.JoinedRoomID = null;
+                bool isDestroyed = false;
+
+                room.Clients.Remove(this.ConnectionID);
+
+                if (room.Clients.Count == 0)
+                {
+                    ServerProvider.instance.world.Rooms.Remove(room.ID);
+                    isDestroyed = true;
+                }
+                else
+                {
+                    if (this.CurrentObject != null)
+                        room.GameObjects.Remove(this.CurrentObject.ObjectID);
+                }
+
+                if (!isDestroyed)
+                    room.BroadcastClientState(this, MSServerEvent.RoomPlayerLeft);
+                else
+                    RoomProvider.instance.OnRoomDispose(room);
 
             }
+
+            IGroup group = null;
+            room.Teams.TryGetValue(this.JoinedTeamID, out group);
+
+            if (group == null)
+                return;
+
+            group.RemovePlayer(this);
         }
         public bool SessionCheck(ShiftServerData data)
         {
@@ -242,7 +283,7 @@ namespace ShiftServer.Base.Auth
             }
             catch (Exception err)
             {
-                log.Error($"[Login Failed] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectonID}", err);
+                log.Error($"[Login Failed] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 return false;
 
             }
@@ -254,7 +295,7 @@ namespace ShiftServer.Base.Auth
     {
         public static ShiftClient GetShiftClient(List<ShiftClient> shifts, TcpClient tcpclient)
         {
-            return shifts.Where(x => x.Client == tcpclient).FirstOrDefault();
+            return shifts.Where(x => x.TCPClient == tcpclient).FirstOrDefault();
         }
 
         // static helper functions /////////////////////////////////////////////

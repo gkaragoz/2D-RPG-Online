@@ -15,9 +15,9 @@ namespace ShiftServer.Base.Core
         int MaxConnectionID { get; set; }
         int RoomLeaderID { get; set; }
         int TickRate { get; set; }
-        int DisposeInMilliseconds { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
+        TimeSpan CurrentServerUptime { get; set; }
         bool IsPrivate { get; set; }
         bool IsPersistence { get; set; }
         bool IsStopTriggered { get; set; }
@@ -25,22 +25,13 @@ namespace ShiftServer.Base.Core
         SafeDictionary<string, IGroup> Teams { get; set; }
         List<string> TeamIdList { get; set; }
         SafeDictionary<int, ShiftClient> Clients { get; set; }
-        SafeDictionary<string, int> SocketIdSessionLookup { get; set; }
-
         int MaxUser { get; set; }
-        void OnPlayerJoin(Character ch, ShiftClient client);
-        void OnPlayerCreate(IGameObject gameObject);
-        void OnObjectDestroy(IGameObject gameObject);
-        void OnObjectCreate(IGameObject gameObject);
-        void OnObjectMove(ShiftServerData data, ShiftClient client);
-        void OnObjectAttack(ShiftServerData data, ShiftClient client);
-        void OnObjectUse(ShiftServerData data, ShiftClient client);
-        void OnGameStart();
-        void BroadcastToRoom(ShiftClient currentClient, MSServerEvent state);
+        void BroadcastClientState(ShiftClient currentClient, MSServerEvent state);
         void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data);
         IGroup GetRandomTeam();
         ShiftClient SetRandomNewLeader();
-        void OnRoomUpdate();
-        void SendRoomState(TimeSpan timespan);
+        void OnPlayerJoin(Character character, ShiftClient shift);
+        void OnGameStart();
+        void DisposeClient(ShiftClient client);
     }
 }

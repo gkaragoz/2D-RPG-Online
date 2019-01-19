@@ -46,10 +46,10 @@ namespace ShiftServer.Base.Core
             catch (Exception err)
             {
 
-                if (shift.Client != null)
+                if (shift.TCPClient != null)
                 {
-                    if (shift.Client.Client.Connected)
-                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectonID} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                    if (shift.TCPClient.Client.Connected)
+                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectionID} REMOTE: " + shift.TCPClient.Client.RemoteEndPoint.ToString(), err);
                 }
                 return;
             }
@@ -79,10 +79,10 @@ namespace ShiftServer.Base.Core
             }
             catch (Exception err)
             {
-                if (shift.Client != null)
+                if (shift.TCPClient != null)
                 {
-                    if (shift.Client.Client.Connected)
-                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectonID} REMOTE: " + shift.Client.Client.RemoteEndPoint.ToString(), err);
+                    if (shift.TCPClient.Client.Connected)
+                        ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectionID} REMOTE: " + shift.TCPClient.Client.RemoteEndPoint.ToString(), err);
                 }
                 return;
             }

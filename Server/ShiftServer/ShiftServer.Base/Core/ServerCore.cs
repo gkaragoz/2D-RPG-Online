@@ -25,32 +25,13 @@ namespace ShiftServer.Base.Core
                 Telepathy.Message msg;
                 while (ServerProvider.instance.server.GetNextMessage(out msg))
                 {
-                    TcpClient client = ServerProvider.instance.server.GetClient(msg.connectionId);
-                    ShiftClient shift = null;
 
                     switch (msg.eventType)
                     {
                         case Telepathy.EventType.Connected:
                             try
                             {
-                                shift = new ShiftClient
-                                {
-                                    ConnectonID = msg.connectionId,
-                                    Client = client,
-                                    IsJoinedToWorld = true,
-                                    IsJoinedToTeam = false,
-                                    IsJoinedToRoom = false,
-                                    IsReady = false,
-
-                                    UserSessionID = new Session()
-                                };
-                                ServerProvider.instance.world.Clients.Add(shift.ConnectonID, shift);
-                                if (client != null)
-                                {
-                                    ServerProvider.log.Info("Connected from: " + client.Client.RemoteEndPoint.ToString());
-                                    break;
-
-                                }
+                                AddNewConnection(msg);
                                 break;
                             }
                             catch (Exception err)
@@ -61,19 +42,20 @@ namespace ShiftServer.Base.Core
 
 
                         case Telepathy.EventType.Data:
-                            ServerProvider.instance.world.Clients.TryGetValue(msg.connectionId, out shift);
-                            int registeredSocketId = 0;
 
+                            ShiftClient shift = null;
+                            ServerProvider.instance.world.Clients.TryGetValue(msg.connectionId, out shift);
                             ServerProvider.instance.events.HandleMessage(msg.data, shift);
 
                             break;
                         case Telepathy.EventType.Disconnected:
                             try
                             {
-                                ShiftClient dcedClient = null;
-                                ServerProvider.instance.world.Clients.TryGetValue(msg.connectionId, out dcedClient);
+                                ShiftClient client = null;
+                                ServerProvider.instance.world.Clients.TryGetValue(msg.connectionId, out client);
 
-                                dcedClient.Dispose();
+                                if (client != null)
+                                    client.Dispose();
 
                                 ServerProvider.log.Info($"ClientNO: {msg.connectionId} Disconnected");
                             }
@@ -85,11 +67,32 @@ namespace ShiftServer.Base.Core
                         default:
                             break;
                     }
-
-
-
                 }
+
                 Thread.Sleep(1000 / 60);
+            }
+        }
+
+        private void AddNewConnection(Telepathy.Message msg)
+        {
+            TcpClient tcp = ServerProvider.instance.server.GetClient(msg.connectionId);
+
+            ShiftClient client = new ShiftClient
+            {
+                ConnectionID = msg.connectionId,
+                TCPClient = tcp,
+                IsJoinedToWorld = false,
+                IsJoinedToTeam = false,
+                IsJoinedToRoom = false,
+                IsReady = false,
+                UserSessionID = "",
+            };
+
+            ServerProvider.instance.world.ClientJoin(client);
+
+            if (client != null)
+            {
+                ServerProvider.log.Info("Connected from: " + tcp.Client.RemoteEndPoint.ToString());
             }
 
         }
