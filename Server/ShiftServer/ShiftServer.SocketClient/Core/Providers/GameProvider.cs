@@ -109,14 +109,11 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-                if (client == null)
-                    return;
-
+              
                 client.ReceivedData += Client_ReceivedData;
                 client.Connected += Client_Connected;
                 client.Disconnected += Client_Disconnected;
-                client.ReceivedError += Client_ReceivedError;
-
+                client.ReceivedError += Client_ReceivedError;               
             
             }
             catch (SocketException socketException)

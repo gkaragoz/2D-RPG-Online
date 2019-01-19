@@ -97,7 +97,7 @@
             join server with session id provided from auth server
             </summary>
         </member>
-        <member name="M:ShiftServer.Client.ManaShiftServer.Listen">
+        <member name="M:ShiftServer.Client.ManaShiftServer.Setup">
             <summary>
             Fixed Update
             </summary>

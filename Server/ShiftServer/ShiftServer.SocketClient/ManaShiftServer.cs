@@ -53,7 +53,7 @@ namespace ShiftServer.Client
             
             _sessionID = cfg.SessionID;
             _gameProvider.Connect(cfg.Host, cfg.Port);
-            this.Listen();
+            this.Setup();
             this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
             this.JoinServer(_sessionID);
         }
@@ -99,7 +99,7 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Listen()
+        public void Setup()
         {
             _gameProvider.SetupTasks();
         }
