@@ -32,6 +32,9 @@ namespace ShiftServer.Client.Core
         {
             try
             {
+                if (client != null)
+                    this.Disconnect();
+
                 if (client == null)
                 {
                     _port = port;
@@ -111,12 +114,12 @@ namespace ShiftServer.Client.Core
         {
             try
             {
-              
+
                 client.ReceivedData += Client_ReceivedData;
                 client.Connected += Client_Connected;
                 client.Disconnected += Client_Disconnected;
-                client.ReceivedError += Client_ReceivedError;               
-            
+                client.ReceivedError += Client_ReceivedError;
+
             }
             catch (SocketException socketException)
             {

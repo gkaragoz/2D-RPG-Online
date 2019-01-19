@@ -112,6 +112,11 @@ namespace ShiftServer.Base.Auth
             this.IsJoinedToTeam = false;
             return true;
         }
+        private void HardDisconnect()
+        {
+            if (this.TCPClient.Connected)
+                this.TCPClient.Close();
+        }
         public void Dispose()
         {
             IRoom room = null;
@@ -164,6 +169,7 @@ namespace ShiftServer.Base.Auth
                 return;
 
             group.RemovePlayer(this);
+            HardDisconnect();
         }
         public bool SessionCheck(ShiftServerData data)
         {
