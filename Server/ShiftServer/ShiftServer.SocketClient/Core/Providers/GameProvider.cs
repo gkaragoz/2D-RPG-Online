@@ -33,26 +33,24 @@ namespace ShiftServer.Client.Core
             try
             {
                 if (client != null)
+                {
                     this.Disconnect();
-
-                if (client == null)
-                {
-                    _port = port;
-                    _address = address;
-
-                    // create and connect the client
-                    client = new Mirror.Transport.Tcp.Client();
-                    client.ReceivedData += Client_ReceivedData;
-                    client.Connected += Client_Connected;
-                    client.Disconnected += Client_Disconnected;
-                    client.ReceivedError += Client_ReceivedError;
-                    //this.SetFixedUpdateInterval();
-                    client.Connect(address, port);
+                    this.client = null;
                 }
-                else
-                {
-                    throw new Exception("Already connected");
-                }
+
+
+                _port = port;
+                _address = address;
+
+                // create and connect the client
+                client = new Mirror.Transport.Tcp.Client();
+                client.ReceivedData += Client_ReceivedData;
+                client.Connected += Client_Connected;
+                client.Disconnected += Client_Disconnected;
+                client.ReceivedError += Client_ReceivedError;
+                //this.SetFixedUpdateInterval();
+                client.Connect(address, port);
+
 
             }
             catch (Exception)
