@@ -655,6 +655,12 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 469316991}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &540072439 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4378432847348090, guid: 564f9f84665c4af43b54572dc2955368,
+    type: 3}
+  m_PrefabInstance: {fileID: 1343898380}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &859988388
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -731,6 +737,7 @@ GameObject:
   - component: {fileID: 916856516}
   - component: {fileID: 916856515}
   - component: {fileID: 916856514}
+  - component: {fileID: 916856519}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -818,6 +825,25 @@ Transform:
   m_Father: {fileID: 77556060}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 45, y: 30, z: 0}
+--- !u!114 &916856519
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916856513}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33587b4f07f3c7d4090cd3d0c5be65df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 540072439}
+  smoothFollow: 1
+  smoothSpeed: 0.125
+  offset: {x: -4, y: 10, z: -8}
+  maxHeight: 10
+  minHeight: 5
+  heightDampening: 5
 --- !u!1001 &1039363063
 PrefabInstance:
   m_ObjectHideFlags: 0

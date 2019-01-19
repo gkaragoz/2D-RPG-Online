@@ -268,6 +268,7 @@
     <Compile Include="Assets\Scripts\Archieve\Room\Team\TeamManager.cs" />
     <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\CameraController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAnimator.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAttack.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterController.cs" />
@@ -356,7 +357,6 @@
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-    <None Include="Assets\Hand Painted Texture Pack - Natural Surfaces 1.10\Readme.txt" />
     <None Include="Assets\Scripts\Network\ShiftServer\Google.Protobuf.xml" />
     <None Include="Assets\Tayx\Graphy - Ultimate Stats Monitor\Changelog.txt" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface-Mobile.shader" />
