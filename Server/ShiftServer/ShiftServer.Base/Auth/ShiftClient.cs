@@ -30,14 +30,14 @@ namespace ShiftServer.Base.Auth
         public string JoinedTeamID { get; set; }
         public bool IsConnected { get => this.TCPClient.Connected; }
 
-        public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
+        public void SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.ServerEvent;
                 data.Svevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return ServerProvider.instance.server.Send(this.ConnectionID, bb);
+                ServerProvider.instance.server.Send(ConnectionID, bb);
             }
             catch (Exception err)
             {
@@ -46,24 +46,22 @@ namespace ShiftServer.Base.Auth
                     if (this.TCPClient.Connected)
                         log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 }
-                return false;
             }
 
         }
-        public bool SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        public void SendPacket(MSPlayerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.PlayerEvent;
                 data.Plevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return ServerProvider.instance.server.Send(this.ConnectionID, bb);
+                ServerProvider.instance.server.Send(this.ConnectionID, bb);
             }
             catch (Exception err)
             {
                 if (this.TCPClient.Connected)
                     log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
-                return false;
             }
 
         }

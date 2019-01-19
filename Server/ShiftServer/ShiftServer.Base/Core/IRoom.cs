@@ -32,6 +32,7 @@ namespace ShiftServer.Base.Core
         ShiftClient SetRandomNewLeader();
         void OnPlayerJoin(Character character, ShiftClient shift);
         void OnGameStart();
+        void OnRoomUpdate();
         void DisposeClient(ShiftClient client);
     }
 }

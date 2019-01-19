@@ -133,6 +133,7 @@ namespace ShiftServer.Base.Rooms
         }
         public void BroadcastPlayerDataToRoom(MSPlayerEvent state, ShiftServerData data)
         {
+
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
@@ -196,10 +197,17 @@ namespace ShiftServer.Base.Rooms
 
         public virtual void OnGameStart()
         {
+
         }
 
+        public virtual void OnRoomUpdate()
+        {
+
+        }
         public void DisposeClient(ShiftClient client)
         {
+            client.IsJoinedToRoom = false;
+            client.JoinedRoomID = null;
             this.Clients.Remove(client.ConnectionID);
         }
     

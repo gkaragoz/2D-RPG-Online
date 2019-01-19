@@ -25,6 +25,13 @@ namespace ShiftServer.Base.Core
         public void CreateRoom(IRoom room)
         {
             ServerProvider.instance.world.AddRoom(room);
+            room.IsStopTriggered = false;
+            Thread gameRoom = new Thread(room.OnGameStart)
+            {
+                IsBackground = true,
+                Name = "ShiftServer Room Starts " + room.Name
+            };
+            gameRoom.Start();
         }
 
         public void OnRoomCreate(ShiftServerData data, ShiftClient shift)

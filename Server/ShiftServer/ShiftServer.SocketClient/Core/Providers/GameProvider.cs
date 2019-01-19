@@ -13,7 +13,7 @@ namespace ShiftServer.Client.Core
     /// </summary>
     public class GameProvider
     {
-        public Telepathy.Client client = null;
+        public Mirror.Transport.Tcp.Client client = null;
         public Thread listenerThread = null;
         public ClientDataHandler dataHandler = null;
         string _address = null;
@@ -38,7 +38,7 @@ namespace ShiftServer.Client.Core
                     _address = address;
 
                     // create and connect the client
-                    client = new Telepathy.Client();
+                    client = new Mirror.Transport.Tcp.Client();
 
                     //this.SetFixedUpdateInterval();
                     client.Connect(address, port);
@@ -66,14 +66,14 @@ namespace ShiftServer.Client.Core
 
         public bool IsConnected()
         {
-            return client.Connected;
+            return client.IsConnected;
         }
         public bool IsClientConnected()
         {
             if (this.client == null)
                 return false;
 
-            return client.Connected;
+            return client.IsConnected;
         }
         public void Disconnect()
         {
@@ -104,54 +104,20 @@ namespace ShiftServer.Client.Core
             client.Send(bb);
         }
 
-        public void SetFixedUpdateInterval()
-        {
-            //this timer interval simulate the fixed update in unity. must control on server every time
-            //int timerInterval = TickrateUtil.Set(15);
 
-            //System.Timers.Timer aTimer = new System.Timers.Timer();
-            //aTimer.Elapsed += new ElapsedEventHandler(FixedUpdate);
-            //// Set the Interval to 1 millisecond.  Note: Time is set in Milliseconds
-            //aTimer.Interval = timerInterval;
-            //aTimer.Enabled = true;
-
-        }
-
-        public void FixedUpdate()
+        public void SetupTasks()
         {
             try
             {
                 if (client == null)
                     return;
 
-                if (client.Connected)
-                {
-                    // grab all new messages. do this in your Update loop.
-                    Telepathy.Message msg;
-                    while (client.GetNextMessage(out msg))
-                    {
-                        switch (msg.eventType)
-                        {
-                            case Telepathy.EventType.Connected:
-                                Console.WriteLine("Connected To Socket");
-                                this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
-                                break;
-                            case Telepathy.EventType.Data:
-                                this.dataHandler.HandleMessage(msg.data);
-                                break;
-                            case Telepathy.EventType.Disconnected:
-                                Console.WriteLine("Disconnected From Socket");
-                                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
-                                client.Disconnect();
-                                break;
-                        }
-                    }
-                }
-                else
-                {
-                    client.Connect(_address, _port);
-                    Thread.Sleep(1);
-                }
+                client.ReceivedData += Client_ReceivedData;
+                client.Connected += Client_Connected;
+                client.Disconnected += Client_Disconnected;
+                client.ReceivedError += Client_ReceivedError;
+
+            
             }
             catch (SocketException socketException)
             {
@@ -160,7 +126,25 @@ namespace ShiftServer.Client.Core
             }
         }
 
+        private void Client_ReceivedError(Exception obj)
+        {
+            Console.WriteLine("Socket exception: " + obj);
+        }
 
+        private void Client_Disconnected()
+        {
+            this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
+            client.Disconnect();
+        }
 
+        private void Client_Connected()
+        {
+            this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
+        }
+
+        private void Client_ReceivedData(byte[] obj)
+        {
+            this.dataHandler.HandleMessage(obj);
+        }
     }
 }

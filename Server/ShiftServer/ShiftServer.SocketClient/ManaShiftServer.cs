@@ -100,7 +100,7 @@ namespace ShiftServer.Client
         /// <returns></returns>
         public void Listen()
         {
-            _gameProvider.FixedUpdate();
+            _gameProvider.SetupTasks();
         }
 
         /// <summary>
