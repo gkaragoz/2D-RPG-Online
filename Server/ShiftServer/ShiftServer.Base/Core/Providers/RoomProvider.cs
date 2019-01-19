@@ -307,6 +307,7 @@ namespace ShiftServer.Base.Core
 
             }
         }
+
         public void OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
             try

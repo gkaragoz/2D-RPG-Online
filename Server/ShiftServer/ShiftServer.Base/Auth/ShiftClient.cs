@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Auth
                 data.Basevtid = MSBaseEventId.ServerEvent;
                 data.Svevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return Send(bb);
+                return ServerProvider.instance.server.Send(this.ConnectionID, bb);
             }
             catch (Exception err)
             {
@@ -57,11 +57,11 @@ namespace ShiftServer.Base.Auth
                 data.Basevtid = MSBaseEventId.PlayerEvent;
                 data.Plevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return Send(bb);
+                return ServerProvider.instance.server.Send(this.ConnectionID, bb);
             }
             catch (Exception err)
             {
-                if (this.TCPClient.Client.Connected)
+                if (this.TCPClient.Connected)
                     log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 return false;
             }
@@ -113,57 +113,6 @@ namespace ShiftServer.Base.Auth
             group.RemovePlayer(this);
             this.IsJoinedToTeam = false;
             return true;
-        }
-        private bool Send(byte[] bb)
-        {
-            if (this.TCPClient != null)
-            {
-                try
-                {
-                    NetworkStream stream = TCPClient.GetStream();
-                    return SendMessage(stream, bb);
-                }
-                catch (Exception exception)
-                {
-                    log.Error($"[JoinTeam] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}  Cant access because client is null", exception);
-                    return false;
-                }
-            }
-            else
-                return false;
-        }
-        // send message (via stream) with the <size,content> message structure
-        protected static bool SendMessage(NetworkStream stream, byte[] content)
-        {
-            // can we still write to this socket (not disconnected?)
-            if (!stream.CanWrite)
-            {
-                return false;
-            }
-
-            // stream.Write throws exceptions if client sends with high
-            // frequency and the server stops
-            try
-            {
-                // construct header (size)
-                byte[] header = ShiftHelper.IntToBytes(content.Length);
-
-                // write header+content at once via payload array. writing
-                // header,payload separately would cause 2 TCP packets to be
-                // sent if nagle's algorithm is disabled(2x TCP header overhead)
-                byte[] payload = new byte[header.Length + content.Length];
-                Array.Copy(header, payload, header.Length);
-                Array.Copy(content, 0, payload, header.Length, content.Length);
-
-                stream.Write(payload, 0, payload.Length);
-
-                return true;
-            }
-            catch (Exception exception)
-            {
-                // log as regular message because servers do shut down sometimes
-                return false;
-            }
         }
         public void Dispose()
         {

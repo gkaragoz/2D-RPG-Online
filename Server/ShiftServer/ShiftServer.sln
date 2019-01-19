@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Base", "ShiftSe
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Chat", "ShiftServer.Chat\ShiftServer.Chat.csproj", "{2E598311-FF95-4282-B64D-747B7803E7D4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShiftServer.Bot", "..\..\..\..\..\Desktop\BOT\ShiftServer.Bot.csproj", "{0876844E-8480-4A69-97B2-00A7C713D5DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{2E598311-FF95-4282-B64D-747B7803E7D4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2E598311-FF95-4282-B64D-747B7803E7D4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2E598311-FF95-4282-B64D-747B7803E7D4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0876844E-8480-4A69-97B2-00A7C713D5DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0876844E-8480-4A69-97B2-00A7C713D5DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0876844E-8480-4A69-97B2-00A7C713D5DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0876844E-8480-4A69-97B2-00A7C713D5DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
