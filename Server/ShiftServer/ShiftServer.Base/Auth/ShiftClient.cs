@@ -128,12 +128,11 @@ namespace ShiftServer.Base.Auth
             if (string.IsNullOrEmpty(userSessionId))
                 return;
 
-            if (string.IsNullOrEmpty(this.JoinedRoomID))
-                return;
-
             ServerProvider.instance.world.ClientDispose(this);
             ServerProvider.instance.world.Clients.Remove(this.ConnectionID);
-            ServerProvider.instance.world.Rooms.TryGetValue(this.JoinedRoomID, out room);
+
+            if (!string.IsNullOrEmpty(this.JoinedRoomID))
+                ServerProvider.instance.world.Rooms.TryGetValue(this.JoinedRoomID, out room);
 
             if (room != null)
             {
@@ -163,12 +162,12 @@ namespace ShiftServer.Base.Auth
             }
 
             IGroup group = null;
-            room.Teams.TryGetValue(this.JoinedTeamID, out group);
+            if (!string.IsNullOrEmpty(this.JoinedTeamID))
+                room.Teams.TryGetValue(this.JoinedTeamID, out group);
 
-            if (group == null)
-                return;
+            if (group != null)
+                group.RemovePlayer(this);
 
-            group.RemovePlayer(this);
             HardDisconnect();
         }
         public bool SessionCheck(ShiftServerData data)
