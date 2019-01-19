@@ -64,8 +64,7 @@ namespace ShiftServer.Base.Factory.Entities
                 data.CurrentHp = this.CurrentHP;
             }
 
-            return data;
-           
+            return data;       
         }
 
 

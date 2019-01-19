@@ -19,7 +19,7 @@ namespace ShiftServer.Base.Core
 
         public IZone world = null;
 
-        public Telepathy.Server server = null;
+        public Mirror.Transport.Tcp.Server server = null;
         public ServerEventHandler events = null;
         public Thread listener = null;
 
@@ -42,10 +42,9 @@ namespace ShiftServer.Base.Core
         {
             try
             {
-                server = new Telepathy.Server();
+                server = new Mirror.Transport.Tcp.Server();
                 server.NoDelay = true;
-                server.SendTimeout = 0;
-                server.Start(port);
+                server.Listen(port);
             }
             catch (Exception err)
             {

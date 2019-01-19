@@ -32,7 +32,7 @@ namespace ShiftServer.Server
             bgRoom.Name = "MANASHIFT DEFAULT";
             bgRoom.MaxUser = 3000;
             bgRoom.IsPersistence = true;
-            bgRoom.ID = "banaismailde";
+            bgRoom.ID = "123";
             _roomProvider.CreateRoom(bgRoom);
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);

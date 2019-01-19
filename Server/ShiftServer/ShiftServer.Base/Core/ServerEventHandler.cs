@@ -35,7 +35,7 @@ namespace ShiftServer.Base.Core
                     ServerEventInvoker.Fire(serverEvents, data, client);
                     break;
                 default:
-                 
+
                     break;
             }
         }

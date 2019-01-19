@@ -52,8 +52,11 @@ namespace ShiftServer.Base.Rooms
                 TeamIdList.Add(Id);
             }
 
+            //OnGameStart();
+
+
         }
-        public new void OnGameStart()
+        public override void OnGameStart()
         {
             GameStartDate = DateTime.UtcNow;
 
@@ -192,7 +195,7 @@ namespace ShiftServer.Base.Rooms
             this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
            
         }
-        public void OnRoomUpdate()
+        public override void OnRoomUpdate()
         {
             CurrentServerUptime = DateTime.UtcNow - this.GameStartDate;
             TimeSpan updatePassTime = CurrentServerUptime - LastGameUpdate;
