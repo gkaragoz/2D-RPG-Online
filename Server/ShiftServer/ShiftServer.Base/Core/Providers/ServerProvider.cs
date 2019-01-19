@@ -89,7 +89,7 @@ namespace ShiftServer.Base.Core
 
         public void OnPing(ShiftServerData data, ShiftClient shift)
         {
-            if (shift != null || shift.Client != null)
+            if (shift != null || shift.TCPClient != null)
                 shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
@@ -114,21 +114,16 @@ namespace ShiftServer.Base.Core
 
                 ShiftServerData errorData = new ShiftServerData();
                 errorData.ErrorReason = ShiftServerError.NoRespondServer;
-                log.Error($"[Failed Login] Internal DB Error Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}", err);
+                log.Error($"[Failed Login] Internal DB Error Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}", err);
                 shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
                 return;
             }
 
-            string sessionId = shift.UserSessionID;
-            data.Session = new SessionData();
-            data.Session.Sid = sessionId;
-
-            world.SocketIdSessionLookup.Add(sessionId, shift.ConnectonID);
             shift.IsJoinedToWorld = true;
 
             ShiftServerData newData = new ShiftServerData();
             shift.SendPacket(MSServerEvent.Connection, newData);
-            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
+            log.Info($"[Login Success] Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
         }
 

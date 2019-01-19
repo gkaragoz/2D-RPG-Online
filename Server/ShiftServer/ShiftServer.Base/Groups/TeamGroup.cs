@@ -28,7 +28,7 @@ namespace ShiftServer.Base.Groups
             {
                 client.IsJoinedToTeam = true;
                 client.JoinedTeamID = this.ID;
-                Clients.Add(client.ConnectonID, client);
+                Clients.Add(client.ConnectionID, client);
             }
         }
         public void RemovePlayer(ShiftClient client)
@@ -39,7 +39,7 @@ namespace ShiftServer.Base.Groups
                 client.IsJoinedToTeam = false;
                 client.JoinedTeamID = null;
                             
-                Clients.Remove(client.ConnectonID);
+                Clients.Remove(client.ConnectionID);
             }
             
         }

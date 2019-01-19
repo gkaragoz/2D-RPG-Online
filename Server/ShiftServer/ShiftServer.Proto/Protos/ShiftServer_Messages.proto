@@ -6,8 +6,6 @@ message ShiftServerData {
 	MSServerEvent svevtid = 2;  // Event type
 	MSPlayerEvent plevtid = 3;  // Sub ev type
 
-	SessionData Session = 4; // SessionData
-	ClientData ClientInfo = 5; // ClientData
 	CommonAccountData AccountData = 6;
 	RoomData RoomData = 7;
 	AccountData Account = 8;
@@ -20,8 +18,6 @@ message ShiftServerData {
 
 	string SessionID = 14;
 	MatchmakingData MatchmakingData = 15;
-	double TimeBetweenTicks = 16;
-	double CurrentServerTime = 17;
 	int32 svTickRate = 18;
 
 }

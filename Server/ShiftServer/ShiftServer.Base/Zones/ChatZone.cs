@@ -26,52 +26,6 @@ namespace ShiftServer.Base.Zones
         {
             Clients = new SafeDictionary<int, ShiftClient>();
         }
-    
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <returns>
-        ///
-        /// data.Session;
-        /// data.AccountData;
-        /// </returns>
-        /// <param name="data"></param>
-        /// <param name="shift"></param>
-        public void OnAccountLogin(ShiftServerData data, ShiftClient shift)
-        {
-            if (data.ClientInfo == null)
-            {
-                ShiftServerData errorData = new ShiftServerData();
-                errorData.ErrorReason = ShiftServerError.WrongClientData;
-                log.Warn($"[Failed Login] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
-                shift.SendPacket(MSServerEvent.AccountJoin, errorData);
-                return;
-            }
 
-
-            //check account
-            string accUsername = data.Account.Username;
-            string accPassword = data.Account.Password;
-            //QUERY TO SOMEWHERE ELSE
-
-            //Checking the client has only one player character under control
-            shift.UserSessionID.SetSid(data);
-            string sessionId = shift.UserSessionID;
-            data.Session = new SessionData();
-            data.Session.Sid = sessionId;
-            //check login data
-
-            data.Account = null;
-            data.AccountData = new CommonAccountData();
-            data.AccountData.Username = accUsername;
-            data.AccountData.VirtualMoney = 100;
-            data.AccountData.VirtualSpecialMoney = 100;
-
-            shift.SendPacket(MSServerEvent.AccountJoin, data);
-            shift.UserName = data.AccountData.Username;
-            SocketIdSessionLookup.Add(sessionId, shift.ConnectonID);
-            log.Info($"[Login Success] Remote:{shift.Client.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectonID}");
-
-        }
     }
 }
