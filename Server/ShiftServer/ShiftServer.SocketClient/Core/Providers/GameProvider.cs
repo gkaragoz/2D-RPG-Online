@@ -120,7 +120,7 @@ namespace ShiftServer.Client.Core
             }
             catch (SocketException socketException)
             {
-                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionLost, ShiftServerError.NoRespondServer);
+                this.dataHandler.HandleServerFailure(MSServerEvent.ConnectionFailed, ShiftServerError.NoRespondServer);
                 Console.WriteLine("Socket exception: " + socketException);
             }
         }
