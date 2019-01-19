@@ -32,7 +32,7 @@ namespace ShiftServer.Base.Core
 
         private void Server_ReceivedError(int connId, Exception arg2)
         {
-            ServerProvider.log.Error($"ClientNO: {connId} Exception ", arg2);
+            ServerProvider.log.Error($"ClientNO: {connId} Exception " + arg2.Message);
         }
 
         private void Server_Disconnected(int connId)
