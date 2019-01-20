@@ -61,8 +61,7 @@ public class NetworkManager : MonoBehaviour {
         _cfg.Port = _port;
         _cfg.SessionID = SessionID;
 
-        StartCoroutine(mss.Connect(_cfg));
-        PopupManager.instance.ShowPopupLoading("Connecting to server...");
+        mss.Connect(_cfg);
     }
 
     private void InitializeGameplayServer() {

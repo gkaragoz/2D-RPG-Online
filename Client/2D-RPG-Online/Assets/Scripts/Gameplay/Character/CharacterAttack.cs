@@ -35,7 +35,7 @@ public class CharacterAttack : MonoBehaviour {
     }
 
     private IEnumerator IAttack() {
-        //AudioManager.instance.Play("swing" + Random.Range(1, 3));
+        AudioManager.instance.Play("swing" + Random.Range(1, 3));
 
         _nextAttackTime = Time.time + attackSpeed;
 

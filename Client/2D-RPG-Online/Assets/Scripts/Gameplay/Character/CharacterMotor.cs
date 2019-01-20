@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CharacterMotor : MonoBehaviour {
 
@@ -23,12 +24,11 @@ public class CharacterMotor : MonoBehaviour {
 
     public void Move(Vector3 direction) {
         Vector3 currentPosition = _rb.transform.position;
-        //_rb2D.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
         _rb.transform.rotation = Quaternion.LookRotation(direction);
         _rb.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
 
-        //AudioManager.instance.Play("footstep");
+        AudioManager.instance.Play("footstep");
     }
 
 }
