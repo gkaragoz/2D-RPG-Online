@@ -29,7 +29,7 @@ namespace ShiftServer.Client.Core
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public async void Connect(string address, int port)
+        public void Connect(string address, int port)
         {
             try
             {
@@ -50,7 +50,7 @@ namespace ShiftServer.Client.Core
                 client.Disconnected += Client_Disconnected;
                 client.ReceivedError += Client_ReceivedError;
                 //this.SetFixedUpdateInterval();
-                await Task.Run(() => client.Connect(address, port));
+                client.Connect(address, port);
             }
             catch (Exception)
             {
@@ -96,9 +96,9 @@ namespace ShiftServer.Client.Core
         /// <summary> 	
         /// Send message to server using socket connection. 	
         /// </summary> 	
-        public async void SendMessage(byte[] bb)
+        public void SendMessage(byte[] bb)
         {
-            await Task.Run(() => client.Send(bb));           
+            client.Send(bb);           
         }
 
 
