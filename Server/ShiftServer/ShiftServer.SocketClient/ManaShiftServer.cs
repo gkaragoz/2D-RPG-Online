@@ -25,6 +25,7 @@ namespace ShiftServer.Client
         public static ConfigData cfg = null;
         public bool IsConnected { get => _gameProvider.IsClientConnected(); }
         public bool IsConnecting { get => _gameProvider.client.Connecting; }
+        public bool IsAccountJoined { get => _gameProvider.IsAccountJoined; }
         public bool HasPlayerRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
         public MSSRoom JoinedRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom; }
         public CommonAccountData AccountData { get => _gameProvider.dataHandler.accountData; }
