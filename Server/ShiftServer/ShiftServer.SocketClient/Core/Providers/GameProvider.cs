@@ -136,9 +136,9 @@ namespace ShiftServer.Client.Core
             //this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
         }
 
-        private async void Client_ReceivedDataAsync(byte[] obj)
+        private void Client_ReceivedDataAsync(byte[] obj)
         {
-            await this.dataHandler.HandleMessageAsync(obj);
+            this.dataHandler.HandleMessageAsync(obj);
         }
     }
 }

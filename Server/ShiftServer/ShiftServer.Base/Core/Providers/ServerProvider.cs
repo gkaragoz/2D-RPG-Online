@@ -90,14 +90,14 @@ namespace ShiftServer.Base.Core
         public async Task OnPing(ShiftServerData data, ShiftClient shift)
         {
             if (shift != null || shift.TCPClient != null)
-                shift.SendPacket(MSServerEvent.PingRequest, data);
+                await shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
         public async Task OnAccountJoin(ShiftServerData data, ShiftClient shift)
         {
             try
             {
-                if (!shift.SessionCheck(data))
+                if (! await shift.SessionCheckAsync(data))
                 {
                     shift.Dispose();
                     return;

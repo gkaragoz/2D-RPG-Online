@@ -72,7 +72,7 @@ namespace ShiftServer.Base.Rooms
             data.RoomData = new RoomData();
             data.RoomData.PlayerInfo = MakeRoomPlayerInfo(currentClient);
 
-            this.BroadcastDataToRoom(currentClient, evt, data);
+            this.BroadcastDataToRoomAsync(currentClient, evt, data);
         }
         public IGroup GetRandomTeam()
         {
@@ -117,7 +117,7 @@ namespace ShiftServer.Base.Rooms
 
             return null;
         }
-        public void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data)
+        public async void BroadcastDataToRoomAsync(ShiftClient currentClient, MSServerEvent state, ShiftServerData data)
         {
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
@@ -128,10 +128,10 @@ namespace ShiftServer.Base.Rooms
                 if (clientList[i].ConnectionID == currentClient.ConnectionID)
                     continue;
 
-                clientList[i].SendPacket(state, data);
+                await clientList[i].SendPacket(state, data);
             }
         }
-        public void BroadcastPlayerDataToRoom(MSPlayerEvent state, ShiftServerData data)
+        public async Task BroadcastPlayerDataToRoomAsync(MSPlayerEvent state, ShiftServerData data)
         {
 
             List<ShiftClient> clientList = this.Clients.GetValues();
@@ -140,10 +140,10 @@ namespace ShiftServer.Base.Rooms
                 if (clientList[i].UserSessionID == null)
                     continue;
 
-                clientList[i].SendPacket(state, data);
+                await clientList[i].SendPacket(state, data);
             }
         }
-        public void BroadcastDataToRoom(ShiftClient currentClient, MSPlayerEvent state, ShiftServerData data)
+        public async void BroadcastDataToRoomAsync(ShiftClient currentClient, MSPlayerEvent state, ShiftServerData data)
         {
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
@@ -154,7 +154,7 @@ namespace ShiftServer.Base.Rooms
                 if (clientList[i].ConnectionID == currentClient.ConnectionID)
                     continue;
 
-                clientList[i].SendPacket(state, data);
+                await clientList[i].SendPacket(state, data);
             }
         }
         public ShiftClient SetRandomNewLeader()
@@ -191,7 +191,7 @@ namespace ShiftServer.Base.Rooms
             this.Clients.Add(client.ConnectionID, client);
             client.IsJoinedToRoom = true;
         }
-        public virtual void OnPlayerJoin(Character character, ShiftClient shift)
+        public virtual void OnPlayerJoinAsync(Character character, ShiftClient shift)
         {
         }
 

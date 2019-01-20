@@ -173,7 +173,7 @@ namespace ShiftServer.Base.Auth
 
             HardDisconnect();
         }
-        public bool SessionCheck(ShiftServerData data)
+        public async Task<bool> SessionCheckAsync(ShiftServerData data)
         {
             bool result = false;
             //session check
@@ -204,7 +204,7 @@ namespace ShiftServer.Base.Auth
                 return result;
             else
             {
-                this.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
+                await this.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
                 return result;
             }
 
