@@ -70,7 +70,7 @@ public class PingStatus : MonoBehaviour {
         }
     }
 
-    private async Task OnPingResponse(ShiftServerData data) {
+    private void OnPingResponse(ShiftServerData data) {
         _stopwatch.Stop();
 
         _currentPingValue = _stopwatch.Elapsed.Milliseconds;

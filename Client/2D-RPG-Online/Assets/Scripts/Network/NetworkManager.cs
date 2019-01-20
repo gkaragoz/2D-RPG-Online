@@ -61,7 +61,8 @@ public class NetworkManager : MonoBehaviour {
         _cfg.Port = _port;
         _cfg.SessionID = SessionID;
 
-        mss.Connect(_cfg);
+        StartCoroutine(mss.Connect(_cfg));
+        PopupManager.instance.ShowPopupLoading("Connecting to server...");
     }
 
     private void InitializeGameplayServer() {
@@ -71,17 +72,17 @@ public class NetworkManager : MonoBehaviour {
         mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
     }
 
-    private async Task OnConnectionSuccess(ShiftServerData data) {
+    private void OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
 
         onGameplayServerConnectionSuccess?.Invoke();
     }
 
-    private async Task OnConnectionFailed(ShiftServerData data) {
+    private void OnConnectionFailed(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_FAILED + data);
     }
 
-    private async Task OnConnectionLost(ShiftServerData data) {
+    private void OnConnectionLost(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_LOST + data);
     }
 
