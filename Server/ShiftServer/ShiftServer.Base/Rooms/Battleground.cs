@@ -101,7 +101,7 @@ namespace ShiftServer.Base.Rooms
             var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectID).FirstOrDefault();
             GOUpdatePacket.PlayerList.Remove(item);
         }
-        public override void OnPlayerJoin(Character chardata, ShiftClient shift)
+        public override async void OnPlayerJoinAsync(Character chardata, ShiftClient shift)
         {
             ShiftServerData sendData = new ShiftServerData();
             string clientSessionId = shift.UserSessionID;
@@ -134,7 +134,6 @@ namespace ShiftServer.Base.Rooms
                 Player player = new Player();
                 player.OwnerConnectionID = shift.ConnectionID;
                 player.OwnerSessionID = shift.UserSessionID;
-                player.ObjectID = Interlocked.Increment(ref ObjectCounter);
                 player.Name = chardata.Name;
                 player.MaxHP = chardata.Stats.Health;
                 player.CurrentHP = chardata.Stats.Health;
@@ -170,9 +169,9 @@ namespace ShiftServer.Base.Rooms
             };
 
             //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
-            shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
+            await shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
-        public void SendRoomState(TimeSpan timespan)
+        public async void SendRoomStateAsync(TimeSpan timespan)
         {
 
             ShiftServerData data = new ShiftServerData();
@@ -192,7 +191,7 @@ namespace ShiftServer.Base.Rooms
                 data.GoUpdatePacket.PlayerList.Add(pObject);
             }
 
-            this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
+            await this.BroadcastPlayerDataToRoomAsync(MSPlayerEvent.RoomUpdate, data);
            
         }
         public override void OnRoomUpdate()
@@ -211,7 +210,7 @@ namespace ShiftServer.Base.Rooms
                 gObject.ResolveInputs();
             }
 
-            SendRoomState(updatePassTime);
+            SendRoomStateAsync(updatePassTime);
         }
     }
 }

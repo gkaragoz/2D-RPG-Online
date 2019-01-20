@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Core
 
         public async Task OnRoomCreate(ShiftServerData data, ShiftClient shift)
         {
-            if (!shift.SessionCheck(data))
+            if (!(await shift.SessionCheckAsync(data)))
                 return;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
@@ -129,7 +129,7 @@ namespace ShiftServer.Base.Core
                 ShiftServerData oData = new ShiftServerData();
                 log.Error($"ClientNO: {shift.ConnectionID} ------>" + ShiftServerError.AlreadyInRoom);
                 oData.ErrorReason = ShiftServerError.AlreadyInRoom;
-                shift.SendPacket(MSServerEvent.RoomCreateFailed, oData);
+                await shift.SendPacket(MSServerEvent.RoomCreateFailed, oData);
 
             }
 
@@ -141,7 +141,7 @@ namespace ShiftServer.Base.Core
 
             log.Info($"ClientNO: {shift.ConnectionID} ------> RoomJoin");
 
-            if (!shift.SessionCheck(data))
+            if (! await shift.SessionCheckAsync(data))
                 return;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
@@ -296,11 +296,11 @@ namespace ShiftServer.Base.Core
                 return;
             }
         }
-        public void OnMatchMaking(ShiftServerData data, ShiftClient shift)
+        public async Task OnMatchMakingAsync(ShiftServerData data, ShiftClient shift)
         {
             try
             {
-                if (!shift.SessionCheck(data))
+                if (! await shift.SessionCheckAsync(data))
                     return;
 
 
@@ -311,8 +311,7 @@ namespace ShiftServer.Base.Core
                 log.Error($"ClientNO: {shift.ConnectionID} ------>" + ShiftServerError.RoomAuthProblem);
                 ShiftServerData errdata = new ShiftServerData();
                 errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
-                shift.SendPacket(MSServerEvent.RoomLeaveFailed, errdata);
-
+                await shift.SendPacket(MSServerEvent.RoomLeaveFailed, errdata);
             }
         }
 
@@ -324,7 +323,7 @@ namespace ShiftServer.Base.Core
                 bool isDestroyed = false;
                 log.Info($"ClientNO: {shift.ConnectionID} ------> RoomLeave");
 
-                if (!shift.SessionCheck(data))
+                if (! await shift.SessionCheckAsync(data))
                     return;
 
 
@@ -381,7 +380,7 @@ namespace ShiftServer.Base.Core
                         else
                             pInfo.IsLeader = false;
 
-                        prevRoom.BroadcastDataToRoom(shift, MSServerEvent.RoomChangeLeader, data);
+                        prevRoom.BroadcastDataToRoomAsync(shift, MSServerEvent.RoomChangeLeader, data);
                     }
 
                     await shift.SendPacket(MSServerEvent.RoomLeave, leaveRoomData);
@@ -410,13 +409,13 @@ namespace ShiftServer.Base.Core
             }
 
         }
-        public void OnRoomPlayerReadyStatusChanged(ShiftServerData data, ShiftClient shift)
+        public async Task OnRoomPlayerReadyStatusChangedAsync(ShiftServerData data, ShiftClient shift)
         {
             IRoom result = null;
 
             log.Info($"ClientNO: {shift.ConnectionID} ------> PlayerReady StatusChanged");
 
-            if (!shift.SessionCheck(data))
+            if (! await shift.SessionCheckAsync(data))
                 return;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
@@ -425,7 +424,7 @@ namespace ShiftServer.Base.Core
             try
             {
 
-                if (!shift.SessionCheck(data))
+                if (! await shift.SessionCheckAsync(data))
                     return;
 
                 if (!shift.IsJoinedToRoom)
@@ -446,7 +445,7 @@ namespace ShiftServer.Base.Core
                     newData.RoomData.PlayerReadyStatusInfo.IsReady = data.RoomData.PlayerReadyStatusInfo.IsReady;
                     newData.RoomData.PlayerReadyStatusInfo.Username = acc.SelectedCharName;
 
-                    result.BroadcastDataToRoom(shift, MSServerEvent.RoomPlayerReadyStatus, newData);
+                    result.BroadcastDataToRoomAsync(shift, MSServerEvent.RoomPlayerReadyStatus, newData);
 
                 }
                 else
@@ -454,7 +453,7 @@ namespace ShiftServer.Base.Core
                     log.Error($"ClientNO: {shift.ConnectionID} ------>" + ShiftServerError.RoomAuthProblem);
                     ShiftServerData errdata = new ShiftServerData();
                     errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
-                    shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
+                    await shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
                 }
 
 
@@ -465,9 +464,9 @@ namespace ShiftServer.Base.Core
                 log.Error($"ClientNO: {shift.ConnectionID} ------>" + ShiftServerError.RoomAuthProblem);
                 ShiftServerData errdata = new ShiftServerData();
                 errdata.ErrorReason = ShiftServerError.NotInAnyRoom;
-                shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
+                await shift.SendPacket(MSServerEvent.RoomPlayerReadyStatusFailed, errdata);
             }
-            shift.SendPacket(MSServerEvent.RoomGameStart, data);
+            await shift.SendPacket(MSServerEvent.RoomGameStart, data);
         }
         public async Task OnRoomLeaderChange(ShiftServerData data, ShiftClient shift)
         {
@@ -480,7 +479,7 @@ namespace ShiftServer.Base.Core
             bool isSuccess = false;
             IRoom room = null;
 
-            if (!shift.SessionCheck(data))
+            if (! await shift.SessionCheckAsync(data))
                 return;
 
             if (data.RoomData.Room == null)
@@ -531,11 +530,11 @@ namespace ShiftServer.Base.Core
             }
 
         }
-        public void OnLobbyRefresh(ShiftServerData data, ShiftClient shift)
+        public async Task OnLobbyRefreshAsync(ShiftServerData data, ShiftClient shift)
         {
             log.Info($"ClientNO: {shift.ConnectionID} ------> LobbyRefresh");
 
-            if (!shift.SessionCheck(data))
+            if (! await shift.SessionCheckAsync(data))
                 return;
 
             DateTime now = DateTime.UtcNow;
@@ -587,7 +586,7 @@ namespace ShiftServer.Base.Core
         private void SpawnCharacterToRoom(ShiftClient shift, IRoom room)
         {
             Character character = DBContext.ctx.Characters.FindByCharName(shift.UserName);
-            room.OnPlayerJoin(character, shift);
+            room.OnPlayerJoinAsync(character, shift);
         }
         private void AddGOInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
         {

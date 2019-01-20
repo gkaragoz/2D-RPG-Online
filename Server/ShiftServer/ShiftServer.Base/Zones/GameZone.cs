@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Worlds
                 }
             }
         }
-        public void SendWorldState()
+        public async System.Threading.Tasks.Task SendWorldStateAsync()
         {
             List<ShiftClient> clientList = Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
@@ -47,7 +47,7 @@ namespace ShiftServer.Base.Worlds
 
                 ShiftServerData data = new ShiftServerData();
 
-                clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
+                await clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
             }
 
         }

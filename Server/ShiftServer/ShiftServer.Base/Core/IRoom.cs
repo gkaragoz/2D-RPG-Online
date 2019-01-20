@@ -2,6 +2,7 @@
 using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using System.Timers;
 using Telepathy;
 
@@ -27,10 +28,10 @@ namespace ShiftServer.Base.Core
         SafeDictionary<int, ShiftClient> Clients { get; set; }
         int MaxUser { get; set; }
         void BroadcastClientState(ShiftClient currentClient, MSServerEvent state);
-        void BroadcastDataToRoom(ShiftClient currentClient, MSServerEvent state, ShiftServerData data);
+        void BroadcastDataToRoomAsync(ShiftClient currentClient, MSServerEvent state, ShiftServerData data);
         IGroup GetRandomTeam();
         ShiftClient SetRandomNewLeader();
-        void OnPlayerJoin(Character character, ShiftClient shift);
+        void OnPlayerJoinAsync(Character character, ShiftClient shift);
         void OnGameStart();
         void OnRoomUpdate();
         void DisposeClient(ShiftClient client);

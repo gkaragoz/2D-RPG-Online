@@ -46,7 +46,7 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Connect(ConfigData cfg, int timeout = 10)
+        public IEnumerator Connect(ConfigData cfg, int timeout = 10)
         {
             if (string.IsNullOrEmpty(cfg.SessionID))
                 throw new ArgumentNullException("Session ID is null");
@@ -57,20 +57,26 @@ namespace ShiftServer.Client
 
             Stopwatch s = new Stopwatch();
             s.Start();
-            while (this.IsConnected != true) {
+
+            while (this.IsConnected != true)
+            {
                 if (s.Elapsed > TimeSpan.FromSeconds(timeout))
                 {
                     throw new TimeoutException("Connection timeout");
                 }
                 Console.WriteLine("connecting...");
+
+                yield return null;
             };
+
             s.Stop();
 
             this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
             this.JoinServer(_sessionID);
         }
 
-        private async Task OnPingResponse(ShiftServerData data)
+        
+        private void OnPingResponse(ShiftServerData data)
         {
             _stopwatch.Stop();
             _currentPingValue = _stopwatch.Elapsed.Milliseconds;
@@ -121,7 +127,7 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="eventType">Shift Server event list</param>
         /// <param name="listener">Callback function which fired when event triggered</param>
-        public void AddEventListener(object eventType, Func<ShiftServerData, Task> listener)
+        public void AddEventListener(object eventType, Action<ShiftServerData> listener)
         {
             if (eventType.GetType() == typeof(MSServerEvent))
             {
