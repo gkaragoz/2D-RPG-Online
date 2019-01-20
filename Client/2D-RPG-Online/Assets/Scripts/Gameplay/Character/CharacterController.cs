@@ -42,9 +42,15 @@ public class CharacterController : MonoBehaviour {
         if (new Vector3(newPosition.x, newPosition.z) == transform.position) {
             _characterAnimator.OnStop();
         } else {
-            Vector3 direction = new Vector3(newPosition.x, newPosition.z) - transform.position;
+            Vector3 direction = new Vector3(newPosition.x, 0, newPosition.z) - transform.position;
 
             _characterAnimator.OnMove(direction);
+
+            Vector3 rotation = new Vector3(direction.x, 0f, direction.z);
+
+            if (rotation != Vector3.zero) {
+                transform.rotation = Quaternion.LookRotation(rotation);
+            }
 
             transform.position = newPosition;
         }

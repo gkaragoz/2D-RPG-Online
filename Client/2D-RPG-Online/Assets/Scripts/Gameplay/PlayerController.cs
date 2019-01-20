@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void AddPositionToBuffer(double timestamp, Vector2 position) {
+    public void AddPositionToBuffer(double timestamp, Vector3 position) {
 
         _positionBuffer.Add(new PositionEntry(timestamp, position));
     }

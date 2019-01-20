@@ -80,7 +80,7 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
         var renderTimestamp = now - (1000.0 / serverTickrate);
 
@@ -94,16 +94,16 @@ public class RoomManager : Menu {
 
             // Interpolate between the two surrounding authoritative positions.
             if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
-                Vector2 firstVector = entity.PositionBuffer[0].vector3;
-                Vector2 secondVector = entity.PositionBuffer[1].vector3;
+                Vector3 firstVector = entity.PositionBuffer[0].vector3;
+                Vector3 secondVector = entity.PositionBuffer[1].vector3;
 
                 double t0 = entity.PositionBuffer[0].updateTime;
                 double t1 = entity.PositionBuffer[1].updateTime;
                 
                 double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
-                double interpY = firstVector.y + (secondVector.y - firstVector.y) * (renderTimestamp - t0) / (t1 - t0);
+                double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
 
-                Vector2 newPosition = new Vector2((float)interpX, (float)interpY);
+                Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
 
                 entity.ToNewPosition(newPosition);
             }
