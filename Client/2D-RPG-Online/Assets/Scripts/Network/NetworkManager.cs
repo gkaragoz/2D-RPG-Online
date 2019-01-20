@@ -3,10 +3,9 @@ using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
 using System;
 using System.Threading.Tasks;
+using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
-
-    public Func<bool> onGameplayServerConnectionSuccess;
 
     public static ManaShiftServer mss;
     public static string SessionID { get; set; }
@@ -40,6 +39,8 @@ public class NetworkManager : MonoBehaviour {
     private const string ON_CONNECTION_FAILED = "Connection failed!";
     private const string ON_CONNECTION_LOST = "Connection lost!";
 
+    private bool _hasConnectionProblem = false;
+
     public static NetworkManager instance;
 
     private void Awake() {
@@ -53,7 +54,7 @@ public class NetworkManager : MonoBehaviour {
         InitializeGameplayServer();
     }
 
-    public void ConnectToGameplayServer() {
+    public IEnumerator ConnectToGameplayServer(Action<bool> success) {
         Debug.Log(CONNECT);
 
         _cfg = new ConfigData();
@@ -61,7 +62,20 @@ public class NetworkManager : MonoBehaviour {
         _cfg.Port = _port;
         _cfg.SessionID = SessionID;
 
-        mss.Connect(_cfg);
+        mss.Connect(_cfg, 3);
+
+        while (!mss.IsConnected) {
+            yield return new WaitForSeconds(0.2f);
+
+            if (_hasConnectionProblem) {
+                success(false);
+
+                StopAllCoroutines();
+                break;
+            }
+        }
+
+        success(true);
     }
 
     private void InitializeGameplayServer() {
@@ -74,15 +88,19 @@ public class NetworkManager : MonoBehaviour {
     private void OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
 
-        onGameplayServerConnectionSuccess?.Invoke();
+        _hasConnectionProblem = false;
     }
 
     private void OnConnectionFailed(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_FAILED + data);
+
+        _hasConnectionProblem = true;
     }
 
     private void OnConnectionLost(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_LOST + data);
+
+        _hasConnectionProblem = true;
     }
 
     private void OnApplicationQuit() {

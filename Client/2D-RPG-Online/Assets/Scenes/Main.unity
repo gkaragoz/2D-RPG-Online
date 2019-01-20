@@ -16510,7 +16510,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c09798ce980645488be944e6181f2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostName: 192.168.1.3
+  _hostName: 192.168.1.2
   _port: 2000
   _reconciliaton: 1
 --- !u!4 &1045909617
@@ -26263,8 +26263,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 1904710925}
   subContainer: {fileID: 1647306820}
-  _playerPrefab: {fileID: 1429456644795412, guid: 564f9f84665c4af43b54572dc2955368,
-    type: 3}
+  _playerPrefab: {fileID: 84, guid: 564f9f84665c4af43b54572dc2955368, type: 3}
   _btnStartGame: {fileID: 1074621522}
   _btnReady: {fileID: 2029559455}
   _btnNotReady: {fileID: 1438094722}

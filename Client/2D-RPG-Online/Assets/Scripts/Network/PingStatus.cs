@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
 using System.Timers;
-using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,13 +31,6 @@ public class PingStatus : MonoBehaviour {
 
     private void Start() {
         NetworkManager.mss.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
-
-        NetworkManager.instance.onGameplayServerConnectionSuccess = OnGamePlayServerConnectionSuccess;
-    }
-
-    private bool OnGamePlayServerConnectionSuccess() {
-        SendPingRequest();
-        return true;
     }
 
     private void SendPingRequest() {
