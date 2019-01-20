@@ -31,14 +31,14 @@ namespace ShiftServer.Client.Core
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb)
+        public async Task HandleMessageAsync(byte[] bb)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
             switch (data.Basevtid)
             {
                 case MSBaseEventId.PlayerEvent:
-                    ClientEventInvoker.Fire(playerEvents, data);
+                    await ClientEventInvoker.FireAsync(playerEvents, data);
                     break;
                 case MSBaseEventId.ServerEvent:
                     switch (data.Svevtid)
@@ -66,7 +66,7 @@ namespace ShiftServer.Client.Core
                             break;
                     }
 
-                    ClientEventInvoker.Fire(clientEvents, data);
+                    ClientEventInvoker.FireAsync(clientEvents, data);
                     break;
                 default:
 

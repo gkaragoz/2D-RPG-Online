@@ -10,14 +10,14 @@ namespace ShiftServer.Base.Core
     public class ServerEventCallback
     {
         public MSServerEvent EventID { get; set; }
-        public Action<ShiftServerData, ShiftClient> CallbackFunc { get; set; }
+        public Func<ShiftServerData, ShiftClient, Task> CallbackFunc { get; set; }
 
     }
 
     public class PlayerEventCallback
     {
         public MSPlayerEvent EventID { get; set; }
-        public Action<ShiftServerData, ShiftClient> CallbackFunc { get; set; }
+        public Func<ShiftServerData, ShiftClient, Task> CallbackFunc { get; set; }
 
     }
     public static class ServerEventInvoker
@@ -29,7 +29,7 @@ namespace ShiftServer.Base.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient shift)
+        public static async Task FireAsync(List<PlayerEventCallback> events, ShiftServerData data, ShiftClient shift)
         {
             try
             {
@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Core
                 {
                     if (events[i].EventID == data.Plevtid)
                     {
-                        events[i].CallbackFunc.Invoke(data, shift);
+                        await events[i].CallbackFunc.Invoke(data, shift);
                     }
 
 
@@ -63,7 +63,7 @@ namespace ShiftServer.Base.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<ServerEventCallback> events, ShiftServerData data, ShiftClient shift)
+        public static async Task FireAsync(List<ServerEventCallback> events, ShiftServerData data, ShiftClient shift)
         {
             try
             {
@@ -71,7 +71,7 @@ namespace ShiftServer.Base.Core
                 {
                     if (events[i].EventID == data.Svevtid)
                     {
-                        events[i].CallbackFunc.Invoke(data, shift);
+                        await events[i].CallbackFunc.Invoke(data, shift);
                     }
 
 
@@ -84,7 +84,6 @@ namespace ShiftServer.Base.Core
                     if (shift.TCPClient.Client.Connected)
                         ServerProvider.log.Error($"[EXCEPTION] ClientNO: {shift.ConnectionID} REMOTE: " + shift.TCPClient.Client.RemoteEndPoint.ToString(), err);
                 }
-                return;
             }
 
         }

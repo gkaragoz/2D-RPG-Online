@@ -70,7 +70,7 @@ namespace ShiftServer.Client
             this.JoinServer(_sessionID);
         }
 
-        private void OnPingResponse(ShiftServerData data)
+        private async Task OnPingResponse(ShiftServerData data)
         {
             _stopwatch.Stop();
             _currentPingValue = _stopwatch.Elapsed.Milliseconds;
@@ -121,7 +121,7 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="eventType">Shift Server event list</param>
         /// <param name="listener">Callback function which fired when event triggered</param>
-        public void AddEventListener(object eventType, Action<ShiftServerData> listener)
+        public void AddEventListener(object eventType, Func<ShiftServerData, Task> listener)
         {
             if (eventType.GetType() == typeof(MSServerEvent))
             {

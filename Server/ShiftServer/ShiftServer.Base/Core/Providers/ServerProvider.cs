@@ -8,6 +8,7 @@ using System.Net.Sockets;
 using System.Threading;
 using System.Timers;
 using ShiftServer.Proto.Db;
+using System.Threading.Tasks;
 
 namespace ShiftServer.Base.Core
 {
@@ -65,7 +66,7 @@ namespace ShiftServer.Base.Core
 
         }
 
-        public void AddServerEventListener(MSServerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
+        public void AddServerEventListener(MSServerEvent eventType, Func<ShiftServerData, ShiftClient, Task> listener)
         {
             log.Info("Add listener event to: " + eventType.ToString());
 
@@ -75,7 +76,7 @@ namespace ShiftServer.Base.Core
                 EventID = eventType
             });
         }
-        public void AddServerEventListener(MSPlayerEvent eventType, Action<ShiftServerData, ShiftClient> listener)
+        public void AddServerEventListener(MSPlayerEvent eventType, Func<ShiftServerData, ShiftClient, Task> listener)
         {
             log.Info("Add listener event to: " + eventType.ToString());
 
@@ -86,13 +87,13 @@ namespace ShiftServer.Base.Core
             });
         }
 
-        public void OnPing(ShiftServerData data, ShiftClient shift)
+        public async Task OnPing(ShiftServerData data, ShiftClient shift)
         {
             if (shift != null || shift.TCPClient != null)
                 shift.SendPacket(MSServerEvent.PingRequest, data);
         }
 
-        public void OnAccountJoin(ShiftServerData data, ShiftClient shift)
+        public async Task OnAccountJoin(ShiftServerData data, ShiftClient shift)
         {
             try
             {
@@ -114,13 +115,13 @@ namespace ShiftServer.Base.Core
                 ShiftServerData errorData = new ShiftServerData();
                 errorData.ErrorReason = ShiftServerError.NoRespondServer;
                 log.Error($"[Failed Login] Internal DB Error Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}", err);
-                shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
+                await shift.SendPacket(MSServerEvent.AccountJoinFailed, errorData);
                 return;
             }
 
             this.world.ClientJoin(shift);
             ShiftServerData newData = new ShiftServerData();
-            shift.SendPacket(MSServerEvent.Connection, newData);
+            await shift.SendPacket(MSServerEvent.Connection, newData);
             log.Info($"[Login Success] Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
         }

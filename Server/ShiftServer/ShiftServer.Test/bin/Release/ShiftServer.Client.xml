@@ -12,7 +12,7 @@
             Management of server-client messages
             </summary>
         </member>
-        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.Fire(System.Collections.Generic.List{ShiftServer.Client.Core.PlayerEventCallback},ShiftServerData)">
+        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.FireAsync(System.Collections.Generic.List{ShiftServer.Client.Core.PlayerEventCallback},ShiftServerData)">
             <summary>
             Invoke Player Events
             </summary>
@@ -20,7 +20,7 @@
             <param name="eventId"> Shift server event msg id</param>
             <param name="data"> Shift server event data</param>
         </member>
-        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.Fire(System.Collections.Generic.List{ShiftServer.Client.Core.ClientEventCallback},ShiftServerData)">
+        <member name="M:ShiftServer.Client.Core.ClientEventInvoker.FireAsync(System.Collections.Generic.List{ShiftServer.Client.Core.ClientEventCallback},ShiftServerData)">
             <summary>
             Invoke client callback functions
             </summary>
@@ -104,7 +104,7 @@
             <param name="client">client object</param>
             <returns></returns>
         </member>
-        <member name="M:ShiftServer.Client.ManaShiftServer.AddEventListener(System.Object,System.Action{ShiftServerData})">
+        <member name="M:ShiftServer.Client.ManaShiftServer.AddEventListener(System.Object,System.Func{ShiftServerData,System.Threading.Tasks.Task})">
             <summary>
             Add event handler function with giving message enum
             </summary>
