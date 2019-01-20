@@ -10,14 +10,14 @@ namespace ShiftServer.Client.Core
     public class ClientEventCallback
     {
         public MSServerEvent EventId { get; set; }
-        public Action<ShiftServerData> CallbackFunc { get; set; }
+        public Func<ShiftServerData, Task> CallbackFunc { get; set; }
 
     }
 
     public class PlayerEventCallback
     {
         public MSPlayerEvent EventId { get; set; }
-        public Action<ShiftServerData> CallbackFunc { get; set; }
+        public Func<ShiftServerData, Task> CallbackFunc { get; set; }
 
     }
 
@@ -30,14 +30,14 @@ namespace ShiftServer.Client.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<PlayerEventCallback> events, ShiftServerData data)
+        public static async Task FireAsync(List<PlayerEventCallback> events, ShiftServerData data)
         {
 
             for (int i = 0; i < events.Count; i++)
             {
                 if (events[i].EventId == data.Plevtid)
                 {
-                    events[i].CallbackFunc.Invoke(data);
+                    await events[i].CallbackFunc.Invoke(data);
                 }
 
 
@@ -52,14 +52,14 @@ namespace ShiftServer.Client.Core
         /// <param name="events"> Registered event list from AddEventListener</param>
         /// <param name="eventId"> Shift server event msg id</param>
         /// <param name="data"> Shift server event data</param>
-        public static void Fire(List<ClientEventCallback> events, ShiftServerData data)
+        public static async Task FireAsync(List<ClientEventCallback> events, ShiftServerData data)
         {
 
             for (int i = 0; i < events.Count; i++)
             {
                 if (events[i].EventId == data.Svevtid)
                 {
-                    events[i].CallbackFunc.Invoke(data);
+                    await events[i].CallbackFunc.Invoke(data);
                 }
 
 

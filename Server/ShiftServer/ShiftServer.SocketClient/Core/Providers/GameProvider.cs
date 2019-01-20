@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net.Sockets;
 using System.Threading;
+using System.Threading.Tasks;
 using System.Timers;
 using Google.Protobuf;
 using ShiftServer.Client;
@@ -28,7 +29,7 @@ namespace ShiftServer.Client.Core
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Connect(string address, int port)
+        public async void Connect(string address, int port)
         {
             try
             {
@@ -44,14 +45,12 @@ namespace ShiftServer.Client.Core
 
                 // create and connect the client
                 client = new Mirror.Transport.Tcp.Client();
-                client.ReceivedData += Client_ReceivedData;
+                client.ReceivedData += Client_ReceivedDataAsync;
                 client.Connected += Client_Connected;
                 client.Disconnected += Client_Disconnected;
                 client.ReceivedError += Client_ReceivedError;
                 //this.SetFixedUpdateInterval();
-                client.Connect(address, port);
-
-
+                await Task.Run(() => client.Connect(address, port));
             }
             catch (Exception)
             {
@@ -97,9 +96,9 @@ namespace ShiftServer.Client.Core
         /// <summary> 	
         /// Send message to server using socket connection. 	
         /// </summary> 	
-        public void SendMessage(byte[] bb)
+        public async void SendMessage(byte[] bb)
         {
-            client.Send(bb);
+            await Task.Run(() => client.Send(bb));           
         }
 
 
@@ -108,7 +107,7 @@ namespace ShiftServer.Client.Core
             try
             {
 
-                client.ReceivedData += Client_ReceivedData;
+                client.ReceivedData += Client_ReceivedDataAsync;
                 client.Connected += Client_Connected;
                 client.Disconnected += Client_Disconnected;
                 client.ReceivedError += Client_ReceivedError;
@@ -137,9 +136,9 @@ namespace ShiftServer.Client.Core
             //this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
         }
 
-        private void Client_ReceivedData(byte[] obj)
+        private async void Client_ReceivedDataAsync(byte[] obj)
         {
-            this.dataHandler.HandleMessage(obj);
+            await this.dataHandler.HandleMessageAsync(obj);
         }
     }
 }

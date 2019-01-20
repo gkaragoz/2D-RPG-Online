@@ -30,14 +30,14 @@ namespace ShiftServer.Base.Auth
         public string JoinedTeamID { get; set; }
         public bool IsConnected { get => this.TCPClient.Connected; }
 
-        public void SendPacket(MSServerEvent eventType, ShiftServerData data)
+        public async Task SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.ServerEvent;
                 data.Svevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                ServerProvider.instance.server.Send(ConnectionID, bb);
+                await Task.Run(() => ServerProvider.instance.server.Send(ConnectionID, bb));
             }
             catch (Exception err)
             {
@@ -49,14 +49,14 @@ namespace ShiftServer.Base.Auth
             }
 
         }
-        public void SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        public async Task SendPacket(MSPlayerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.PlayerEvent;
                 data.Plevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                ServerProvider.instance.server.Send(this.ConnectionID, bb);
+                await Task.Run(() => ServerProvider.instance.server.Send(ConnectionID, bb));
             }
             catch (Exception err)
             {

@@ -22,17 +22,17 @@ namespace ShiftServer.Base.Core
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb, ShiftClient client)
+        public async void HandleMessage(byte[] bb, ShiftClient client)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
             switch (data.Basevtid)
             {
                 case MSBaseEventId.PlayerEvent:
-                    ServerEventInvoker.Fire(playerEvents, data, client);
+                    await ServerEventInvoker.FireAsync(playerEvents, data, client);
                     break;
                 case MSBaseEventId.ServerEvent:
-                    ServerEventInvoker.Fire(serverEvents, data, client);
+                    await ServerEventInvoker.FireAsync(serverEvents, data, client);
                     break;
                 default:
 
