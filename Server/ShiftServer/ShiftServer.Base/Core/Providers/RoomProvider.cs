@@ -141,7 +141,7 @@ namespace ShiftServer.Base.Core
 
             log.Info($"ClientNO: {shift.ConnectionID} ------> RoomJoin");
 
-            if (! await shift.SessionCheckAsync(data))
+            if (!await shift.SessionCheckAsync(data))
                 return;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
@@ -307,7 +307,7 @@ namespace ShiftServer.Base.Core
         {
             try
             {
-                if (! await shift.SessionCheckAsync(data))
+                if (!await shift.SessionCheckAsync(data))
                     return;
 
 
@@ -321,7 +321,6 @@ namespace ShiftServer.Base.Core
                 await shift.SendPacket(MSServerEvent.RoomLeaveFailed, errdata);
             }
         }
-
         public async Task OnRoomLeave(ShiftServerData data, ShiftClient shift)
         {
             try
@@ -330,7 +329,7 @@ namespace ShiftServer.Base.Core
                 bool isDestroyed = false;
                 log.Info($"ClientNO: {shift.ConnectionID} ------> RoomLeave");
 
-                if (! await shift.SessionCheckAsync(data))
+                if (!await shift.SessionCheckAsync(data))
                     return;
 
 
@@ -422,7 +421,7 @@ namespace ShiftServer.Base.Core
 
             log.Info($"ClientNO: {shift.ConnectionID} ------> PlayerReady StatusChanged");
 
-            if (! await shift.SessionCheckAsync(data))
+            if (!await shift.SessionCheckAsync(data))
                 return;
 
             AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
@@ -431,7 +430,7 @@ namespace ShiftServer.Base.Core
             try
             {
 
-                if (! await shift.SessionCheckAsync(data))
+                if (!await shift.SessionCheckAsync(data))
                     return;
 
                 if (!shift.IsJoinedToRoom)
@@ -486,7 +485,7 @@ namespace ShiftServer.Base.Core
             bool isSuccess = false;
             IRoom room = null;
 
-            if (! await shift.SessionCheckAsync(data))
+            if (!await shift.SessionCheckAsync(data))
                 return;
 
             if (data.RoomData.Room == null)
@@ -502,7 +501,7 @@ namespace ShiftServer.Base.Core
 
                 if (room.Clients.Count > 1)
                 {
-                    room.SetRandomNewLeader();                   
+                    room.SetRandomNewLeader();
                 }
                 else
                 {
@@ -541,7 +540,7 @@ namespace ShiftServer.Base.Core
         {
             log.Info($"ClientNO: {shift.ConnectionID} ------> LobbyRefresh");
 
-            if (! await shift.SessionCheckAsync(data))
+            if (!await shift.SessionCheckAsync(data))
                 return;
 
             DateTime now = DateTime.UtcNow;
@@ -571,6 +570,7 @@ namespace ShiftServer.Base.Core
             MoveInput moveInput = new MoveInput();
             moveInput.EventType = data.Plevtid;
             moveInput.Vector = new System.Numerics.Vector3(data.PlayerInput.PosX, 0, data.PlayerInput.PosZ);
+            moveInput.PressTime = data.PlayerInput.PressTime;
 
             IRoom room = null;
             ServerProvider.instance.world.Rooms.TryGetValue(shift.JoinedRoomID, out room);
@@ -597,12 +597,19 @@ namespace ShiftServer.Base.Core
         }
         private void AddGOInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
         {
+            //SpeedHack
+            if (!AntiCheatEngine.ValidateMoveInput(input))
+                return;
+
             IGameObject go = null;
             room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);
             if (go != null)
             {
+
                 input.SequenceID = data.PlayerInput.SequenceID;
                 go.GameInputs.Enqueue(input);
+
+
             }
         }
 

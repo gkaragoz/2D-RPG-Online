@@ -225,8 +225,9 @@ message SPlayerInput {
 	float pos_x = 2;
 	float pos_y = 3;
 	float pos_z = 4;
-	float timestamp = 5;
-	int32 sequenceID = 6;
+	float press_time = 5;
+	float timestamp = 6;
+	int32 sequenceID = 7;
 
 }
 
