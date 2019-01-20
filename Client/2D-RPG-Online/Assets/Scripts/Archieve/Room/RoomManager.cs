@@ -77,7 +77,7 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
         var renderTimestamp = now - (1000.0 / serverTickrate);
 
