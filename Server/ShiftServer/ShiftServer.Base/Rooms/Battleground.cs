@@ -122,6 +122,9 @@ namespace ShiftServer.Base.Rooms
                     PosX = currentPlayer.Position.X,
                     PosY = currentPlayer.Position.Y,
                     PosZ = currentPlayer.Position.Z,
+                    RotX = currentPlayer.Rotation.X,
+                    RotY = currentPlayer.Rotation.Y,
+                    RotZ = currentPlayer.Rotation.Z,
                     AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                     MovementSpeed = (float)shift.CurrentObject.MovementSpeed
                 };

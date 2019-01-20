@@ -201,11 +201,14 @@ message PlayerObject {
 	float pos_x = 8;
 	float pos_y = 9;
 	float pos_z = 10;
-	float attackSpeed = 11;
-	float movementSpeed = 12;
-	repeated SPlayerInput playerInputs = 13;
-	int32 Oid = 14;
-	string Name = 15;
+	float rot_x = 11;
+	float rot_y = 12;
+	float rot_z = 13;
+	float attackSpeed = 14;
+	float movementSpeed = 15;
+	repeated SPlayerInput playerInputs = 16;
+	int32 Oid = 17;
+	string Name = 18;
 }
 
 enum PlayerClass {

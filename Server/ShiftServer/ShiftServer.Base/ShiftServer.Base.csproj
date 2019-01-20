@@ -71,6 +71,7 @@
     <Compile Include="Auth\Crypto.cs" />
     <Compile Include="Auth\ShiftClient.cs" />
     <Compile Include="Core\CollisionDetection.cs" />
+    <Compile Include="Core\GameEngine.cs" />
     <Compile Include="Core\Providers\DBServiceProvider.cs" />
     <Compile Include="Core\Providers\GroupProvider.cs" />
     <Compile Include="Core\IGameInput.cs" />

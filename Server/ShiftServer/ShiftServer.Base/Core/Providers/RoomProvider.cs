@@ -245,7 +245,11 @@ namespace ShiftServer.Base.Core
                                 MaxHp = cl.CurrentObject.MaxHP,
                                 PosX = cl.CurrentObject.Position.X,
                                 PosY = cl.CurrentObject.Position.Y,
-                                PosZ = cl.CurrentObject.Position.Z
+                                PosZ = cl.CurrentObject.Position.Z,
+
+                                RotX = cl.CurrentObject.Rotation.X,
+                                RotY = cl.CurrentObject.Rotation.Y,
+                                RotZ = cl.CurrentObject.Rotation.Z
                             };
 
                             if (result.RoomLeaderID == cl.ConnectionID)
@@ -270,7 +274,10 @@ namespace ShiftServer.Base.Core
                         MaxHp = shift.CurrentObject.MaxHP,
                         PosX = shift.CurrentObject.Position.X,
                         PosY = shift.CurrentObject.Position.Y,
-                        PosZ = shift.CurrentObject.Position.Z
+                        PosZ = shift.CurrentObject.Position.Z,
+                        RotX = shift.CurrentObject.Rotation.X,
+                        RotY = shift.CurrentObject.Position.Y,
+                        RotZ = shift.CurrentObject.Position.Z
                     };
                     data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectID;
                     shift.IsJoinedToRoom = true;
@@ -563,7 +570,7 @@ namespace ShiftServer.Base.Core
         {
             MoveInput moveInput = new MoveInput();
             moveInput.EventType = data.Plevtid;
-            moveInput.Vector = new System.Numerics.Vector3(data.PlayerInput.PosX, data.PlayerInput.PosY, 0);
+            moveInput.Vector = new System.Numerics.Vector3(data.PlayerInput.PosX, 0, data.PlayerInput.PosZ);
 
             IRoom room = null;
             ServerProvider.instance.world.Rooms.TryGetValue(shift.JoinedRoomID, out room);
