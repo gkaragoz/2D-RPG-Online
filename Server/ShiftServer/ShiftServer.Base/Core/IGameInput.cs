@@ -8,6 +8,7 @@ namespace ShiftServer.Base.Core
         MSPlayerEvent EventType { get; set; }
         Vector3 Vector { get; set; }
         int SequenceID { get; set; }
+        float PressTime { get; set; }
     }
 
 }

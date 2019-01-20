@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Base.Core
 {
-    class CollisionDetection
+    public static class CollisionDetection
     {
+
     }
 }

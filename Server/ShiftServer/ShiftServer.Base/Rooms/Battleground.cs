@@ -25,7 +25,7 @@ namespace ShiftServer.Base.Rooms
         public DateTime GameStartDate { get; set; }
         public TimeSpan LastGameUpdate { get; set; }
         public int MaxUserPerTeam { get; set; }
-
+        public Vector3 Scale { get; set; }
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
