@@ -133,7 +133,7 @@ namespace ShiftServer.Client.Core
 
         private void Client_Connected()
         {
-            //this.dataHandler.HandleServerSuccess(MSServerEvent.Connection);
+            ManaShiftServer.mss.JoinServer();
         }
 
         private void Client_ReceivedDataAsync(byte[] obj)

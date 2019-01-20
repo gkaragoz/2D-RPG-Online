@@ -19,9 +19,10 @@ namespace ShiftServer.Client
     /// </summary>
     public sealed class ManaShiftServer
     {
-        private static ManaShiftServer _mss = null;
+        public static ManaShiftServer mss = null;
         private static GameProvider _gameProvider = null;
-        private static string _sessionID = null;
+        public static string sessionID = null;
+        public static ConfigData cfg = null;
         public bool IsConnected { get => _gameProvider.IsClientConnected(); }
         public bool IsConnecting { get => _gameProvider.client.Connecting; }
         public bool HasPlayerRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
@@ -36,8 +37,9 @@ namespace ShiftServer.Client
         /// </summary>
         public ManaShiftServer()
         {
-            _mss = this;
+            mss = this;
             _gameProvider = new GameProvider();
+            cfg = null;
             _stopwatch = new Stopwatch();
         }
 
@@ -46,63 +48,15 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public IEnumerator IConnect(ConfigData cfg, int timeout = 10)
-        {
-            if (string.IsNullOrEmpty(cfg.SessionID))
-                throw new ArgumentNullException("Session ID is null");
-
-            _sessionID = cfg.SessionID;
-            _gameProvider.Connect(cfg.Host, cfg.Port);
-
-            Stopwatch s = new Stopwatch();
-            s.Start();
-
-            while (this.IsConnected != true)
-            {
-                if (s.Elapsed > TimeSpan.FromSeconds(timeout))
-                {
-                    _gameProvider.dataHandler.HandleServerFailure(MSServerEvent.ConnectionFailed, ShiftServerError.NoRespondServer);
-                }
-
-                yield return null;
-            };
-
-            s.Stop();
-
-            this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
-            this.JoinServer(_sessionID);
-        }
         public void Connect(ConfigData cfg, int timeout = 10)
         {
             if (string.IsNullOrEmpty(cfg.SessionID))
                 throw new ArgumentNullException("Session ID is null");
 
-            _sessionID = cfg.SessionID;
+            sessionID = cfg.SessionID;
             _gameProvider.Connect(cfg.Host, cfg.Port);
-
-            Stopwatch s = new Stopwatch();
-            s.Start();
-
-            while (this.IsConnected != true)
-            {
-                if (s.Elapsed > TimeSpan.FromSeconds(timeout))
-                {
-                    _gameProvider.dataHandler.HandleServerFailure(MSServerEvent.ConnectionFailed, ShiftServerError.NoRespondServer);
-                }
-            };
-
-            s.Stop();
-
-            this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
-            this.JoinServer(_sessionID);
         }
-
-        private void OnPingResponse(ShiftServerData data)
-        {
-            _stopwatch.Stop();
-            _currentPingValue = _stopwatch.Elapsed.Milliseconds;
-        }
-
+     
         private void OnAccountJoinSuccess(ShiftServerData data)
         {
 
@@ -127,8 +81,11 @@ namespace ShiftServer.Client
         /// <summary>
         /// join server with session id provided from auth server
         /// </summary>
-        private void JoinServer(string sessionID)
+        public void JoinServer()
         {
+            if (string.IsNullOrEmpty(sessionID))
+                throw new ArgumentNullException("Session ID is null");
+
             ShiftServerData data = new ShiftServerData();
             data.SessionID = sessionID;            
             this.SendMessage(MSServerEvent.AccountJoin, data);
@@ -188,7 +145,7 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.ServerEvent;
             data.Svevtid = evt;
-            data.SessionID = _sessionID;
+            data.SessionID = sessionID;
 
             byte[] bb = data.ToByteArray();
 
@@ -207,7 +164,7 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.PlayerEvent;
             data.Plevtid = evt;
-            data.SessionID = _sessionID;
+            data.SessionID = sessionID;
 
             byte[] bb = data.ToByteArray();
 
