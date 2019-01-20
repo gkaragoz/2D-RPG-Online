@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-public class Task : MonoBehaviour {
+public class LoadingTask : MonoBehaviour {
 
     public Action taskAction;
 

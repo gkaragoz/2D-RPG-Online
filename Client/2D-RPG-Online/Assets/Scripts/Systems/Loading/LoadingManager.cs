@@ -69,7 +69,7 @@ public class LoadingManager : Menu {
         _checkList = new List<bool>();
     }
 
-    public void AddTask(Task task) {
+    public void AddTask(LoadingTask task) {
         _checkList.Add(false);
         _progressFilledAmount = GetPerProgressFilledAmount();
     }

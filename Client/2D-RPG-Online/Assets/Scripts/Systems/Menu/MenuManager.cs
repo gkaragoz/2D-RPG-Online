@@ -20,7 +20,7 @@ public class MenuManager : Menu {
 
     #endregion
 
-    public Task initializationProgress;
+    public LoadingTask initializationProgress;
 
     [SerializeField]
     private Image _imgClassBg;

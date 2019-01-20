@@ -20,7 +20,7 @@ public class AccountManager : MonoBehaviour {
 
     #endregion
 
-    public Task initializationProgress;
+    public LoadingTask initializationProgress;
 
     public Action onAccountManagerInitialized;
     public Action onAccountUpdated;

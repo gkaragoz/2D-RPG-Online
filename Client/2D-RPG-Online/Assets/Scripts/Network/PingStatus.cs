@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.Timers;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -71,7 +70,7 @@ public class PingStatus : MonoBehaviour {
         }
     }
 
-    private void OnPingResponse(ShiftServerData data) {
+    private async Task OnPingResponse(ShiftServerData data) {
         _stopwatch.Stop();
 
         _currentPingValue = _stopwatch.Elapsed.Milliseconds;

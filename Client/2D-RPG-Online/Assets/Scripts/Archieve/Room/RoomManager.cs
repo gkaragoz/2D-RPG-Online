@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -212,10 +213,10 @@ public class RoomManager : Menu {
         return true;
     }
 
-    private void OnRoomUpdated(ShiftServerData data) {
+    private async Task OnRoomUpdated(ShiftServerData data) {
         serverTickrate = data.SvTickRate;
 
-        Debug.Log(data);
+        //Debug.Log(data);
 
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
@@ -246,7 +247,7 @@ public class RoomManager : Menu {
         }
     }
 
-    private void OnPlayerCreated(ShiftServerData data) {
+    private async Task OnPlayerCreated(ShiftServerData data) {
         Debug.Log("OnPlayerCreated: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
@@ -258,7 +259,7 @@ public class RoomManager : Menu {
         }
     }
 
-    private void OnRoomJoinSuccess(ShiftServerData data) {
+    private async Task OnRoomJoinSuccess(ShiftServerData data) {
         Debug.Log("OnRoomJoinSuccess: " + data);
 
         MSSRoom joinedRoom = data.RoomData.Room;
@@ -270,11 +271,11 @@ public class RoomManager : Menu {
         onRoomJoined?.Invoke();
     }
 
-    private void OnRoomJoinFailed(ShiftServerData data) {
+    private async Task OnRoomJoinFailed(ShiftServerData data) {
         Debug.Log("OnRoomJoinFailed: " + data);
     }
 
-    private void OnRoomCreated(ShiftServerData data) {
+    private async Task OnRoomCreated(ShiftServerData data) {
         Debug.Log("OnRoomCreated: " + data);
 
         //playerInfo = data.RoomData.CreatedRoom.Teams;
@@ -282,21 +283,21 @@ public class RoomManager : Menu {
         onRoomCreated?.Invoke();
     }
 
-    private void OnRoomCreateFailed(ShiftServerData data) {
+    private async Task OnRoomCreateFailed(ShiftServerData data) {
         Debug.Log("OnRoomCreateFailed: " + data);
     }
 
-    private void OnRoomDeleted(ShiftServerData data) {
+    private async Task OnRoomDeleted(ShiftServerData data) {
         Debug.Log("OnRoomDeleted: " + data);
 
         _otherPlayerControllers = new List<PlayerController>();
     }
 
-    private void OnRoomDeleteFailed(ShiftServerData data) {
+    private async Task OnRoomDeleteFailed(ShiftServerData data) {
         Debug.Log("OnRoomDeleteFailed: " + data);
     }
 
-    private void OnRoomPlayerJoined(ShiftServerData data) {
+    private async Task OnRoomPlayerJoined(ShiftServerData data) {
         Debug.Log("OnRoomPlayerJoined: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
@@ -304,7 +305,7 @@ public class RoomManager : Menu {
         CreatePlayer(playerInfo);
     }
 
-    private void OnRoomPlayerLeft(ShiftServerData data) {
+    private async Task OnRoomPlayerLeft(ShiftServerData data) {
         Debug.Log("OnRoomPlayerLeft: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
@@ -318,7 +319,7 @@ public class RoomManager : Menu {
         }
     }
 
-    private void OnRoomLeaveSuccess(ShiftServerData data) {
+    private async Task OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
 
         SceneManager.UnloadSceneAsync("Gameplay");
@@ -327,27 +328,27 @@ public class RoomManager : Menu {
         MenuManager.instance.Show();
     }
 
-    private void OnRoomLeaveFailed(ShiftServerData data) {
+    private async Task OnRoomLeaveFailed(ShiftServerData data) {
         Debug.Log("OnRoomLeaveFailed: " + data);
     }
 
-    private void OnRoomGetPlayers(ShiftServerData data) {
+    private async Task OnRoomGetPlayers(ShiftServerData data) {
         Debug.Log("OnRoomGetPlayers: " + data);
     }
 
-    private void OnRoomLeaderChanged(ShiftServerData data) {
+    private async Task OnRoomLeaderChanged(ShiftServerData data) {
         Debug.Log("OnRoomLeaderChanged: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
     }
 
-    private void OnPlayerReadyStatusChanged(ShiftServerData data) {
+    private async Task OnPlayerReadyStatusChanged(ShiftServerData data) {
         Debug.Log("OnPlayerReadyStatusChanged: " + data);
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
     }
 
-    private void OnPlayerReadyStatusChangeFailed(ShiftServerData data) {
+    private async Task OnPlayerReadyStatusChangeFailed(ShiftServerData data) {
         Debug.Log("OnPlayerReadyStatusChangeFailed: " + data);
     }
 

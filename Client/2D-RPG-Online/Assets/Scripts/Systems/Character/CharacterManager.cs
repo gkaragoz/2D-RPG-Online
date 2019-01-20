@@ -19,7 +19,7 @@ public class CharacterManager : MonoBehaviour {
 
     #endregion
 
-    public Task initializationProgress;
+    public LoadingTask initializationProgress;
 
     public Action<CharacterModel> onCharacterCreated;
     public Action<CharacterModel> onCharacterSelected;

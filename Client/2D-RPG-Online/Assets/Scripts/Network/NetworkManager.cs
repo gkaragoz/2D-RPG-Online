@@ -2,6 +2,7 @@
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
 using System;
+using System.Threading.Tasks;
 
 public class NetworkManager : MonoBehaviour {
 
@@ -70,17 +71,17 @@ public class NetworkManager : MonoBehaviour {
         mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
     }
 
-    private void OnConnectionSuccess(ShiftServerData data) {
+    private async Task OnConnectionSuccess(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_SUCCESS + data);
 
         onGameplayServerConnectionSuccess?.Invoke();
     }
 
-    private void OnConnectionFailed(ShiftServerData data) {
+    private async Task OnConnectionFailed(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_FAILED + data);
     }
 
-    private void OnConnectionLost(ShiftServerData data) {
+    private async Task OnConnectionLost(ShiftServerData data) {
         Debug.Log(ON_CONNECTION_LOST + data);
     }
 

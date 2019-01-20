@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    public Task accountDataResponseProgress;
+    public LoadingTask accountDataResponseProgress;
 
     public const string HAS_PLAYED_BEFORE = "HAS_PLAYED_BEFORE";
 
