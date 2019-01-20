@@ -14,13 +14,18 @@ namespace ShiftServer.Client.Core
     /// </summary>
     public class GameProvider
     {
+        public static GameProvider instance = null;
         public Mirror.Transport.Tcp.Client client = null;
         public Thread listenerThread = null;
         public ClientDataHandler dataHandler = null;
         string _address = null;
         int _port;
+
+        public bool IsAccountJoined;
         public GameProvider()
         {
+            instance = this;
+            IsAccountJoined = false;
             dataHandler = new ClientDataHandler();
         }
 

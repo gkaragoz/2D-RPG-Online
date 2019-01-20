@@ -84,9 +84,11 @@ namespace ShiftServer.Base.Factory.Entities
         {
             if (State != EntityState.STUN)
             {
+                input = Vector3.Normalize(input);
+
                 Quaternion newRotation = GameEngine.QuaternionLookRotation(input, new Vector3(0, 1, 0));
                 this.Rotation = new Vector3(newRotation.X, newRotation.Y, newRotation.Z);
-                this.Position += Vector3.Normalize(input) * (float)this.MovementSpeed * 0.02f;
+                this.Position +=  input * (float)this.MovementSpeed * 0.02f;
                 State = EntityState.MOVE;
             }
         }

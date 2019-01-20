@@ -61,6 +61,7 @@ namespace ShiftServer.Client.Core
                             roomProvider.DisposeRoom(data);
                             break;
                         case MSServerEvent.Connection:
+                            GameProvider.instance.IsAccountJoined = true;
                             break;
                         default:
                             break;
