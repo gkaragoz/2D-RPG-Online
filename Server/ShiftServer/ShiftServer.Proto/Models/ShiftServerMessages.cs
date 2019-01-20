@@ -56,14 +56,15 @@ public static partial class ShiftServerMessagesReflection {
           "amVjdHMYAiADKAsyDC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3Zl",
           "chgBIAEoCRIUCgxtYWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgD",
           "IAEoCSJHCgtzR2FtZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiAB",
-          "KAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIiwwIKDFBsYXllck9i",
+          "KAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIi8AIKDFBsYXllck9i",
           "amVjdBIcCgZwQ2xhc3MYASABKA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50",
           "SHAYAiABKAUSDQoFbWF4SHAYAyABKAUSEAoIc3RyZW5ndGgYBCABKAUSEQoJ",
           "ZGV4dGVyaXR5GAUgASgFEhQKDGludGVsbGlnZW5jZRgGIAEoBRIfChdsYXN0",
           "UHJvY2Vzc2VkU2VxdWVuY2VJRBgHIAEoBRINCgVwb3NfeBgIIAEoAhINCgVw",
-          "b3NfeRgJIAEoAhINCgVwb3NfehgKIAEoAhITCgthdHRhY2tTcGVlZBgLIAEo",
-          "AhIVCg1tb3ZlbWVudFNwZWVkGAwgASgCEiMKDHBsYXllcklucHV0cxgNIAMo",
-          "CzINLlNQbGF5ZXJJbnB1dBILCgNPaWQYDiABKAUSDAoETmFtZRgPIAEoCSKH",
+          "b3NfeRgJIAEoAhINCgVwb3NfehgKIAEoAhINCgVyb3RfeBgLIAEoAhINCgVy",
+          "b3RfeRgMIAEoAhINCgVyb3RfehgNIAEoAhITCgthdHRhY2tTcGVlZBgOIAEo",
+          "AhIVCg1tb3ZlbWVudFNwZWVkGA8gASgCEiMKDHBsYXllcklucHV0cxgQIAMo",
+          "CzINLlNQbGF5ZXJJbnB1dBILCgNPaWQYESABKAUSDAoETmFtZRgSIAEoCSKH",
           "AQoMU1BsYXllcklucHV0EiMKC3BsYXllckV2ZW50GAEgASgOMg4uTVNQbGF5",
           "ZXJFdmVudBINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3Nf",
           "ehgEIAEoAhIRCgl0aW1lc3RhbXAYBSABKAISEgoKc2VxdWVuY2VJRBgGIAEo",
@@ -108,7 +109,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::sGameObject), global::sGameObject.Parser, new[]{ "Oid", "PosX", "PosY", "PosZ" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PClass", "CurrentHp", "MaxHp", "Strength", "Dexterity", "Intelligence", "LastProcessedSequenceID", "PosX", "PosY", "PosZ", "AttackSpeed", "MovementSpeed", "PlayerInputs", "Oid", "Name" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PClass", "CurrentHp", "MaxHp", "Strength", "Dexterity", "Intelligence", "LastProcessedSequenceID", "PosX", "PosY", "PosZ", "RotX", "RotY", "RotZ", "AttackSpeed", "MovementSpeed", "PlayerInputs", "Oid", "Name" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SPlayerInput), global::SPlayerInput.Parser, new[]{ "PlayerEvent", "PosX", "PosY", "PosZ", "Timestamp", "SequenceID" }, null, null, null)
         }));
   }
@@ -2962,6 +2963,9 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     posX_ = other.posX_;
     posY_ = other.posY_;
     posZ_ = other.posZ_;
+    rotX_ = other.rotX_;
+    rotY_ = other.rotY_;
+    rotZ_ = other.rotZ_;
     attackSpeed_ = other.attackSpeed_;
     movementSpeed_ = other.movementSpeed_;
     playerInputs_ = other.playerInputs_.Clone();
@@ -3085,8 +3089,41 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
   }
 
+  /// <summary>Field number for the "rot_x" field.</summary>
+  public const int RotXFieldNumber = 11;
+  private float rotX_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float RotX {
+    get { return rotX_; }
+    set {
+      rotX_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rot_y" field.</summary>
+  public const int RotYFieldNumber = 12;
+  private float rotY_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float RotY {
+    get { return rotY_; }
+    set {
+      rotY_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "rot_z" field.</summary>
+  public const int RotZFieldNumber = 13;
+  private float rotZ_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float RotZ {
+    get { return rotZ_; }
+    set {
+      rotZ_ = value;
+    }
+  }
+
   /// <summary>Field number for the "attackSpeed" field.</summary>
-  public const int AttackSpeedFieldNumber = 11;
+  public const int AttackSpeedFieldNumber = 14;
   private float attackSpeed_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float AttackSpeed {
@@ -3097,7 +3134,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "movementSpeed" field.</summary>
-  public const int MovementSpeedFieldNumber = 12;
+  public const int MovementSpeedFieldNumber = 15;
   private float movementSpeed_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float MovementSpeed {
@@ -3108,9 +3145,9 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "playerInputs" field.</summary>
-  public const int PlayerInputsFieldNumber = 13;
+  public const int PlayerInputsFieldNumber = 16;
   private static readonly pb::FieldCodec<global::SPlayerInput> _repeated_playerInputs_codec
-      = pb::FieldCodec.ForMessage(106, global::SPlayerInput.Parser);
+      = pb::FieldCodec.ForMessage(130, global::SPlayerInput.Parser);
   private readonly pbc::RepeatedField<global::SPlayerInput> playerInputs_ = new pbc::RepeatedField<global::SPlayerInput>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public pbc::RepeatedField<global::SPlayerInput> PlayerInputs {
@@ -3118,7 +3155,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "Oid" field.</summary>
-  public const int OidFieldNumber = 14;
+  public const int OidFieldNumber = 17;
   private int oid_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int Oid {
@@ -3129,7 +3166,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "Name" field.</summary>
-  public const int NameFieldNumber = 15;
+  public const int NameFieldNumber = 18;
   private string name_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Name {
@@ -3162,6 +3199,9 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosZ, other.PosZ)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotX, other.RotX)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotY, other.RotY)) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotZ, other.RotZ)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AttackSpeed, other.AttackSpeed)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(MovementSpeed, other.MovementSpeed)) return false;
     if(!playerInputs_.Equals(other.playerInputs_)) return false;
@@ -3183,6 +3223,9 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
     if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
     if (PosZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosZ);
+    if (RotX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotX);
+    if (RotY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotY);
+    if (RotZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotZ);
     if (AttackSpeed != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AttackSpeed);
     if (MovementSpeed != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(MovementSpeed);
     hash ^= playerInputs_.GetHashCode();
@@ -3241,21 +3284,33 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
       output.WriteRawTag(85);
       output.WriteFloat(PosZ);
     }
-    if (AttackSpeed != 0F) {
+    if (RotX != 0F) {
       output.WriteRawTag(93);
+      output.WriteFloat(RotX);
+    }
+    if (RotY != 0F) {
+      output.WriteRawTag(101);
+      output.WriteFloat(RotY);
+    }
+    if (RotZ != 0F) {
+      output.WriteRawTag(109);
+      output.WriteFloat(RotZ);
+    }
+    if (AttackSpeed != 0F) {
+      output.WriteRawTag(117);
       output.WriteFloat(AttackSpeed);
     }
     if (MovementSpeed != 0F) {
-      output.WriteRawTag(101);
+      output.WriteRawTag(125);
       output.WriteFloat(MovementSpeed);
     }
     playerInputs_.WriteTo(output, _repeated_playerInputs_codec);
     if (Oid != 0) {
-      output.WriteRawTag(112);
+      output.WriteRawTag(136, 1);
       output.WriteInt32(Oid);
     }
     if (Name.Length != 0) {
-      output.WriteRawTag(122);
+      output.WriteRawTag(146, 1);
       output.WriteString(Name);
     }
     if (_unknownFields != null) {
@@ -3296,6 +3351,15 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (PosZ != 0F) {
       size += 1 + 4;
     }
+    if (RotX != 0F) {
+      size += 1 + 4;
+    }
+    if (RotY != 0F) {
+      size += 1 + 4;
+    }
+    if (RotZ != 0F) {
+      size += 1 + 4;
+    }
     if (AttackSpeed != 0F) {
       size += 1 + 4;
     }
@@ -3304,10 +3368,10 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
     size += playerInputs_.CalculateSize(_repeated_playerInputs_codec);
     if (Oid != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeInt32Size(Oid);
+      size += 2 + pb::CodedOutputStream.ComputeInt32Size(Oid);
     }
     if (Name.Length != 0) {
-      size += 1 + pb::CodedOutputStream.ComputeStringSize(Name);
+      size += 2 + pb::CodedOutputStream.ComputeStringSize(Name);
     }
     if (_unknownFields != null) {
       size += _unknownFields.CalculateSize();
@@ -3349,6 +3413,15 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
     if (other.PosZ != 0F) {
       PosZ = other.PosZ;
+    }
+    if (other.RotX != 0F) {
+      RotX = other.RotX;
+    }
+    if (other.RotY != 0F) {
+      RotY = other.RotY;
+    }
+    if (other.RotZ != 0F) {
+      RotZ = other.RotZ;
     }
     if (other.AttackSpeed != 0F) {
       AttackSpeed = other.AttackSpeed;
@@ -3415,22 +3488,34 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
           break;
         }
         case 93: {
-          AttackSpeed = input.ReadFloat();
+          RotX = input.ReadFloat();
           break;
         }
         case 101: {
+          RotY = input.ReadFloat();
+          break;
+        }
+        case 109: {
+          RotZ = input.ReadFloat();
+          break;
+        }
+        case 117: {
+          AttackSpeed = input.ReadFloat();
+          break;
+        }
+        case 125: {
           MovementSpeed = input.ReadFloat();
           break;
         }
-        case 106: {
+        case 130: {
           playerInputs_.AddEntriesFrom(input, _repeated_playerInputs_codec);
           break;
         }
-        case 112: {
+        case 136: {
           Oid = input.ReadInt32();
           break;
         }
-        case 122: {
+        case 146: {
           Name = input.ReadString();
           break;
         }
