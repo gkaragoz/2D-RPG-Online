@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 
+[ExecuteInEditMode]
 public class WorldSpaceBillboard : MonoBehaviour {
 
     void LateUpdate() {
