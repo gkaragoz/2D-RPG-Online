@@ -14,5 +14,6 @@ namespace ShiftServer.Base.Factory.Entities
         public Vector3 Vector { get; set; }
         public int SequenceID { get; set; }
         public int LastSequenceID { get; set; }
+        public float PressTime { get; set; }
     }
 }

@@ -16,6 +16,8 @@ namespace ShiftServer.Base.Core
         int MaxConnectionID { get; set; }
         int RoomLeaderID { get; set; }
         int TickRate { get; set; }
+        int GameRoomTickRate { get; set; }
+        int GameRoomUpdateInterval { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         TimeSpan CurrentServerUptime { get; set; }

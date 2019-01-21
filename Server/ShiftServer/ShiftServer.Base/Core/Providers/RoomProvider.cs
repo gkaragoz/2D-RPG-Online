@@ -597,9 +597,9 @@ namespace ShiftServer.Base.Core
         }
         private void AddGOInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
         {
-            //SpeedHack
-            if (!AntiCheatEngine.ValidateMoveInput(input))
-                return;
+            ////SpeedHack
+            //if (!AntiCheatEngine.ValidateMoveInput(input))
+            //    return;
 
             IGameObject go = null;
             room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);

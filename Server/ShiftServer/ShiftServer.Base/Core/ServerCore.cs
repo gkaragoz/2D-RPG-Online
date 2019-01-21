@@ -30,12 +30,12 @@ namespace ShiftServer.Base.Core
             ServerProvider.instance.server.ReceivedError += Server_ReceivedError;
         }
 
-        private void Server_ReceivedError(int connId, Exception arg2)
+        public void Server_ReceivedError(int connId, Exception arg2)
         {
             ServerProvider.log.Error($"ClientNO: {connId} Exception " + arg2.Message);
         }
 
-        private void Server_Disconnected(int connId)
+        public void Server_Disconnected(int connId)
         {
             try
             {
@@ -45,8 +45,6 @@ namespace ShiftServer.Base.Core
                 if (client != null)
                     client.Dispose();
 
-
-                ServerProvider.instance.world.Clients.Remove(connId);
                 ServerProvider.log.Info($"ClientNO: {connId} Disconnected");
             }
             catch (Exception err)
@@ -55,7 +53,7 @@ namespace ShiftServer.Base.Core
             }
         }
 
-        private void Server_Connected(int connId)
+        public void Server_Connected(int connId)
         {
             try
             {
@@ -67,7 +65,7 @@ namespace ShiftServer.Base.Core
             }
         }
 
-        private void Server_ReceivedDataAsync(int connId, byte[] data)
+        public void Server_ReceivedDataAsync(int connId, byte[] data)
         {
 
             ShiftClient shift = null;

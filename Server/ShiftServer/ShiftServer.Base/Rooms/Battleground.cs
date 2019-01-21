@@ -29,8 +29,6 @@ namespace ShiftServer.Base.Rooms
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
-        public int GameRoomTickRate = 15;
-
         public UpdateGOList GOUpdatePacket = new UpdateGOList();
         public Battleground(int groupCount, int maxUserPerTeam)
         {
@@ -62,16 +60,16 @@ namespace ShiftServer.Base.Rooms
 
             this.StartGameRoom();
         }
+
+       
         private void StartGameRoom()
         {
-            TickRate = GameRoomTickRate;
-            int timerInterval = TickrateUtil.Set(TickRate);
-
+            GameRoomUpdateInterval = TickrateUtil.Set(GameRoomTickRate);
 
             while (!IsStopTriggered)
             {
                 this.OnRoomUpdate();
-                Thread.Sleep(timerInterval);
+                Thread.Sleep(GameRoomUpdateInterval);
             }
 
 
@@ -134,20 +132,8 @@ namespace ShiftServer.Base.Rooms
             }
             else
             {
-                Player player = new Player();
-                player.OwnerConnectionID = shift.ConnectionID;
-                player.OwnerSessionID = shift.UserSessionID;
-                player.Name = chardata.Name;
-                player.MaxHP = chardata.Stats.Health;
-                player.CurrentHP = chardata.Stats.Health;
-                player.AttackSpeed = chardata.Stats.AttackSpeed;
-                player.MovementSpeed = chardata.Stats.MovementSpeed;
-                player.CurrentHP = chardata.Stats.Health;
-                player.Position = new Vector3(0.0f, 0.0f, 0.0f);
-                player.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
-                player.Scale = new Vector3(1f, 1f, 1f);
-                player.State = EntityState.NEWSPAWN;
-
+                Player player = new Player(chardata, shift);
+              
                 this.OnPlayerCreate(player);
                 log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
@@ -172,29 +158,41 @@ namespace ShiftServer.Base.Rooms
             };
 
             //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
-            await shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
+            shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
         public async void SendRoomStateAsync(TimeSpan timespan)
         {
 
             ShiftServerData data = new ShiftServerData();
-            data.SvTickRate = this.TickRate;
+            data.SvTickRate = this.GameRoomTickRate;
             data.GoUpdatePacket = new UpdateGOList();
 
             IGameObject gObject = null;
-            for (int i = 0; i <= ObjectCounter; i++)
+
+            Parallel.For(0, ObjectCounter + 1, i =>
             {
                 GameObjects.TryGetValue(i, out gObject);
-                if (gObject == null)
-                    continue;
+                if (gObject != null)
+                {
+                    PlayerObject pObject = gObject.GetPlayerObject();
+
+                    data.GoUpdatePacket.PlayerList.Add(pObject);
+                }
+            });
+
+            //for (int i = 0; i <= ObjectCounter; i++)
+            //{
+            //    GameObjects.TryGetValue(i, out gObject);
+            //    if (gObject == null)
+            //        continue;
 
 
-                PlayerObject pObject = gObject.GetPlayerObject();
+            //    PlayerObject pObject = gObject.GetPlayerObject();
 
-                data.GoUpdatePacket.PlayerList.Add(pObject);
-            }
+            //    data.GoUpdatePacket.PlayerList.Add(pObject);
+            //}
 
-            await this.BroadcastPlayerDataToRoomAsync(MSPlayerEvent.RoomUpdate, data);
+            this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
            
         }
         public override void OnRoomUpdate()
@@ -204,6 +202,13 @@ namespace ShiftServer.Base.Rooms
             LastGameUpdate = CurrentServerUptime;
 
             IGameObject gObject = null;
+            //Parallel.For(0, ObjectCounter+1, i =>
+            //{
+            //    GameObjects.TryGetValue(i, out gObject);
+            //    if (gObject != null)
+            //        gObject.ResolveInputs();
+            //});
+
             for (int i = 0; i <= ObjectCounter; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);

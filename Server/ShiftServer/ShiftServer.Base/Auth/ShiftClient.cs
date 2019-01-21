@@ -49,7 +49,7 @@ namespace ShiftServer.Base.Auth
             }
 
         }
-        public async Task SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        public async Task SendPacketAsync(MSPlayerEvent eventType, ShiftServerData data)
         {
             try
             {
@@ -57,6 +57,22 @@ namespace ShiftServer.Base.Auth
                 data.Plevtid = eventType;
                 byte[] bb = data.ToByteArray();
                 await Task.Run(() => ServerProvider.instance.server.Send(ConnectionID, bb));
+            }
+            catch (Exception err)
+            {
+                if (this.TCPClient.Connected)
+                    log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
+            }
+
+        }
+        public void SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        {
+            try
+            {
+                data.Basevtid = MSBaseEventId.PlayerEvent;
+                data.Plevtid = eventType;
+                byte[] bb = data.ToByteArray();
+                ServerProvider.instance.server.Send(ConnectionID, bb);
             }
             catch (Exception err)
             {

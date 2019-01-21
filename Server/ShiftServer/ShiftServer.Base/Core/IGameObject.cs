@@ -22,7 +22,7 @@ namespace ShiftServer.Base.Core
         int LastProcessedSequenceID { get; set; }
         void OnAttack();
         void OnHit();
-        void OnMove(Vector3 rotation);
+        void OnMove(IGameInput input);
         void ResolveInputs();
         PlayerObject GetPlayerObject();
     }
