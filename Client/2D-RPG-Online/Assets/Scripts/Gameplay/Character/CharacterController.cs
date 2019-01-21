@@ -38,6 +38,10 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public void Rotate(Vector3 direction) {
+        _characterMotor.Rotate(direction);
+    }
+
     public void ToNewPosition(Vector3 newPosition) {
         if (new Vector3(newPosition.x, newPosition.z) == transform.position) {
             _characterAnimator.OnStop();

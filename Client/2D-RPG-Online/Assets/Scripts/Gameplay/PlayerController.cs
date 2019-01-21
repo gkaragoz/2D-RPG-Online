@@ -11,10 +11,12 @@ public class PlayerController : MonoBehaviour {
     public class PositionEntry {
         public Vector3 vector3;
         public double updateTime;
+        public int inputSequenceID;
 
-        public PositionEntry(double updateTime, Vector3 vector3) {
+        public PositionEntry(double updateTime, Vector3 vector3, int inputSequenceID) {
             this.updateTime = updateTime;
             this.vector3 = vector3;
+            this.inputSequenceID = inputSequenceID;
         }
     }
 
@@ -30,6 +32,8 @@ public class PlayerController : MonoBehaviour {
     public bool IsMe { get { return _isMe; } }
 
     public List<PositionEntry> PositionBuffer { get { return _positionBuffer; } set { _positionBuffer = value; } }
+
+    public int LastProcessedInputSequenceID { get { return _lastProcessedInputSequenceID; } set { _lastProcessedInputSequenceID = value; } }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour {
 
     private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
 
+    private int _lastProcessedInputSequenceID;
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
@@ -56,7 +61,7 @@ public class PlayerController : MonoBehaviour {
         _playerHUD = GetComponent<PlayerHUD>();
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         if (_isMe || _isOfflineMode) {
             _xInput = _joystick.Horizontal;
             _zInput = _joystick.Vertical;
@@ -71,6 +76,7 @@ public class PlayerController : MonoBehaviour {
 
                 data.PlayerInput.PosX = CurrentInput.x;
                 data.PlayerInput.PosZ = CurrentInput.z;
+                data.PlayerInput.PressTime = Time.fixedDeltaTime;
 
                 NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
@@ -103,9 +109,9 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public void AddPositionToBuffer(double timestamp, Vector3 position) {
+    public void AddPositionToBuffer(double timestamp, Vector3 position, int inputSequenceID) {
 
-        _positionBuffer.Add(new PositionEntry(timestamp, position));
+        _positionBuffer.Add(new PositionEntry(timestamp, position, inputSequenceID));
     }
 
     public Vector2 GetVectorByInput(int index) {
@@ -142,6 +148,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Move(Vector3 input) {
         _characterController.Move(input);
+    }
+
+    public void Rotate() {
+        _characterController.Rotate(CurrentInput);
     }
 
     public void ToNewPosition(Vector3 newPosition) {

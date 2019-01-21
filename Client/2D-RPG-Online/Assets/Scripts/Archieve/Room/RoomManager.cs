@@ -78,8 +78,8 @@ public class RoomManager : Menu {
     }
 
     private void Update() {
-        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-        var renderTimestamp = now - (1000.0 / serverTickrate);
+        var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+        var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
 
         for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
             PlayerController entity = _otherPlayerControllers[ii];
@@ -96,9 +96,11 @@ public class RoomManager : Menu {
 
                 double t0 = entity.PositionBuffer[0].updateTime;
                 double t1 = entity.PositionBuffer[1].updateTime;
-                
+
                 double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
                 double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
+
+                entity.LastProcessedInputSequenceID = entity.PositionBuffer[1].inputSequenceID;
 
                 Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
 
@@ -131,7 +133,7 @@ public class RoomManager : Menu {
 
                 NetworkManager.mss.SendMessage(MSServerEvent.RoomCreate, data);
             }
-        })); 
+        }));
     }
 
     public void JoinRoom() {
@@ -201,32 +203,39 @@ public class RoomManager : Menu {
     private void OnRoomUpdated(ShiftServerData data) {
         serverTickrate = data.SvTickRate;
 
-        Debug.Log(data);
+        //Debug.Log(data);
 
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
+            if (updatedPlayerObject.Oid == _myPlayerController.Oid) {
 
-            //Reconciliation
-            if (NetworkManager.instance.Reconciliaton) {
-                if (updatedPlayerObject.Oid == _myPlayerController.Oid) {
+                //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
+
+                //My Reconciliation
+                if (NetworkManager.instance.Reconciliaton) {
                     for (int jj = 0; jj < _myPlayerController.PlayerInputs.Count; jj++) {
                         if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
                             _myPlayerController.RemoveRange(jj, 1);
+                        } else {
+                            // re apply
                         }
                     }
+                } else {
+                    _myPlayerController.ClearPlayerInputs();
                 }
-            } else {
-                _myPlayerController.ClearPlayerInputs();
             }
 
-            //Movement
+            //Other Entity's Movement
             for (int jj = 0; jj < _otherPlayerControllers.Count; jj++) {
                 if (_otherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
                     Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
-                    DateTime updateTime = DateTime.UtcNow;
-                    var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                    _otherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition);
+                    if (_otherPlayerControllers[jj].LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
+                        DateTime updateTime = DateTime.UtcNow;
+                        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                        _otherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
+                    }
+                    _otherPlayerControllers[jj].LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
                 }
             }
         }
