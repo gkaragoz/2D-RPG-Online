@@ -77,7 +77,7 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
-    private void Update() {
+    private void FixedUpdate() {
         var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
         var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
 
@@ -100,7 +100,7 @@ public class RoomManager : Menu {
                 double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
                 double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
 
-                entity.LastProcessedInputSequenceID = entity.PositionBuffer[1].inputSequenceID;
+                //entity.transform.position = Vector3.Lerp(firstVector, secondVector, (float)(renderTimestamp - t0) / (float)(t1 - t0));
 
                 Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
 
