@@ -78,33 +78,33 @@ public class RoomManager : Menu {
     }
 
     private void FixedUpdate() {
-        var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-        var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
+        if (NetworkManager.mss.IsConnected) {
+            var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
 
-        for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
-            PlayerController entity = _otherPlayerControllers[ii];
+            for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
+                PlayerController entity = _otherPlayerControllers[ii];
 
-            // Drop older positions.
-            while (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[1].updateTime <= renderTimestamp) {
-                entity.PositionBuffer = entity.PositionBuffer.Skip(1).ToList();
-            }
+                // Drop older positions.
+                while (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[1].updateTime <= renderTimestamp) {
+                    entity.PositionBuffer = entity.PositionBuffer.Skip(1).ToList();
+                }
 
-            // Interpolate between the two surrounding authoritative positions.
-            if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
-                Vector3 firstVector = entity.PositionBuffer[0].vector3;
-                Vector3 secondVector = entity.PositionBuffer[1].vector3;
+                // Interpolate between the two surrounding authoritative positions.
+                if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
+                    Vector3 firstVector = entity.PositionBuffer[0].vector3;
+                    Vector3 secondVector = entity.PositionBuffer[1].vector3;
 
-                double t0 = entity.PositionBuffer[0].updateTime;
-                double t1 = entity.PositionBuffer[1].updateTime;
+                    double t0 = entity.PositionBuffer[0].updateTime;
+                    double t1 = entity.PositionBuffer[1].updateTime;
 
-                double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
-                double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
+                    double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
+                    double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
 
-                //entity.transform.position = Vector3.Lerp(firstVector, secondVector, (float)(renderTimestamp - t0) / (float)(t1 - t0));
+                    Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
 
-                Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
-
-                entity.ToNewPosition(newPosition);
+                    entity.ToNewPosition(newPosition);
+                }
             }
         }
     }

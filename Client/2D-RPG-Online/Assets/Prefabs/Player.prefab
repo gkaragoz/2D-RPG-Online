@@ -249,7 +249,7 @@ MonoBehaviour:
   _zInput: 0
   _joystick: {fileID: 6971512816043740217}
   _btnAttack: {fileID: 6551498302710673833}
-  _isOfflineMode: 1
+  _isOfflineMode: 0
 --- !u!114 &377
 MonoBehaviour:
   m_ObjectHideFlags: 0
