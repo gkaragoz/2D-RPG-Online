@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using PhysX;
+using System.Collections.Generic;
 using System.Numerics;
 using Telepathy;
 
@@ -10,8 +11,10 @@ namespace ShiftServer.Base.Core
         int OwnerConnectionID { get; set; }
         string OwnerSessionID { get; set; }
         int ObjectID { get; set; }
+        PlayerClass Class { get; set; }
         List<IGameObject> OwnedObjects { get; set; }
         SafeQueue<IGameInput> GameInputs { get; set; }
+        RigidBody rigidBody { get; set; }
         Vector3 Position { get; set; }
         Vector3 Rotation { get; set; }
         Vector3 Scale { get; set; }
@@ -24,6 +27,7 @@ namespace ShiftServer.Base.Core
         void OnHit();
         void OnMove(IGameInput input);
         void ResolveInputs();
+        void ResolveInputs(IGameInput input);
         PlayerObject GetPlayerObject();
     }
 }

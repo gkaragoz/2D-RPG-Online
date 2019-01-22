@@ -13,23 +13,12 @@ namespace ShiftServer.Base.Core
 {
     public class ServerCore
     {
-
-        long messagesReceived = 0;
-        long dataReceived = 0;
+        
         public static ServerCore instance = null;
         public ServerCore()
         {
             instance = this;
         }
-        public void GetMessages()
-        {
-            //Stopwatch stopwatch = Stopwatch.StartNew();
-            ServerProvider.instance.server.ReceivedData += Server_ReceivedDataAsync;
-            ServerProvider.instance.server.Connected += Server_Connected;
-            ServerProvider.instance.server.Disconnected += Server_Disconnected;
-            ServerProvider.instance.server.ReceivedError += Server_ReceivedError;
-        }
-
         public void Server_ReceivedError(int connId, Exception arg2)
         {
             ServerProvider.log.Error($"ClientNO: {connId} Exception " + arg2.Message);

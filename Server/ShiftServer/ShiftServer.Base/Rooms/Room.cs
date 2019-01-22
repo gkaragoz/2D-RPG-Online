@@ -141,11 +141,10 @@ namespace ShiftServer.Base.Rooms
             List<ShiftClient> clientList = this.Clients.GetValues();
             for (int i = 0; i < clientList.Count; i++)
             {
-                if (clientList[i].UserSessionID == null)
-                    continue;
-
-                clientList[i].SendPacket(state, data);
+                if (clientList[i].UserSessionID != null)
+                    clientList[i].SendPacket(state, data);
             }
+
         }
         public async void BroadcastDataToRoomAsync(ShiftClient currentClient, MSPlayerEvent state, ShiftServerData data)
         {

@@ -12,14 +12,14 @@ namespace ShiftServer.Base.Zones
         public SafeDictionary<int, IGameObject> GameObjects { get; set; }
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
         public SafeDictionary<string, IRoom> Rooms { get; set; }
-        SafeDictionary<string, Thread> _roomThreads { get; set; }
+        public SafeDictionary<string, Thread> roomThreads { get; set; }
 
         public int ObjectCounter = 0;
         public Zone()
         {
             Clients = new SafeDictionary<int, ShiftClient>();
             GameObjects = new SafeDictionary<int, IGameObject>();
-            _roomThreads = new SafeDictionary<string, Thread>();
+            roomThreads = new SafeDictionary<string, Thread>();
             Rooms = new SafeDictionary<string, IRoom>();
         }
       
@@ -38,16 +38,14 @@ namespace ShiftServer.Base.Zones
 
             this.Rooms.Add(room.ID, room);
 
-            Thread gameRoom = new Thread(room.OnGameStart)
-            {
-                IsBackground = true,
-                Name = "ShiftServer Room Starts " + room.Name
-            };
+            //Thread gameRoom = new Thread(room.OnGameStart)
+            //{
+            //    IsBackground = true,
+            //    Name = "ShiftServer Room Starts " + room.Name
+            //};
 
-            //starting game thread
-            gameRoom.Start();
-
-            _roomThreads.Add(room.ID, gameRoom);
+            ////starting game thread
+            //gameRoom.Start();
 
             ServerProvider.log.Info(room.Name + "> ROOM START");
 

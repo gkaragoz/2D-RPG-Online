@@ -148,6 +148,7 @@ namespace ShiftServer.Base.Rooms
             {
                 Name = shift.UserName,
                 Oid = shift.CurrentObject.ObjectID,
+                PClass = (PlayerClass)chardata.ClassIndex,
                 AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                 MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                 CurrentHp = shift.CurrentObject.CurrentHP,
@@ -166,32 +167,21 @@ namespace ShiftServer.Base.Rooms
             ShiftServerData data = new ShiftServerData();
             data.SvTickRate = this.GameRoomTickRate;
             data.GoUpdatePacket = new UpdateGOList();
+            data.GoUpdatePacket.PlayerList.Clear();
 
             IGameObject gObject = null;
 
-            Parallel.For(0, ObjectCounter + 1, i =>
+            for (int i = 0; i < ObjectCounter + 1; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);
                 if (gObject != null)
                 {
                     PlayerObject pObject = gObject.GetPlayerObject();
-
-                    data.GoUpdatePacket.PlayerList.Add(pObject);
+                    if (pObject != null)
+                        data.GoUpdatePacket.PlayerList.Add(pObject);
                 }
-            });
-
-            //for (int i = 0; i <= ObjectCounter; i++)
-            //{
-            //    GameObjects.TryGetValue(i, out gObject);
-            //    if (gObject == null)
-            //        continue;
-
-
-            //    PlayerObject pObject = gObject.GetPlayerObject();
-
-            //    data.GoUpdatePacket.PlayerList.Add(pObject);
-            //}
-
+            }
+          
             this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
            
         }
@@ -201,22 +191,22 @@ namespace ShiftServer.Base.Rooms
             TimeSpan updatePassTime = CurrentServerUptime - LastGameUpdate;
             LastGameUpdate = CurrentServerUptime;
 
-            IGameObject gObject = null;
-            //Parallel.For(0, ObjectCounter+1, i =>
+            //IGameObject gObject = null;
+            //Parallel.For(0, ObjectCounter + 1, i =>
+            //  {
+            //      GameObjects.TryGetValue(i, out gObject);
+            //      if (gObject != null)
+            //          gObject.ResolveInputs();
+            //  });
+
+            //for (int i = 0; i <= ObjectCounter; i++)
             //{
             //    GameObjects.TryGetValue(i, out gObject);
-            //    if (gObject != null)
-            //        gObject.ResolveInputs();
-            //});
+            //    if (gObject == null)
+            //        continue;
 
-            for (int i = 0; i <= ObjectCounter; i++)
-            {
-                GameObjects.TryGetValue(i, out gObject);
-                if (gObject == null)
-                    continue;
-
-                gObject.ResolveInputs();
-            }
+            //    gObject.ResolveInputs();
+            //}
 
             SendRoomStateAsync(updatePassTime);
         }

@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using System.Timers;
 using Telepathy;
 
+
+
 namespace ShiftServer.Base.Core
 {
     public interface IRoom
@@ -21,6 +23,7 @@ namespace ShiftServer.Base.Core
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         TimeSpan CurrentServerUptime { get; set; }
+         
         bool IsPrivate { get; set; }
         bool IsPersistence { get; set; }
         bool IsStopTriggered { get; set; }

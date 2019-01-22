@@ -1,5 +1,4 @@
-﻿using BulletSharp;
-using ShiftServer.Base.Auth;
+﻿using ShiftServer.Base.Auth;
 using ShiftServer.Base.Core;
 using ShiftServer.Proto.Db;
 using System;
@@ -9,6 +8,8 @@ using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
+using PhysX;
+
 
 namespace ShiftServer.Base.Factory.Entities
 {
@@ -22,7 +23,6 @@ namespace ShiftServer.Base.Factory.Entities
         public Vector3 Position { get; set; }
         public Vector3 Rotation { get; set; }
         public Vector3 Scale { get; set; }
-        public RigidBody rigidBody { get; set; }
         public int OwnerConnectionID { get; set; }
         public List<IGameObject> OwnedObjects { get; set; }
         public SafeQueue<IGameInput> GameInputs { get; set; }
@@ -31,6 +31,8 @@ namespace ShiftServer.Base.Factory.Entities
         public double AttackSpeed { get; set; }
         public int LastProcessedSequenceID { get; set; }
         public EntityState State { get; set; }
+        public RigidBody rigidBody { get; set; }
+
         public Player(Character chardata, ShiftClient shift)
         {
             GameInputs = new SafeQueue<IGameInput>();
@@ -47,7 +49,7 @@ namespace ShiftServer.Base.Factory.Entities
             this.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
             this.Scale = new Vector3(1f, 1f, 1f);
             this.State = EntityState.NEWSPAWN;
-
+            
         }
         public PlayerObject GetPlayerObject()
         {
@@ -69,6 +71,7 @@ namespace ShiftServer.Base.Factory.Entities
                 data.MovementSpeed = (float)this.MovementSpeed;
             }
 
+
             data.PosX = this.Position.X;
             data.PosY = this.Position.Y;
             data.PosZ = this.Position.Z;
@@ -76,7 +79,6 @@ namespace ShiftServer.Base.Factory.Entities
             data.RotX = this.Rotation.X;
             data.RotY = this.Rotation.Y;
             data.RotZ = this.Rotation.Z;
-
 
             if (State == EntityState.GETHIT || State == EntityState.ATTACK)
             {
@@ -97,12 +99,16 @@ namespace ShiftServer.Base.Factory.Entities
         {
             if (State != EntityState.STUN)
             {
-                Vector3 moveInput = Vector3.Normalize(input.Vector);
+                //Vector3 moveInput = Vector3.Normalize(input.Vector);
+                if (Math.Sqrt(Math.Pow(input.Vector.X, 2) + Math.Pow(input.Vector.Y, 2) + Math.Pow(input.Vector.Z, 2)) <= Math.Sqrt(3))
+                {
+                    Quaternion newRotation = GameEngine.QuaternionLookRotation(input.Vector, new Vector3(0, 1, 0));
+                    this.Rotation = new Vector3(newRotation.X, newRotation.Y, newRotation.Z);
+                    this.Position += input.Vector * (float)this.MovementSpeed * 0.02f;
+                    State = EntityState.MOVE;
+                }
 
-                Quaternion newRotation = GameEngine.QuaternionLookRotation(moveInput, new Vector3(0, 1, 0));
-                this.Rotation = new Vector3(newRotation.X, newRotation.Y, newRotation.Z);
-                this.Position += moveInput * (float)this.MovementSpeed * 0.02f;
-                State = EntityState.MOVE;
+
             }
         }
         public void ResolveInputs()
@@ -133,6 +139,33 @@ namespace ShiftServer.Base.Factory.Entities
                 }
                 //pInput = (PlayerInput)gInput;
             }
+        }
+
+        public void ResolveInputs(IGameInput input)
+        {
+
+            if (input != null)
+            {
+                switch (input.EventType)
+                {
+                    case MSPlayerEvent.Move:
+                        this.OnMove(input);
+                        break;
+                    case MSPlayerEvent.Attack:
+                        break;
+                    case MSPlayerEvent.Dead:
+                        break;
+                    case MSPlayerEvent.Use:
+                        break;
+                    default:
+                        State = EntityState.IDLE;
+                        break;
+                }
+
+                this.LastProcessedSequenceID = input.SequenceID;
+            }
+            //pInput = (PlayerInput)gInput;
+
         }
     }
 }

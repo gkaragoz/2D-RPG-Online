@@ -33,6 +33,8 @@ namespace ShiftServer.Base.Core
                 Name = "ShiftServer Room Starts " + room.Name
             };
             gameRoom.Start();
+
+            ServerProvider.instance.world.roomThreads.Add(room.ID, gameRoom);
         }
 
         public async Task OnRoomCreate(ShiftServerData data, ShiftClient shift)
@@ -246,7 +248,7 @@ namespace ShiftServer.Base.Core
                                 PosX = cl.CurrentObject.Position.X,
                                 PosY = cl.CurrentObject.Position.Y,
                                 PosZ = cl.CurrentObject.Position.Z,
-
+                                PClass = cl.CurrentObject.Class,
                                 RotX = cl.CurrentObject.Rotation.X,
                                 RotY = cl.CurrentObject.Rotation.Y,
                                 RotZ = cl.CurrentObject.Rotation.Z
@@ -271,6 +273,7 @@ namespace ShiftServer.Base.Core
                         AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                         MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                         CurrentHp = shift.CurrentObject.CurrentHP,
+                        PClass = shift.CurrentObject.Class,
                         MaxHp = shift.CurrentObject.MaxHP,
                         PosX = shift.CurrentObject.Position.X,
                         PosY = shift.CurrentObject.Position.Y,
@@ -577,7 +580,7 @@ namespace ShiftServer.Base.Core
             if (room == null)
                 return;
 
-            AddGOInput(shift, room, moveInput, data);
+            ResolveInput(shift, room, moveInput, data);
         }
         public void OnRoomDispose(IRoom room)
         {
@@ -597,9 +600,9 @@ namespace ShiftServer.Base.Core
         }
         private void AddGOInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
         {
-            ////SpeedHack
-            //if (!AntiCheatEngine.ValidateMoveInput(input))
-            //    return;
+            
+            if (!AntiCheatEngine.ValidateMoveInput(input))
+                return;
 
             IGameObject go = null;
             room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);
@@ -612,6 +615,24 @@ namespace ShiftServer.Base.Core
 
             }
         }
+        private void ResolveInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
+        {
+
+            //if (!AntiCheatEngine.ValidateMoveInput(input))
+            //    return;
+
+            IGameObject go = null;
+            room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);
+            if (go != null)
+            {
+
+                input.SequenceID = data.PlayerInput.SequenceID;
+                go.ResolveInputs(input);
+
+
+            }
+        }
+
 
 
     }
