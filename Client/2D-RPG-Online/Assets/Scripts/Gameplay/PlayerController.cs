@@ -85,8 +85,6 @@ public class PlayerController : MonoBehaviour {
 
             if (HasInput) {
                 Move();
-            } else {
-                Stop();
             }
         }
 
@@ -156,10 +154,6 @@ public class PlayerController : MonoBehaviour {
 
     public void ToNewPosition(Vector3 newPosition) {
         _characterController.ToNewPosition(newPosition);
-    }
-
-    public void Stop() {
-        _characterController.Stop();
     }
 
     public void Destroy() {

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour {
 
@@ -11,15 +9,7 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     public void OnMove(Vector3 direction) {
-        if (direction != Vector3.zero) {
-            _animator.SetBool("IsRunning", true);
-        } else {
-            _animator.SetBool("IsRunning", false);
-        }
-    }
-    
-    public void OnStop() {
-        _animator.SetBool("IsRunning", false);
+        _animator.SetFloat("InputMagnitude", direction.magnitude);
     }
     
     public void OnAttack() {
