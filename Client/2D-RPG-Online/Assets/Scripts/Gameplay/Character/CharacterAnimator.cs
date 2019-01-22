@@ -11,6 +11,10 @@ public class CharacterAnimator : MonoBehaviour {
     public void OnMove(Vector3 direction) {
         _animator.SetFloat("InputMagnitude", direction.magnitude);
     }
+
+    public void OnStop() {
+        _animator.SetFloat("InputMagnitude", 0);
+    }
     
     public void OnAttack() {
         _animator.SetTrigger("BasicAttack");

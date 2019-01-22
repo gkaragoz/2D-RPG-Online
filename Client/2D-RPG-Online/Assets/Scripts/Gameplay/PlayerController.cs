@@ -85,6 +85,8 @@ public class PlayerController : MonoBehaviour {
 
             if (HasInput) {
                 Move();
+            } else {
+                Stop();
             }
         }
 
@@ -146,6 +148,10 @@ public class PlayerController : MonoBehaviour {
 
     public void Move(Vector3 input) {
         _characterController.Move(input);
+    }
+
+    public void Stop() {
+        _characterController.Stop();
     }
 
     public void Rotate() {

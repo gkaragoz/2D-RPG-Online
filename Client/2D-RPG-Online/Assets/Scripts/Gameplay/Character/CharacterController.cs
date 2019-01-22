@@ -38,6 +38,10 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public void Stop() {
+        _characterAnimator.OnStop();
+    }
+
     public void Rotate(Vector3 direction) {
         _characterMotor.Rotate(direction);
     }
