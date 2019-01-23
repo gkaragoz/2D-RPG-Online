@@ -52,15 +52,12 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xml" />
-    <Reference Include="Telepathy, Version=1.0.206.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Telepathy.1.0.206\lib\net35\Telepathy.dll</HintPath>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Core\ClientDataHandler.cs" />
     <Compile Include="Core\ClientEventCallback.cs" />
-    <Compile Include="Core\GameProvider.cs" />
-    <Compile Include="Core\RoomProvider.cs" />
+    <Compile Include="Core\Providers\GameProvider.cs" />
+    <Compile Include="Core\Providers\RoomProvider.cs" />
     <Compile Include="Data\Entities\ConfigData.cs" />
     <Compile Include="Data\Entities\Enums.cs" />
     <Compile Include="ManaShiftServer.cs" />
@@ -73,6 +70,10 @@
     <ProjectReference Include="..\ShiftServer.Proto\ShiftServer.Proto.csproj">
       <Project>{ce127e51-41a4-4c6a-9f9b-10954401e692}</Project>
       <Name>ShiftServer.Proto</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Telepathy-async\Telepathy\Telepathy.csproj">
+      <Project>{1b0da837-6732-4334-ad27-1a1d43dd8125}</Project>
+      <Name>Telepathy</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

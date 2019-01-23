@@ -1,5 +1,6 @@
 ﻿using ShiftServer.Proto.RestModels;
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AccountManager : MonoBehaviour {
@@ -19,33 +20,31 @@ public class AccountManager : MonoBehaviour {
 
     #endregion
 
-    public Task initializationProgress;
+    public LoadingTask initializationProgress;
 
+    public Action onAccountManagerInitialized;
     public Action onAccountUpdated;
+
+    public List<CharacterModel> AllCharacters { get { return _account.characters; } }
+    public string SelectedCharacterName { get { return _account.selected_char_name; } }
+    public bool HasCharacter { get { return _account.characters.Count > 0 ? true : false; } }
+    public int Gold { get { return _account.gold; } }
+    public int Gem { get { return _account.gem; } }
 
     [Header("Debug")]
     [SerializeField]
     private Account _account;
 
-    public Account Account {
-        get {
-            return _account;
-        }
-        private set {
-            _account = value;
-        }
-    }
-
     private void Start() {
-        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
-        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
+        CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
     }
 
     public void Initialize(Account account) {
-        this.Account = account;
+        this._account = account;
 
         initializationProgress.Invoke();
-        onAccountUpdated?.Invoke();
+        onAccountManagerInitialized?.Invoke();
     }
 
     private void AddCharacter(CharacterModel newCharacter) {

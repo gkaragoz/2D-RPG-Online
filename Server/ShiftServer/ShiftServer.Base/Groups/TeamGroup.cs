@@ -15,11 +15,11 @@ namespace ShiftServer.Base.Groups
         public SafeDictionary<int, ShiftClient> Clients { get; set; }
 
         public int MaxPlayer { get; set; }
-        public string Id { get; set; }
+        public string ID { get; set; }
         public TeamGroup(string id, int maxPlayer)
         {
             Clients = new SafeDictionary<int, ShiftClient>();
-            Id = id;
+            ID = id;
             MaxPlayer = maxPlayer;
         }
         public void AddPlayer(ShiftClient client)
@@ -27,8 +27,8 @@ namespace ShiftServer.Base.Groups
             if (MaxPlayer > Clients.Count)
             {
                 client.IsJoinedToTeam = true;
-                client.JoinedTeamId = this.Id;
-                Clients.Add(client.connectionId, client);
+                client.JoinedTeamID = this.ID;
+                Clients.Add(client.ConnectionID, client);
             }
         }
         public void RemovePlayer(ShiftClient client)
@@ -37,9 +37,9 @@ namespace ShiftServer.Base.Groups
             if (client != null)
             {
                 client.IsJoinedToTeam = false;
-                client.JoinedTeamId = null;
+                client.JoinedTeamID = null;
                             
-                Clients.Remove(client.connectionId);
+                Clients.Remove(client.ConnectionID);
             }
             
         }

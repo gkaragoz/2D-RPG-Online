@@ -80,7 +80,7 @@
             Constructor method of game client object
             </summary>
         </member>
-        <member name="M:ShiftServer.Client.ManaShiftServer.Connect(ShiftServer.Client.Data.Entities.ConfigData)">
+        <member name="M:ShiftServer.Client.ManaShiftServer.Connect(ShiftServer.Client.Data.Entities.ConfigData,System.Int32)">
             <summary>
             Connect to tcp socket
             </summary>
@@ -92,7 +92,12 @@
             Get Room List
             </summary>
         </member>
-        <member name="M:ShiftServer.Client.ManaShiftServer.Listen">
+        <member name="M:ShiftServer.Client.ManaShiftServer.JoinServer">
+            <summary>
+            join server with session id provided from auth server
+            </summary>
+        </member>
+        <member name="M:ShiftServer.Client.ManaShiftServer.Setup">
             <summary>
             Fixed Update
             </summary>

@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Diagnostics;
+using System.Timers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -32,21 +31,23 @@ public class PingStatus : MonoBehaviour {
 
     private void Start() {
         NetworkManager.mss.AddEventListener(MSServerEvent.PingRequest, OnPingResponse);
-
-        StartCoroutine(SendPingRequest());
     }
 
-    private IEnumerator SendPingRequest() {
-        while (true) {
+    private void SendPingRequest() {
+        Stopwatch stopwatch = Stopwatch.StartNew();
+        var timer = new Timer(2500.0);
+
+        timer.Elapsed += (object sender, ElapsedEventArgs e) => {
             if (NetworkManager.mss.IsConnected) {
                 _stopwatch = new Stopwatch();
                 _stopwatch.Start();
 
                 NetworkManager.mss.SendMessage(MSServerEvent.PingRequest);
             }
+        };
 
-            yield return new WaitForSeconds(1f);
-        }
+        timer.AutoReset = true;
+        timer.Enabled = true;
     }
 
     private void SetPingColor() {

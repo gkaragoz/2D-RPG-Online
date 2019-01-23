@@ -13,11 +13,17 @@ namespace ShiftServer.Proto.Db
         [BsonId]
         public ObjectId ID { get; set; }
 
-        [BsonElement("username")]
-        public string AccountID { get; set; }
+        [BsonElement("email")]
+        public string Email { get; set; }
+
+        [BsonElement("user_id")]
+        public string UserID { get; set; }
 
         [BsonElement("session_id")]
         public string SessionID { get; set; }
+
+        [BsonElement("is_guest")]
+        public bool IsGuest { get; set; }
 
         [BsonElement("expire_in")]
         public int ExpireIn { get; set; }

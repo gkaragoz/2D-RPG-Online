@@ -1,6 +1,7 @@
 ﻿
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : Menu {
 
@@ -19,7 +20,10 @@ public class MenuManager : Menu {
 
     #endregion
 
-    public Task initializationProgress;
+    public LoadingTask initializationProgress;
+
+    [SerializeField]
+    private Image _imgClassBg;
 
     [SerializeField]
     private TextMeshProUGUI _txtAccountGold;
@@ -48,11 +52,11 @@ public class MenuManager : Menu {
     private TextMeshProUGUI _txtCharacterDexterity;
 
     private void Start() {
-        AccountManager.instance.onAccountUpdated = UpdateUI;
+        AccountManager.instance.onAccountUpdated += UpdateUI;
     }
 
     public void Initialize() {
-        if (CharacterManager.instance.HasCharacter) {
+        if (AccountManager.instance.HasCharacter) {
             UpdateUI();
         }
 
@@ -60,22 +64,25 @@ public class MenuManager : Menu {
     }
 
     private void UpdateUI() {
-        _txtAccountGold.text = AccountManager.instance.Account.gold.ToString();
-        _txtAccountGem.text = AccountManager.instance.Account.gem.ToString();
+        _txtAccountGold.text = AccountManager.instance.Gold.ToString();
+        _txtAccountGem.text = AccountManager.instance.Gem.ToString();
 
-        if (CharacterManager.instance.HasCharacter) {
+        if (AccountManager.instance.HasCharacter) {
+            _imgClassBg.color = CharacterClassVisualization.instance.GetVisualizationProperties((CharacterClassVisualization.Classes)CharacterManager.instance.SelectedCharacter.class_index).ClassFrameColor;
+
             _txtCharacterName.text = CharacterManager.instance.SelectedCharacter.name.ToString();
-            _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level.ToString();
-            _txtCharacterExperience.text = CharacterManager.instance.SelectedCharacter.exp.ToString();
+            _txtCharacterLevel.text = CharacterManager.instance.SelectedCharacter.level + " Lv.";
+            _txtCharacterExperience.text = "Exp: " + CharacterManager.instance.SelectedCharacter.exp;
+
+            _txtCharacterStatPoints.text = "x" + CharacterManager.instance.SelectedCharacter.stat_points;
+
+            _txtCharacterHealth.text = CharacterManager.instance.SelectedCharacter.stat.health.ToString();
+            _txtCharacterMana.text = CharacterManager.instance.SelectedCharacter.stat.mana.ToString();
+
+            _txtCharacterStrength.text = CharacterManager.instance.SelectedCharacter.attribute.strength.ToString();
+            _txtCharacterIntelligence.text = CharacterManager.instance.SelectedCharacter.attribute.intelligence.ToString();
+            _txtCharacterDexterity.text = CharacterManager.instance.SelectedCharacter.attribute.dexterity.ToString();
         }
-
-        //_txtCharacterStatPoints.text = AccountManager.instance.Account.gold.ToString();
-        //_txtCharacterHealth.text = AccountManager.instance.Account.gold.ToString();
-        //_txtCharacterMana.text = AccountManager.instance.Account.gold.ToString();
-
-        //_txtCharacterStrength.text = AccountManager.instance.Account.gold.ToString();
-        //_txtCharacterIntelligence.text = AccountManager.instance.Account.gold.ToString();
-        //_txtCharacterDexterity.text = AccountManager.instance.Account.gold.ToString();
     }
 
 }

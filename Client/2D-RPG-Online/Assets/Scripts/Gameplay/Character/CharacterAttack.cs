@@ -39,11 +39,11 @@ public class CharacterAttack : MonoBehaviour {
 
         _nextAttackTime = Time.time + attackSpeed;
 
-        Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
-        for (int ii = 0; ii < objectsToDamage.Length; ii++) {
-            //Run on damage function in the victim side.
-            objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
-        }
+        //Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
+        //for (int ii = 0; ii < objectsToDamage.Length; ii++) {
+        //    //Run on damage function in the victim side.
+        //    objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
+        //}
 
         IsAttacking = true;
 

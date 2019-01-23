@@ -1,66 +1,141 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : MonoBehaviour {
-    
-    public bool HasInput {
-        get {
-            return (CurrentInput != Vector2.zero) ? true : false;
+
+    public class PositionEntry {
+        public Vector3 vector3;
+        public double updateTime;
+        public int inputSequenceID;
+
+        public PositionEntry(double updateTime, Vector3 vector3, int inputSequenceID) {
+            this.updateTime = updateTime;
+            this.vector3 = vector3;
+            this.inputSequenceID = inputSequenceID;
         }
     }
 
-    public Vector2 CurrentInput { get; private set; }
-    public Vector2 LastInput { get; private set; }
+    public bool HasInput {
+        get {
+            return (CurrentInput != Vector3.zero) ? true : false;
+        }
+    }
+
+    public Vector3 CurrentInput { get; private set; }
+    public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
+    public int Oid { get { return _playerData.Oid; } }
+    public bool IsMe { get { return _isMe; } }
+
+    public List<PositionEntry> PositionBuffer { get { return _positionBuffer; } set { _positionBuffer = value; } }
+
+    public int LastProcessedInputSequenceID { get { return _lastProcessedInputSequenceID; } set { _lastProcessedInputSequenceID = value; } }
 
     [SerializeField]
     [Utils.ReadOnly]
-    private float _xInput, _yInput;
+    private float _xInput, _zInput;
     [SerializeField]
     private Joystick _joystick;
-
-    [Header("Settings")]
     [SerializeField]
-    private bool _controllerInput;
+    private Button _btnAttack;
     [SerializeField]
-    private bool _joystickInput;
+    private bool _isOfflineMode;
 
+    private bool _isMe;
     private CharacterController _characterController;
+    private PlayerHUD _playerHUD;
+    private PlayerObject _playerData;
 
-    private void Start() {
+    private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
+
+    private int _lastProcessedInputSequenceID;
+    private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
+    private int _nonAckInputIndex = 0;
+
+    private void Awake() {
         _characterController = GetComponent<CharacterController>();
+        _playerHUD = GetComponent<PlayerHUD>();
     }
 
     private void FixedUpdate() {
-        LastInput = CurrentInput;
-
-        if (_controllerInput) {
-            _xInput = Input.GetAxisRaw("Horizontal");
-            _yInput = Input.GetAxisRaw("Vertical");
-        }
-
-        if (_joystickInput && (_xInput == 0 || _yInput == 0)) {
+        if (_isMe || _isOfflineMode) {
             _xInput = _joystick.Horizontal;
-            _yInput = _joystick.Vertical;
+            _zInput = _joystick.Vertical;
+
+            CurrentInput = new Vector3(_xInput, 0, _zInput);
+
+            if (!_isOfflineMode && HasInput && NetworkManager.mss != null) {
+                ShiftServerData data = new ShiftServerData();
+
+                data.PlayerInput = new SPlayerInput();
+                data.PlayerInput.SequenceID = _nonAckInputIndex++;
+
+                data.PlayerInput.PosX = CurrentInput.x;
+                data.PlayerInput.PosZ = CurrentInput.z;
+                data.PlayerInput.PressTime = Time.fixedDeltaTime;
+
+                NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
+
+                PlayerInputs.Add(data.PlayerInput);
+            }
+
+            if (HasInput) {
+                Move();
+            } else {
+                Stop();
+            }
         }
 
-        CurrentInput = new Vector2(_xInput, _yInput);
-
-        if (HasInput) { 
-            Move();
-        } else {
-            Stop();
-        }
-
-        _xInput = 0;
-        _yInput = 0;
+        UpdateHUD();
     }
 
-    private void Update() {
-        if (Input.GetButton("Fire1")) {
-            Attack();
+    public void Initialize(PlayerObject playerData) {
+        this._playerData = playerData;
+
+        _playerHUD.SetName(_playerData.Name);
+
+        InitializeCharacter(_playerData);
+
+        if (_playerData.Name == AccountManager.instance.SelectedCharacterName) {
+            _isMe = true;
+            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
+        } else {
+            _isMe = false;
+            _playerHUD.Hide();
         }
+    }
+
+    public void AddPositionToBuffer(double timestamp, Vector3 position, int inputSequenceID) {
+
+        _positionBuffer.Add(new PositionEntry(timestamp, position, inputSequenceID));
+    }
+
+    public Vector2 GetVectorByInput(int index) {
+        return new Vector2(PlayerInputs[index].PosX, PlayerInputs[index].PosY);
+    }
+
+    public void ClearPlayerInputs() {
+        _playerInputs = new List<SPlayerInput>();
+    }
+
+    public void RemoveRange(int index, int count) {
+        _playerInputs.RemoveRange(index, count);
+    }
+
+    public int GetSequenceID(int index) {
+        return PlayerInputs[index].SequenceID;
+    }
+
+    public void SetJoystick(FixedJoystick joystick) {
+        this._joystick = joystick;
+    }
+
+    public void InitializeCharacter(PlayerObject playerData) {
+        _characterController.Initiailize(playerData);
     }
 
     public void Attack() {
@@ -71,8 +146,28 @@ public class PlayerController : MonoBehaviour {
         _characterController.Move(CurrentInput);
     }
 
+    public void Move(Vector3 input) {
+        _characterController.Move(input);
+    }
+
     public void Stop() {
         _characterController.Stop();
+    }
+
+    public void Rotate() {
+        _characterController.Rotate(CurrentInput);
+    }
+
+    public void ToNewPosition(Vector3 newPosition) {
+        _characterController.ToNewPosition(newPosition);
+    }
+
+    public void Destroy() {
+        Destroy(this.gameObject);
+    }
+
+    private void UpdateHUD() {
+        _playerHUD.UpdateHUD(PlayerInputs.Count);
     }
 
 }

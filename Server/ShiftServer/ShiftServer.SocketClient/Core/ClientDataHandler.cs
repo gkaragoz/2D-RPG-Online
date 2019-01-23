@@ -31,7 +31,7 @@ namespace ShiftServer.Client.Core
 
         private static ShiftServerData data = null;
 
-        public void HandleMessage(byte[] bb)
+        public void HandleMessageAsync(byte[] bb)
         {
             data = ShiftServerData.Parser.ParseFrom(bb);
 
@@ -45,9 +45,6 @@ namespace ShiftServer.Client.Core
                     {
                         case MSServerEvent.AccountJoin:
                             accountData = data.AccountData;
-                            break;
-                        case MSServerEvent.LobbyRefresh:
-                            roomProvider.AddOrUpdate(data);
                             break;
                         case MSServerEvent.RoomJoin:
                             roomProvider.SetCurrentJoinedRoom(data);
@@ -64,6 +61,8 @@ namespace ShiftServer.Client.Core
                             roomProvider.DisposeRoom(data);
                             break;
                         case MSServerEvent.Connection:
+                            Console.WriteLine(">>> [Account Joined] <<<");
+                            GameProvider.instance.IsAccountJoined = true;
                             break;
                         default:
                             break;

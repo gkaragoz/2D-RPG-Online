@@ -13,11 +13,23 @@ namespace ShiftServer.Proto.Db
         [BsonId]
         public ObjectId ID { get; set; }
 
-        [BsonElement("username")]
-        public string Username { get; set; }
-
         [BsonElement("email")]
         public string Email { get; set; }
+
+        [BsonElement("user_id")]
+        public string UserId { get; set; }
+
+        [BsonElement("selected_char_name")]
+        public string SelectedCharName { get; set; }
+
+        [BsonElement("is_guest")]
+        public bool IsGuest { get; set; }
+
+        [BsonElement("gold")]
+        public int Gold { get; set; }
+
+        [BsonElement("gem")]
+        public int Gem { get; set; }
 
         [BsonElement("created_at")]
         [BsonDateTimeOptions(Kind = DateTimeKind.Utc)]

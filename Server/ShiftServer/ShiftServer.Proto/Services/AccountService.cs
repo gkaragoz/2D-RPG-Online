@@ -14,7 +14,7 @@ namespace ShiftServer.Proto.Services
         {
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(AccountDbName);
-            _accounts = database.GetCollection<Account>("Accounts");
+            _accounts = database.GetCollection<Account>("account");
         }
 
         public List<Account> Get()
@@ -22,11 +22,10 @@ namespace ShiftServer.Proto.Services
             return _accounts.Find(account => true).ToList();
         }
 
-        public Account Get(string id)
+        public Account GetByUserID(string id)
         {
-            var docId = new ObjectId(id);
 
-            return _accounts.Find<Account>(account => account.ID == docId).FirstOrDefault();
+            return _accounts.Find<Account>(account => account.UserId == id).FirstOrDefault();
         }
 
         public Account Create(Account acc)
@@ -35,21 +34,15 @@ namespace ShiftServer.Proto.Services
             return acc;
         }
 
-        public void Update(string id, Account accIn)
+        public void Update(string userId, Account accIn)
         {
-            var docId = new ObjectId(id);
 
-            _accounts.ReplaceOne(acc => acc.ID == docId, accIn);
+            _accounts.ReplaceOne(acc => acc.UserId == userId, accIn);
         }
 
         public void Remove(Account accIn)
         {
-            _accounts.DeleteOne(acc => acc.ID == accIn.ID);
-        }
-
-        public void Remove(ObjectId id)
-        {
-            _accounts.DeleteOne(acc => acc.ID == id);
+            _accounts.DeleteOne(acc => acc.UserId == accIn.UserId);
         }
     }
 

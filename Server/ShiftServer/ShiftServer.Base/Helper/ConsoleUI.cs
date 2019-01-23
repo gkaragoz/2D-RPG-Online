@@ -41,7 +41,7 @@ namespace ShiftServer.Base.Helper
                         var roomList = serverProvider.world.Rooms.GetValues();
                         foreach (var room in roomList)
                         {
-                            Console.WriteLine(string.Format("Room Name: {0} , User: {1}/{2}", room.Name, room.SocketIdSessionLookup.Count, room.MaxUser));
+                            Console.WriteLine(string.Format("ID: {0} Room Name: {1} , User: {2}/{3}", room.ID, room.Name, room.Clients.Count, room.MaxUser));
                         }
                         break;
                     case "playerlist":
@@ -53,12 +53,12 @@ namespace ShiftServer.Base.Helper
                             IRoom room = null;
                             if (player.IsJoinedToRoom)
                             {
-                                serverProvider.world.Rooms.TryGetValue(player.JoinedRoomId, out room);
-                                Console.WriteLine(string.Format("UserName: {0} #{1}--> Room: {2}", player.UserName, player.connectionId, room.Name));
+                                serverProvider.world.Rooms.TryGetValue(player.JoinedRoomID, out room);
+                                Console.WriteLine(string.Format("UserName: {0} #{1}--> Room: {2}", player.UserName, player.ConnectionID, room.Name));
                             }
                             else
                             {
-                                Console.WriteLine(string.Format("UserName: {0} #{1}", player.UserName, player.connectionId));
+                                Console.WriteLine(string.Format("UserName: {0} #{1}", player.UserName, player.ConnectionID));
                             }
                         }
                         break;

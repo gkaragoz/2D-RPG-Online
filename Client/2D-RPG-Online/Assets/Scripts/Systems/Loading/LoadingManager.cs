@@ -29,6 +29,10 @@ public class LoadingManager : Menu {
     private Image _imgFilledBar;
     [SerializeField]
     private TextMeshProUGUI _txtFilledAmount;
+    [SerializeField]
+    private Image _background;
+    [SerializeField]
+    private Sprite[] _randomBackground;
 
     [Header("Settings")]
     [SerializeField]
@@ -52,6 +56,8 @@ public class LoadingManager : Menu {
 
     private void Start() {
         _imgFilledBar.fillAmount = 0;
+
+        _background.sprite = _randomBackground[UnityEngine.Random.Range(0, _randomBackground.Length)];
     }
 
     private void Update() {
@@ -63,7 +69,7 @@ public class LoadingManager : Menu {
         _checkList = new List<bool>();
     }
 
-    public void AddTask(Task task) {
+    public void AddTask(LoadingTask task) {
         _checkList.Add(false);
         _progressFilledAmount = GetPerProgressFilledAmount();
     }

@@ -23,17 +23,17 @@ public class LoginManager : MonoBehaviour {
 
     public Action<APIConfig.LoginResults> onLoginResult;
 
-    public Task initializationProgress;
-    public Task googlePlaySignInResponseProgress;
-    public Task sessionIdResponseProgress;
-    public Task accountDataResponseProgress;
+    public LoadingTask initializationProgress;
+    public LoadingTask googlePlaySignInResponseProgress;
+    public LoadingTask sessionIdResponseProgress;
+    public LoadingTask accountDataResponseProgress;
 
     public static string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
     public static string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
     public static string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
 
     public void Initialize() {
-        GooglePlayManager.instance.onGooglePlaySignInResult = OnGooglePlaySignInResult;
+        GooglePlayManager.instance.onGooglePlaySignInResult += OnGooglePlaySignInResult;
         onLoginResult = OnLoginResult;
 
         initializationProgress.Invoke();

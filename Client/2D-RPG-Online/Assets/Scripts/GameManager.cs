@@ -1,4 +1,5 @@
-﻿using ShiftServer.Proto.RestModels;
+﻿using System;
+using ShiftServer.Proto.RestModels;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -20,7 +21,7 @@ public class GameManager : MonoBehaviour {
 
     #endregion
 
-    public Task accountDataResponseProgress;
+    public LoadingTask accountDataResponseProgress;
 
     public const string HAS_PLAYED_BEFORE = "HAS_PLAYED_BEFORE";
 
@@ -49,10 +50,12 @@ public class GameManager : MonoBehaviour {
     private void Start() {
         Application.targetFrameRate = 60;
 
-        LoginManager.instance.onLoginCompleted = OnLoginCompleted;
-        LoadingManager.instance.onLoadingCompleted = OnLoadingCompleted;
-        CharacterManager.instance.onCharacterCreated = OnCharacterCreated;
-        CharacterManager.instance.onCharacterSelected = OnCharacterSelected;
+        LoginManager.instance.onLoginCompleted += OnLoginCompleted;
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+        CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
+        CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
+        RoomManager.instance.onRoomCreated += OnRoomCreated;
+        RoomManager.instance.onRoomJoined += OnRoomJoined;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -90,7 +93,7 @@ public class GameManager : MonoBehaviour {
             //Go To Tutorial Scene.
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
-            TutorialManager.instance.onTutorialCompleted = OnTutorialCompleted;
+            TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
 
             LoginManager.instance.Login();
@@ -116,6 +119,22 @@ public class GameManager : MonoBehaviour {
     private void OnCharacterSelected(CharacterModel selectedCharacter) {
         CharacterManager.instance.HideCharacterSelectionMenu();
         MenuManager.instance.Show();
+    }
+
+    private void OnRoomCreated() {
+        //Go To Gameplay Scene.
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+
+        MenuManager.instance.Hide();
+        RoomManager.instance.Show();
+    }
+
+    private void OnRoomJoined() {
+        //Go To Gameplay Scene.
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+
+        MenuManager.instance.Hide();
+        RoomManager.instance.Show();
     }
 
 #if UNITY_EDITOR

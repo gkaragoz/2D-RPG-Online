@@ -19,13 +19,16 @@ namespace ShiftServer.Client
     /// </summary>
     public sealed class ManaShiftServer
     {
-        private static ManaShiftServer _mss = null;
-        private static GameProvider gameProvider = null;
-        public bool IsConnected { get => gameProvider.client.Connected; }
-        public bool IsConnecting { get => gameProvider.client.Connecting; }
-        public bool HasPlayerRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
-        public MSSRoom JoinedRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom; }
-        public CommonAccountData AccountData { get => gameProvider.dataHandler.accountData; }
+        public static ManaShiftServer mss = null;
+        private static GameProvider _gameProvider = null;
+        public static string sessionID = null;
+        public static ConfigData cfg = null;
+        public bool IsConnected { get => _gameProvider.IsClientConnected(); }
+        public bool IsConnecting { get => _gameProvider.client.Connecting; }
+        public bool IsAccountJoined { get => _gameProvider.IsAccountJoined; }
+        public bool HasPlayerRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
+        public MSSRoom JoinedRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom; }
+        public CommonAccountData AccountData { get => _gameProvider.dataHandler.accountData; }
 
         private Stopwatch _stopwatch;
         private long _currentPingValue;
@@ -35,8 +38,9 @@ namespace ShiftServer.Client
         /// </summary>
         public ManaShiftServer()
         {
-            _mss = this;
-            gameProvider = new GameProvider();
+            mss = this;
+            _gameProvider = new GameProvider();
+            cfg = null;
             _stopwatch = new Stopwatch();
         }
 
@@ -45,18 +49,19 @@ namespace ShiftServer.Client
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Connect(ConfigData cfg)
+        public void Connect(ConfigData cfg, int timeout = 10)
         {
-            gameProvider.Connect(cfg.Host, cfg.Port);
-            this.AddEventListener(MSServerEvent.PingRequest, this.OnPingResponse);
-        }
+            if (string.IsNullOrEmpty(cfg.SessionID))
+                throw new ArgumentNullException("Session ID is null");
 
-        private void OnPingResponse(ShiftServerData data)
+            sessionID = cfg.SessionID;
+            _gameProvider.Connect(cfg.Host, cfg.Port);
+        }
+     
+        private void OnAccountJoinSuccess(ShiftServerData data)
         {
-            _stopwatch.Stop();
-            _currentPingValue = _stopwatch.Elapsed.Milliseconds;
-        }
 
+        }
         private void SendPingRequest()
         {
             _stopwatch = new Stopwatch();
@@ -70,18 +75,30 @@ namespace ShiftServer.Client
         /// </summary>
         public List<Room> GetRoomList()
         {
-            this.SendMessage(MSServerEvent.LobbyRefresh);
-            TickrateUtil.SafeDelay(500);
-            return gameProvider.dataHandler.roomProvider.RoomList;
+            //sthis.SendMessage(MSServerEvent.LobbyRefresh);
+            return _gameProvider.dataHandler.roomProvider.RoomList;
+        }
+
+        /// <summary>
+        /// join server with session id provided from auth server
+        /// </summary>
+        public void JoinServer()
+        {
+            if (string.IsNullOrEmpty(sessionID))
+                throw new ArgumentNullException("Session ID is null");
+
+            ShiftServerData data = new ShiftServerData();
+            data.SessionID = sessionID;            
+            this.SendMessage(MSServerEvent.AccountJoin, data);
         }
         /// <summary>
         /// Fixed Update
         /// </summary>
         /// <param name="client">client object</param>
         /// <returns></returns>
-        public void Listen()
+        public void Setup()
         {
-            gameProvider.FixedUpdate();
+            _gameProvider.SetupTasks();
         }
 
         /// <summary>
@@ -93,7 +110,7 @@ namespace ShiftServer.Client
         {
             if (eventType.GetType() == typeof(MSServerEvent))
             {
-                gameProvider.dataHandler.clientEvents.Add(new ClientEventCallback
+                _gameProvider.dataHandler.clientEvents.Add(new ClientEventCallback
                 {
                     CallbackFunc = listener,
                     EventId = (MSServerEvent)eventType
@@ -101,7 +118,7 @@ namespace ShiftServer.Client
             }
             else if (eventType.GetType() == typeof(MSPlayerEvent))
             {
-                gameProvider.dataHandler.playerEvents.Add(new PlayerEventCallback
+                _gameProvider.dataHandler.playerEvents.Add(new PlayerEventCallback
                 {
                     CallbackFunc = listener,
                     EventId = (MSPlayerEvent)eventType
@@ -114,7 +131,7 @@ namespace ShiftServer.Client
         /// </summary>
         public void Disconnect()
         {
-            gameProvider.Disconnect();
+            _gameProvider.Disconnect();
         }
 
       
@@ -129,12 +146,12 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.ServerEvent;
             data.Svevtid = evt;
-
+            data.SessionID = sessionID;
 
             byte[] bb = data.ToByteArray();
 
             if (bb.Length > 0)
-                gameProvider.SendMessage(bb);
+                _gameProvider.SendMessage(bb);
         }
 
        
@@ -148,11 +165,12 @@ namespace ShiftServer.Client
 
             data.Basevtid = MSBaseEventId.PlayerEvent;
             data.Plevtid = evt;
+            data.SessionID = sessionID;
 
             byte[] bb = data.ToByteArray();
 
             if (bb.Length > 0)
-                gameProvider.SendMessage(bb);
+                _gameProvider.SendMessage(bb);
         }
 
 

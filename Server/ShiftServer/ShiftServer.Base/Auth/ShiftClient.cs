@@ -1,63 +1,67 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Base.Core;
+using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using Telepathy;
 
 namespace ShiftServer.Base.Auth
 {
-    public class ShiftClient : IClient
+    public class ShiftClient : ManaSocket
     {
         private static readonly log4net.ILog log
                 = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public Session UserSession { get; set; }
-        public TcpClient Client { get; set; }
+        public string UserSessionID { get; set; }
+        public TcpClient TCPClient { get; set; }
+        public IGameObject CurrentObject { get; set; }
+        public SafeQueue<IGameInput> Inputs { get; set; }
         public string UserName { get; set; }
-        public int connectionId { get; set; }
+        public int ConnectionID { get; set; }
         public bool IsJoinedToWorld { get; set; }
         public bool IsReady { get; set; }
         public bool IsJoinedToRoom { get; set; }
         public bool IsJoinedToTeam { get; set; }
-        public string JoinedRoomId { get; set; }
-        public string JoinedTeamId { get; set; }
-        public bool IsConnected()
-        {
-            return Client.Connected;
-        }
+        public string JoinedRoomID { get; set; }
+        public string JoinedTeamID { get; set; }
+        public bool IsConnected { get => this.TCPClient.Connected; }
 
-        public bool SendPacket(MSServerEvent eventType, ShiftServerData data)
+        public async Task SendPacket(MSServerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.ServerEvent;
                 data.Svevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return Send(bb);
+                await Task.Run(() => ServerProvider.instance.server.Send(ConnectionID, bb));
             }
             catch (Exception err)
             {
-                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
-                return false;
+                if (this.TCPClient != null)
+                {
+                    if (this.TCPClient.Connected)
+                        log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
+                }
             }
-                 
+
         }
-        public bool SendPacket(MSPlayerEvent eventType, ShiftServerData data)
+        public async Task SendPacket(MSPlayerEvent eventType, ShiftServerData data)
         {
             try
             {
                 data.Basevtid = MSBaseEventId.PlayerEvent;
                 data.Plevtid = eventType;
                 byte[] bb = data.ToByteArray();
-                return Send(bb);
+                await Task.Run(() => ServerProvider.instance.server.Send(ConnectionID, bb));
             }
             catch (Exception err)
             {
-                log.Error($"[SendPacket] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId}", err);
-                return false;
+                if (this.TCPClient.Connected)
+                    log.Error($"[SendPacket] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
             }
 
         }
@@ -65,119 +69,188 @@ namespace ShiftServer.Base.Auth
         {
 
             IGroup group = null;
-            if (this.IsJoinedToTeam)
-            {
-                room.Teams.TryGetValue(this.JoinedTeamId, out group);
-
-                if (group != null)
-                {
-                    return group;
-                }
-                else
-                    return null;
-            }
-            else
+            if (!this.IsJoinedToTeam)
                 return null;
-        }
 
-        public bool JoinTeam(IGroup group)
-        {
+            room.Teams.TryGetValue(this.JoinedTeamID, out group);
 
             if (group != null)
+                return group;
+            else
+                return null;
+
+        }
+        public bool JoinTeam(IGroup group)
+        {
+            if (group == null)
+                return false;
+
+            if (this.IsJoinedToTeam)
             {
-                if (this.IsJoinedToTeam)
-                {
-                    log.Info($"[JoinTeam] Remote:{this.Client.Client.RemoteEndPoint.ToString()} ClientNo:{this.connectionId} Already in a team");
-                    return false;
-                }
-                else
-                {
-                    group.AddPlayer(this);
-                    return true;
-                }
+                log.Info($"[JoinTeam] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID} Already in a team");
+                return false;
             }
             else
-                return false;
-       
+            {
+                group.AddPlayer(this);
+                return true;
+            }
+
+
         }
         public bool LeaveFromTeam(IRoom room)
         {
-
             IGroup group = null;
-            if (this.IsJoinedToTeam)
-            {
-                room.Teams.TryGetValue(this.JoinedTeamId, out group);
+            if (!this.IsJoinedToTeam)
+                return false;
 
-                if (group != null)
+            room.Teams.TryGetValue(this.JoinedTeamID, out group);
+            if (group == null)
+                return false;
+
+            group.RemovePlayer(this);
+            this.IsJoinedToTeam = false;
+            return true;
+        }
+        private void HardDisconnect()
+        {
+            if (this.TCPClient.Connected)
+            {
+                this.TCPClient.Dispose();
+                this.TCPClient.Close();
+            }
+        }
+        public void Dispose()
+        {
+            IRoom room = null;
+            string userSessionId = this.UserSessionID;
+
+            if (this == null)
+                return;
+
+            if (string.IsNullOrEmpty(userSessionId))
+                return;
+
+            ServerProvider.instance.world.ClientDispose(this);
+            ServerProvider.instance.world.Clients.Remove(this.ConnectionID);
+
+            if (!string.IsNullOrEmpty(this.JoinedRoomID))
+                ServerProvider.instance.world.Rooms.TryGetValue(this.JoinedRoomID, out room);
+
+            if (room != null)
+            {
+
+                this.IsJoinedToRoom = false;
+                this.JoinedRoomID = null;
+                bool isDestroyed = false;
+
+                room.Clients.Remove(this.ConnectionID);
+
+                if (room.Clients.Count == 0 && !room.IsPersistence)
                 {
-                    group.RemovePlayer(this);
-                    this.IsJoinedToTeam = false;
-                    return true;
+                    ServerProvider.instance.world.Rooms.Remove(room.ID);
+                    isDestroyed = true;
                 }
                 else
-                    return false;
-            }
-            else
-                return false;
-        }
-        private bool Send(byte[] bb)
-        {
-            if (this.Client != null)
-            {
-                try
                 {
-                    NetworkStream stream = Client.GetStream();
-                    return SendMessage(stream, bb);
+                    if (this.CurrentObject != null)
+                        room.GameObjects.Remove(this.CurrentObject.ObjectID);
                 }
-                catch (Exception exception)
-                {
-                    Console.WriteLine("Server.SendMessage exception: " + exception);
-                    return false;
-                }
-            }
-            else
-                return false;
-        }
-        // send message (via stream) with the <size,content> message structure
-        protected static bool SendMessage(NetworkStream stream, byte[] content)
-        {
-            // can we still write to this socket (not disconnected?)
-            if (!stream.CanWrite)
-            {
-                return false;
+
+                if (!isDestroyed)
+                    room.BroadcastClientState(this, MSServerEvent.RoomPlayerLeft);
+                else
+                    RoomProvider.instance.OnRoomDispose(room);
+
             }
 
-            // stream.Write throws exceptions if client sends with high
-            // frequency and the server stops
+            IGroup group = null;
+            if (!string.IsNullOrEmpty(this.JoinedTeamID))
+                room.Teams.TryGetValue(this.JoinedTeamID, out group);
+
+            if (group != null)
+                group.RemovePlayer(this);
+
+            HardDisconnect();
+        }
+        public async Task<bool> SessionCheckAsync(ShiftServerData data)
+        {
+            bool result = false;
+            //session check
+            if (data.SessionID == null)
+                return result;
+
+            AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
+
+            if (session == null)
+                return result;
+
+            this.UserSessionID = data.SessionID;
+            Account acc = DBContext.ctx.Accounts.GetByUserID(session.UserID);
+            if (acc == null)
+                return result;
+
+            //check if already logged in
+            List<ShiftClient> clients = ServerProvider.instance.world.Clients.GetValues();
+            var client = clients.Find(x => x.UserSessionID == session.SessionID);
+
+            if (session.SessionID == data.SessionID)
+                result = true;
+
+            if (client == null && this.IsJoinedToWorld != true)
+                result = false;
+
+            if (result)
+                return result;
+            else
+            {
+                await this.SendPacket(MSServerEvent.ConnectionFailed, new ShiftServerData { ErrorReason = ShiftServerError.BadSession });
+                return result;
+            }
+
+
+        }
+        public bool FillAccountData(ShiftServerData data)
+        {
             try
             {
-                // construct header (size)
-                byte[] header = ShiftHelper.IntToBytes(content.Length);
+                AccountSession session = DBContext.ctx.Sessions.FindBySessionID(data.SessionID);
+                Account acc = DBContext.ctx.Accounts.GetByUserID(session.UserID);
 
-                // write header+content at once via payload array. writing
-                // header,payload separately would cause 2 TCP packets to be
-                // sent if nagle's algorithm is disabled(2x TCP header overhead)
-                byte[] payload = new byte[header.Length + content.Length];
-                Array.Copy(header, payload, header.Length);
-                Array.Copy(content, 0, payload, header.Length, content.Length);
-                stream.Write(payload, 0, payload.Length);
+                this.UserSessionID = data.SessionID;
+
+
+                data.Account = null;
+                data.AccountData = new CommonAccountData();
+                data.AccountData.VirtualMoney = acc.Gold;
+                data.AccountData.VirtualSpecialMoney = acc.Gem;
+
+                if (string.IsNullOrEmpty(acc.SelectedCharName))
+                    this.UserName = data.AccountData.Username;
+                else
+                {
+                    data.AccountData.Username = acc.SelectedCharName;
+                    this.UserName = acc.SelectedCharName;
+                }
+
 
                 return true;
             }
-            catch (Exception exception)
+            catch (Exception err)
             {
-                // log as regular message because servers do shut down sometimes
+                log.Error($"[Login Failed] Remote:{this.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{this.ConnectionID}", err);
                 return false;
-            }
-        }
 
+            }
+
+        }
     }
 
     public static class ShiftHelper
     {
         public static ShiftClient GetShiftClient(List<ShiftClient> shifts, TcpClient tcpclient)
-        { 
-            return shifts.Where(x => x.Client == tcpclient).FirstOrDefault();
+        {
+            return shifts.Where(x => x.TCPClient == tcpclient).FirstOrDefault();
         }
 
         // static helper functions /////////////////////////////////////////////
@@ -209,6 +282,6 @@ namespace ShiftServer.Base.Auth
 
         }
     }
-   
+
 
 }

@@ -19,10 +19,10 @@ public class CharacterClassVisualization : MonoBehaviour {
     #endregion
 
     public enum Classes {
-        Warrior,
-        Archer,
-        Mage,
-        Priest
+        Warrior = 0,
+        Archer = 1,
+        Mage = 2,
+        Priest = 3
     }
 
     [Serializable]

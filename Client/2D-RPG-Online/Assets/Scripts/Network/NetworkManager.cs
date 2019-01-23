@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
 using ShiftServer.Client;
 using ShiftServer.Client.Data.Entities;
-using System.Net.NetworkInformation;
+using System;
+using System.Threading.Tasks;
+using System.Collections;
 
 public class NetworkManager : MonoBehaviour {
-    
+
     public static ManaShiftServer mss;
     public static string SessionID { get; set; }
 
@@ -17,11 +19,16 @@ public class NetworkManager : MonoBehaviour {
         }
     }
 
+    public bool Reconciliaton { get { return _reconciliaton; } }
+
     [SerializeField]
     private string _hostName = "127.0.0.0";
 
     [SerializeField]
     private int _port = 1337;
+
+    [SerializeField]
+    private bool _reconciliaton;
 
     private ConfigData _cfg;
 
@@ -31,6 +38,8 @@ public class NetworkManager : MonoBehaviour {
     private const string ON_CONNECTION_SUCCESS = "Connection success!";
     private const string ON_CONNECTION_FAILED = "Connection failed!";
     private const string ON_CONNECTION_LOST = "Connection lost!";
+
+    private bool _hasConnectionProblem = false;
 
     public static NetworkManager instance;
 
@@ -42,53 +51,56 @@ public class NetworkManager : MonoBehaviour {
 
         DontDestroyOnLoad(instance);
 
-        //InitNetwork();
+        InitializeGameplayServer();
     }
 
-    public static string GetMacAddress() {
-        string macAddresses = "";
-        foreach (NetworkInterface nic in NetworkInterface.GetAllNetworkInterfaces()) {
-            // Only consider Ethernet network interfaces, thereby ignoring any
-            // loopback devices etc.
-            if (nic.NetworkInterfaceType != NetworkInterfaceType.Ethernet) continue;
-            if (nic.OperationalStatus == OperationalStatus.Up) {
-                macAddresses += nic.GetPhysicalAddress().ToString();
-                break;
-            }
-        }
-        return macAddresses;
-    }
-
-    private void InitNetwork() {
-        mss = new ManaShiftServer();
-        mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
-        mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
-        mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
+    public IEnumerator ConnectToGameplayServer(Action<bool> success) {
+        Debug.Log(CONNECT);
 
         _cfg = new ConfigData();
         _cfg.Host = _hostName;
         _cfg.Port = _port;
+        _cfg.SessionID = SessionID;
 
-        //LogManager.instance.AddLog(CONNECT + _cfg.Host + ":" + _cfg.Port, Log.Type.Server);
-        mss.Connect(_cfg);
+        mss.Connect(_cfg, 3);
+
+        while (!mss.IsConnected) {
+            yield return new WaitForSeconds(0.2f);
+
+            if (_hasConnectionProblem) {
+                success(false);
+
+                StopAllCoroutines();
+                break;
+            }
+        }
+
+        success(true);
     }
 
-    private void Update() {
-        if (mss != null) {
-            mss.Listen();
-        }
+    private void InitializeGameplayServer() {
+        mss = new ManaShiftServer();
+        mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
+        mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
+        mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);
     }
 
     private void OnConnectionSuccess(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_SUCCESS, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_SUCCESS + data);
+
+        _hasConnectionProblem = false;
     }
 
     private void OnConnectionFailed(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_FAILED, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_FAILED + data);
+
+        _hasConnectionProblem = true;
     }
 
     private void OnConnectionLost(ShiftServerData data) {
-        LogManager.instance.AddLog(ON_CONNECTION_LOST, Log.Type.Server);
+        Debug.Log(ON_CONNECTION_LOST + data);
+
+        _hasConnectionProblem = true;
     }
 
     private void OnApplicationQuit() {

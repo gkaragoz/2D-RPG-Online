@@ -24,29 +24,29 @@ namespace ShiftServer.Server
 
             GameZone zone = new GameZone();
             _serverProvider = new ServerProvider(zone);
-            _roomProvider = new RoomProvider(_serverProvider);
+            _roomProvider = new RoomProvider();
             _groupProvider = new GroupProvider(_roomProvider);
 
-            Battleground bgRoom = new Battleground(2, 4);
-            bgRoom.Name = "MANASHIFT BattleRoyale #1 ( OFFICIAL )";
-            bgRoom.MaxUser = 8;
+            //default
+            Battleground bgRoom = new Battleground(2, 1500);
+            bgRoom.Name = "MANASHIFT DEFAULT";
+            bgRoom.MaxUser = 3000;
+            bgRoom.IsPersistence = true;
+            bgRoom.ID = "123";
             _roomProvider.CreateRoom(bgRoom);
 
             _serverProvider.AddServerEventListener(MSServerEvent.PingRequest, _serverProvider.OnPing);
             _serverProvider.AddServerEventListener(MSServerEvent.AccountJoin, _serverProvider.OnAccountJoin);
-            _serverProvider.AddServerEventListener(MSServerEvent.LobbyMatchmaking, _serverProvider.OnMatchmaking);
 
             _serverProvider.AddServerEventListener(MSServerEvent.RoomCreate, _roomProvider.OnRoomCreate);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomDelete, _roomProvider.OnRoomDelete);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomJoin, _roomProvider.OnRoomJoin);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomLeave, _roomProvider.OnRoomLeave);
             _serverProvider.AddServerEventListener(MSServerEvent.RoomChangeLeader, _roomProvider.OnRoomLeaderChange);
-            _serverProvider.AddServerEventListener(MSServerEvent.LobbyRefresh, _roomProvider.OnLobbyRefresh);
 
-            _serverProvider.AddServerEventListener(MSPlayerEvent.Use, zone.OnObjectUse);
-            _serverProvider.AddServerEventListener(MSPlayerEvent.CreatePlayer, zone.OnPlayerCreate);
+            _serverProvider.AddServerEventListener(MSPlayerEvent.Move, _roomProvider.OnObjectMove);
 
-            _serverProvider.Listen(tickrate : 30, port : 2000);
+            _serverProvider.Listen(tickrate : 15, port : 2000);
 
             ConsoleUI.Run(_serverProvider);
             //Run Server Simulation

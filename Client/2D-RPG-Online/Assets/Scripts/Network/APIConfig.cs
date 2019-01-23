@@ -17,6 +17,8 @@ public static class APIConfig {
         SUCCESS_GET_ACCOUNT_DATA = 00020
     }
 
+    public static string ERROR_INVALID_JSON = "04106";
+
     public static string URL_SessionID = "http://192.168.1.2:5000/api/auth/login";
     public static string URL_AccountData = "http://192.168.1.2:5000/api/user/account";
     public static string URL_GuestLogin = "http://192.168.1.2:5000/api/auth/guestlogin";
@@ -67,8 +69,15 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
-            callback(authResponse);
+            try {
+                authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
+
+                callback(authResponse);
+            } catch (Exception) {
+                PopupManager.instance.ShowPopupMessage("ERROR", ERROR_INVALID_JSON, PopupMessage.Type.Error);
+                throw;
+            }
+
         } else {
             Debug.Log("error: " + http.Error());
         }
@@ -92,8 +101,15 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            accountDataResponse = JsonConvert.DeserializeObject<Account>(resp.Body());
-            callback(accountDataResponse);
+            try {
+                accountDataResponse = JsonConvert.DeserializeObject<Account>(resp.Body());
+
+                callback(accountDataResponse);
+            } catch (Exception) {
+                PopupManager.instance.ShowPopupMessage("ERROR", ERROR_INVALID_JSON, PopupMessage.Type.Error);
+                throw;
+            }
+
         } else {
             Debug.Log("error: " + http.Error());
         }
@@ -116,8 +132,15 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
-            callback(authResponse);
+            try {
+                authResponse = JsonConvert.DeserializeObject<Auth>(resp.Body());
+
+                callback(authResponse);
+            } catch (Exception) {
+                PopupManager.instance.ShowPopupMessage("ERROR", ERROR_INVALID_JSON, PopupMessage.Type.Error);
+                throw;
+            }
+
         } else {
             Debug.Log("error: " + http.Error());
         }
@@ -140,8 +163,15 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            createdCharacterResponse = JsonConvert.DeserializeObject<CharAdd>(resp.Body());
-            callback(createdCharacterResponse);
+            try {
+                createdCharacterResponse = JsonConvert.DeserializeObject<CharAdd>(resp.Body());
+
+                callback(createdCharacterResponse);
+            } catch (Exception) {
+                PopupManager.instance.ShowPopupMessage("ERROR", ERROR_INVALID_JSON, PopupMessage.Type.Error);
+                throw;
+            }
+
         } else {
             Debug.Log("error: " + http.Error());
         }
@@ -164,8 +194,15 @@ public static class APIConfig {
             Response resp = http.Response();
             Debug.Log("status: " + resp.Status().ToString() + "\nbody: " + resp.Body());
 
-            selectedCharacterResponse = JsonConvert.DeserializeObject<CharSelect>(resp.Body());
-            callback(selectedCharacterResponse);
+            try {
+                selectedCharacterResponse = JsonConvert.DeserializeObject<CharSelect>(resp.Body());
+
+                callback(selectedCharacterResponse);
+            } catch (Exception) {
+                PopupManager.instance.ShowPopupMessage("ERROR", ERROR_INVALID_JSON, PopupMessage.Type.Error);
+                throw;
+            }
+
         } else {
             Debug.Log("error: " + http.Error());
         }

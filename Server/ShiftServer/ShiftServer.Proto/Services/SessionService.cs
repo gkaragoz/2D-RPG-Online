@@ -17,7 +17,7 @@ namespace ShiftServer.Proto.Services
         {
             var client = new MongoClient(connectionString);
             var database = client.GetDatabase(AccountDbName);
-            _sessions = database.GetCollection<AccountSession>("AccountSessions");
+            _sessions = database.GetCollection<AccountSession>("account_session");
         }
 
         public List<AccountSession> Get()
@@ -25,29 +25,10 @@ namespace ShiftServer.Proto.Services
             return _sessions.Find(session => true).ToList();
         }
 
-        public AccountSession Get(string id)
+
+        public AccountSession FindBySessionID(string sessionId)
         {
-            var docId = new ObjectId(id);
-
-            return _sessions.Find<AccountSession>(session => session.ID == docId).FirstOrDefault();
-        }
-
-        public AccountSession FindByAccessToken(string accesstoken)
-        {
-            return _sessions.Find<AccountSession>(session => session.SessionID == accesstoken).FirstOrDefault();
-        }
-
-        public AccountSession Create(AccountSession sess)
-        {
-            _sessions.InsertOne(sess);
-            return sess;
-        }
-
-        public void Update(string id, AccountSession sessIn)
-        {
-            var docId = new ObjectId(id);
-
-            _sessions.ReplaceOne(acc => acc.ID == docId, sessIn);
+            return _sessions.Find<AccountSession>(session => session.SessionID == sessionId).FirstOrDefault();
         }
 
         public void Remove(AccountSession sessIn)
