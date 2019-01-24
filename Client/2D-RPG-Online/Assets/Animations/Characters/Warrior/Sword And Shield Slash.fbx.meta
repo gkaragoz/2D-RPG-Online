@@ -173,7 +173,7 @@ ModelImporter:
       name: BasicAttack
       takeName: mixamo.com
       firstFrame: 0
-      lastFrame: 45
+      lastFrame: 30.599998
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
