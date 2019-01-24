@@ -23,10 +23,10 @@ public class CharacterMotor : MonoBehaviour {
     }
 
     public void Move(Vector3 direction) {
-        Vector3 currentPosition = _rb.transform.position;
-
-        _rb.transform.rotation = Quaternion.LookRotation(direction);
-        _rb.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
+        _rb.transform.SetPositionAndRotation(
+                _rb.transform.position + (direction * speed * Time.fixedDeltaTime),
+                Quaternion.LookRotation(direction)
+        );
 
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("footstep");
