@@ -31,6 +31,11 @@ public class CharacterUI : Menu {
 
     public void SetHealthBar() {
         _imgHealthBar.fillAmount = (_characterStats.GetCurrentHealth() / _characterStats.GetMaxHealth());
+
+        if (_imgHealthBar.fillAmount == 0) {
+            _imgHealthBar.transform.parent.gameObject.SetActive(false);
+            _imgManaBar.transform.parent.gameObject.SetActive(false);
+        }
     }
 
     public void SetManaBar() {

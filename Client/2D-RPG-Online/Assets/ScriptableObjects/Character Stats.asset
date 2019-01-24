@@ -28,7 +28,7 @@ MonoBehaviour:
   _maxMana: 0
   _currentMana: 0
   _attackDamage: 50
-  _attackSpeed: 1
+  _attackSpeed: 0.5
   _movementSpeed: 2
   _attackRange: 1
   _level: 0
