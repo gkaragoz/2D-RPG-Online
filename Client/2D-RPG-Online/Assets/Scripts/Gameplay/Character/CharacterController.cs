@@ -17,13 +17,6 @@ public class CharacterController : MonoBehaviour {
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    private void Update() {
-        //DEBUG
-        if (Input.GetKeyDown(KeyCode.Space)) {
-            _characterAnimator.OnDeath();
-        }
-    }
-
     public void Attack() {
         if (!_characterAttack.IsAttacking && _characterAttack.CanAttack) {
             _characterAttack.Attack();
@@ -32,10 +25,8 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Move(Vector3 direction) {
-        if (!_characterAttack.IsAttacking) {
-            _characterMotor.Move(direction);
-            _characterAnimator.OnMove(direction);
-        }
+        _characterMotor.Move(direction);
+        _characterAnimator.OnMove(direction);
     }
 
     public void TakeDamage() {

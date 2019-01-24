@@ -277,7 +277,6 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterUI.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Destructable.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakePresets.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShaker.cs" />

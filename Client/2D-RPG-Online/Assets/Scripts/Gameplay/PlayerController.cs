@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -48,6 +45,8 @@ public class PlayerController : MonoBehaviour, IAttackable {
     [SerializeField]
     private bool _isOfflineMode;
     [SerializeField]
+    private bool _isControllerActive;
+    [SerializeField]
     private GameObject _HUDPrefab;
 
     private bool _isMe;
@@ -73,8 +72,17 @@ public class PlayerController : MonoBehaviour, IAttackable {
 
     private void FixedUpdate() {
         if (_isMe || _isOfflineMode) {
-            _xInput = _joystick.Horizontal;
-            _zInput = _joystick.Vertical;
+            if (_isControllerActive) {
+                _xInput = Input.GetAxis("Horizontal");
+                _zInput = Input.GetAxis("Vertical");
+            } else {
+                _xInput = _joystick.Horizontal;
+                _zInput = _joystick.Vertical;
+            }
+
+            if (Input.GetButtonDown("Fire1")) {
+                Attack();
+            }
 
             CurrentInput = new Vector3(_xInput, 0, _zInput);
 

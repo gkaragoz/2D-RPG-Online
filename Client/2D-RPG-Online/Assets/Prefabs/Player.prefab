@@ -290,7 +290,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fbbf4beb607d273488739664b0f87ef1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 5
 --- !u!114 &385
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,12 +302,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b718141f5e3ac4f998d8f54fda1959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackSpeed: 0.5
-  attackRange: 0.35
   attackables:
     serializedVersion: 2
     m_Bits: 768
-  attackHitPoint: {fileID: 0}
+  attackHitPoint: {fileID: 5438459712335397436}
   _nextAttackTime: 0
 --- !u!114 &4323530393496758791
 MonoBehaviour:

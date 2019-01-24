@@ -4,17 +4,11 @@ using UnityEngine;
 public class CharacterMotor : MonoBehaviour {
 
     private CharacterStats _characterStats;
-
-    public bool IsMoving {
-        get {
-            return _rb.velocity.magnitude > 0 ? true : false;
-        }
-    }
-
     private Rigidbody _rb;
 
     private void Start() {
         _rb = GetComponent<Rigidbody>();
+        _characterStats = GetComponent<CharacterStats>();
     }
 
     public void Move(Vector3 direction) {

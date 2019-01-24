@@ -20,26 +20,17 @@ MonoBehaviour:
   _baseDexterity:
     _value: 0
     _requiredStatsPoints: 0
-  _baseConstitution:
-    _value: 0
-    _requiredStatsPoints: 0
-  _baseAgility:
-    _value: 0
-    _requiredStatsPoints: 0
   _baseIntelligence:
     _value: 0
     _requiredStatsPoints: 0
-  _baseCharisma:
-    _value: 0
-    _requiredStatsPoints: 0
+  _maxHealth: 0
   _currentHealth: 0
-  _currentStamina: 0
-  _currentWeight: 0
-  _speed: 2
-  _angularSpeed: 999
-  _acceleration: 8
+  _maxMana: 0
+  _currentMana: 0
+  _attackDamage: 50
+  _attackSpeed: 1
+  _movementSpeed: 2
+  _attackRange: 1
   _level: 0
   _maxExperience: 0
   _currentExperience: 0
-  _fame: 0
-  _honor: 0

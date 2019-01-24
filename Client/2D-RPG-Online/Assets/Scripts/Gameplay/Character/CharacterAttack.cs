@@ -22,6 +22,7 @@ public class CharacterAttack : MonoBehaviour {
     private CharacterStats _characterStats;
 
     private void Start() {
+        attackHitPoint.gameObject.SetActive(false);
         _characterStats = GetComponent<CharacterStats>();
     }
 
@@ -35,9 +36,12 @@ public class CharacterAttack : MonoBehaviour {
         }
 
         _nextAttackTime = Time.time + _characterStats.GetAttackSpeed();
-        //objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
 
         IsAttacking = true;
+
+        attackHitPoint.gameObject.SetActive(true);
+        yield return new WaitForSeconds(0.01f);
+        attackHitPoint.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
@@ -45,7 +49,7 @@ public class CharacterAttack : MonoBehaviour {
     }
 
     private void OnDrawGizmos() {
-        if (attackHitPoint != null) {
+        if (attackHitPoint != null && _characterStats != null) {
             Gizmos.color = Color.red;
             Gizmos.DrawWireSphere(attackHitPoint.position, _characterStats.GetAttackRange());
         }
