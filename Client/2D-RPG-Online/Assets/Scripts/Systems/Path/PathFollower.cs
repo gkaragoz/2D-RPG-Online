@@ -14,6 +14,7 @@ public class PathFollower : MonoBehaviour {
     public float rotationSpeed = 3.5f;
     public bool rotate = false;
     public bool runOnStart = false;
+    public bool mixPath = false;
     public bool repeatForever = false;
 
     [Header("Debug")]
@@ -31,7 +32,7 @@ public class PathFollower : MonoBehaviour {
 
     private void Start() {
         if (runOnStart) {
-            transform.position = pathEditor.GetPathPoint(_currentPathPointIndex);
+            transform.position = pathEditor.GetRandomPathPoint();
             Run();
         }
     }
@@ -48,7 +49,11 @@ public class PathFollower : MonoBehaviour {
             Rotate();
 
             if (HasReachedToPoint()) {
-                SetNextPoint();
+                if (mixPath) {
+                    SetRandomPoint();
+                } else {
+                    SetNextPoint();
+                }
             }
 
             if (HasCompletedPath()) {
@@ -82,6 +87,10 @@ public class PathFollower : MonoBehaviour {
     
     private void SetNextPoint() {
         _currentPathPointIndex++;
+    }
+
+    private void SetRandomPoint() {
+        _currentPathPointIndex = pathEditor.GetRandomPathIndex();
     }
 
     private bool HasReachedToPoint() {

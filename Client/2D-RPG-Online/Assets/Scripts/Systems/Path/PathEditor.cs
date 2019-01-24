@@ -46,6 +46,14 @@ public class PathEditor : MonoBehaviour {
         return allPaths[index].position;
     }
 
+    public Vector3 GetRandomPathPoint() {
+        return allPaths[Random.Range(0, allPaths.Count)].position;
+    }
+
+    public int GetRandomPathIndex() {
+        return Random.Range(0, allPaths.Count);
+    }
+
     public void SelectDirection(Direction direction) {
         switch (direction) {
             case Direction.Normal:

@@ -10,9 +10,25 @@ public class CharacterAnimator : MonoBehaviour {
     private static readonly int anim_Die = Animator.StringToHash("Die");
 
     private Animator _animator;
+    private Vector3 _currentPosition;
+    private Vector3 _direction;
 
     private void Start() {
         _animator = GetComponentInChildren<Animator>();
+    }
+
+    private void FixedUpdate() {
+        _currentPosition = transform.position;
+    }
+
+    private void LateUpdate() {
+        _direction = transform.position;
+
+        if (_direction != _currentPosition) {
+            _animator.SetFloat(anim_InputMagnitude, .7f, locomotionAnimationSmoothTime, Time.deltaTime);
+        } else {
+            _animator.SetFloat(anim_InputMagnitude, 0f, locomotionAnimationSmoothTime, Time.deltaTime);
+        }
     }
 
     public void OnMove(Vector3 direction) {
