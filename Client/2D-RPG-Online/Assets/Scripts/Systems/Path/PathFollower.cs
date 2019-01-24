@@ -32,6 +32,7 @@ public class PathFollower : MonoBehaviour {
     private void Start() {
         if (runOnStart) {
             transform.position = pathEditor.GetRandomPathPoint();
+            
             Run();
         }
     }
@@ -49,7 +50,7 @@ public class PathFollower : MonoBehaviour {
 
             if (HasReachedToPoint()) {
                 if (mixPath) {
-                    SetRandomPoint();
+                    SetNextPointAsARandom();
                 } else {
                     SetNextPoint();
                 }
@@ -62,6 +63,10 @@ public class PathFollower : MonoBehaviour {
     }
 
     public void Run() {
+        if (mixPath) {
+            SetNextPointAsARandom();
+        }
+
         isRunning = true;
     }
 
@@ -75,6 +80,12 @@ public class PathFollower : MonoBehaviour {
 
     private void Rotate() {
         if (rotate) {
+            Vector3 rotationVector = _desiredPointPosition - _currentPosition;
+
+            if (rotationVector == Vector3.zero) {
+                return;
+            }
+
             Quaternion desiredRotation = Quaternion.LookRotation(_desiredPointPosition - _currentPosition);
             transform.rotation = Quaternion.Slerp(transform.rotation, desiredRotation, rotationSpeed * Time.deltaTime);
         }
@@ -88,7 +99,7 @@ public class PathFollower : MonoBehaviour {
         _currentPathPointIndex++;
     }
 
-    private void SetRandomPoint() {
+    private void SetNextPointAsARandom() {
         _currentPathPointIndex = pathEditor.GetRandomPathIndex();
     }
 
