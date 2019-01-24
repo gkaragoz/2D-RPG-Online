@@ -95,6 +95,7 @@ public class PathEditor : MonoBehaviour {
 
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(PathEditor))]
 public class PathEditorDrawer : Editor {
 
@@ -114,3 +115,4 @@ public class PathEditorDrawer : Editor {
     }
 
 }
+#endif

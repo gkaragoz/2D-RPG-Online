@@ -126,6 +126,7 @@ public class PathFollower : MonoBehaviour {
 
 }
 
+#if UNITY_EDITOR
 [CustomEditor(typeof(PathFollower))]
 public class PathFollowerDrawer : Editor {
 
@@ -148,3 +149,4 @@ public class PathFollowerDrawer : Editor {
     }
 
 }
+#endif
