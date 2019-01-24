@@ -276,9 +276,8 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterMotor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormAI.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormAnimator.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Character\Worm\WormMotor.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO1.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats1.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Destructable.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakePresets.cs" />
