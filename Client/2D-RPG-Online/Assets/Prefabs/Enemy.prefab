@@ -421,8 +421,9 @@ MonoBehaviour:
   rotationSpeed: 3.5
   rotate: 1
   runOnStart: 1
+  mixPath: 1
   repeatForever: 1
-  _currentPathPointIndex: 0
+  _currentPathPointIndex: 1
   isRunning: 0
 --- !u!1 &4159888000945545231
 GameObject:

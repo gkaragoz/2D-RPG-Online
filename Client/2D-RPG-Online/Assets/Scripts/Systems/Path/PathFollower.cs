@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System.Collections;
+using UnityEditor;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour {
@@ -38,26 +39,25 @@ public class PathFollower : MonoBehaviour {
     }
 
     private void Update() {
-        if (!isRunning)
-            return;
+        if (isRunning) {
+            if (!HasPathCompleted) {
+                _currentPosition = transform.position;
+                _desiredPointPosition = pathEditor.GetPathPoint(_currentPathPointIndex);
 
-        if (!HasPathCompleted) {
-            _currentPosition = transform.position;
-            _desiredPointPosition = pathEditor.GetPathPoint(_currentPathPointIndex);
+                Move();
+                Rotate();
 
-            Move();
-            Rotate();
-
-            if (HasReachedToPoint()) {
-                if (mixPath) {
-                    SetNextPointAsARandom();
-                } else {
-                    SetNextPoint();
+                if (HasReachedToPoint()) {
+                    if (mixPath) {
+                        SetNextPointAsARandom();
+                    } else {
+                        SetNextPoint();
+                    }
                 }
-            }
 
-            if (HasCompletedPath()) {
-                OnPathCompleted();
+                if (HasCompletedPath()) {
+                    OnPathCompleted();
+                }
             }
         }
     }
@@ -133,6 +133,16 @@ public class PathFollowerDrawer : Editor {
         PathFollower script = (PathFollower)target;
 
         GUI.backgroundColor = Color.green;
+        if (GUILayout.Button("Start")) {
+            script.Run();
+        }
+
+        GUI.backgroundColor = Color.red;
+        if (GUILayout.Button("Stop")) {
+            script.Stop();
+        }
+
+        GUI.backgroundColor = Color.cyan;
 
         base.OnInspectorGUI();
     }
