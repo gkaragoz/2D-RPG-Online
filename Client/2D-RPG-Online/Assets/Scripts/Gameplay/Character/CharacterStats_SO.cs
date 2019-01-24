@@ -12,6 +12,9 @@ public class CharacterStats_SO : ScriptableObject {
 
     #region Events
 
+    public delegate void DeathEvent();
+    public event DeathEvent onDeath;
+
     public delegate void CurrentExperienceValueChanged();
     public event CurrentExperienceValueChanged onCurrentExperienceValueChanged;
 
@@ -93,13 +96,23 @@ public class CharacterStats_SO : ScriptableObject {
     private BaseStats _baseIntelligence;
 
     [SerializeField]
+    private float _maxHealth = 0;
+    [SerializeField]
     private float _currentHealth = 0;
 
+    [SerializeField]
+    private float _maxMana = 0;
     [SerializeField]
     private float _currentMana = 0;
 
     [SerializeField]
-    private float _speed = 2;
+    private int _attackDamage = 5;
+    [SerializeField]
+    private float _attackSpeed = 1.0f;
+    [SerializeField]
+    private float _movementSpeed = 2;
+    [SerializeField]
+    private float _attackRange = 1;
 
     [SerializeField]
     private int _level = 0;
@@ -190,15 +203,54 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public float Speed {
+    public int AttackDamage {
         get {
-            return _speed;
+            return _attackDamage;
         }
 
         set {
-            _speed = value;
-            if (_speed < 0) {
-                _speed = 0;
+            _attackDamage = value;
+            if (_attackDamage < 0) {
+                _attackDamage = 0;
+            }
+        }
+    }
+
+    public float AttackSpeed {
+        get {
+            return _attackSpeed;
+        }
+
+        set {
+            _attackSpeed = value;
+            if (_attackSpeed < 0) {
+                _attackSpeed = 0;
+            }
+        }
+    }
+
+    public float AttackRange {
+        get {
+            return _attackRange;
+        }
+
+        set {
+            _attackRange = value;
+            if (_attackRange < 0) {
+                _attackRange = 0;
+            }
+        }
+    }
+
+    public float MovementSpeed {
+        get {
+            return _movementSpeed;
+        }
+
+        set {
+            _movementSpeed = value;
+            if (_movementSpeed < 0) {
+                _movementSpeed = 0;
             }
         }
     }
@@ -211,9 +263,7 @@ public class CharacterStats_SO : ScriptableObject {
         set {
             _level = value;
 
-            if (onLevelValueChanged != null) {
-                onLevelValueChanged.Invoke();
-            }
+            onLevelValueChanged?.Invoke();
         }
     }
 
@@ -225,9 +275,7 @@ public class CharacterStats_SO : ScriptableObject {
         set {
             _maxExperience = value;
 
-            if (onMaxExperienceValueChanged != null) {
-                onMaxExperienceValueChanged.Invoke();
-            }
+            onMaxExperienceValueChanged?.Invoke();
         }
     }
 
@@ -239,9 +287,7 @@ public class CharacterStats_SO : ScriptableObject {
         set {
             _currentExperience = value;
 
-            if (onCurrentExperienceValueChanged != null) {
-                onCurrentExperienceValueChanged.Invoke();
-            }
+            onCurrentExperienceValueChanged?.Invoke();
         }
     }
 
@@ -290,6 +336,18 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
+    public void AddAttackDamage(int damageAmount) {
+        AttackDamage += damageAmount;
+    }
+
+    public void AddAttackSpeed(float speedAmount) {
+        AttackSpeed += speedAmount;
+    }
+
+    public void AddAttackRange(float rangeAmount) {
+        AttackRange += rangeAmount;
+    }
+
     public void AddExp(int expAmount) {
         if (CurrentExperience + expAmount >= MaxExperience) {
             int needExpAmount = MaxExperience - CurrentExperience;
@@ -319,7 +377,10 @@ public class CharacterStats_SO : ScriptableObject {
         CurrentHealth -= amount;
 
         if (CurrentHealth <= 0) {
-            //Death();
+            CurrentHealth = 0;
+            Debug.Log("Death");
+
+            onDeath?.Invoke();
         }
     }
 
@@ -329,6 +390,18 @@ public class CharacterStats_SO : ScriptableObject {
         if (CurrentMana <= 0) {
             CurrentMana = 0;
         }
+    }
+
+    public void ReduceAttackDamage(int damageAmount) {
+        AttackDamage -= damageAmount;
+    }
+
+    public void ReduceAttackSpeed(float speedAmount) {
+        AttackSpeed -= speedAmount;
+    }
+
+    public void ReduceAttackRange(float rangeAmount) {
+        AttackRange -= rangeAmount;
     }
 
     public void LooseExp(int expAmount) {
@@ -348,21 +421,22 @@ public class CharacterStats_SO : ScriptableObject {
         //Display death visualization.
     }
 
-    public void SetLevel(int level) {
-        StatsPoints = 0;
+    public void Initialize(PlayerObject playerObject) {
+        //this.StatsPoints = statPoints;
 
-        BaseStrength = new BaseStats(40);
-        BaseDexterity = new BaseStats(40);
-        BaseIntelligence = new BaseStats(20);
+        //this.BaseStrength = new BaseStats(baseStrength);
+        //this.BaseDexterity = new BaseStats(baseDexterity);
+        //this.BaseIntelligence = new BaseStats(baseIntelligence);
 
-        CurrentHealth = MaxHealth;
-        CurrentMana = MaxMana;
+        //this.CurrentHealth = MaxHealth;
+        //this.CurrentMana = MaxMana;
 
-        Speed = 2;
+        this.MovementSpeed = playerObject.MovementSpeed;
 
-        Level = 0;
-        MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
-        CurrentExperience = 0;
+        //this.Level = level;
+        //this.MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
+        //this.MaxExperience = maxExperience;
+        //this.CurrentExperience = currentExperience;
     }
 
     public void LevelUp() {

@@ -6,11 +6,15 @@ public class CharacterController : MonoBehaviour {
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
+    private CharacterUI _characterUI;
+    private CharacterStats _characterStats;
 
     private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
         _characterAnimator = GetComponent<CharacterAnimator>();
+        _characterUI = GetComponent<CharacterUI>();
+        _characterStats = GetComponent<CharacterStats>();
     }
 
     private void Update() {
@@ -18,10 +22,6 @@ public class CharacterController : MonoBehaviour {
         if (Input.GetKeyDown(KeyCode.Space)) {
             _characterAnimator.OnDeath();
         }
-    }
-
-    public void Initiailize(PlayerObject playerData) {
-        _characterMotor.SetMovementSpeed(playerData.MovementSpeed);
     }
 
     public void Attack() {
@@ -36,6 +36,14 @@ public class CharacterController : MonoBehaviour {
             _characterMotor.Move(direction);
             _characterAnimator.OnMove(direction);
         }
+    }
+
+    public void TakeDamage() {
+        _characterAnimator.OnHit();
+    }
+
+    public void OnDeath() {
+        _characterAnimator.OnDeath();
     }
 
     public void Stop() {
@@ -60,6 +68,18 @@ public class CharacterController : MonoBehaviour {
 
             transform.position = newPosition;
         }
+    }
+
+    public void UpdateUI() {
+        _characterUI.UpdateUI();
+    }
+
+    public void ShowControllers() {
+        _characterUI.Show();
+    }
+
+    public void HideControllers() {
+        _characterUI.Hide();
     }
 
 }

@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterStats : MonoBehaviour {
 
@@ -19,12 +17,13 @@ public class CharacterStats : MonoBehaviour {
         if (_characterDefinition_Template != null) {
             characterDefinition = Instantiate(_characterDefinition_Template);
         }
-        if (characterDefinition.isPlayer) {
-            characterDefinition.SetLevel(0);
-        }
     }
 
     #endregion
+
+    public void Initialize(PlayerObject playerObject) {
+        characterDefinition.Initialize(playerObject);
+    }
 
     private void Update() {
         if (Input.GetKeyDown(KeyCode.Keypad1)) {
@@ -74,6 +73,18 @@ public class CharacterStats : MonoBehaviour {
         characterDefinition.ApplyMana(manaAmount);
     }
 
+    public void AddAttackDamage(int damageAmount) {
+        characterDefinition.AddAttackDamage(damageAmount);
+    }
+
+    public void AddAttackSpeed(int speedAmount) {
+        characterDefinition.AddAttackSpeed(speedAmount);
+    }
+
+    public void AddAttackRange(int speedAmount) {
+        characterDefinition.AddAttackRange(speedAmount);
+    }
+
     public void AddExp(int expAmount) {
         characterDefinition.AddExp(expAmount);
     }
@@ -88,6 +99,18 @@ public class CharacterStats : MonoBehaviour {
 
     public void TakeMana(float amount) {
         characterDefinition.TakeMana(amount);
+    }
+
+    public void ReduceAttackDamage(int amount) {
+        characterDefinition.ReduceAttackDamage(amount);
+    }
+
+    public void ReduceAttackSpeed(int amount) {
+        characterDefinition.ReduceAttackSpeed(amount);
+    }
+
+    public void ReduceAttackRange(float amount) {
+        characterDefinition.ReduceAttackRange(amount);
     }
 
     public void LooseExp(int amount) {
@@ -138,16 +161,28 @@ public class CharacterStats : MonoBehaviour {
         return characterDefinition.CurrentHealth;
     }
 
-    public float GetMaxStamina() {
+    public float GetMaxMana() {
         return characterDefinition.MaxMana;
     }
 
-    public float GetCurrentStamina() {
+    public float GetCurrentMana() {
         return characterDefinition.CurrentMana;
     }
 
-    public float GetSpeed() {
-        return characterDefinition.Speed;
+    public int GetAttackDamage() {
+        return characterDefinition.AttackDamage;
+    }
+
+    public float GetAttackSpeed() {
+        return characterDefinition.AttackSpeed;
+    }
+
+    public float GetMovementSpeed() {
+        return characterDefinition.MovementSpeed;
+    }
+
+    public float GetAttackRange() {
+        return characterDefinition.AttackRange;
     }
 
     public int GetLevel() {

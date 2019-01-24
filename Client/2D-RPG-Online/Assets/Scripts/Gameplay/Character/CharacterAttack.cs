@@ -4,13 +4,7 @@ using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour {
 
-    [Header("Initialization")]
-    public float attackSpeed = 1f;
-    public float attackRangeX = 0.35f;
-    public float attackRangeY = 0.35f;
-
     public LayerMask attackables;
-
     public Transform attackHitPoint;
 
     public bool IsAttacking { get; private set; }
@@ -25,13 +19,14 @@ public class CharacterAttack : MonoBehaviour {
     [Utils.ReadOnly]
     private float _nextAttackTime;
 
-    public void Attack() {
-        StartCoroutine(IAttack());
+    private CharacterStats _characterStats;
+
+    private void Start() {
+        _characterStats = GetComponent<CharacterStats>();
     }
 
-    public void OnHit() {
-        Debug.Log("On Hit.");
-        IsAttacking = false;
+    public void Attack() {
+        StartCoroutine(IAttack());
     }
 
     private IEnumerator IAttack() {
@@ -39,25 +34,20 @@ public class CharacterAttack : MonoBehaviour {
             AudioManager.instance.Play("swing" + Random.Range(1, 3));
         }
 
-        _nextAttackTime = Time.time + attackSpeed;
-
-        //Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
-        //for (int ii = 0; ii < objectsToDamage.Length; ii++) {
-        //    //Run on damage function in the victim side.
-        //    objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
-        //}
+        _nextAttackTime = Time.time + _characterStats.GetAttackSpeed();
+        //objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
 
         IsAttacking = true;
 
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
-        OnHit();
+        IsAttacking = false;
     }
 
     private void OnDrawGizmos() {
         if (attackHitPoint != null) {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackHitPoint.position, new Vector3(attackRangeX, attackRangeY, 1f));
+            Gizmos.DrawWireSphere(attackHitPoint.position, _characterStats.GetAttackRange());
         }
     }
 

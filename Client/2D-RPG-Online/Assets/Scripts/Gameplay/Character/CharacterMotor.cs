@@ -3,8 +3,7 @@ using UnityEngine;
 
 public class CharacterMotor : MonoBehaviour {
 
-    [Header("Initialization")]
-    public float speed = 3f;
+    private CharacterStats _characterStats;
 
     public bool IsMoving {
         get {
@@ -18,13 +17,9 @@ public class CharacterMotor : MonoBehaviour {
         _rb = GetComponent<Rigidbody>();
     }
 
-    public void SetMovementSpeed(float speed) {
-        this.speed = speed;
-    }
-
     public void Move(Vector3 direction) {
         _rb.transform.SetPositionAndRotation(
-                _rb.transform.position + (direction * speed * Time.fixedDeltaTime),
+                _rb.transform.position + (direction * _characterStats.GetMovementSpeed() * Time.fixedDeltaTime),
                 Quaternion.LookRotation(direction)
         );
 

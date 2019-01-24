@@ -2,11 +2,12 @@
 using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : MonoBehaviour, IAttackable {
 
     public class PositionEntry {
         public Vector3 vector3;
@@ -26,6 +27,12 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public int AttackDamage {
+        get {
+            return _characterStats.GetAttackDamage();
+        }
+    }
+
     public Vector3 CurrentInput { get; private set; }
     public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
     public int Oid { get { return _playerData.Oid; } }
@@ -39,26 +46,29 @@ public class PlayerController : MonoBehaviour {
     [Utils.ReadOnly]
     private float _xInput, _zInput;
     [SerializeField]
-    private Joystick _joystick;
-    [SerializeField]
-    private Button _btnAttack;
-    [SerializeField]
     private bool _isOfflineMode;
+    [SerializeField]
+    private GameObject _HUDPrefab;
 
     private bool _isMe;
     private CharacterController _characterController;
-    private PlayerHUD _playerHUD;
     private PlayerObject _playerData;
+    private CharacterStats _characterStats;
+    private Joystick _joystick;
+    private Button _btnAttack;
 
     private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
-
     private int _lastProcessedInputSequenceID;
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
-        _playerHUD = GetComponent<PlayerHUD>();
+        _characterStats = GetComponent<CharacterStats>();
+    }
+
+    private void Start() {
+        CreateHUD();
     }
 
     private void FixedUpdate() {
@@ -90,27 +100,25 @@ public class PlayerController : MonoBehaviour {
             }
         }
 
-        UpdateHUD();
+        //DEBUG PURPOSES
+        UpdatePlayerInputsUI();
     }
 
     public void Initialize(PlayerObject playerData) {
         this._playerData = playerData;
-
-        _playerHUD.SetName(_playerData.Name);
-
-        InitializeCharacter(_playerData);
+        this._characterStats.Initialize(playerData);
 
         if (_playerData.Name == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;
+
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
-            _playerHUD.Hide();
+            HideControllers();
         }
     }
 
     public void AddPositionToBuffer(double timestamp, Vector3 position, int inputSequenceID) {
-
         _positionBuffer.Add(new PositionEntry(timestamp, position, inputSequenceID));
     }
 
@@ -134,8 +142,12 @@ public class PlayerController : MonoBehaviour {
         this._joystick = joystick;
     }
 
-    public void InitializeCharacter(PlayerObject playerData) {
-        _characterController.Initiailize(playerData);
+    public void ShowControllers() {
+        _characterController.ShowControllers();
+    }
+
+    public void HideControllers() {
+        _characterController.HideControllers();
     }
 
     public void Attack() {
@@ -166,8 +178,23 @@ public class PlayerController : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    private void UpdateHUD() {
-        _playerHUD.UpdateHUD(PlayerInputs.Count);
+    private void CreateHUD() {
+        GameObject HUDObject = Instantiate(_HUDPrefab, transform);
+        _joystick = HUDObject.GetComponentInChildren<FixedJoystick>();
+        _btnAttack = HUDObject.transform.Find("btnAttack").GetComponent<Button>();
+
+        _btnAttack.onClick.AddListener(Attack);
+    }
+
+    /// <summary>
+    /// DEBUG
+    /// </summary>
+    /// 
+    [SerializeField]
+    private TextMeshProUGUI _txtNonAckPlayerInputs;
+
+    private void UpdatePlayerInputsUI() {
+        _txtNonAckPlayerInputs.text = PlayerInputs.Count.ToString();
     }
 
 }

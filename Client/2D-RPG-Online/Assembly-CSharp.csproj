@@ -276,8 +276,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterMotor.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO1.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats1.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterUI.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Destructable.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakePresets.cs" />
@@ -285,9 +284,10 @@
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\Gameplay\FadeInOut.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Menu.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\NPC\IAttackable.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\NPC\NPCController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
-    <Compile Include="Assets\Scripts\Gameplay\PlayerHUD.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Portal.cs" />
     <Compile Include="Assets\Scripts\Gameplay\WorldSpaceBillboard.cs" />
     <Compile Include="Assets\Scripts\HUDFPS.cs" />
