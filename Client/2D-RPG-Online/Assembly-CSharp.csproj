@@ -318,6 +318,8 @@
     <Compile Include="Assets\Scripts\Systems\Log\LogFile.cs" />
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Menu\MenuManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\Path\PathEditor.cs" />
+    <Compile Include="Assets\Scripts\Systems\Path\PathFollower.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupLoading.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupMessage.cs" />

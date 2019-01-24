@@ -1,0 +1,91 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+
+public class PathEditor : MonoBehaviour {
+
+    public enum Direction {
+        Normal,
+        Reversed
+    }
+
+    [Header("Initialization")]
+    public bool isRectTransform = false;
+    public Color rayColor = Color.white;
+    public List<Transform> allPaths = new List<Transform>();
+
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private bool _reversed = false;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Transform[] _array;
+
+    private void Start() {
+        _reversed = false;
+    }
+
+    private void OnDrawGizmos() {
+        Gizmos.color = rayColor;
+
+        FillPathList();
+
+        for (int ii = 0; ii < allPaths.Count; ii++) {
+            Vector3 currentPosition = allPaths[ii].position;
+            if (ii > 0) {
+                Vector3 previousPosition = allPaths[ii - 1].position;
+                Gizmos.DrawLine(previousPosition, currentPosition);
+                Gizmos.DrawWireSphere(currentPosition, 0.3f);
+            }
+        }
+    }
+
+    public Vector3 GetPathPoint(int index) {
+        return allPaths[index].position;
+    }
+
+    public void SelectDirection(Direction direction) {
+        switch (direction) {
+            case Direction.Normal:
+            _reversed = false;
+            break;
+            case Direction.Reversed:
+            _reversed = true;
+            break;
+            default:
+            _reversed = false;
+            break;
+        }
+
+        FillPathList();
+    }
+
+    private void FillPathList() {
+        if (_array == null) {
+            if (isRectTransform) {
+                _array = GetComponentsInChildren<RectTransform>();
+            } else {
+                _array = GetComponentsInChildren<Transform>();
+            }
+        }
+
+        allPaths.Clear();
+
+        if (_reversed) {
+            for (int ii = _array.Length - 1; ii >= 0; ii--) {
+                if (_array[ii] != this.transform) {
+                    allPaths.Add(_array[ii]);
+                }
+            }
+        } else {
+            foreach (Transform pathPoint in _array) {
+                if (pathPoint != this.transform) {
+                    allPaths.Add(pathPoint);
+                }
+            }
+        }
+    }
+
+}
