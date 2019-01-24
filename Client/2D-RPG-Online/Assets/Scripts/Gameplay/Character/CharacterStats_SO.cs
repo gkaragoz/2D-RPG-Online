@@ -90,29 +90,16 @@ public class CharacterStats_SO : ScriptableObject {
     [SerializeField]
     private BaseStats _baseDexterity;
     [SerializeField]
-    private BaseStats _baseConstitution;
-    [SerializeField]
-    private BaseStats _baseAgility;
-    [SerializeField]
     private BaseStats _baseIntelligence;
-    [SerializeField]
-    private BaseStats _baseCharisma;
 
     [SerializeField]
     private float _currentHealth = 0;
 
     [SerializeField]
-    private float _currentStamina = 0;
-
-    [SerializeField]
-    private float _currentWeight = 0;
+    private float _currentMana = 0;
 
     [SerializeField]
     private float _speed = 2;
-    [SerializeField]
-    private float _angularSpeed = 999;
-    [SerializeField]
-    private float _acceleration = 8;
 
     [SerializeField]
     private int _level = 0;
@@ -120,11 +107,6 @@ public class CharacterStats_SO : ScriptableObject {
     private int _maxExperience = 0;
     [SerializeField]
     private int _currentExperience = 0;
-
-    [SerializeField]
-    private float _fame = 0;
-    [SerializeField]
-    private float _honor = 0;
 
     #endregion
 
@@ -160,26 +142,6 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public BaseStats BaseConstitution {
-        get {
-            return _baseConstitution;
-        }
-
-        set {
-            _baseConstitution = value;
-        }
-    }
-
-    public BaseStats BaseAgility {
-        get {
-            return _baseAgility;
-        }
-
-        set {
-            _baseAgility = value;
-        }
-    }
-
     public BaseStats BaseIntelligence {
         get {
             return _baseIntelligence;
@@ -187,16 +149,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _baseIntelligence = value;
-        }
-    }
-
-    public BaseStats BaseCharisma {
-        get {
-            return _baseCharisma;
-        }
-
-        set {
-            _baseCharisma = value;
         }
     }
 
@@ -219,38 +171,22 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public float MaxStamina {
+    public float MaxMana {
         get {
-            return BaseConstitution.Value * 5;
+            return BaseIntelligence.Value * 5;
         }
     }
 
-    public float CurrentStamina {
+    public float CurrentMana {
         get {
-            if (_currentStamina > MaxStamina)
-                return MaxStamina;
+            if (_currentMana > MaxMana)
+                return MaxMana;
             else
-                return _currentStamina;
+                return _currentMana;
         }
 
         set {
-            _currentStamina = value;
-        }
-    }
-
-    public float MaxWeight {
-        get {
-            return BaseStrength.Value;
-        }
-    }
-
-    public float CurrentWeight {
-        get {
-            return _currentWeight;
-        }
-
-        set {
-            _currentWeight = value;
+            _currentMana = value;
         }
     }
 
@@ -263,32 +199,6 @@ public class CharacterStats_SO : ScriptableObject {
             _speed = value;
             if (_speed < 0) {
                 _speed = 0;
-            }
-        }
-    }
-
-    public float AngularSpeed {
-        get {
-            return _angularSpeed;
-        }
-
-        set {
-            _angularSpeed = value;
-            if (_angularSpeed < 0) {
-                _angularSpeed = 0;
-            }
-        }
-    }
-
-    public float Acceleration {
-        get {
-            return _acceleration;
-        }
-
-        set {
-            _acceleration = value;
-            if (_acceleration < 0) {
-                _acceleration = 0;
             }
         }
     }
@@ -335,26 +245,6 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public float Fame {
-        get {
-            return _fame;
-        }
-
-        set {
-            _fame = value;
-        }
-    }
-
-    public float Honor {
-        get {
-            return _honor;
-        }
-
-        set {
-            _honor = value;
-        }
-    }
-
     #endregion
 
     #region Stat Increasers
@@ -377,31 +267,10 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public void IncreaseConstitution() {
-        if (StatsPoints >= BaseConstitution.RequiredStatsPoints) {
-            SpendStatsPoints(BaseConstitution.RequiredStatsPoints);
-            BaseConstitution.Increase();
-        }
-    }
-
-    public void IncreaseAgility() {
-        if (StatsPoints >= BaseAgility.RequiredStatsPoints) {
-            SpendStatsPoints(BaseAgility.RequiredStatsPoints);
-            BaseAgility.Increase();
-        }
-    }
-
     public void IncreaseIntelligence() {
         if (StatsPoints >= BaseIntelligence.RequiredStatsPoints) {
             SpendStatsPoints(BaseIntelligence.RequiredStatsPoints);
             BaseIntelligence.Increase();
-        }
-    }
-
-    public void IncreaseCharisma() {
-        if (StatsPoints >= BaseCharisma.RequiredStatsPoints) {
-            SpendStatsPoints(BaseCharisma.RequiredStatsPoints);
-            BaseCharisma.Increase();
         }
     }
 
@@ -413,19 +282,11 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public void ApplyStamina(float staminaAmount) {
-        if ((CurrentStamina + staminaAmount) > MaxStamina) {
-            CurrentStamina = MaxStamina;
+    public void ApplyMana(float manaAmount) {
+        if ((CurrentMana + manaAmount) > MaxMana) {
+            CurrentMana = MaxMana;
         } else {
-            CurrentStamina += staminaAmount;
-        }
-    }
-
-    public void AddWeight(float weightAmount) {
-        if ((CurrentWeight + weightAmount) > MaxWeight) {
-            CurrentWeight = MaxWeight;
-        } else {
-            CurrentWeight += weightAmount;
+            CurrentMana += manaAmount;
         }
     }
 
@@ -462,19 +323,11 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public void TakeStamina(float amount) {
-        CurrentStamina -= amount;
+    public void TakeMana(float amount) {
+        CurrentMana -= amount;
 
-        if (CurrentStamina <= 0) {
-            CurrentStamina = 0;
-        }
-    }
-
-    public void ReleaseWeight(float amount) {
-        CurrentWeight -= amount;
-
-        if (CurrentWeight <= 0) {
-            CurrentWeight = 0;
+        if (CurrentMana <= 0) {
+            CurrentMana = 0;
         }
     }
 
@@ -500,25 +353,16 @@ public class CharacterStats_SO : ScriptableObject {
 
         BaseStrength = new BaseStats(40);
         BaseDexterity = new BaseStats(40);
-        BaseConstitution = new BaseStats(20);
-        BaseAgility = new BaseStats(20);
         BaseIntelligence = new BaseStats(20);
-        BaseCharisma = new BaseStats(20);
 
         CurrentHealth = MaxHealth;
-        CurrentStamina = MaxStamina;
-        CurrentWeight = 0;
+        CurrentMana = MaxMana;
 
         Speed = 2;
-        AngularSpeed = 999;
-        Acceleration = 8;
 
         Level = 0;
         MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
         CurrentExperience = 0;
-
-        Fame = 0;
-        Honor = 0;
     }
 
     public void LevelUp() {

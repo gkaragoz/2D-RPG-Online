@@ -62,32 +62,16 @@ public class CharacterStats : MonoBehaviour {
         characterDefinition.IncreaseDexterity();
     }
 
-    public void IncreaseConstitution() {
-        characterDefinition.IncreaseConstitution();
-    }
-
-    public void IncreaseAgility() {
-        characterDefinition.IncreaseAgility();
-    }
-
     public void IncreaseIntelligence() {
         characterDefinition.IncreaseIntelligence();
-    }
-
-    public void IncreaseCharisma() {
-        characterDefinition.IncreaseCharisma();
     }
 
     public void ApplyHealth(float healthAmount) {
         characterDefinition.ApplyHealth(healthAmount);
     }
 
-    public void ApplyStamina(float staminaAmount) {
-        characterDefinition.ApplyStamina(staminaAmount);
-    }
-
-    public void AddWeight(float weightAmount) {
-        characterDefinition.AddWeight(weightAmount);
+    public void ApplyMana(float manaAmount) {
+        characterDefinition.ApplyMana(manaAmount);
     }
 
     public void AddExp(int expAmount) {
@@ -102,12 +86,8 @@ public class CharacterStats : MonoBehaviour {
         characterDefinition.TakeDamage(amount);
     }
 
-    public void TakeStamina(float amount) {
-        characterDefinition.TakeStamina(amount);
-    }
-
-    public void ReleaseWeight(float amount) {
-        characterDefinition.ReleaseWeight(amount);
+    public void TakeMana(float amount) {
+        characterDefinition.TakeMana(amount);
     }
 
     public void LooseExp(int amount) {
@@ -117,13 +97,6 @@ public class CharacterStats : MonoBehaviour {
     #endregion
 
     #region Reporters
-    public bool CanCarryThisWeight(float weight) {
-        if (weight + GetCurrentWeight() > GetMaxWeight()) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     public bool CanIncreaseStrength() {
         return GetStatsPoints() >= characterDefinition.BaseStrength.RequiredStatsPoints ? true : false;
@@ -133,20 +106,8 @@ public class CharacterStats : MonoBehaviour {
         return GetStatsPoints() >= characterDefinition.BaseDexterity.RequiredStatsPoints ? true : false;
     }
 
-    public bool CanIncreaseConstitution() {
-        return GetStatsPoints() >= characterDefinition.BaseConstitution.RequiredStatsPoints ? true : false;
-    }
-
-    public bool CanIncreaseAgility() {
-        return GetStatsPoints() >= characterDefinition.BaseAgility.RequiredStatsPoints ? true : false;
-    }
-
     public bool CanIncreaseIntelligence() {
         return GetStatsPoints() >= characterDefinition.BaseIntelligence.RequiredStatsPoints ? true : false;
-    }
-
-    public bool CanIncreaseCharisma() {
-        return GetStatsPoints() >= characterDefinition.BaseCharisma.RequiredStatsPoints ? true : false;
     }
 
     public bool HasStatsPoints() {
@@ -165,20 +126,8 @@ public class CharacterStats : MonoBehaviour {
         return characterDefinition.BaseDexterity.Value;
     }
 
-    public int GetBaseConstitution() {
-        return characterDefinition.BaseConstitution.Value;
-    }
-
-    public int GetBaseAgility() {
-        return characterDefinition.BaseAgility.Value;
-    }
-
     public int GetBaseIntelligence() {
         return characterDefinition.BaseIntelligence.Value;
-    }
-
-    public int GetBaseCharisma() {
-        return characterDefinition.BaseCharisma.Value;
     }
 
     public float GetMaxHealth() {
@@ -190,31 +139,15 @@ public class CharacterStats : MonoBehaviour {
     }
 
     public float GetMaxStamina() {
-        return characterDefinition.MaxStamina;
+        return characterDefinition.MaxMana;
     }
 
     public float GetCurrentStamina() {
-        return characterDefinition.CurrentStamina;
-    }
-
-    public float GetMaxWeight() {
-        return characterDefinition.MaxWeight;
-    }
-
-    public float GetCurrentWeight() {
-        return characterDefinition.CurrentWeight;
+        return characterDefinition.CurrentMana;
     }
 
     public float GetSpeed() {
         return characterDefinition.Speed;
-    }
-    
-    public float GetAngularSpeed() {
-        return characterDefinition.AngularSpeed;
-    }
-
-    public float GetAcceleration() {
-        return characterDefinition.Acceleration;
     }
 
     public int GetLevel() {
@@ -227,14 +160,6 @@ public class CharacterStats : MonoBehaviour {
 
     public int GetCurrentExperience() {
         return characterDefinition.CurrentExperience;
-    }
-
-    public float GetFame() {
-        return characterDefinition.Fame;
-    }
-
-    public float GetHonor() {
-        return characterDefinition.Honor;
     }
 
     #endregion
