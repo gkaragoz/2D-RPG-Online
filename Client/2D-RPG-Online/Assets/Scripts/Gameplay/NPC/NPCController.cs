@@ -10,10 +10,12 @@ public class NPCController : MonoBehaviour, IAttackable {
 
     private CharacterStats _characterStats;
     private CharacterController _characterController;
+    private PathFollower _pathFollower;
 
     private void Start() {
         _characterStats = GetComponent<CharacterStats>();
         _characterController = GetComponent<CharacterController>();
+        _pathFollower = GetComponent<PathFollower>();
 
         _characterStats.characterDefinition.onDeath += OnDeath;
     }
@@ -26,6 +28,7 @@ public class NPCController : MonoBehaviour, IAttackable {
     }
 
     public void OnDeath() {
+        _pathFollower.Stop();
         _characterController.OnDeath();
 
         UpdateUI();
