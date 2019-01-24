@@ -1,6 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
 public class PathEditor : MonoBehaviour {
@@ -70,16 +69,14 @@ public class PathEditor : MonoBehaviour {
         FillPathList();
     }
 
-    private void FillPathList() {
-        if (_array == null) {
-            if (isRectTransform) {
-                _array = GetComponentsInChildren<RectTransform>();
-            } else {
-                _array = GetComponentsInChildren<Transform>();
-            }
+    public void FillPathList() {
+        if (isRectTransform) {
+            _array = GetComponentsInChildren<RectTransform>();
+        } else {
+            _array = GetComponentsInChildren<Transform>();
         }
 
-        allPaths.Clear();
+        allPaths = new List<Transform>();
 
         if (_reversed) {
             for (int ii = _array.Length - 1; ii >= 0; ii--) {
@@ -94,6 +91,26 @@ public class PathEditor : MonoBehaviour {
                 }
             }
         }
+    }
+
+}
+
+[CustomEditor(typeof(PathEditor))]
+public class PathEditorDrawer : Editor {
+
+    public override void OnInspectorGUI() {
+        PathEditor script = (PathEditor)target;
+
+        GUI.backgroundColor = Color.green;
+
+        if (GUILayout.Button("Redraw Path")) {
+            script.FillPathList();
+
+            EditorWindow view = EditorWindow.GetWindow<SceneView>();
+            view.Repaint();
+        }
+
+        base.OnInspectorGUI();
     }
 
 }

@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using UnityEditor;
 using UnityEngine;
 
 public class PathFollower : MonoBehaviour {
@@ -112,6 +111,19 @@ public class PathFollower : MonoBehaviour {
         if (onPathCompleted != null) {
             onPathCompleted.Invoke();
         }
+    }
+
+}
+
+[CustomEditor(typeof(PathFollower))]
+public class PathFollowerDrawer : Editor {
+
+    public override void OnInspectorGUI() {
+        PathFollower script = (PathFollower)target;
+
+        GUI.backgroundColor = Color.green;
+
+        base.OnInspectorGUI();
     }
 
 }
