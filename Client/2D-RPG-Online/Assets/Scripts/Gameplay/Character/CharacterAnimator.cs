@@ -4,9 +4,11 @@ public class CharacterAnimator : MonoBehaviour {
 
     public float locomotionAnimationSmoothTime = 0.1f;
 
+    private static readonly int anim_OnHit = Animator.StringToHash("OnHit");
     private static readonly int anim_BasicAttack = Animator.StringToHash("BasicAttack");
     private static readonly int anim_InputMagnitude = Animator.StringToHash("InputMagnitude");
     private static readonly int anim_Die = Animator.StringToHash("Die");
+
     private Animator _animator;
 
     private void Start() {
@@ -20,7 +22,11 @@ public class CharacterAnimator : MonoBehaviour {
     public void OnStop() {
         _animator.SetFloat(anim_InputMagnitude, 0, locomotionAnimationSmoothTime, Time.deltaTime);
     }
-    
+
+    public void OnHit() {
+        _animator.SetTrigger(anim_OnHit);
+    }
+
     public void OnAttack() {
         _animator.SetTrigger(anim_BasicAttack);
     }

@@ -269,6 +269,7 @@
     <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\CameraController.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Character\AnimationBehaviour\OnHitBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAnimator.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAttack.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterController.cs" />
