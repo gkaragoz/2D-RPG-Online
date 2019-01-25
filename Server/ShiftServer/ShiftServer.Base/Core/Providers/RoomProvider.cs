@@ -243,6 +243,8 @@ namespace ShiftServer.Base.Core
                                 Oid = cl.CurrentObject.ObjectID,
                                 AttackSpeed = (float)cl.CurrentObject.AttackSpeed,
                                 MovementSpeed = (float)cl.CurrentObject.MovementSpeed,
+                                AttackDamage = cl.CurrentObject.AttackDamage,
+                                AttackRange = (float)cl.CurrentObject.AttackRange,
                                 CurrentHp = cl.CurrentObject.CurrentHP,
                                 MaxHp = cl.CurrentObject.MaxHP,
                                 CurrentMana = cl.CurrentObject.CurrentMana,
