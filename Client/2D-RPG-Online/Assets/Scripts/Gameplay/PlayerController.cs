@@ -63,12 +63,14 @@ public class PlayerController : MonoBehaviour, IAttackable {
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
-    private void Start() {
+    private void Awake() {
         _characterController = GetComponent<CharacterController>();
         _characterStats = GetComponent<CharacterStats>();
 
         CreateHUD();
+    }
 
+    private void Start() {
         _characterStats.characterDefinition.onDeath += OnDeath;
     }
 

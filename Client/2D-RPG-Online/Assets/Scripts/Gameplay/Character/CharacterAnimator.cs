@@ -22,13 +22,13 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     private void LateUpdate() {
-        _direction = transform.position;
+        //_direction = transform.position;
 
-        if (_direction != _currentPosition) {
-            _animator.SetFloat(anim_InputMagnitude, .7f, locomotionAnimationSmoothTime, Time.deltaTime);
-        } else {
-            _animator.SetFloat(anim_InputMagnitude, 0f, locomotionAnimationSmoothTime, Time.deltaTime);
-        }
+        //if (_direction != _currentPosition) {
+        //    _animator.SetFloat(anim_InputMagnitude, .7f, locomotionAnimationSmoothTime, Time.deltaTime);
+        //} else {
+        //    _animator.SetFloat(anim_InputMagnitude, 0f, locomotionAnimationSmoothTime, Time.deltaTime);
+        //}
     }
 
     public void OnMove(Vector3 direction) {

@@ -24,9 +24,9 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        _characterAttack.SearchTarget();
+        //_characterAttack.SearchTarget();
 
-        Attack();
+        //Attack();
     }
 
     public void Attack() {
