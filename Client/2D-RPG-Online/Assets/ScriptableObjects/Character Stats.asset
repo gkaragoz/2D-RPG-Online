@@ -23,10 +23,10 @@ MonoBehaviour:
   _baseIntelligence:
     _value: 0
     _requiredStatsPoints: 0
-  _maxHealth: 0
-  _currentHealth: 0
-  _maxMana: 0
-  _currentMana: 0
+  _maxHealth: 150
+  _currentHealth: 150
+  _maxMana: 150
+  _currentMana: 150
   _attackDamage: 50
   _attackSpeed: 0.5
   _movementSpeed: 2

@@ -11,13 +11,31 @@ public class CharacterAttack : MonoBehaviour {
 
     public bool CanAttack {
         get {
-            return Time.time > _nextAttackTime && IsTargetInRange() && !IsAttacking;
+            if (Time.time > _nextAttackTime) {
+                if (!IsAttacking) {
+                    if (!HasTargetDied) {
+                        if (IsTargetInRange()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
 
     public bool HasTarget {
         get {
             return Target == null ? false : true;
+        }
+    }
+
+    public bool HasTargetDied {
+        get {
+            if (HasTarget) {
+                return _target.CharacterController.IsDeath;
+            }
+            return false;
         }
     }
 
@@ -72,6 +90,10 @@ public class CharacterAttack : MonoBehaviour {
         _nextAttackTime = Time.time + _characterStats.GetAttackSpeed();
 
         IsAttacking = true;
+
+        yield return new WaitForSeconds(0.3f);
+
+        _target.TakeDamage(_characterStats.GetAttackDamage());
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 

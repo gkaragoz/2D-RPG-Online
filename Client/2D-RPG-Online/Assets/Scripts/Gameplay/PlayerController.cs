@@ -39,6 +39,8 @@ public class PlayerController : MonoBehaviour, IAttackable {
 
     public int LastProcessedInputSequenceID { get { return _lastProcessedInputSequenceID; } set { _lastProcessedInputSequenceID = value; } }
 
+    public CharacterController CharacterController { get { return _characterController; } }
+
     [SerializeField]
     [Utils.ReadOnly]
     private float _xInput, _zInput;
@@ -61,13 +63,13 @@ public class PlayerController : MonoBehaviour, IAttackable {
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _nonAckInputIndex = 0;
 
-    private void Awake() {
+    private void Start() {
         _characterController = GetComponent<CharacterController>();
         _characterStats = GetComponent<CharacterStats>();
-    }
 
-    private void Start() {
         CreateHUD();
+
+        _characterStats.characterDefinition.onDeath += OnDeath;
     }
 
     private void FixedUpdate() {
@@ -151,35 +153,44 @@ public class PlayerController : MonoBehaviour, IAttackable {
     }
 
     public void ShowControllers() {
-        _characterController.ShowControllers();
+        CharacterController.ShowControllers();
     }
 
     public void HideControllers() {
-        _characterController.HideControllers();
+        CharacterController.HideControllers();
+    }
+
+    public void TakeDamage(int damage) {
+        _characterStats.TakeDamage(damage);
+        CharacterController.TakeDamage();
+    }
+
+    public void OnDeath() {
+        CharacterController.OnDeath();
     }
 
     public void Attack() {
-        _characterController.Attack();
+        CharacterController.Attack();
     }
 
     public void Move() {
-        _characterController.Move(CurrentInput);
+        CharacterController.Move(CurrentInput);
     }
 
     public void Move(Vector3 input) {
-        _characterController.Move(input);
+        CharacterController.Move(input);
     }
 
     public void Stop() {
-        _characterController.Stop();
+        CharacterController.Stop();
     }
 
     public void Rotate() {
-        _characterController.Rotate(CurrentInput);
+        CharacterController.Rotate(CurrentInput);
     }
 
     public void ToNewPosition(Vector3 newPosition) {
-        _characterController.ToNewPosition(newPosition);
+        CharacterController.ToNewPosition(newPosition);
     }
 
     public void Destroy() {

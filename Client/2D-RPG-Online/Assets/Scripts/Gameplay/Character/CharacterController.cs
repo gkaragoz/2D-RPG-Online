@@ -3,13 +3,19 @@
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
 
+    public bool IsDeath { get { return _isDeath; } }
+
+    [SerializeField]
+    [Utils.ReadOnly]
+    private bool _isDeath;
+
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
     private CharacterUI _characterUI;
     private CharacterStats _characterStats;
 
-    private void Awake() {
+    private void Start() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
         _characterAnimator = GetComponent<CharacterAnimator>();
@@ -24,7 +30,7 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Attack() {
-        if (_characterAttack.CanAttack) {
+        if (_characterAttack.CanAttack && !_isDeath) {
             _characterMotor.LookTo(_characterAttack.TargetPosition);
             _characterAttack.Attack();
             _characterAnimator.OnAttack();
@@ -32,16 +38,21 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Move(Vector3 direction) {
-        _characterMotor.Move(direction);
-        _characterAnimator.OnMove(direction);
+        if (!_isDeath) {
+            _characterMotor.Move(direction);
+            _characterAnimator.OnMove(direction);
+        }
     }
 
     public void TakeDamage() {
         _characterAnimator.OnHit();
+        _characterUI.UpdateUI();
     }
 
     public void OnDeath() {
+        _isDeath = true;
         _characterAnimator.OnDeath();
+        _characterUI.UpdateUI();
     }
 
     public void Stop() {
