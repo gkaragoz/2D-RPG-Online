@@ -25,11 +25,11 @@ public class CharacterUI : Menu {
         SetManaBar();
     }
 
-    public void SetName() {
+    private void SetName() {
         _txtName.text = _characterStats.name;
     }
 
-    public void SetHealthBar() {
+    private void SetHealthBar() {
         _imgHealthBar.fillAmount = (_characterStats.GetCurrentHealth() / _characterStats.GetMaxHealth());
 
         if (_imgHealthBar.fillAmount == 0) {
@@ -38,7 +38,7 @@ public class CharacterUI : Menu {
         }
     }
 
-    public void SetManaBar() {
+    private void SetManaBar() {
         _imgManaBar.fillAmount = (_characterStats.GetCurrentMana() / _characterStats.GetMaxMana());
     }
 
