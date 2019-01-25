@@ -28,6 +28,8 @@ public class RoomManager : Menu {
     public Action onRoomCreated;
     public Action onRoomJoined;
 
+    public List<PlayerController> OtherPlayerControllers { get { return _otherPlayerControllers; } }
+
     [SerializeField]
     private GameObject _playerPrefab;
     [SerializeField]
@@ -82,8 +84,8 @@ public class RoomManager : Menu {
             var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
             var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
 
-            for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
-                PlayerController entity = _otherPlayerControllers[ii];
+            for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
+                PlayerController entity = OtherPlayerControllers[ii];
 
                 // Drop older positions.
                 while (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[1].updateTime <= renderTimestamp) {
@@ -197,7 +199,7 @@ public class RoomManager : Menu {
         PlayerController playerController = Instantiate(_playerPrefab, new Vector2(playerInfo.CurrentGObject.PosX, playerInfo.CurrentGObject.PosY), Quaternion.identity).GetComponent<PlayerController>();
         playerController.Initialize(playerInfo.CurrentGObject);
 
-        _otherPlayerControllers.Add(playerController);
+        OtherPlayerControllers.Add(playerController);
     }
 
     private void OnRoomUpdated(ShiftServerData data) {
@@ -226,16 +228,16 @@ public class RoomManager : Menu {
             }
 
             //Other Entity's Movement
-            for (int jj = 0; jj < _otherPlayerControllers.Count; jj++) {
-                if (_otherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
+            for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
+                if (OtherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
                     Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
-                    if (_otherPlayerControllers[jj].LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
+                    if (OtherPlayerControllers[jj].LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
                         DateTime updateTime = DateTime.UtcNow;
                         var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                        _otherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
+                        OtherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
                     }
-                    _otherPlayerControllers[jj].LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
+                    OtherPlayerControllers[jj].LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
                 }
             }
         }
@@ -304,10 +306,10 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
-            if (playerInfo.CurrentGObject.Oid == _otherPlayerControllers[ii].Oid) {
-                _otherPlayerControllers.Remove(_otherPlayerControllers[ii]);
-                _otherPlayerControllers[ii].Destroy();
+        for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
+            if (playerInfo.CurrentGObject.Oid == OtherPlayerControllers[ii].Oid) {
+                OtherPlayerControllers.Remove(OtherPlayerControllers[ii]);
+                OtherPlayerControllers[ii].Destroy();
                 break;
             }
         }

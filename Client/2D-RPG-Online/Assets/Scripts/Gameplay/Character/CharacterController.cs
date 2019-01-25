@@ -17,8 +17,15 @@ public class CharacterController : MonoBehaviour {
         _characterStats = GetComponent<CharacterStats>();
     }
 
+    private void Update() {
+        _characterAttack.SearchTarget();
+
+        Attack();
+    }
+
     public void Attack() {
-        if (!_characterAttack.IsAttacking && _characterAttack.CanAttack) {
+        if (_characterAttack.CanAttack) {
+            _characterMotor.LookTo(_characterAttack.TargetPosition);
             _characterAttack.Attack();
             _characterAnimator.OnAttack();
         }

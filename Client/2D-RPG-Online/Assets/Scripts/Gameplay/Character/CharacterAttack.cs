@@ -1,33 +1,67 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour {
 
     public LayerMask attackables;
-    public Transform attackHitPoint;
 
     public bool IsAttacking { get; private set; }
 
     public bool CanAttack {
         get {
-            return Time.time > _nextAttackTime;
+            return Time.time > _nextAttackTime && IsTargetInRange() && !IsAttacking;
         }
     }
+
+    public bool HasTarget {
+        get {
+            return Target == null ? false : true;
+        }
+    }
+
+    public PlayerController Target { get { return _target; } }
+    public Vector3 TargetPosition { get { return _target.transform.position; } }
 
     [SerializeField]
     [Utils.ReadOnly]
     private float _nextAttackTime;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private PlayerController _target;
 
     private CharacterStats _characterStats;
 
     private void Start() {
-        attackHitPoint.gameObject.SetActive(false);
         _characterStats = GetComponent<CharacterStats>();
     }
 
     public void Attack() {
         StartCoroutine(IAttack());
+    }
+
+    public void SearchTarget() {
+        PlayerController target = null;
+        float distance = Mathf.Infinity;
+
+        //for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
+        List<PlayerController> potantialTargets = FindObjectsOfType<PlayerController>().ToList();
+        potantialTargets.Remove(this.gameObject.GetComponent<PlayerController>());
+        for (int ii = 0; ii < potantialTargets.Count; ii++) {
+
+            PlayerController potantialTarget = potantialTargets[ii];
+            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+
+                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+
+                if (potantialTargetDistance < distance) {
+                    target = potantialTarget;
+                }
+
+            }
+        }
+        this._target = target;
     }
 
     private IEnumerator IAttack() {
@@ -39,19 +73,30 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        attackHitPoint.gameObject.SetActive(true);
-        yield return new WaitForSeconds(0.01f);
-        attackHitPoint.gameObject.SetActive(false);
-
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
         IsAttacking = false;
     }
 
+    private bool IsTargetInRange() {
+        if (HasTarget) {
+            float distance = Vector3.Distance(transform.position, Target.transform.position);
+            if (distance <= _characterStats.GetAttackRange()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private float GetDistanceOf(Transform target) {
+        return Vector3.Distance(transform.position, target.position);
+    }
+
     private void OnDrawGizmos() {
-        if (attackHitPoint != null && _characterStats != null) {
+        if (_characterStats != null) {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireSphere(attackHitPoint.position, _characterStats.GetAttackRange());
+            Gizmos.DrawWireSphere(transform.position, _characterStats.GetAttackRange());
         }
     }
 

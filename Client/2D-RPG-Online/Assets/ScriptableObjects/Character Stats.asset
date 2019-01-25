@@ -30,7 +30,7 @@ MonoBehaviour:
   _attackDamage: 50
   _attackSpeed: 0.5
   _movementSpeed: 2
-  _attackRange: 1
+  _attackRange: 2.5
   _level: 0
   _maxExperience: 0
   _currentExperience: 0
