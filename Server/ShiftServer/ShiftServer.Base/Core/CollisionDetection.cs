@@ -6,8 +6,16 @@ using System.Threading.Tasks;
 
 namespace ShiftServer.Base.Core
 {
-    public static class CollisionDetection
+    public class CollisionDetection
     {
+        // collision configuration contains default setup for memory, collision setup
+      
+        public CollisionDetection()
+        {
 
+        }
+        public static void CollisionTest()
+        {
+        }
     }
 }

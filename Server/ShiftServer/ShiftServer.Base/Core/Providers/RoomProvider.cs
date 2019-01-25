@@ -33,6 +33,8 @@ namespace ShiftServer.Base.Core
                 Name = "ShiftServer Room Starts " + room.Name
             };
             gameRoom.Start();
+
+            ServerProvider.instance.world.roomThreads.Add(room.ID, gameRoom);
         }
 
         public async Task OnRoomCreate(ShiftServerData data, ShiftClient shift)
@@ -88,9 +90,9 @@ namespace ShiftServer.Base.Core
                     MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                     CurrentHp = shift.CurrentObject.CurrentHP,
                     MaxHp = shift.CurrentObject.MaxHP,
-                    PosX = shift.CurrentObject.Position.X,
-                    PosY = shift.CurrentObject.Position.Y,
-                    PosZ = shift.CurrentObject.Position.Z
+                    PosX = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
+                    PosY = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
+                    PosZ = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Z
                 };
                 data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectID;
 
@@ -243,10 +245,12 @@ namespace ShiftServer.Base.Core
                                 MovementSpeed = (float)cl.CurrentObject.MovementSpeed,
                                 CurrentHp = cl.CurrentObject.CurrentHP,
                                 MaxHp = cl.CurrentObject.MaxHP,
-                                PosX = cl.CurrentObject.Position.X,
-                                PosY = cl.CurrentObject.Position.Y,
-                                PosZ = cl.CurrentObject.Position.Z,
-
+                                CurrentMana = cl.CurrentObject.CurrentMana,
+                                MaxMana = cl.CurrentObject.MaxMana,
+                                PosX = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
+                                PosY = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
+                                PosZ = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.Z,
+                                PClass = cl.CurrentObject.Class,
                                 RotX = cl.CurrentObject.Rotation.X,
                                 RotY = cl.CurrentObject.Rotation.Y,
                                 RotZ = cl.CurrentObject.Rotation.Z
@@ -269,12 +273,20 @@ namespace ShiftServer.Base.Core
                         Oid = shift.CurrentObject.ObjectID,
                         Name = shift.CurrentObject.Name,
                         AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
+                        AttackDamage = shift.CurrentObject.AttackDamage,
+                        AttackRange = (float)shift.CurrentObject.AttackRange,
                         MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                         CurrentHp = shift.CurrentObject.CurrentHP,
+                        Dexterity = shift.CurrentObject.Dexterity,
+                        Intelligence = shift.CurrentObject.Intelligence,
+                        Strength = shift.CurrentObject.Strenght,
+                        PClass = shift.CurrentObject.Class,
                         MaxHp = shift.CurrentObject.MaxHP,
-                        PosX = shift.CurrentObject.Position.X,
-                        PosY = shift.CurrentObject.Position.Y,
-                        PosZ = shift.CurrentObject.Position.Z,
+                        CurrentMana = shift.CurrentObject.CurrentMana,
+                        MaxMana = shift.CurrentObject.MaxMana,
+                        PosX = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
+                        PosY = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
+                        PosZ = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Z,
                         RotX = shift.CurrentObject.Rotation.X,
                         RotY = shift.CurrentObject.Position.Y,
                         RotZ = shift.CurrentObject.Position.Z
@@ -577,7 +589,7 @@ namespace ShiftServer.Base.Core
             if (room == null)
                 return;
 
-            AddGOInput(shift, room, moveInput, data);
+            ResolveInput(shift, room, moveInput, data);
         }
         public void OnRoomDispose(IRoom room)
         {
@@ -597,7 +609,7 @@ namespace ShiftServer.Base.Core
         }
         private void AddGOInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
         {
-            //SpeedHack
+            
             if (!AntiCheatEngine.ValidateMoveInput(input))
                 return;
 
@@ -612,6 +624,24 @@ namespace ShiftServer.Base.Core
 
             }
         }
+        private void ResolveInput(ShiftClient shift, IRoom room, IGameInput input, ShiftServerData data)
+        {
+
+            //if (!AntiCheatEngine.ValidateMoveInput(input))
+            //    return;
+
+            IGameObject go = null;
+            room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);
+            if (go != null)
+            {
+
+                input.SequenceID = data.PlayerInput.SequenceID;
+                go.ResolveInputs(input);
+
+
+            }
+        }
+
 
 
     }

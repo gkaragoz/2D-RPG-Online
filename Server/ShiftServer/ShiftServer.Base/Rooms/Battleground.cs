@@ -29,8 +29,6 @@ namespace ShiftServer.Base.Rooms
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
-        public int GameRoomTickRate = 15;
-
         public UpdateGOList GOUpdatePacket = new UpdateGOList();
         public Battleground(int groupCount, int maxUserPerTeam)
         {
@@ -39,7 +37,7 @@ namespace ShiftServer.Base.Rooms
             GameObjects = new SafeDictionary<int, IGameObject>();
             Teams = new SafeDictionary<string, IGroup>();
             TeamIdList = new List<string>();
-
+            Scene = PhysxEngine.Engine.CreateScene();
             ID = Guid.NewGuid().ToString();
 
             MaxConnectionID = 0;
@@ -62,16 +60,16 @@ namespace ShiftServer.Base.Rooms
 
             this.StartGameRoom();
         }
+
+       
         private void StartGameRoom()
         {
-            TickRate = GameRoomTickRate;
-            int timerInterval = TickrateUtil.Set(TickRate);
-
+            GameRoomUpdateInterval = TickrateUtil.Set(GameRoomTickRate);
 
             while (!IsStopTriggered)
             {
                 this.OnRoomUpdate();
-                Thread.Sleep(timerInterval);
+                Thread.Sleep(GameRoomUpdateInterval);
             }
 
 
@@ -82,12 +80,18 @@ namespace ShiftServer.Base.Rooms
         public void OnPlayerCreate(IGameObject gameObject)
         {
             gameObject.ObjectID = Interlocked.Increment(ref ObjectCounter);
+            gameObject.RigidDynamic = PhysxEngine.Engine.CreateRigidDynamic(this.Scene);
             GameObjects.Add(gameObject.ObjectID, gameObject);
             GOUpdatePacket.PlayerList.Add(new PlayerObject
             {
                 Name = gameObject.Name,
                 MovementSpeed = (float)gameObject.MovementSpeed,
                 AttackSpeed = (float)gameObject.AttackSpeed,
+                Dexterity = gameObject.Dexterity,
+                Intelligence = gameObject.Intelligence,
+                Strength = gameObject.Strenght,
+                CurrentHp = gameObject.CurrentHP,
+                MaxHp = gameObject.MaxHP,
                 Oid = gameObject.ObjectID,
                 PosX = gameObject.Position.X,
                 PosY = gameObject.Position.Y,
@@ -134,20 +138,8 @@ namespace ShiftServer.Base.Rooms
             }
             else
             {
-                Player player = new Player();
-                player.OwnerConnectionID = shift.ConnectionID;
-                player.OwnerSessionID = shift.UserSessionID;
-                player.Name = chardata.Name;
-                player.MaxHP = chardata.Stats.Health;
-                player.CurrentHP = chardata.Stats.Health;
-                player.AttackSpeed = chardata.Stats.AttackSpeed;
-                player.MovementSpeed = chardata.Stats.MovementSpeed;
-                player.CurrentHP = chardata.Stats.Health;
-                player.Position = new Vector3(0.0f, 0.0f, 0.0f);
-                player.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
-                player.Scale = new Vector3(1f, 1f, 1f);
-                player.State = EntityState.NEWSPAWN;
-
+                Player player = new Player(chardata, shift);
+              
                 this.OnPlayerCreate(player);
                 log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
@@ -162,39 +154,44 @@ namespace ShiftServer.Base.Rooms
             {
                 Name = shift.UserName,
                 Oid = shift.CurrentObject.ObjectID,
+                PClass = (PlayerClass)chardata.ClassIndex,
                 AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
                 MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                 CurrentHp = shift.CurrentObject.CurrentHP,
                 MaxHp = shift.CurrentObject.MaxHP,
+                Dexterity = shift.CurrentObject.Dexterity,
+                Strength = shift.CurrentObject.Strenght,
+                Intelligence = shift.CurrentObject.Intelligence,
                 PosX = shift.CurrentObject.Position.X,
                 PosY = shift.CurrentObject.Position.Y,
                 PosZ = shift.CurrentObject.Position.Z
             };
 
             //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
-            await shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
+            shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
         }
         public async void SendRoomStateAsync(TimeSpan timespan)
         {
 
             ShiftServerData data = new ShiftServerData();
-            data.SvTickRate = this.TickRate;
+            data.SvTickRate = this.GameRoomTickRate;
             data.GoUpdatePacket = new UpdateGOList();
+            data.GoUpdatePacket.PlayerList.Clear();
 
             IGameObject gObject = null;
-            for (int i = 0; i <= ObjectCounter; i++)
+
+            for (int i = 0; i < ObjectCounter + 1; i++)
             {
                 GameObjects.TryGetValue(i, out gObject);
-                if (gObject == null)
-                    continue;
-
-
-                PlayerObject pObject = gObject.GetPlayerObject();
-
-                data.GoUpdatePacket.PlayerList.Add(pObject);
+                if (gObject != null)
+                {
+                    PlayerObject pObject = gObject.GetPlayerObject();
+                    if (pObject != null)
+                        data.GoUpdatePacket.PlayerList.Add(pObject);
+                }
             }
-
-            await this.BroadcastPlayerDataToRoomAsync(MSPlayerEvent.RoomUpdate, data);
+          
+            this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
            
         }
         public override void OnRoomUpdate()
@@ -203,15 +200,22 @@ namespace ShiftServer.Base.Rooms
             TimeSpan updatePassTime = CurrentServerUptime - LastGameUpdate;
             LastGameUpdate = CurrentServerUptime;
 
-            IGameObject gObject = null;
-            for (int i = 0; i <= ObjectCounter; i++)
-            {
-                GameObjects.TryGetValue(i, out gObject);
-                if (gObject == null)
-                    continue;
+            //IGameObject gObject = null;
+            //Parallel.For(0, ObjectCounter + 1, i =>
+            //  {
+            //      GameObjects.TryGetValue(i, out gObject);
+            //      if (gObject != null)
+            //          gObject.ResolveInputs();
+            //  });
 
-                gObject.ResolveInputs();
-            }
+            //for (int i = 0; i <= ObjectCounter; i++)
+            //{
+            //    GameObjects.TryGetValue(i, out gObject);
+            //    if (gObject == null)
+            //        continue;
+
+            //    gObject.ResolveInputs();
+            //}
 
             SendRoomStateAsync(updatePassTime);
         }

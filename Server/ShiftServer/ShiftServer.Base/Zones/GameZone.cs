@@ -47,7 +47,7 @@ namespace ShiftServer.Base.Worlds
 
                 ShiftServerData data = new ShiftServerData();
 
-                await clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
+                clientList[i].SendPacket(MSPlayerEvent.WorldUpdate, data);
             }
 
         }

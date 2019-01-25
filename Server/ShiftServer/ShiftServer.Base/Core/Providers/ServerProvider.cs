@@ -23,9 +23,9 @@ namespace ShiftServer.Base.Core
         public Mirror.Transport.Tcp.Server server = null;
         public ServerEventHandler events = null;
         public Thread listener = null;
-
-        private DBContext ctx = null;
-        private ServerCore core = null;
+        private PhysxEngine _physx = null;
+        private DBContext _ctx = null;
+        private ServerCore _core = null;
 
         public static readonly log4net.ILog log
         = log4net.LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
@@ -35,16 +35,24 @@ namespace ShiftServer.Base.Core
             instance = this;
             world = createdWorld;
             events = new ServerEventHandler();
-            ctx = new DBContext();
-            core = new ServerCore();
+            _ctx = new DBContext();
+            _core = new ServerCore();
+            _physx = new PhysxEngine();
+            
+
         }
 
-        public void Listen(int tickrate, int port)
+        public void Listen(int port)
         {
             try
             {
                 server = new Mirror.Transport.Tcp.Server();
+                server.ReceivedData += ServerCore.instance.Server_ReceivedDataAsync;
+                server.Connected += ServerCore.instance.Server_Connected;
+                server.Disconnected += ServerCore.instance.Server_Disconnected;
+                server.ReceivedError += ServerCore.instance.Server_ReceivedError;
                 server.NoDelay = true;
+                
                 server.Listen(port);
             }
             catch (Exception err)
@@ -54,15 +62,12 @@ namespace ShiftServer.Base.Core
             }
 
             log.Info("SERVER PORT: " + port);
-            log.Info("SERVER TICK: " + tickrate);
 
-            int timerInterval = TickrateUtil.Set(tickrate);
-
-            listener = new Thread(ServerCore.instance.GetMessages);
-            listener.IsBackground = true;
-            listener.Name = "ShiftServer Listener";
-            listener.Start();
-            log.Info("Server SHIFTDATA Listener Thread Started");
+            //listener = new Thread(ServerCore.instance.GetMessages);
+            //listener.IsBackground = true;
+            //listener.Name = "ShiftServer Listener";
+            //listener.Start();
+            //log.Info("Server SHIFTDATA Listener Thread Started");
 
         }
 
@@ -132,13 +137,7 @@ namespace ShiftServer.Base.Core
         }
         public void Stop()
         {
-            // stop the server when you don't need it anymore
-            listener.Interrupt();
-            if (!listener.Join(2000))
-            { // or an agreed resonable time
-                listener.Abort();
-            }
-
+          
             server.Stop();
         }
     }

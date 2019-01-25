@@ -27,5 +27,11 @@ namespace ShiftServer.Proto.Db
 
         [BsonElement("attack_speed")]
         public double AttackSpeed { get; set; }
+
+        [BsonElement("attack_range")]
+        public double AttackRange { get; set; }
+
+        [BsonElement("attack_damage")]
+        public int AttackDamage { get; set; }
     }
 }

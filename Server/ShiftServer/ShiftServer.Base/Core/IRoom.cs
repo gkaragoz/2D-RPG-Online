@@ -1,10 +1,13 @@
-﻿using ShiftServer.Base.Auth;
+﻿using PhysX;
+using ShiftServer.Base.Auth;
 using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Timers;
 using Telepathy;
+
+
 
 namespace ShiftServer.Base.Core
 {
@@ -16,12 +19,16 @@ namespace ShiftServer.Base.Core
         int MaxConnectionID { get; set; }
         int RoomLeaderID { get; set; }
         int TickRate { get; set; }
+        int GameRoomTickRate { get; set; }
+        int GameRoomUpdateInterval { get; set; }
         DateTime CreatedDate { get; set; }
         DateTime UpdateDate { get; set; }
         TimeSpan CurrentServerUptime { get; set; }
+         
         bool IsPrivate { get; set; }
         bool IsPersistence { get; set; }
         bool IsStopTriggered { get; set; }
+        Scene Scene { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<string, IGroup> Teams { get; set; }
         List<string> TeamIdList { get; set; }

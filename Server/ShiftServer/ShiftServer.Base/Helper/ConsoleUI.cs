@@ -15,55 +15,25 @@ namespace ShiftServer.Base.Helper
 
             bool runForever = true;
 
+          
             while (runForever)
             {
-                Console.Write("Command [q cls count roomlist playerlist]: ");
+                Console.Write($" \n" +
+                    $"!q - " +
+                    $"!tickrate - " +
+                    $"!players - " +
+                    $"!rooms \n" +
+                    $">");
+
 
                 string userInput = Console.ReadLine();
                 if (String.IsNullOrEmpty(userInput)) continue;
 
-                List<string> clients;
+                Console.WriteLine("-----------------------------------------");
+                ReadLineParser.Parse(userInput);
+                Console.WriteLine("-----------------------------------------");
 
-                switch (userInput)
-                {
-                    case "q":
-                        serverProvider.Stop();
-                        runForever = false;
-                        break;
-                    case "cls":
-                        Console.Clear();
-                        break;
-                    case "count":
-                        int count = serverProvider.ClientCount();
-                        Console.WriteLine("Total user : " + count);
-                        break;
-                    case "roomlist":
-                        var roomList = serverProvider.world.Rooms.GetValues();
-                        foreach (var room in roomList)
-                        {
-                            Console.WriteLine(string.Format("ID: {0} Room Name: {1} , User: {2}/{3}", room.ID, room.Name, room.Clients.Count, room.MaxUser));
-                        }
-                        break;
-                    case "playerlist":
-                        var playerList = serverProvider.world.Clients.GetValues();
-                        var rmList = serverProvider.world.Rooms.GetValues();
 
-                        foreach (var player in playerList)
-                        {
-                            IRoom room = null;
-                            if (player.IsJoinedToRoom)
-                            {
-                                serverProvider.world.Rooms.TryGetValue(player.JoinedRoomID, out room);
-                                Console.WriteLine(string.Format("UserName: {0} #{1}--> Room: {2}", player.UserName, player.ConnectionID, room.Name));
-                            }
-                            else
-                            {
-                                Console.WriteLine(string.Format("UserName: {0} #{1}", player.UserName, player.ConnectionID));
-                            }
-                        }
-                        break;
-
-                }
             }
         }
     }
