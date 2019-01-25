@@ -19,6 +19,7 @@ namespace ShiftServer.Client.Core
         public Thread listenerThread = null;
         public ClientDataHandler dataHandler = null;
         string _address = null;
+        public Exception error;
         int _port;
 
         public bool IsAccountJoined;
@@ -127,6 +128,7 @@ namespace ShiftServer.Client.Core
 
         private void Client_ReceivedError(Exception obj)
         {
+            error = obj;
             Console.WriteLine("Socket exception: " + obj);
         }
 
