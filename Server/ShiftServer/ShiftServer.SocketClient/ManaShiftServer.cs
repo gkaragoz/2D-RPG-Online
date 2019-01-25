@@ -20,15 +20,15 @@ namespace ShiftServer.Client
     public sealed class ManaShiftServer
     {
         public static ManaShiftServer mss = null;
-        private static GameProvider _gameProvider = null;
+        public static GameProvider gameProvider = null;
         public static string sessionID = null;
         public static ConfigData cfg = null;
-        public bool IsConnected { get => _gameProvider.IsClientConnected(); }
-        public bool IsConnecting { get => _gameProvider.client.Connecting; }
-        public bool IsAccountJoined { get => _gameProvider.IsAccountJoined; }
-        public bool HasPlayerRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
-        public MSSRoom JoinedRoom { get => _gameProvider.dataHandler.roomProvider.JoinedRoom; }
-        public CommonAccountData AccountData { get => _gameProvider.dataHandler.accountData; }
+        public bool IsConnected { get => gameProvider.IsClientConnected(); }
+        public bool IsConnecting { get => gameProvider.client.Connecting; }
+        public bool IsAccountJoined { get => gameProvider.IsAccountJoined; }
+        public bool HasPlayerRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom == null ? false : true; }
+        public MSSRoom JoinedRoom { get => gameProvider.dataHandler.roomProvider.JoinedRoom; }
+        public CommonAccountData AccountData { get => gameProvider.dataHandler.accountData; }
 
         private Stopwatch _stopwatch;
         private long _currentPingValue;
@@ -39,7 +39,7 @@ namespace ShiftServer.Client
         public ManaShiftServer()
         {
             mss = this;
-            _gameProvider = new GameProvider();
+            gameProvider = new GameProvider();
             cfg = null;
             _stopwatch = new Stopwatch();
         }
@@ -55,7 +55,7 @@ namespace ShiftServer.Client
                 throw new ArgumentNullException("Session ID is null");
 
             sessionID = cfg.SessionID;
-            _gameProvider.Connect(cfg.Host, cfg.Port);
+            gameProvider.Connect(cfg.Host, cfg.Port);
         }
      
         private void OnAccountJoinSuccess(ShiftServerData data)
@@ -76,7 +76,7 @@ namespace ShiftServer.Client
         public List<Room> GetRoomList()
         {
             //sthis.SendMessage(MSServerEvent.LobbyRefresh);
-            return _gameProvider.dataHandler.roomProvider.RoomList;
+            return gameProvider.dataHandler.roomProvider.RoomList;
         }
 
         /// <summary>
@@ -98,7 +98,7 @@ namespace ShiftServer.Client
         /// <returns></returns>
         public void Setup()
         {
-            _gameProvider.SetupTasks();
+            gameProvider.SetupTasks();
         }
 
         /// <summary>
@@ -110,7 +110,7 @@ namespace ShiftServer.Client
         {
             if (eventType.GetType() == typeof(MSServerEvent))
             {
-                _gameProvider.dataHandler.clientEvents.Add(new ClientEventCallback
+                gameProvider.dataHandler.clientEvents.Add(new ClientEventCallback
                 {
                     CallbackFunc = listener,
                     EventId = (MSServerEvent)eventType
@@ -118,7 +118,7 @@ namespace ShiftServer.Client
             }
             else if (eventType.GetType() == typeof(MSPlayerEvent))
             {
-                _gameProvider.dataHandler.playerEvents.Add(new PlayerEventCallback
+                gameProvider.dataHandler.playerEvents.Add(new PlayerEventCallback
                 {
                     CallbackFunc = listener,
                     EventId = (MSPlayerEvent)eventType
@@ -131,7 +131,7 @@ namespace ShiftServer.Client
         /// </summary>
         public void Disconnect()
         {
-            _gameProvider.Disconnect();
+            gameProvider.Disconnect();
         }
 
       
@@ -151,7 +151,7 @@ namespace ShiftServer.Client
             byte[] bb = data.ToByteArray();
 
             if (bb.Length > 0)
-                _gameProvider.SendMessage(bb);
+                gameProvider.SendMessage(bb);
         }
 
        
@@ -170,7 +170,7 @@ namespace ShiftServer.Client
             byte[] bb = data.ToByteArray();
 
             if (bb.Length > 0)
-                _gameProvider.SendMessage(bb);
+                gameProvider.SendMessage(bb);
         }
 
 
