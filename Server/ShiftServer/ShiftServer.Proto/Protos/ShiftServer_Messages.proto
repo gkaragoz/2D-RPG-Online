@@ -194,21 +194,25 @@ message PlayerObject {
 
 	int32 currentHp = 2;
 	int32 maxHp = 3;
-	int32 strength = 4;
-	int32 dexterity = 5;
-	int32 intelligence = 6;
-	int32 lastProcessedSequenceID = 7;
-	float pos_x = 8;
-	float pos_y = 9;
-	float pos_z = 10;
-	float rot_x = 11;
-	float rot_y = 12;
-	float rot_z = 13;
-	float attackSpeed = 14;
-	float movementSpeed = 15;
-	repeated SPlayerInput playerInputs = 16;
-	int32 Oid = 17;
-	string Name = 18;
+	int32 currentMana = 4;
+	int32 maxMana = 5;
+	int32 strength = 6;
+	int32 dexterity = 7;
+	int32 intelligence = 8;
+	int32 attackDamage = 9;
+	float attackRange = 10;
+	int32 lastProcessedSequenceID = 11;
+	float pos_x = 12;
+	float pos_y = 13;
+	float pos_z = 14;
+	float rot_x = 15;
+	float rot_y = 16;
+	float rot_z = 17;
+	float attackSpeed = 18;
+	float movementSpeed = 19;
+	repeated SPlayerInput playerInputs = 20;
+	int32 Oid = 21;
+	string Name = 22;
 }
 
 enum PlayerClass {

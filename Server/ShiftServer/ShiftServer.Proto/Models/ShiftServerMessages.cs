@@ -56,44 +56,46 @@ public static partial class ShiftServerMessagesReflection {
           "amVjdHMYAiADKAsyDC5zR2FtZU9iamVjdCJDCgpDbGllbnREYXRhEgsKA3Zl",
           "chgBIAEoCRIUCgxtYWNoaW5lX25hbWUYAiABKAkSEgoKbWFjaGluZV9pZBgD",
           "IAEoCSJHCgtzR2FtZU9iamVjdBILCgNvaWQYASABKAUSDQoFcG9zX3gYAiAB",
-          "KAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIi8AIKDFBsYXllck9i",
+          "KAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oYBCABKAIiwQMKDFBsYXllck9i",
           "amVjdBIcCgZwQ2xhc3MYASABKA4yDC5QbGF5ZXJDbGFzcxIRCgljdXJyZW50",
-          "SHAYAiABKAUSDQoFbWF4SHAYAyABKAUSEAoIc3RyZW5ndGgYBCABKAUSEQoJ",
-          "ZGV4dGVyaXR5GAUgASgFEhQKDGludGVsbGlnZW5jZRgGIAEoBRIfChdsYXN0",
-          "UHJvY2Vzc2VkU2VxdWVuY2VJRBgHIAEoBRINCgVwb3NfeBgIIAEoAhINCgVw",
-          "b3NfeRgJIAEoAhINCgVwb3NfehgKIAEoAhINCgVyb3RfeBgLIAEoAhINCgVy",
-          "b3RfeRgMIAEoAhINCgVyb3RfehgNIAEoAhITCgthdHRhY2tTcGVlZBgOIAEo",
-          "AhIVCg1tb3ZlbWVudFNwZWVkGA8gASgCEiMKDHBsYXllcklucHV0cxgQIAMo",
-          "CzINLlNQbGF5ZXJJbnB1dBILCgNPaWQYESABKAUSDAoETmFtZRgSIAEoCSKb",
-          "AQoMU1BsYXllcklucHV0EiMKC3BsYXllckV2ZW50GAEgASgOMg4uTVNQbGF5",
-          "ZXJFdmVudBINCgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3Nf",
-          "ehgEIAEoAhISCgpwcmVzc190aW1lGAUgASgCEhEKCXRpbWVzdGFtcBgGIAEo",
-          "AhISCgpzZXF1ZW5jZUlEGAcgASgFKjEKDU1TQmFzZUV2ZW50SWQSDwoLUGxh",
-          "eWVyRXZlbnQQABIPCgtTZXJ2ZXJFdmVudBABKm4KDU1TUGxheWVyRXZlbnQS",
-          "EAoMV09STERfVVBEQVRFEAASDwoLUk9PTV9VUERBVEUQARIICgRNT1ZFEAIS",
-          "CgoGQVRUQUNLEAMSCAoEREVBRBAEEgcKA1VTRRAFEhEKDUNSRUFURV9QTEFZ",
-          "RVIQBiqsBAoNTVNTZXJ2ZXJFdmVudBIQCgxBQ0NPVU5UX0pPSU4QABIXChNB",
-          "Q0NPVU5UX0pPSU5fRkFJTEVEEAESEgoOUFVCTElDX01FU1NBR0UQAhINCglS",
-          "T09NX0pPSU4QAxIOCgpST09NX0xFQVZFEAQSFQoRUk9PTV9MRUFWRV9GQUlM",
-          "RUQQBRIPCgtST09NX0NSRUFURRAGEg8KC1JPT01fREVMRVRFEAcSFAoQUk9P",
-          "TV9QTEFZRVJfTEVGVBAIEhYKElJPT01fUExBWUVSX0pPSU5FRBAJEhQKEFJP",
-          "T01fSk9JTl9GQUlMRUQQChIWChJST09NX0NSRUFURV9GQUlMRUQQCxIWChJS",
-          "T09NX0RFTEVURV9GQUlMRUQQDBIUChBST09NX0dFVF9QTEFZRVJTEA0SEwoP",
-          "Uk9PTV9HQU1FX1NUQVJUEA4SFgoSUk9PTV9DSEFOR0VfTEVBREVSEA8SHAoY",
-          "Uk9PTV9QTEFZRVJfUkVBRFlfU1RBVFVTEBASIwofUk9PTV9QTEFZRVJfUkVB",
-          "RFlfU1RBVFVTX0ZBSUxFRBAREhAKDE1FU1NBR0VfU0VORBASEhMKD01FU1NB",
-          "R0VfUkVDSUVWRRATEhUKEUxPQkJZX01BVENITUFLSU5HEBQSDgoKQ09OTkVD",
-          "VElPThAWEhUKEUNPTk5FQ1RJT05fRkFJTEVEEBcSEwoPQ09OTkVDVElPTl9M",
-          "T1NUEBgSEAoMUElOR19SRVFVRVNUEBkqJQoPTWF0Y2htYWtpbmdSb29tEggK",
-          "BEJHXzIQABIICgRCR180EAEq/gEKEFNoaWZ0U2VydmVyRXJyb3ISEgoOQ0xJ",
-          "RU5UX1ZFUl9PTEQQABIPCgtCQURfU0VTU0lPThABEhIKDlJPT01fTk9UX0ZP",
-          "VU5EEAISEwoPQUxSRUFEWV9JTl9ST09NEAMSGwoXV1JPTkdfTE9HSU5fQ1JF",
-          "REVOVElBTFMQBBIVChFXUk9OR19DTElFTlRfREFUQRAFEhUKEU5PX1JFU1BP",
-          "TkRfU0VSVkVSEAYSFQoRUk9PTV9BVVRIX1BST0JMRU0QBxITCg9OT1RfSU5f",
-          "QU5ZX1JPT00QCBINCglST09NX0ZVTEwQCRIWChJNQVRDSE1BS0lOR19GQUlM",
-          "RUQQCio1Cg1TaGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1PEAESEAoM",
-          "QUNUSU9OQkFUVExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2FycmlvchAAEgoK",
-          "BkFyY2hlchABEggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJvdG8z"));
+          "SHAYAiABKAUSDQoFbWF4SHAYAyABKAUSEwoLY3VycmVudE1hbmEYBCABKAUS",
+          "DwoHbWF4TWFuYRgFIAEoBRIQCghzdHJlbmd0aBgGIAEoBRIRCglkZXh0ZXJp",
+          "dHkYByABKAUSFAoMaW50ZWxsaWdlbmNlGAggASgFEhQKDGF0dGFja0RhbWFn",
+          "ZRgJIAEoBRITCgthdHRhY2tSYW5nZRgKIAEoAhIfChdsYXN0UHJvY2Vzc2Vk",
+          "U2VxdWVuY2VJRBgLIAEoBRINCgVwb3NfeBgMIAEoAhINCgVwb3NfeRgNIAEo",
+          "AhINCgVwb3NfehgOIAEoAhINCgVyb3RfeBgPIAEoAhINCgVyb3RfeRgQIAEo",
+          "AhINCgVyb3RfehgRIAEoAhITCgthdHRhY2tTcGVlZBgSIAEoAhIVCg1tb3Zl",
+          "bWVudFNwZWVkGBMgASgCEiMKDHBsYXllcklucHV0cxgUIAMoCzINLlNQbGF5",
+          "ZXJJbnB1dBILCgNPaWQYFSABKAUSDAoETmFtZRgWIAEoCSKbAQoMU1BsYXll",
+          "cklucHV0EiMKC3BsYXllckV2ZW50GAEgASgOMg4uTVNQbGF5ZXJFdmVudBIN",
+          "CgVwb3NfeBgCIAEoAhINCgVwb3NfeRgDIAEoAhINCgVwb3NfehgEIAEoAhIS",
+          "CgpwcmVzc190aW1lGAUgASgCEhEKCXRpbWVzdGFtcBgGIAEoAhISCgpzZXF1",
+          "ZW5jZUlEGAcgASgFKjEKDU1TQmFzZUV2ZW50SWQSDwoLUGxheWVyRXZlbnQQ",
+          "ABIPCgtTZXJ2ZXJFdmVudBABKm4KDU1TUGxheWVyRXZlbnQSEAoMV09STERf",
+          "VVBEQVRFEAASDwoLUk9PTV9VUERBVEUQARIICgRNT1ZFEAISCgoGQVRUQUNL",
+          "EAMSCAoEREVBRBAEEgcKA1VTRRAFEhEKDUNSRUFURV9QTEFZRVIQBiqsBAoN",
+          "TVNTZXJ2ZXJFdmVudBIQCgxBQ0NPVU5UX0pPSU4QABIXChNBQ0NPVU5UX0pP",
+          "SU5fRkFJTEVEEAESEgoOUFVCTElDX01FU1NBR0UQAhINCglST09NX0pPSU4Q",
+          "AxIOCgpST09NX0xFQVZFEAQSFQoRUk9PTV9MRUFWRV9GQUlMRUQQBRIPCgtS",
+          "T09NX0NSRUFURRAGEg8KC1JPT01fREVMRVRFEAcSFAoQUk9PTV9QTEFZRVJf",
+          "TEVGVBAIEhYKElJPT01fUExBWUVSX0pPSU5FRBAJEhQKEFJPT01fSk9JTl9G",
+          "QUlMRUQQChIWChJST09NX0NSRUFURV9GQUlMRUQQCxIWChJST09NX0RFTEVU",
+          "RV9GQUlMRUQQDBIUChBST09NX0dFVF9QTEFZRVJTEA0SEwoPUk9PTV9HQU1F",
+          "X1NUQVJUEA4SFgoSUk9PTV9DSEFOR0VfTEVBREVSEA8SHAoYUk9PTV9QTEFZ",
+          "RVJfUkVBRFlfU1RBVFVTEBASIwofUk9PTV9QTEFZRVJfUkVBRFlfU1RBVFVT",
+          "X0ZBSUxFRBAREhAKDE1FU1NBR0VfU0VORBASEhMKD01FU1NBR0VfUkVDSUVW",
+          "RRATEhUKEUxPQkJZX01BVENITUFLSU5HEBQSDgoKQ09OTkVDVElPThAWEhUK",
+          "EUNPTk5FQ1RJT05fRkFJTEVEEBcSEwoPQ09OTkVDVElPTl9MT1NUEBgSEAoM",
+          "UElOR19SRVFVRVNUEBkqJQoPTWF0Y2htYWtpbmdSb29tEggKBEJHXzIQABII",
+          "CgRCR180EAEq/gEKEFNoaWZ0U2VydmVyRXJyb3ISEgoOQ0xJRU5UX1ZFUl9P",
+          "TEQQABIPCgtCQURfU0VTU0lPThABEhIKDlJPT01fTk9UX0ZPVU5EEAISEwoP",
+          "QUxSRUFEWV9JTl9ST09NEAMSGwoXV1JPTkdfTE9HSU5fQ1JFREVOVElBTFMQ",
+          "BBIVChFXUk9OR19DTElFTlRfREFUQRAFEhUKEU5PX1JFU1BPTkRfU0VSVkVS",
+          "EAYSFQoRUk9PTV9BVVRIX1BST0JMRU0QBxITCg9OT1RfSU5fQU5ZX1JPT00Q",
+          "CBINCglST09NX0ZVTEwQCRIWChJNQVRDSE1BS0lOR19GQUlMRUQQCio1Cg1T",
+          "aGlmdFJvb21UeXBlEgkKBUxPQkJZEAASBwoDTU1PEAESEAoMQUNUSU9OQkFU",
+          "VExFEAIqPAoLUGxheWVyQ2xhc3MSCwoHV2FycmlvchAAEgoKBkFyY2hlchAB",
+          "EggKBE1hZ2UQAhIKCgZQcmllc3QQA2IGcHJvdG8z"));
     descriptor = pbr::FileDescriptor.FromGeneratedCode(descriptorData,
         new pbr::FileDescriptor[] { },
         new pbr::GeneratedClrTypeInfo(new[] {typeof(global::MSBaseEventId), typeof(global::MSPlayerEvent), typeof(global::MSServerEvent), typeof(global::MatchmakingRoom), typeof(global::ShiftServerError), typeof(global::ShiftRoomType), typeof(global::PlayerClass), }, new pbr::GeneratedClrTypeInfo[] {
@@ -109,7 +111,7 @@ public static partial class ShiftServerMessagesReflection {
           new pbr::GeneratedClrTypeInfo(typeof(global::ObjectAction), global::ObjectAction.Parser, new[]{ "CurrentObject", "InteractedObjects" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::ClientData), global::ClientData.Parser, new[]{ "Ver", "MachineName", "MachineId" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::sGameObject), global::sGameObject.Parser, new[]{ "Oid", "PosX", "PosY", "PosZ" }, null, null, null),
-          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PClass", "CurrentHp", "MaxHp", "Strength", "Dexterity", "Intelligence", "LastProcessedSequenceID", "PosX", "PosY", "PosZ", "RotX", "RotY", "RotZ", "AttackSpeed", "MovementSpeed", "PlayerInputs", "Oid", "Name" }, null, null, null),
+          new pbr::GeneratedClrTypeInfo(typeof(global::PlayerObject), global::PlayerObject.Parser, new[]{ "PClass", "CurrentHp", "MaxHp", "CurrentMana", "MaxMana", "Strength", "Dexterity", "Intelligence", "AttackDamage", "AttackRange", "LastProcessedSequenceID", "PosX", "PosY", "PosZ", "RotX", "RotY", "RotZ", "AttackSpeed", "MovementSpeed", "PlayerInputs", "Oid", "Name" }, null, null, null),
           new pbr::GeneratedClrTypeInfo(typeof(global::SPlayerInput), global::SPlayerInput.Parser, new[]{ "PlayerEvent", "PosX", "PosY", "PosZ", "PressTime", "Timestamp", "SequenceID" }, null, null, null)
         }));
   }
@@ -2956,9 +2958,13 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     pClass_ = other.pClass_;
     currentHp_ = other.currentHp_;
     maxHp_ = other.maxHp_;
+    currentMana_ = other.currentMana_;
+    maxMana_ = other.maxMana_;
     strength_ = other.strength_;
     dexterity_ = other.dexterity_;
     intelligence_ = other.intelligence_;
+    attackDamage_ = other.attackDamage_;
+    attackRange_ = other.attackRange_;
     lastProcessedSequenceID_ = other.lastProcessedSequenceID_;
     posX_ = other.posX_;
     posY_ = other.posY_;
@@ -3012,8 +3018,30 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
   }
 
+  /// <summary>Field number for the "currentMana" field.</summary>
+  public const int CurrentManaFieldNumber = 4;
+  private int currentMana_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int CurrentMana {
+    get { return currentMana_; }
+    set {
+      currentMana_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "maxMana" field.</summary>
+  public const int MaxManaFieldNumber = 5;
+  private int maxMana_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int MaxMana {
+    get { return maxMana_; }
+    set {
+      maxMana_ = value;
+    }
+  }
+
   /// <summary>Field number for the "strength" field.</summary>
-  public const int StrengthFieldNumber = 4;
+  public const int StrengthFieldNumber = 6;
   private int strength_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int Strength {
@@ -3024,7 +3052,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "dexterity" field.</summary>
-  public const int DexterityFieldNumber = 5;
+  public const int DexterityFieldNumber = 7;
   private int dexterity_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int Dexterity {
@@ -3035,7 +3063,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "intelligence" field.</summary>
-  public const int IntelligenceFieldNumber = 6;
+  public const int IntelligenceFieldNumber = 8;
   private int intelligence_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int Intelligence {
@@ -3045,8 +3073,30 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
   }
 
+  /// <summary>Field number for the "attackDamage" field.</summary>
+  public const int AttackDamageFieldNumber = 9;
+  private int attackDamage_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public int AttackDamage {
+    get { return attackDamage_; }
+    set {
+      attackDamage_ = value;
+    }
+  }
+
+  /// <summary>Field number for the "attackRange" field.</summary>
+  public const int AttackRangeFieldNumber = 10;
+  private float attackRange_;
+  [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
+  public float AttackRange {
+    get { return attackRange_; }
+    set {
+      attackRange_ = value;
+    }
+  }
+
   /// <summary>Field number for the "lastProcessedSequenceID" field.</summary>
-  public const int LastProcessedSequenceIDFieldNumber = 7;
+  public const int LastProcessedSequenceIDFieldNumber = 11;
   private int lastProcessedSequenceID_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int LastProcessedSequenceID {
@@ -3057,7 +3107,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "pos_x" field.</summary>
-  public const int PosXFieldNumber = 8;
+  public const int PosXFieldNumber = 12;
   private float posX_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosX {
@@ -3068,7 +3118,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "pos_y" field.</summary>
-  public const int PosYFieldNumber = 9;
+  public const int PosYFieldNumber = 13;
   private float posY_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosY {
@@ -3079,7 +3129,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "pos_z" field.</summary>
-  public const int PosZFieldNumber = 10;
+  public const int PosZFieldNumber = 14;
   private float posZ_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float PosZ {
@@ -3090,7 +3140,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "rot_x" field.</summary>
-  public const int RotXFieldNumber = 11;
+  public const int RotXFieldNumber = 15;
   private float rotX_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float RotX {
@@ -3101,7 +3151,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "rot_y" field.</summary>
-  public const int RotYFieldNumber = 12;
+  public const int RotYFieldNumber = 16;
   private float rotY_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float RotY {
@@ -3112,7 +3162,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "rot_z" field.</summary>
-  public const int RotZFieldNumber = 13;
+  public const int RotZFieldNumber = 17;
   private float rotZ_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float RotZ {
@@ -3123,7 +3173,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "attackSpeed" field.</summary>
-  public const int AttackSpeedFieldNumber = 14;
+  public const int AttackSpeedFieldNumber = 18;
   private float attackSpeed_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float AttackSpeed {
@@ -3134,7 +3184,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "movementSpeed" field.</summary>
-  public const int MovementSpeedFieldNumber = 15;
+  public const int MovementSpeedFieldNumber = 19;
   private float movementSpeed_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public float MovementSpeed {
@@ -3145,9 +3195,9 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "playerInputs" field.</summary>
-  public const int PlayerInputsFieldNumber = 16;
+  public const int PlayerInputsFieldNumber = 20;
   private static readonly pb::FieldCodec<global::SPlayerInput> _repeated_playerInputs_codec
-      = pb::FieldCodec.ForMessage(130, global::SPlayerInput.Parser);
+      = pb::FieldCodec.ForMessage(162, global::SPlayerInput.Parser);
   private readonly pbc::RepeatedField<global::SPlayerInput> playerInputs_ = new pbc::RepeatedField<global::SPlayerInput>();
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public pbc::RepeatedField<global::SPlayerInput> PlayerInputs {
@@ -3155,7 +3205,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "Oid" field.</summary>
-  public const int OidFieldNumber = 17;
+  public const int OidFieldNumber = 21;
   private int oid_;
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public int Oid {
@@ -3166,7 +3216,7 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
   }
 
   /// <summary>Field number for the "Name" field.</summary>
-  public const int NameFieldNumber = 18;
+  public const int NameFieldNumber = 22;
   private string name_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
   public string Name {
@@ -3192,9 +3242,13 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (PClass != other.PClass) return false;
     if (CurrentHp != other.CurrentHp) return false;
     if (MaxHp != other.MaxHp) return false;
+    if (CurrentMana != other.CurrentMana) return false;
+    if (MaxMana != other.MaxMana) return false;
     if (Strength != other.Strength) return false;
     if (Dexterity != other.Dexterity) return false;
     if (Intelligence != other.Intelligence) return false;
+    if (AttackDamage != other.AttackDamage) return false;
+    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(AttackRange, other.AttackRange)) return false;
     if (LastProcessedSequenceID != other.LastProcessedSequenceID) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosX, other.PosX)) return false;
     if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PosY, other.PosY)) return false;
@@ -3216,9 +3270,13 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (PClass != 0) hash ^= PClass.GetHashCode();
     if (CurrentHp != 0) hash ^= CurrentHp.GetHashCode();
     if (MaxHp != 0) hash ^= MaxHp.GetHashCode();
+    if (CurrentMana != 0) hash ^= CurrentMana.GetHashCode();
+    if (MaxMana != 0) hash ^= MaxMana.GetHashCode();
     if (Strength != 0) hash ^= Strength.GetHashCode();
     if (Dexterity != 0) hash ^= Dexterity.GetHashCode();
     if (Intelligence != 0) hash ^= Intelligence.GetHashCode();
+    if (AttackDamage != 0) hash ^= AttackDamage.GetHashCode();
+    if (AttackRange != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(AttackRange);
     if (LastProcessedSequenceID != 0) hash ^= LastProcessedSequenceID.GetHashCode();
     if (PosX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosX);
     if (PosY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PosY);
@@ -3256,61 +3314,77 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
       output.WriteRawTag(24);
       output.WriteInt32(MaxHp);
     }
-    if (Strength != 0) {
+    if (CurrentMana != 0) {
       output.WriteRawTag(32);
+      output.WriteInt32(CurrentMana);
+    }
+    if (MaxMana != 0) {
+      output.WriteRawTag(40);
+      output.WriteInt32(MaxMana);
+    }
+    if (Strength != 0) {
+      output.WriteRawTag(48);
       output.WriteInt32(Strength);
     }
     if (Dexterity != 0) {
-      output.WriteRawTag(40);
+      output.WriteRawTag(56);
       output.WriteInt32(Dexterity);
     }
     if (Intelligence != 0) {
-      output.WriteRawTag(48);
+      output.WriteRawTag(64);
       output.WriteInt32(Intelligence);
     }
+    if (AttackDamage != 0) {
+      output.WriteRawTag(72);
+      output.WriteInt32(AttackDamage);
+    }
+    if (AttackRange != 0F) {
+      output.WriteRawTag(85);
+      output.WriteFloat(AttackRange);
+    }
     if (LastProcessedSequenceID != 0) {
-      output.WriteRawTag(56);
+      output.WriteRawTag(88);
       output.WriteInt32(LastProcessedSequenceID);
     }
     if (PosX != 0F) {
-      output.WriteRawTag(69);
+      output.WriteRawTag(101);
       output.WriteFloat(PosX);
     }
     if (PosY != 0F) {
-      output.WriteRawTag(77);
+      output.WriteRawTag(109);
       output.WriteFloat(PosY);
     }
     if (PosZ != 0F) {
-      output.WriteRawTag(85);
+      output.WriteRawTag(117);
       output.WriteFloat(PosZ);
     }
     if (RotX != 0F) {
-      output.WriteRawTag(93);
+      output.WriteRawTag(125);
       output.WriteFloat(RotX);
     }
     if (RotY != 0F) {
-      output.WriteRawTag(101);
+      output.WriteRawTag(133, 1);
       output.WriteFloat(RotY);
     }
     if (RotZ != 0F) {
-      output.WriteRawTag(109);
+      output.WriteRawTag(141, 1);
       output.WriteFloat(RotZ);
     }
     if (AttackSpeed != 0F) {
-      output.WriteRawTag(117);
+      output.WriteRawTag(149, 1);
       output.WriteFloat(AttackSpeed);
     }
     if (MovementSpeed != 0F) {
-      output.WriteRawTag(125);
+      output.WriteRawTag(157, 1);
       output.WriteFloat(MovementSpeed);
     }
     playerInputs_.WriteTo(output, _repeated_playerInputs_codec);
     if (Oid != 0) {
-      output.WriteRawTag(136, 1);
+      output.WriteRawTag(168, 1);
       output.WriteInt32(Oid);
     }
     if (Name.Length != 0) {
-      output.WriteRawTag(146, 1);
+      output.WriteRawTag(178, 1);
       output.WriteString(Name);
     }
     if (_unknownFields != null) {
@@ -3330,6 +3404,12 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (MaxHp != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxHp);
     }
+    if (CurrentMana != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(CurrentMana);
+    }
+    if (MaxMana != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(MaxMana);
+    }
     if (Strength != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Strength);
     }
@@ -3338,6 +3418,12 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
     if (Intelligence != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(Intelligence);
+    }
+    if (AttackDamage != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeInt32Size(AttackDamage);
+    }
+    if (AttackRange != 0F) {
+      size += 1 + 4;
     }
     if (LastProcessedSequenceID != 0) {
       size += 1 + pb::CodedOutputStream.ComputeInt32Size(LastProcessedSequenceID);
@@ -3355,16 +3441,16 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
       size += 1 + 4;
     }
     if (RotY != 0F) {
-      size += 1 + 4;
+      size += 2 + 4;
     }
     if (RotZ != 0F) {
-      size += 1 + 4;
+      size += 2 + 4;
     }
     if (AttackSpeed != 0F) {
-      size += 1 + 4;
+      size += 2 + 4;
     }
     if (MovementSpeed != 0F) {
-      size += 1 + 4;
+      size += 2 + 4;
     }
     size += playerInputs_.CalculateSize(_repeated_playerInputs_codec);
     if (Oid != 0) {
@@ -3393,6 +3479,12 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     if (other.MaxHp != 0) {
       MaxHp = other.MaxHp;
     }
+    if (other.CurrentMana != 0) {
+      CurrentMana = other.CurrentMana;
+    }
+    if (other.MaxMana != 0) {
+      MaxMana = other.MaxMana;
+    }
     if (other.Strength != 0) {
       Strength = other.Strength;
     }
@@ -3401,6 +3493,12 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
     }
     if (other.Intelligence != 0) {
       Intelligence = other.Intelligence;
+    }
+    if (other.AttackDamage != 0) {
+      AttackDamage = other.AttackDamage;
+    }
+    if (other.AttackRange != 0F) {
+      AttackRange = other.AttackRange;
     }
     if (other.LastProcessedSequenceID != 0) {
       LastProcessedSequenceID = other.LastProcessedSequenceID;
@@ -3460,62 +3558,78 @@ public sealed partial class PlayerObject : pb::IMessage<PlayerObject> {
           break;
         }
         case 32: {
-          Strength = input.ReadInt32();
+          CurrentMana = input.ReadInt32();
           break;
         }
         case 40: {
-          Dexterity = input.ReadInt32();
+          MaxMana = input.ReadInt32();
           break;
         }
         case 48: {
-          Intelligence = input.ReadInt32();
+          Strength = input.ReadInt32();
           break;
         }
         case 56: {
-          LastProcessedSequenceID = input.ReadInt32();
+          Dexterity = input.ReadInt32();
           break;
         }
-        case 69: {
-          PosX = input.ReadFloat();
+        case 64: {
+          Intelligence = input.ReadInt32();
           break;
         }
-        case 77: {
-          PosY = input.ReadFloat();
+        case 72: {
+          AttackDamage = input.ReadInt32();
           break;
         }
         case 85: {
-          PosZ = input.ReadFloat();
+          AttackRange = input.ReadFloat();
           break;
         }
-        case 93: {
-          RotX = input.ReadFloat();
+        case 88: {
+          LastProcessedSequenceID = input.ReadInt32();
           break;
         }
         case 101: {
-          RotY = input.ReadFloat();
+          PosX = input.ReadFloat();
           break;
         }
         case 109: {
-          RotZ = input.ReadFloat();
+          PosY = input.ReadFloat();
           break;
         }
         case 117: {
-          AttackSpeed = input.ReadFloat();
+          PosZ = input.ReadFloat();
           break;
         }
         case 125: {
+          RotX = input.ReadFloat();
+          break;
+        }
+        case 133: {
+          RotY = input.ReadFloat();
+          break;
+        }
+        case 141: {
+          RotZ = input.ReadFloat();
+          break;
+        }
+        case 149: {
+          AttackSpeed = input.ReadFloat();
+          break;
+        }
+        case 157: {
           MovementSpeed = input.ReadFloat();
           break;
         }
-        case 130: {
+        case 162: {
           playerInputs_.AddEntriesFrom(input, _repeated_playerInputs_codec);
           break;
         }
-        case 136: {
+        case 168: {
           Oid = input.ReadInt32();
           break;
         }
-        case 146: {
+        case 178: {
           Name = input.ReadString();
           break;
         }

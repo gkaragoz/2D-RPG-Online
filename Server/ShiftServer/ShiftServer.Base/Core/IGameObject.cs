@@ -14,14 +14,21 @@ namespace ShiftServer.Base.Core
         PlayerClass Class { get; set; }
         List<IGameObject> OwnedObjects { get; set; }
         SafeQueue<IGameInput> GameInputs { get; set; }
-        RigidBody rigidBody { get; set; }
+        RigidDynamic RigidDynamic { get; set; }
         Vector3 Position { get; set; }
         Vector3 Rotation { get; set; }
         Vector3 Scale { get; set; }
         double MovementSpeed { get; set; }
         double AttackSpeed { get; set; }
+        double AttackRange { get; set; }
+        int AttackDamage { get; set; }
         int CurrentHP { get; set; }
         int MaxHP { get; set; }
+        int MaxMana { get; set; }
+        int CurrentMana { get; set; }
+        int Strenght { get; set; }
+        int Dexterity { get; set; }
+        int Intelligence { get; set; }
         int LastProcessedSequenceID { get; set; }
         void OnAttack();
         void OnHit();

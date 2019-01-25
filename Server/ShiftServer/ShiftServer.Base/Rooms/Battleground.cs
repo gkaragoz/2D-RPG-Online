@@ -37,7 +37,7 @@ namespace ShiftServer.Base.Rooms
             GameObjects = new SafeDictionary<int, IGameObject>();
             Teams = new SafeDictionary<string, IGroup>();
             TeamIdList = new List<string>();
-
+            Scene = PhysxEngine.Engine.CreateScene();
             ID = Guid.NewGuid().ToString();
 
             MaxConnectionID = 0;
@@ -80,12 +80,18 @@ namespace ShiftServer.Base.Rooms
         public void OnPlayerCreate(IGameObject gameObject)
         {
             gameObject.ObjectID = Interlocked.Increment(ref ObjectCounter);
+            gameObject.RigidDynamic = PhysxEngine.Engine.CreateRigidDynamic(this.Scene);
             GameObjects.Add(gameObject.ObjectID, gameObject);
             GOUpdatePacket.PlayerList.Add(new PlayerObject
             {
                 Name = gameObject.Name,
                 MovementSpeed = (float)gameObject.MovementSpeed,
                 AttackSpeed = (float)gameObject.AttackSpeed,
+                Dexterity = gameObject.Dexterity,
+                Intelligence = gameObject.Intelligence,
+                Strength = gameObject.Strenght,
+                CurrentHp = gameObject.CurrentHP,
+                MaxHp = gameObject.MaxHP,
                 Oid = gameObject.ObjectID,
                 PosX = gameObject.Position.X,
                 PosY = gameObject.Position.Y,
@@ -153,6 +159,9 @@ namespace ShiftServer.Base.Rooms
                 MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
                 CurrentHp = shift.CurrentObject.CurrentHP,
                 MaxHp = shift.CurrentObject.MaxHP,
+                Dexterity = shift.CurrentObject.Dexterity,
+                Strength = shift.CurrentObject.Strenght,
+                Intelligence = shift.CurrentObject.Intelligence,
                 PosX = shift.CurrentObject.Position.X,
                 PosY = shift.CurrentObject.Position.Y,
                 PosZ = shift.CurrentObject.Position.Z

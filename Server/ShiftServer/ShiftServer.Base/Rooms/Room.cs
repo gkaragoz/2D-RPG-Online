@@ -1,4 +1,5 @@
-﻿using ShiftServer.Base.Auth;
+﻿using PhysX;
+using ShiftServer.Base.Auth;
 using ShiftServer.Base.Core;
 using ShiftServer.Proto.Db;
 using ShiftServer.Proto.Helper;
@@ -35,6 +36,7 @@ namespace ShiftServer.Base.Rooms
         public TimeSpan CurrentServerUptime { get; set; }
         public int GameRoomTickRate { get; set; } = 8;
         public int GameRoomUpdateInterval { get; set; } = 0;
+        public Scene Scene { get; set; }
 
         private RoomPlayerInfo MakeRoomPlayerInfo(ShiftClient currentClient)
         {

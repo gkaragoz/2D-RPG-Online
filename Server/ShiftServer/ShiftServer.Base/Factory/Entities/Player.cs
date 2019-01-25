@@ -31,7 +31,14 @@ namespace ShiftServer.Base.Factory.Entities
         public double AttackSpeed { get; set; }
         public int LastProcessedSequenceID { get; set; }
         public EntityState State { get; set; }
-        public RigidBody rigidBody { get; set; }
+        public RigidDynamic RigidDynamic { get; set; }
+        public int Strenght { get; set; }
+        public int Dexterity { get; set; }
+        public int Intelligence { get; set; }
+        public double AttackRange { get; set; }
+        public int AttackDamage { get; set; }
+        public int MaxMana { get; set; }
+        public int CurrentMana { get; set; }
 
         public Player(Character chardata, ShiftClient shift)
         {
@@ -42,9 +49,15 @@ namespace ShiftServer.Base.Factory.Entities
             this.Name = chardata.Name;
             this.MaxHP = chardata.Stats.Health;
             this.CurrentHP = chardata.Stats.Health;
+            this.MaxMana = chardata.Stats.Mana;
+            this.CurrentMana = chardata.Stats.Mana;
             this.AttackSpeed = chardata.Stats.AttackSpeed;
+            this.AttackRange = chardata.Stats.AttackRange;
+            this.AttackDamage = chardata.Stats.AttackDamage;
             this.MovementSpeed = chardata.Stats.MovementSpeed;
-            this.CurrentHP = chardata.Stats.Health;
+            this.Dexterity = chardata.Attributes.Dexterity;
+            this.Strenght = chardata.Attributes.Strength;
+            this.Intelligence = chardata.Attributes.Intelligence;
             this.Position = new Vector3(0.0f, 0.0f, 0.0f);
             this.Rotation = new Vector3(0.0f, 0.0f, 0.0f);
             this.Scale = new Vector3(1f, 1f, 1f);

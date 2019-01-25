@@ -1,4 +1,5 @@
-﻿using ShiftServer.Base.Auth;
+﻿using PhysX;
+using ShiftServer.Base.Auth;
 using ShiftServer.Proto.Db;
 using System;
 using System.Collections.Generic;
@@ -27,6 +28,7 @@ namespace ShiftServer.Base.Core
         bool IsPrivate { get; set; }
         bool IsPersistence { get; set; }
         bool IsStopTriggered { get; set; }
+        Scene Scene { get; set; }
         SafeDictionary<int, IGameObject> GameObjects { get; set; }
         SafeDictionary<string, IGroup> Teams { get; set; }
         List<string> TeamIdList { get; set; }
