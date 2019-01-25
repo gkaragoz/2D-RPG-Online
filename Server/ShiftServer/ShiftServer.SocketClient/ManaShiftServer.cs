@@ -44,6 +44,11 @@ namespace ShiftServer.Client
             _stopwatch = new Stopwatch();
         }
 
+        public Exception GetError()
+        {
+            return GameProvider.instance.error;
+        }
+
         /// <summary>
         /// Connect to tcp socket
         /// </summary>
