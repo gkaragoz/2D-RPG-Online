@@ -262,10 +262,6 @@
     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Room\RoomClientSlot.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Room\RoomManager.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Room\Team\Team.cs" />
-    <Compile Include="Assets\Scripts\Archieve\Room\Team\TeamManager.cs" />
     <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\CameraController.cs" />
@@ -322,6 +318,10 @@
     <Compile Include="Assets\Scripts\Systems\Popup\PopupLoading.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupMessage.cs" />
+    <Compile Include="Assets\Scripts\Systems\Room\RoomClientSlot.cs" />
+    <Compile Include="Assets\Scripts\Systems\Room\RoomManager.cs" />
+    <Compile Include="Assets\Scripts\Systems\Room\Team\Team.cs" />
+    <Compile Include="Assets\Scripts\Systems\Room\Team\TeamManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Tutorial\TutorialManager.cs" />
     <Compile Include="Assets\Scripts\Utils.cs" />
     <Compile Include="Assets\Scripts\Visualize\PopupTween.cs" />
