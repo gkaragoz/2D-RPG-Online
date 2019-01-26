@@ -96,7 +96,10 @@ public class PlayerController : MonoBehaviour {
 
         if (Utils.IsValid(_networkIdentifier.NetworkObject.PositionX, _networkIdentifier.NetworkObject.PositionY, _networkIdentifier.NetworkObject.PositionZ)) {
             Vector3 newPosition = new Vector3(_networkIdentifier.NetworkObject.PositionX.ToFloat(), _networkIdentifier.NetworkObject.PositionY.ToFloat(), _networkIdentifier.NetworkObject.PositionZ.ToFloat());
-            MoveToPosition(newPosition);
+
+            if (newPosition != transform.position) {
+                MoveToPosition(newPosition);
+            }
         } else {
             Stop();
         }
