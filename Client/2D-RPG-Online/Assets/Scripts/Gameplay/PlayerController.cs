@@ -124,11 +124,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     public void MoveToPosition(Vector3 position) {
-        if (position == Vector3.zero) {
-            Stop();
-        } else {
-            CharacterController.MoveToPosition(position);
-        }
+        CharacterController.MoveToPosition(position);
     }
 
     public void Stop() {
