@@ -10,7 +10,7 @@ message ShiftServerData {
 	RoomData RoomData = 7;
 	AccountData Account = 8;
 
-	UpdateGOList GoUpdatePacket = 9; // GameObjects list
+	ClientStateUpdate StateUpdate = 9; // GameObjects list
 	SPlayerInput PlayerInput = 11;
 	NetworkIdentifier sPlayerObject = 12;
 	ShiftServerError ErrorReason = 13;
@@ -157,10 +157,8 @@ message AccountData {
 
 }
 
-message UpdateGOList {
-
-	repeated NetworkIdentifier playerList = 1;
-
+message ClientStateUpdate {
+	repeated NetworkIdentifier NetworkObjects = 1;
 }
 
 message ClientData {

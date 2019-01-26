@@ -29,7 +29,7 @@ namespace ShiftServer.Base.Rooms
         public int ObjectCounter = 0;
         public int PlayerCounter = 0;
 
-        public UpdateGOList GOUpdatePacket = new UpdateGOList();
+        public ClientStateUpdate UpdatePacket = new ClientStateUpdate();
         public Battleground(int groupCount, int maxUserPerTeam)
         {
             MaxUserPerTeam = maxUserPerTeam;
@@ -82,13 +82,13 @@ namespace ShiftServer.Base.Rooms
             gameObject.ObjectID = Interlocked.Increment(ref ObjectCounter);
             gameObject.RigidDynamic = PhysxEngine.Engine.CreateRigidDynamic(this.Scene);
             GameObjects.Add(gameObject.ObjectID, gameObject);
-            GOUpdatePacket.PlayerList.Add(gameObject.GetPlayerObject());
+            UpdatePacket.NetworkObjects.Add(gameObject.GetPlayerObject());
         }
         public void OnObjectDestroy(IGameObject gameObject)
         {
             GameObjects.Remove(gameObject.ObjectID);
-            var item = GOUpdatePacket.PlayerList.Where(x => x.Id == gameObject.ObjectID).FirstOrDefault();
-            GOUpdatePacket.PlayerList.Remove(item);
+            var item = UpdatePacket.NetworkObjects.Where(x => x.Id == gameObject.ObjectID).FirstOrDefault();
+            UpdatePacket.NetworkObjects.Remove(item);
         }
         public override async void OnPlayerJoinAsync(Character chardata, ShiftClient shift)
         {
@@ -118,8 +118,8 @@ namespace ShiftServer.Base.Rooms
 
             ShiftServerData data = new ShiftServerData();
             data.SvTickRate = this.GameRoomTickRate;
-            data.GoUpdatePacket = new UpdateGOList();
-            data.GoUpdatePacket.PlayerList.Clear();
+            data.StateUpdate = new ClientStateUpdate();
+            data.StateUpdate.NetworkObjects.Clear();
 
             IGameObject gObject = null;
 
@@ -130,7 +130,7 @@ namespace ShiftServer.Base.Rooms
                 {
                     NetworkIdentifier pObject = gObject.GetPlayerObject();
                     if (pObject != null)
-                        data.GoUpdatePacket.PlayerList.Add(pObject);
+                        data.StateUpdate.NetworkObjects.Add(pObject);
                 }
             }
 
