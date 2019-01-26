@@ -115,7 +115,7 @@ namespace ShiftServer.Base.Factory.Entities
                 pObject.CurrentHp = this.CurrentHP;
                 pObject.CurrentMana = this.CurrentMana;
             }
-            networkIdentifier.PlayerObject = pObject;
+            networkIdentifier.PlayerData = pObject;
             //state management key, resolve input count between per tickrate
             ResolvedInputCount = 0;
 

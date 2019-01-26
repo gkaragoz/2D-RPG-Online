@@ -282,7 +282,7 @@ namespace ShiftServer.Base.Auth
             {
                 Id = this.CurrentObject.ObjectID,
                 Type = NetIdentifierFlag.Player,
-                PlayerObject = obj,
+                PlayerData = obj,
                 RotationX = this.CurrentObject.Rotation.X,
                 RotationY = this.CurrentObject.Rotation.Y,
                 RotationZ = this.CurrentObject.Rotation.Z,

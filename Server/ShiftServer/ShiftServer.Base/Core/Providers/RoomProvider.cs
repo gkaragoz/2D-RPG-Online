@@ -84,7 +84,7 @@ namespace ShiftServer.Base.Core
 
                 this.SpawnCharacterToRoom(shift, newRoom);
                 
-                data.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
+                data.RoomData.PlayerInfo.NetworkObject = shift.CreateNetIdentifierMessage();
              
 
                 if (newRoom.RoomLeaderID == shift.ConnectionID)
@@ -227,7 +227,7 @@ namespace ShiftServer.Base.Core
                             pInfo.Username = charAcc.SelectedCharName;
                             pInfo.IsReady = cl.IsReady;
                             pInfo.TeamId = cl.JoinedTeamID;                          
-                            pInfo.CurrentGObject = cl.CreateNetIdentifierMessage();
+                            pInfo.NetworkObject = cl.CreateNetIdentifierMessage();
                             if (result.RoomLeaderID == cl.ConnectionID)
                                 pInfo.IsLeader = true;
                             else
@@ -238,7 +238,7 @@ namespace ShiftServer.Base.Core
                     }
 
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
-                    data.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
+                    data.RoomData.PlayerInfo.NetworkObject = shift.CreateNetIdentifierMessage();
 
                     shift.IsJoinedToRoom = true;
                     result.BroadcastClientState(shift, MSServerEvent.RoomPlayerJoined);
