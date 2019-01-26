@@ -15,6 +15,9 @@ namespace ShiftServer.Proto.Utils
 
         public static float ToFloat(this string value)
         {
+            if (string.IsNullOrEmpty(value))
+                return float.NaN;
+
             return float.Parse(value);
         }
 
