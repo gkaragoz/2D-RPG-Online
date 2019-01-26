@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class NetworkObject {
+public class NetworkEntity {
 
     public Action OnPlayerDataChanged;
 
@@ -19,32 +19,23 @@ public class NetworkObject {
         }
     }
 
-    public PlayerObject PlayerObject {
-        get { return _playerData; }
-        set {
-            _playerData = value;
-            OnPlayerDataChanged?.Invoke();
-        }
-    }
-
-    public string PlayerName { get { return _playerData.Name; } }
+    public NetworkIdentifier NetworkObject { get { return _networkObject; } }
 
     public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
 
-    public int Oid { get { return _networkObject.Id; } }
-
     public List<PositionEntry> PositionBuffer { get { return _positionBuffer; } set { _positionBuffer = value; } }
+
+    public int Oid { get { return _networkObject.Id; } }
 
     public int LastProcessedInputSequenceID { get { return _lastProcessedInputSequenceID; } set { _lastProcessedInputSequenceID = value; } }
 
     private NetworkIdentifier _networkObject;
-    private PlayerObject _playerData;
     private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _lastProcessedInputSequenceID;
     private int _nonAckInputIndex = 0;
 
-    public NetworkObject(NetworkIdentifier networkObject) {
+    public NetworkEntity(NetworkIdentifier networkObject) {
         this._networkObject = networkObject;
     }
 

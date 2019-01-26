@@ -421,7 +421,7 @@ public class CharacterStats_SO : ScriptableObject {
         //Display death visualization.
     }
 
-    public void Initialize(NetworkObject networkObject) {
+    public void Initialize(NetworkIdentifier networkObject) {
         //this.StatsPoints = statPoints;
 
         //this.BaseStrength = new BaseStats(baseStrength);
@@ -431,7 +431,7 @@ public class CharacterStats_SO : ScriptableObject {
         //this.CurrentHealth = MaxHealth;
         //this.CurrentMana = MaxMana;
 
-        this.MovementSpeed = networkObject.PlayerObject.MoveSpeed;
+        this.MovementSpeed = networkObject.PlayerData.MoveSpeed;
 
         //this.Level = level;
         //this.MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
