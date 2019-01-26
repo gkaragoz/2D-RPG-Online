@@ -61,7 +61,7 @@ namespace ShiftServer.Base.Rooms
             this.StartGameRoom();
         }
 
-       
+
         private void StartGameRoom()
         {
             GameRoomUpdateInterval = TickrateUtil.Set(GameRoomTickRate);
@@ -82,27 +82,12 @@ namespace ShiftServer.Base.Rooms
             gameObject.ObjectID = Interlocked.Increment(ref ObjectCounter);
             gameObject.RigidDynamic = PhysxEngine.Engine.CreateRigidDynamic(this.Scene);
             GameObjects.Add(gameObject.ObjectID, gameObject);
-            GOUpdatePacket.PlayerList.Add(new PlayerObject
-            {
-                Name = gameObject.Name,
-                MovementSpeed = (float)gameObject.MovementSpeed,
-                AttackSpeed = (float)gameObject.AttackSpeed,
-                Dexterity = gameObject.Dexterity,
-                Intelligence = gameObject.Intelligence,
-                Strength = gameObject.Strenght,
-                CurrentHp = gameObject.CurrentHP,
-                MaxHp = gameObject.MaxHP,
-                Oid = gameObject.ObjectID,
-                PosX = gameObject.Position.X,
-                PosY = gameObject.Position.Y,
-                PosZ = gameObject.Position.Z,
-
-            });
+            GOUpdatePacket.PlayerList.Add(gameObject.GetPlayerObject());
         }
         public void OnObjectDestroy(IGameObject gameObject)
         {
             GameObjects.Remove(gameObject.ObjectID);
-            var item = GOUpdatePacket.PlayerList.Where(x => x.Oid == gameObject.ObjectID).FirstOrDefault();
+            var item = GOUpdatePacket.PlayerList.Where(x => x.Id == gameObject.ObjectID).FirstOrDefault();
             GOUpdatePacket.PlayerList.Remove(item);
         }
         public override async void OnPlayerJoinAsync(Character chardata, ShiftClient shift)
@@ -113,59 +98,17 @@ namespace ShiftServer.Base.Rooms
                 return;
 
             List<IGameObject> gameObjectList = GameObjects.GetValues();
-            Player currentPlayer = (Player)gameObjectList.Where(x => x.OwnerConnectionID == shift.ConnectionID && x.GetType() == typeof(Player)).FirstOrDefault();
 
-            // if already exist in world
-            if (currentPlayer != null)
-            {
-                sendData.SPlayerObject = new PlayerObject
-                {
-                    PClass = currentPlayer.Class,
-                    CurrentHp = currentPlayer.CurrentHP,
-                    MaxHp = currentPlayer.MaxHP,
-                    PosX = currentPlayer.Position.X,
-                    PosY = currentPlayer.Position.Y,
-                    PosZ = currentPlayer.Position.Z,
-                    RotX = currentPlayer.Rotation.X,
-                    RotY = currentPlayer.Rotation.Y,
-                    RotZ = currentPlayer.Rotation.Z,
-                    AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
-                    MovementSpeed = (float)shift.CurrentObject.MovementSpeed
-                };
+            Player player = new Player(chardata, shift);
 
+            this.OnPlayerCreate(player);
+            log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
 
-
-            }
-            else
-            {
-                Player player = new Player(chardata, shift);
-              
-                this.OnPlayerCreate(player);
-                log.Info($"[CreatePlayer] OnRoom:{this.ID} Remote:{shift.TCPClient.Client.RemoteEndPoint.ToString()} ClientNo:{shift.ConnectionID}");
-
-
-                currentPlayer = player;
-            }
-            shift.CurrentObject = currentPlayer;
+            shift.CurrentObject = player;
             shift.Inputs = new SafeQueue<IGameInput>();
             sendData.RoomData = new RoomData();
             sendData.RoomData.PlayerInfo = new RoomPlayerInfo();
-            sendData.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
-            {
-                Name = shift.UserName,
-                Oid = shift.CurrentObject.ObjectID,
-                PClass = (PlayerClass)chardata.ClassIndex,
-                AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
-                MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
-                CurrentHp = shift.CurrentObject.CurrentHP,
-                MaxHp = shift.CurrentObject.MaxHP,
-                Dexterity = shift.CurrentObject.Dexterity,
-                Strength = shift.CurrentObject.Strenght,
-                Intelligence = shift.CurrentObject.Intelligence,
-                PosX = shift.CurrentObject.Position.X,
-                PosY = shift.CurrentObject.Position.Y,
-                PosZ = shift.CurrentObject.Position.Z
-            };
+            sendData.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
 
             //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);
@@ -185,14 +128,14 @@ namespace ShiftServer.Base.Rooms
                 GameObjects.TryGetValue(i, out gObject);
                 if (gObject != null)
                 {
-                    PlayerObject pObject = gObject.GetPlayerObject();
+                    NetworkIdentifier pObject = gObject.GetPlayerObject();
                     if (pObject != null)
                         data.GoUpdatePacket.PlayerList.Add(pObject);
                 }
             }
-          
+
             this.BroadcastPlayerDataToRoom(MSPlayerEvent.RoomUpdate, data);
-           
+
         }
         public override void OnRoomUpdate()
         {

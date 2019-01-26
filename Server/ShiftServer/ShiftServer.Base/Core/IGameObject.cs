@@ -35,6 +35,7 @@ namespace ShiftServer.Base.Core
         void OnMove(IGameInput input);
         void ResolveInputs();
         void ResolveInputs(IGameInput input);
-        PlayerObject GetPlayerObject();
+        NetworkIdentifier GetPlayerObject();
+
     }
 }
