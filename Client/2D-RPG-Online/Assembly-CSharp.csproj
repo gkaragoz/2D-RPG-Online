@@ -290,7 +290,7 @@
     <Compile Include="Assets\Scripts\HUDFPS.cs" />
     <Compile Include="Assets\Scripts\Network\APIConfig.cs" />
     <Compile Include="Assets\Scripts\Network\LoginManager.cs" />
-    <Compile Include="Assets\Scripts\Network\NetworkIdentifier.cs" />
+    <Compile Include="Assets\Scripts\Network\NetworkIdentity.cs" />
     <Compile Include="Assets\Scripts\Network\NetworkManager.cs" />
     <Compile Include="Assets\Scripts\Network\PingStatus.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Client.cs" />

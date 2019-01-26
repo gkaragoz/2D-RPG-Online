@@ -207,7 +207,7 @@ public class RoomManager : Menu {
         Debug.Log(data);
 
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
-            PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
+            NetworkIdentifier updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
             if (updatedPlayerObject.Oid == _myPlayerController.NetworkIdentifier.Oid) {
 
                 //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
@@ -244,10 +244,10 @@ public class RoomManager : Menu {
 
     private void OnPlayerCreated(ShiftServerData data) {
         Debug.Log("OnPlayerCreated: " + data);
-
+        
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        if (playerInfo.CurrentGObject.Name == AccountManager.instance.SelectedCharacterName) {
+        if (playerInfo.CurrentGObject.PlayerObject.Name == AccountManager.instance.SelectedCharacterName) {
             CreateMyPlayer(playerInfo);
         } else {
             CreatePlayer(playerInfo);
