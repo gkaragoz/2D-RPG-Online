@@ -236,15 +236,17 @@ public class RoomManager : Menu {
             //Other Entity's Movement
             for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
                 if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedNetworkObject.Id) {
-                    Vector3 updatedPosition = new Vector3(updatedNetworkObject.PositionX.ToFloat(), updatedNetworkObject.PositionY.ToFloat(), updatedNetworkObject.PositionZ.ToFloat());
+                    if (Utils.IsValid(updatedNetworkObject.PositionX, updatedNetworkObject.PositionY, updatedNetworkObject.PositionZ)) {
+                        Vector3 updatedPosition = new Vector3(updatedNetworkObject.PositionX.ToFloat(), updatedNetworkObject.PositionY.ToFloat(), updatedNetworkObject.PositionZ.ToFloat());
 
-                    if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
-                        DateTime updateTime = DateTime.UtcNow;
-                        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                        OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
+                        if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
+                            DateTime updateTime = DateTime.UtcNow;
+                            var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                            OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
+                        }
+
+                        OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedNetworkObject.LastProcessedInputID;
                     }
-
-                    OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedNetworkObject.LastProcessedInputID;
                 }
             }
         }

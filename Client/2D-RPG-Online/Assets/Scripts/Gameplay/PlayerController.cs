@@ -99,6 +99,8 @@ public class PlayerController : MonoBehaviour {
 
             if (newPosition != transform.position) {
                 MoveToPosition(newPosition);
+            } else {
+                Stop();
             }
         } else {
             Stop();
