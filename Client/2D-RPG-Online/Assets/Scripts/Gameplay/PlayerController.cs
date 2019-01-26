@@ -43,10 +43,6 @@ public class PlayerController : MonoBehaviour {
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    private void Start() {
-        _characterStats.characterDefinition.onDeath += OnDeath;
-    }
-
     private void FixedUpdate() {
         if (_isMe || _isOfflineMode) {
             if (_isControllerActive) {

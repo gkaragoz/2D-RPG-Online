@@ -10,22 +10,6 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "Character Stats", menuName = "Character/Character Stats")]
 public class CharacterStats_SO : ScriptableObject {
 
-    #region Events
-
-    public delegate void DeathEvent();
-    public event DeathEvent onDeath;
-
-    public delegate void CurrentExperienceValueChanged();
-    public event CurrentExperienceValueChanged onCurrentExperienceValueChanged;
-
-    public delegate void MaxExperienceValueChanged();
-    public event MaxExperienceValueChanged onMaxExperienceValueChanged;
-
-    public delegate void LevelValueChanged();
-    public event LevelValueChanged onLevelValueChanged;
-
-    #endregion
-
     #region Base Stats Class
 
     [System.Serializable]
@@ -86,6 +70,9 @@ public class CharacterStats_SO : ScriptableObject {
     public bool isPlayer = false;
 
     [SerializeField]
+    private string _name = string.Empty;
+
+    [SerializeField]
     private int _statsPoints = 0;
 
     [SerializeField]
@@ -124,6 +111,16 @@ public class CharacterStats_SO : ScriptableObject {
     #endregion
 
     #region Getter Setters
+
+    public string Name {
+        get {
+            return _name;
+        }
+
+        set {
+            _name = value;
+        }
+    }
 
     public int StatsPoints {
         get {
@@ -167,16 +164,17 @@ public class CharacterStats_SO : ScriptableObject {
 
     public float MaxHealth {
         get {
-            return BaseStrength.Value * 5;
+            return _maxHealth;
+        }
+
+        set {
+            _maxHealth = value;
         }
     }
 
     public float CurrentHealth {
         get {
-            if (_currentHealth > MaxHealth)
-                return MaxHealth;
-            else
-                return _currentHealth;
+            return _currentHealth;
         }
 
         set {
@@ -186,16 +184,17 @@ public class CharacterStats_SO : ScriptableObject {
 
     public float MaxMana {
         get {
-            return BaseIntelligence.Value * 5;
+            return _maxMana;
+        }
+
+        set {
+            _maxMana = value;
         }
     }
 
     public float CurrentMana {
         get {
-            if (_currentMana > MaxMana)
-                return MaxMana;
-            else
-                return _currentMana;
+            return _currentMana;
         }
 
         set {
@@ -262,8 +261,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _level = value;
-
-            onLevelValueChanged?.Invoke();
         }
     }
 
@@ -274,8 +271,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _maxExperience = value;
-
-            onMaxExperienceValueChanged?.Invoke();
         }
     }
 
@@ -286,8 +281,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _currentExperience = value;
-
-            onCurrentExperienceValueChanged?.Invoke();
         }
     }
 
@@ -379,8 +372,6 @@ public class CharacterStats_SO : ScriptableObject {
         if (CurrentHealth <= 0) {
             CurrentHealth = 0;
             Debug.Log("Death");
-
-            onDeath?.Invoke();
         }
     }
 
@@ -422,21 +413,27 @@ public class CharacterStats_SO : ScriptableObject {
     }
 
     public void Initialize(NetworkIdentifier networkObject) {
-        //this.StatsPoints = statPoints;
+        //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
+        this.Name = AccountManager.instance.SelectedCharacterName;
 
-        //this.BaseStrength = new BaseStats(baseStrength);
-        //this.BaseDexterity = new BaseStats(baseDexterity);
-        //this.BaseIntelligence = new BaseStats(baseIntelligence);
+        this.BaseStrength = new BaseStats(networkObject.PlayerData.Strength);
+        this.BaseDexterity = new BaseStats(networkObject.PlayerData.Dexterity);
+        this.BaseIntelligence = new BaseStats(networkObject.PlayerData.Intelligence);
 
-        //this.CurrentHealth = MaxHealth;
-        //this.CurrentMana = MaxMana;
+        this.CurrentHealth = networkObject.PlayerData.CurrentHp;
+        this.MaxHealth = networkObject.PlayerData.MaxHp;
+        this.CurrentMana = networkObject.PlayerData.CurrentMana;
+        this.MaxMana = networkObject.PlayerData.MaxMana;
 
+        this.AttackDamage = networkObject.PlayerData.AttackDamage;
+        this.AttackSpeed = networkObject.PlayerData.AttackSpeed;
+        this.AttackRange = networkObject.PlayerData.AttackRange;
         this.MovementSpeed = networkObject.PlayerData.MoveSpeed;
 
         //this.Level = level;
-        //this.MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
+        this.MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
         //this.MaxExperience = maxExperience;
-        //this.CurrentExperience = currentExperience;
+        this.CurrentExperience = 0;
     }
 
     public void LevelUp() {

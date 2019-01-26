@@ -26,7 +26,7 @@ public class CharacterUI : Menu {
     }
 
     private void SetName() {
-        _txtName.text = _characterStats.name;
+        _txtName.text = _characterStats.GetName();
     }
 
     private void SetHealthBar() {
