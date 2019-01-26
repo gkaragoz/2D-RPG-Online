@@ -182,20 +182,20 @@ public class RoomManager : Menu {
     }
 
     private void CreateMyPlayer(RoomPlayerInfo playerInfo) {
-        GameObject player = Instantiate(_playerPrefab, new Vector2(playerInfo.CurrentGObject.PosX, playerInfo.CurrentGObject.PosY), Quaternion.identity);
+        GameObject player = Instantiate(_playerPrefab, new Vector3(playerInfo.CurrentGObject.PositionX, playerInfo.CurrentGObject.PositionY, playerInfo.CurrentGObject.PositionZ), Quaternion.identity);
 
         _myPlayerController = player.GetComponent<PlayerController>();
-        _myPlayerController.Initialize(playerInfo.CurrentGObject);
+        _myPlayerController.Initialize(playerInfo.CurrentGObject.PlayerObject);
     }
 
 
     private void CreatePlayer(RoomPlayerInfo playerInfo) {
-        PlayerObject tempCurrentObject = playerInfo.CurrentGObject;
+        PlayerObject tempCurrentObject = playerInfo.CurrentGObject.PlayerObject;
 
-        playerInfo.CurrentGObject = new PlayerObject();
+        playerInfo.CurrentGObject = new NetworkIdentifier();
         playerInfo.CurrentGObject = tempCurrentObject;
 
-        PlayerController playerController = Instantiate(_playerPrefab, new Vector2(playerInfo.CurrentGObject.PosX, playerInfo.CurrentGObject.PosY), Quaternion.identity).GetComponent<PlayerController>();
+        PlayerController playerController = Instantiate(_playerPrefab, new Vector3(playerInfo.CurrentGObject.PositionX, playerInfo.CurrentGObject.PositionY, playerInfo.CurrentGObject.PositionZ), Quaternion.identity).GetComponent<PlayerController>();
         playerController.Initialize(playerInfo.CurrentGObject);
 
         OtherPlayerControllers.Add(playerController);
@@ -206,16 +206,16 @@ public class RoomManager : Menu {
 
         Debug.Log(data);
 
-        for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
-            NetworkIdentifier updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
-            if (updatedPlayerObject.Oid == _myPlayerController.NetworkIdentifier.Oid) {
+        for (int ii = 0; ii < data.StateUpdate.NetworkObjects.Count; ii++) {
+            NetworkIdentifier updatedNetworkObject = data.StateUpdate.NetworkObjects[ii];
+            if (updatedNetworkObject.Id == _myPlayerController.NetworkIdentifier.Oid) {
 
                 //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
                 //My Reconciliation
                 if (NetworkManager.instance.Reconciliaton) {
                     for (int jj = 0; jj < _myPlayerController.NetworkIdentifier.PlayerInputs.Count; jj++) {
-                        if (_myPlayerController.NetworkIdentifier.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
+                        if (_myPlayerController.NetworkIdentifier.GetSequenceID(jj) <= updatedNetworkObject.LastProcessedInputID) {
                             _myPlayerController.NetworkIdentifier.RemoveRange(jj, 1);
                         } else {
                             // re apply
@@ -228,15 +228,15 @@ public class RoomManager : Menu {
 
             //Other Entity's Movement
             for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
-                if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedPlayerObject.Oid) {
-                    Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
+                if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedNetworkObject.Id) {
+                    Vector3 updatedPosition = new Vector3(updatedNetworkObject.PositionX, updatedNetworkObject.PositionY, updatedNetworkObject.PositionZ);
 
-                    if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
+                    if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
                         DateTime updateTime = DateTime.UtcNow;
                         var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                        OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
+                        OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
                     }
-                    OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
+                    OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedNetworkObject.LastProcessedInputID;
                 }
             }
         }
