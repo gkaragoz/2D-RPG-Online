@@ -8,6 +8,15 @@ namespace ShiftServer.Proto.Utils
 {
     public static class DataExtensions
     {
+        public static string ToStringDefault(this float value)
+        {
+            return value.ToString("0.000");
+        }
+
+        public static float ToFloat(this string value)
+        {
+            return float.Parse(value);
+        }
 
         public static object GetValue(this object value)
         {

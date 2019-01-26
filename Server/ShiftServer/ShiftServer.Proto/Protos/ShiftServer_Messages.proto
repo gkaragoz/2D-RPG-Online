@@ -191,17 +191,18 @@ message NetworkIdentifier {
 	int32 id = 1;
 	NetIdentifierFlag type = 2;
 
-	float position_x = 3;
-	float position_y = 4;
-	float position_z = 5;
+	string position_x = 3;
+	string position_y = 4;
+	string position_z = 5;
 
-	float rotation_x = 6;
-	float rotation_y = 7;
-	float rotation_z = 8;
+	string rotation_x = 6;
+	string rotation_y = 7;
+	string rotation_z = 8;
 
-	float scale_x = 9;
-	float scale_y = 10;
-	float scale_z = 11;
+	string scale_x = 9;
+	string scale_y = 10;
+	string scale_z = 11;
+
 	PlayerObject PlayerData = 12;
 	int32 lastProcessedInputID = 13;	
 }

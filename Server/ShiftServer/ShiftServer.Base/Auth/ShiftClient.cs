@@ -1,6 +1,7 @@
 ﻿using Google.Protobuf;
 using ShiftServer.Base.Core;
 using ShiftServer.Proto.Db;
+using ShiftServer.Proto.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -283,17 +284,17 @@ namespace ShiftServer.Base.Auth
                 Id = this.CurrentObject.ObjectID,
                 Type = NetIdentifierFlag.Player,
                 PlayerData = obj,
-                RotationX = this.CurrentObject.Rotation.X,
-                RotationY = this.CurrentObject.Rotation.Y,
-                RotationZ = this.CurrentObject.Rotation.Z,
+                RotationX = this.CurrentObject.Rotation.X.ToStringDefault(),
+                RotationY = this.CurrentObject.Rotation.Y.ToStringDefault(),
+                RotationZ = this.CurrentObject.Rotation.Z.ToStringDefault(),
 
-                PositionX = this.CurrentObject.Position.X,
-                PositionY = this.CurrentObject.Position.Y,
-                PositionZ = this.CurrentObject.Position.Z,
+                PositionX = this.CurrentObject.Position.X.ToStringDefault(),
+                PositionY = this.CurrentObject.Position.Y.ToStringDefault(),
+                PositionZ = this.CurrentObject.Position.Z.ToStringDefault(),
 
-                ScaleX = this.CurrentObject.Position.X,
-                ScaleY = this.CurrentObject.Position.Y,
-                ScaleZ = this.CurrentObject.Position.Z,
+                ScaleX = this.CurrentObject.Position.X.ToStringDefault(),
+                ScaleY = this.CurrentObject.Position.Y.ToStringDefault(),
+                ScaleZ = this.CurrentObject.Position.Z.ToStringDefault(),
             };
 
             return networkIdentifier;
