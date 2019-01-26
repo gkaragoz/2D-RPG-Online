@@ -19,7 +19,7 @@ public class Utils : MonoBehaviour {
 
     public static bool IsValid(params string[] value) {
         for (int ii = 0; ii < value.Length; ii++) {
-            if (value[ii] == string.Empty || value[ii] == null) {
+            if (value[ii] == string.Empty || value[ii] == null || value[ii] == "NaN") {
                 return false;
             }
         }

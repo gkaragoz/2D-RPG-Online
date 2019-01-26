@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using ShiftServer.Proto.Utils;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -74,10 +75,10 @@ public class PlayerController : MonoBehaviour {
         UpdatePlayerInputsUI();
     }
 
-    public void Initialize(NetworkIdentifier networkObject) {
-        _networkIdentifier = new NetworkEntity(networkObject);
+    public void Initialize(NetworkIdentifier networkData) {
+        _networkIdentifier = new NetworkEntity(networkData);
 
-        this._characterStats.Initialize(networkObject);
+        this._characterStats.Initialize(networkData);
 
         if (_networkIdentifier.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;
@@ -87,6 +88,17 @@ public class PlayerController : MonoBehaviour {
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
+        }
+    }
+
+    public void Render(NetworkEntity networkData) {
+        _networkIdentifier = networkData;
+
+        if (Utils.IsValid(_networkIdentifier.NetworkObject.PositionX, _networkIdentifier.NetworkObject.PositionY, _networkIdentifier.NetworkObject.PositionZ)) {
+            Vector3 newPosition = new Vector3(_networkIdentifier.NetworkObject.PositionX.ToFloat(), _networkIdentifier.NetworkObject.PositionY.ToFloat(), _networkIdentifier.NetworkObject.PositionZ.ToFloat());
+            MoveToPosition(newPosition);
+        } else {
+            Stop();
         }
     }
 
