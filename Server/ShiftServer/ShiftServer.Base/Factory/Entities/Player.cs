@@ -39,6 +39,7 @@ namespace ShiftServer.Base.Factory.Entities
         public int AttackDamage { get; set; }
         public int MaxMana { get; set; }
         public int CurrentMana { get; set; }
+        public int ResolvedInputCount { get; set; }
 
         public Player(Character chardata, ShiftClient shift)
         {
@@ -64,41 +65,61 @@ namespace ShiftServer.Base.Factory.Entities
             this.State = EntityState.NEWSPAWN;
             
         }
-        public PlayerObject GetPlayerObject()
+        public NetworkIdentifier GetPlayerObject()
         {
-            PlayerObject data = new PlayerObject
+            PlayerObject pObject = new PlayerObject();
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier
             {
-                Oid = this.ObjectID,
-                LastProcessedSequenceID = this.LastProcessedSequenceID
+                Id = this.ObjectID,
+                Type = NetIdentifierFlag.Player,
+                LastProcessedInputID = this.LastProcessedSequenceID,
+              
             };
+
+            if (ResolvedInputCount == 0)
+            {
+                this.State = EntityState.IDLE;
+                return networkIdentifier;
+            }
 
             if (State == EntityState.NEWSPAWN)
             {
-                data.PosX = this.Position.X;
-                data.PosY = this.Position.Y;
-                data.PosZ = this.Position.Z;
-                data.RotX = this.Rotation.X;
-                data.RotY = this.Rotation.Y;
-                data.RotZ = this.Rotation.Z;
-                data.AttackSpeed = (float)this.AttackSpeed;
-                data.MovementSpeed = (float)this.MovementSpeed;
+                networkIdentifier.PositionX = this.Position.X;
+                networkIdentifier.PositionY = this.Position.Y;
+                networkIdentifier.PositionZ = this.Position.Z;
+
+                networkIdentifier.RotationX = this.Rotation.X;
+                networkIdentifier.RotationY = this.Rotation.Y;
+                networkIdentifier.RotationZ = this.Rotation.Z;
+
+                pObject.AttackSpeed = (float)this.AttackSpeed;
+                pObject.AttackDamage = this.AttackDamage;
+                pObject.AttackRange = (float)this.AttackRange;
+
+                pObject.MoveSpeed = (float)this.MovementSpeed;
             }
 
+            if (State == EntityState.MOVE)
+            {
+                networkIdentifier.PositionX = this.Position.X;
+                networkIdentifier.PositionY = this.Position.Y;
+                networkIdentifier.PositionZ = this.Position.Z;
 
-            data.PosX = this.Position.X;
-            data.PosY = this.Position.Y;
-            data.PosZ = this.Position.Z;
-
-            data.RotX = this.Rotation.X;
-            data.RotY = this.Rotation.Y;
-            data.RotZ = this.Rotation.Z;
-
+                networkIdentifier.RotationX = this.Rotation.X;
+                networkIdentifier.RotationY = this.Rotation.Y;
+                networkIdentifier.RotationZ = this.Rotation.Z;
+            }
+         
             if (State == EntityState.GETHIT || State == EntityState.ATTACK)
             {
-                data.CurrentHp = this.CurrentHP;
+                pObject.CurrentHp = this.CurrentHP;
+                pObject.CurrentMana = this.CurrentMana;
             }
+            networkIdentifier.PlayerObject = pObject;
+            //state management key, resolve input count between per tickrate
+            ResolvedInputCount = 0;
 
-            return data;
+            return networkIdentifier;
         }
         public void OnAttack()
         {
@@ -120,13 +141,19 @@ namespace ShiftServer.Base.Factory.Entities
                     this.Position += input.Vector * (float)this.MovementSpeed * 0.02f;
                     State = EntityState.MOVE;
                 }
-
+                this.ResolvedInputCount++;
 
             }
         }
         public void ResolveInputs()
         {
             IGameInput gInput = null;
+            if (this.GameInputs.Count == 0)
+            {
+                State = EntityState.IDLE;
+                return;
+            }
+
             for (int kk = 0; kk <= this.GameInputs.Count; kk++)
             {
                 this.GameInputs.TryDequeue(out gInput);
@@ -150,8 +177,11 @@ namespace ShiftServer.Base.Factory.Entities
 
                     this.LastProcessedSequenceID = gInput.SequenceID;
                 }
+
                 //pInput = (PlayerInput)gInput;
             }
+
+            
         }
 
         public void ResolveInputs(IGameInput input)
@@ -176,6 +206,10 @@ namespace ShiftServer.Base.Factory.Entities
                 }
 
                 this.LastProcessedSequenceID = input.SequenceID;
+            }
+            else
+            {
+                State = EntityState.IDLE;
             }
             //pInput = (PlayerInput)gInput;
 

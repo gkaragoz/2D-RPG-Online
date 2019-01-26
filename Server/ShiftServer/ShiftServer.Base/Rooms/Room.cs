@@ -50,19 +50,7 @@ namespace ShiftServer.Base.Rooms
             pInfo.IsReady = currentClient.IsReady;
             if (currentClient.CurrentObject != null)
             {
-                pInfo.ObjectId = currentClient.CurrentObject.ObjectID;
-                pInfo.CurrentGObject = new PlayerObject
-                {
-                    Name = currentClient.UserName,
-                    Oid = currentClient.CurrentObject.ObjectID,
-                    AttackSpeed = (float)currentClient.CurrentObject.AttackSpeed,
-                    MovementSpeed = (float)currentClient.CurrentObject.MovementSpeed,
-                    CurrentHp = currentClient.CurrentObject.CurrentHP,
-                    MaxHp = currentClient.CurrentObject.MaxHP,
-                    PosX = currentClient.CurrentObject.Position.X,
-                    PosY = currentClient.CurrentObject.Position.Y,
-                    PosZ = currentClient.CurrentObject.Position.Z
-                };
+                pInfo.CurrentGObject = currentClient.CreateNetIdentifierMessage();
             }
 
             if (this.RoomLeaderID == currentClient.ConnectionID)

@@ -103,7 +103,7 @@ namespace ShiftServer.Client
         /// <returns></returns>
         public void Setup()
         {
-            gameProvider.SetupTasks();
+            //gameProvider.SetupTasks();
         }
 
         /// <summary>

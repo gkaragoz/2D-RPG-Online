@@ -83,18 +83,9 @@ namespace ShiftServer.Base.Core
                 data.RoomData.PlayerInfo.IsReady = shift.IsReady;
 
                 this.SpawnCharacterToRoom(shift, newRoom);
-
-                data.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
-                {
-                    AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
-                    MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
-                    CurrentHp = shift.CurrentObject.CurrentHP,
-                    MaxHp = shift.CurrentObject.MaxHP,
-                    PosX = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
-                    PosY = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
-                    PosZ = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Z
-                };
-                data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectID;
+                
+                data.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
+             
 
                 if (newRoom.RoomLeaderID == shift.ConnectionID)
                     data.RoomData.PlayerInfo.IsLeader = true;
@@ -235,29 +226,8 @@ namespace ShiftServer.Base.Core
                             RoomPlayerInfo pInfo = new RoomPlayerInfo();
                             pInfo.Username = charAcc.SelectedCharName;
                             pInfo.IsReady = cl.IsReady;
-                            pInfo.TeamId = cl.JoinedTeamID;
-                            pInfo.ObjectId = cl.CurrentObject.ObjectID;
-                            pInfo.CurrentGObject = new PlayerObject
-                            {
-                                Name = cl.CurrentObject.Name,
-                                Oid = cl.CurrentObject.ObjectID,
-                                AttackSpeed = (float)cl.CurrentObject.AttackSpeed,
-                                MovementSpeed = (float)cl.CurrentObject.MovementSpeed,
-                                AttackDamage = cl.CurrentObject.AttackDamage,
-                                AttackRange = (float)cl.CurrentObject.AttackRange,
-                                CurrentHp = cl.CurrentObject.CurrentHP,
-                                MaxHp = cl.CurrentObject.MaxHP,
-                                CurrentMana = cl.CurrentObject.CurrentMana,
-                                MaxMana = cl.CurrentObject.MaxMana,
-                                PosX = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
-                                PosY = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
-                                PosZ = cl.CurrentObject.RigidDynamic.GlobalPose.Translation.Z,
-                                PClass = cl.CurrentObject.Class,
-                                RotX = cl.CurrentObject.Rotation.X,
-                                RotY = cl.CurrentObject.Rotation.Y,
-                                RotZ = cl.CurrentObject.Rotation.Z
-                            };
-
+                            pInfo.TeamId = cl.JoinedTeamID;                          
+                            pInfo.CurrentGObject = cl.CreateNetIdentifierMessage();
                             if (result.RoomLeaderID == cl.ConnectionID)
                                 pInfo.IsLeader = true;
                             else
@@ -267,33 +237,9 @@ namespace ShiftServer.Base.Core
                         }
                     }
 
-                    //if (result.SocketIdSessionLookup.Count > 1)
-                    //shift.SendPacket(MSServerEvent.RoomGetPlayers, listData);
                     data.RoomData.PlayerInfo = new RoomPlayerInfo();
-                    data.RoomData.PlayerInfo.CurrentGObject = new PlayerObject
-                    {
-                        Oid = shift.CurrentObject.ObjectID,
-                        Name = shift.CurrentObject.Name,
-                        AttackSpeed = (float)shift.CurrentObject.AttackSpeed,
-                        AttackDamage = shift.CurrentObject.AttackDamage,
-                        AttackRange = (float)shift.CurrentObject.AttackRange,
-                        MovementSpeed = (float)shift.CurrentObject.MovementSpeed,
-                        CurrentHp = shift.CurrentObject.CurrentHP,
-                        Dexterity = shift.CurrentObject.Dexterity,
-                        Intelligence = shift.CurrentObject.Intelligence,
-                        Strength = shift.CurrentObject.Strenght,
-                        PClass = shift.CurrentObject.Class,
-                        MaxHp = shift.CurrentObject.MaxHP,
-                        CurrentMana = shift.CurrentObject.CurrentMana,
-                        MaxMana = shift.CurrentObject.MaxMana,
-                        PosX = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.X,
-                        PosY = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Y,
-                        PosZ = shift.CurrentObject.RigidDynamic.GlobalPose.Translation.Z,
-                        RotX = shift.CurrentObject.Rotation.X,
-                        RotY = shift.CurrentObject.Position.Y,
-                        RotZ = shift.CurrentObject.Position.Z
-                    };
-                    data.RoomData.PlayerInfo.ObjectId = shift.CurrentObject.ObjectID;
+                    data.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
+
                     shift.IsJoinedToRoom = true;
                     result.BroadcastClientState(shift, MSServerEvent.RoomPlayerJoined);
                     await shift.SendPacket(MSServerEvent.RoomJoin, data);
@@ -631,7 +577,6 @@ namespace ShiftServer.Base.Core
 
             //if (!AntiCheatEngine.ValidateMoveInput(input))
             //    return;
-
             IGameObject go = null;
             room.GameObjects.TryGetValue(shift.CurrentObject.ObjectID, out go);
             if (go != null)

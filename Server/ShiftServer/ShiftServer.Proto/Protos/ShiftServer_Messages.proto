@@ -11,9 +11,8 @@ message ShiftServerData {
 	AccountData Account = 8;
 
 	UpdateGOList GoUpdatePacket = 9; // GameObjects list
-	ObjectAction Interaction = 10;
 	SPlayerInput PlayerInput = 11;
-	PlayerObject sPlayerObject = 12;
+	NetworkIdentifier sPlayerObject = 12;
 	ShiftServerError ErrorReason = 13;
 
 	string SessionID = 14;
@@ -148,8 +147,7 @@ message RoomPlayerInfo {
 	bool IsJoinedToTeam = 3;
 	bool IsReady = 4;
 	bool IsLeader = 5;
-	PlayerObject CurrentGObject = 6;
-	int32 ObjectId = 7;
+	NetworkIdentifier CurrentGObject = 6;
 }
 
 message AccountData {
@@ -161,13 +159,8 @@ message AccountData {
 
 message UpdateGOList {
 
-	repeated PlayerObject playerList = 1;
+	repeated NetworkIdentifier playerList = 1;
 
-}
-message ObjectAction {
-
-	sGameObject currentObject = 1;
-	repeated sGameObject interactedObjects = 2;
 }
 
 message ClientData {
@@ -177,21 +170,9 @@ message ClientData {
 	string machine_id = 3;
 }
 
-message sGameObject {
-
-	int32 oid = 1;
-
-	float pos_x = 2;
-	float pos_y = 3;
-	float pos_z = 4;
-
-}
-
-
 message PlayerObject {
 
 	PlayerClass pClass = 1;
-
 	int32 currentHp = 2;
 	int32 maxHp = 3;
 	int32 currentMana = 4;
@@ -201,18 +182,35 @@ message PlayerObject {
 	int32 intelligence = 8;
 	int32 attackDamage = 9;
 	float attackRange = 10;
-	int32 lastProcessedSequenceID = 11;
-	float pos_x = 12;
-	float pos_y = 13;
-	float pos_z = 14;
-	float rot_x = 15;
-	float rot_y = 16;
-	float rot_z = 17;
 	float attackSpeed = 18;
-	float movementSpeed = 19;
-	repeated SPlayerInput playerInputs = 20;
-	int32 Oid = 21;
-	string Name = 22;
+	float moveSpeed = 19;
+	repeated SPlayerInput inputs = 20;
+	string name = 22;
+}
+
+message NetworkIdentifier {
+
+	int32 id = 1;
+	NetIdentifierFlag type = 2;
+
+	float position_x = 3;
+	float position_y = 4;
+	float position_z = 5;
+
+	float rotation_x = 6;
+	float rotation_y = 7;
+	float rotation_z = 8;
+
+	float scale_x = 9;
+	float scale_y = 10;
+	float scale_z = 11;
+	PlayerObject playerObject = 12;
+	int32 lastProcessedInputID = 13;	
+}
+
+
+enum NetIdentifierFlag {
+	Player = 0;
 }
 
 enum PlayerClass {

@@ -22,10 +22,9 @@ namespace ShiftServer.Base.Core
         public RigidDynamic CreateRigidDynamic(Scene scene)
         {
             var material = scene.Physics.CreateMaterial(0.7f, 0.7f, 0.1f);
-
+            
 
             RigidDynamic rigidActor = scene.Physics.CreateRigidDynamic();
-
             //to-do gokhanla incele
             var boxGeom = new BoxGeometry(2, 2, 2);
             var boxShape = rigidActor.CreateShape(boxGeom, material);

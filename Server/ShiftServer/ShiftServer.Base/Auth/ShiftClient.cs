@@ -260,6 +260,44 @@ namespace ShiftServer.Base.Auth
             }
 
         }
+
+        public NetworkIdentifier CreateNetIdentifierMessage()
+        {
+            PlayerObject obj = new PlayerObject
+            {
+                Name = this.CurrentObject.Name,
+                AttackSpeed = (float)this.CurrentObject.AttackSpeed,
+                MoveSpeed = (float)this.CurrentObject.MovementSpeed,
+                AttackDamage = this.CurrentObject.AttackDamage,
+                AttackRange = (float)this.CurrentObject.AttackRange,
+                CurrentHp = this.CurrentObject.CurrentHP,
+                MaxHp = this.CurrentObject.MaxHP,
+                CurrentMana = this.CurrentObject.CurrentMana,
+                MaxMana = this.CurrentObject.MaxMana,      
+                PClass = this.CurrentObject.Class,
+              
+            };
+
+            NetworkIdentifier networkIdentifier = new NetworkIdentifier
+            {
+                Id = this.CurrentObject.ObjectID,
+                Type = NetIdentifierFlag.Player,
+                PlayerObject = obj,
+                RotationX = this.CurrentObject.Rotation.X,
+                RotationY = this.CurrentObject.Rotation.Y,
+                RotationZ = this.CurrentObject.Rotation.Z,
+
+                PositionX = this.CurrentObject.Position.X,
+                PositionY = this.CurrentObject.Position.Y,
+                PositionZ = this.CurrentObject.Position.Z,
+
+                ScaleX = this.CurrentObject.Position.X,
+                ScaleY = this.CurrentObject.Position.Y,
+                ScaleZ = this.CurrentObject.Position.Z,
+            };
+
+            return networkIdentifier;
+        }
     }
 
     public static class ShiftHelper
