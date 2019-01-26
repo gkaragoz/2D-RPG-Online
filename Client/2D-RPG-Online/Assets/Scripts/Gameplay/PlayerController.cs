@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
-    public NetworkIdentity NetworkIdentifier { get { return _networkIdentifier; } }
+    public NetworkObject NetworkIdentifier { get { return _networkIdentifier; } }
     public Vector3 CurrentInput { get; private set; }
     public CharacterController CharacterController { get { return _characterController; } }
 
@@ -32,7 +32,7 @@ public class PlayerController : MonoBehaviour {
     private GameObject _HUDPrefab;
 
     private bool _isMe;
-    private NetworkIdentity _networkIdentifier;
+    private NetworkObject _networkIdentifier;
     private CharacterController _characterController;
     private CharacterStats _characterStats;
     private Joystick _joystick;
@@ -78,10 +78,10 @@ public class PlayerController : MonoBehaviour {
         UpdatePlayerInputsUI();
     }
 
-    public void Initialize(PlayerObject playerData) {
-        _networkIdentifier = new NetworkIdentity(playerData);
+    public void Initialize(NetworkIdentifier networkObject) {
+        _networkIdentifier = new NetworkObject(networkObject);
 
-        this._characterStats.Initialize(playerData);
+        this._characterStats.Initialize(_networkIdentifier);
 
         if (_networkIdentifier.PlayerName == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;

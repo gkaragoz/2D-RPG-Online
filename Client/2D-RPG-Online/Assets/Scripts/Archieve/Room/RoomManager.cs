@@ -182,21 +182,21 @@ public class RoomManager : Menu {
     }
 
     private void CreateMyPlayer(RoomPlayerInfo playerInfo) {
-        GameObject player = Instantiate(_playerPrefab, new Vector3(playerInfo.CurrentGObject.PositionX, playerInfo.CurrentGObject.PositionY, playerInfo.CurrentGObject.PositionZ), Quaternion.identity);
+        GameObject player = Instantiate(_playerPrefab, new Vector3(playerInfo.NetworkObject.PositionX, playerInfo.NetworkObject.PositionY, playerInfo.NetworkObject.PositionZ), Quaternion.identity);
 
         _myPlayerController = player.GetComponent<PlayerController>();
-        _myPlayerController.Initialize(playerInfo.CurrentGObject.PlayerObject);
+        _myPlayerController.Initialize(playerInfo.NetworkObject);
     }
 
 
     private void CreatePlayer(RoomPlayerInfo playerInfo) {
-        PlayerObject tempCurrentObject = playerInfo.CurrentGObject.PlayerObject;
+        NetworkIdentifier tempNetworkObject = playerInfo.NetworkObject;
 
-        playerInfo.CurrentGObject = new NetworkIdentifier();
-        playerInfo.CurrentGObject = tempCurrentObject;
+        playerInfo.NetworkObject = new NetworkIdentifier();
+        playerInfo.NetworkObject = tempNetworkObject;
 
-        PlayerController playerController = Instantiate(_playerPrefab, new Vector3(playerInfo.CurrentGObject.PositionX, playerInfo.CurrentGObject.PositionY, playerInfo.CurrentGObject.PositionZ), Quaternion.identity).GetComponent<PlayerController>();
-        playerController.Initialize(playerInfo.CurrentGObject);
+        PlayerController playerController = Instantiate(_playerPrefab, new Vector3(playerInfo.NetworkObject.PositionX, playerInfo.NetworkObject.PositionY, playerInfo.NetworkObject.PositionZ), Quaternion.identity).GetComponent<PlayerController>();
+        playerController.Initialize(playerInfo.NetworkObject);
 
         OtherPlayerControllers.Add(playerController);
     }
@@ -247,7 +247,7 @@ public class RoomManager : Menu {
         
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        if (playerInfo.CurrentGObject.PlayerObject.Name == AccountManager.instance.SelectedCharacterName) {
+        if (playerInfo.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
             CreateMyPlayer(playerInfo);
         } else {
             CreatePlayer(playerInfo);

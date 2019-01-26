@@ -21,8 +21,8 @@ public class CharacterStats : MonoBehaviour {
 
     #endregion
 
-    public void Initialize(PlayerObject playerObject) {
-        characterDefinition.Initialize(playerObject);
+    public void Initialize(NetworkObject networkObject) {
+        characterDefinition.Initialize(networkObject);
     }
 
     private void Update() {
