@@ -108,7 +108,7 @@ namespace ShiftServer.Base.Rooms
             shift.Inputs = new SafeQueue<IGameInput>();
             sendData.RoomData = new RoomData();
             sendData.RoomData.PlayerInfo = new RoomPlayerInfo();
-            sendData.RoomData.PlayerInfo.CurrentGObject = shift.CreateNetIdentifierMessage();
+            sendData.RoomData.PlayerInfo.NetworkObject = shift.CreateNetIdentifierMessage();
 
             //this.BroadcastDataToRoom(shift, MSPlayerEvent.CreatePlayer, sendData);
             shift.SendPacket(MSPlayerEvent.CreatePlayer, sendData);

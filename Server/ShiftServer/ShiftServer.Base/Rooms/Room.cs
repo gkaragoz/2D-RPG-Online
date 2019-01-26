@@ -50,7 +50,7 @@ namespace ShiftServer.Base.Rooms
             pInfo.IsReady = currentClient.IsReady;
             if (currentClient.CurrentObject != null)
             {
-                pInfo.CurrentGObject = currentClient.CreateNetIdentifierMessage();
+                pInfo.NetworkObject = currentClient.CreateNetIdentifierMessage();
             }
 
             if (this.RoomLeaderID == currentClient.ConnectionID)
