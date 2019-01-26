@@ -25,29 +25,6 @@ public class CharacterStats : MonoBehaviour {
         _characterDefinition.Initialize(networkObject);
     }
 
-    private void Update() {
-        if (Input.GetKeyDown(KeyCode.Keypad1)) {
-            //LogManager.instance.AddLog("You gained 1 exp!", Log.Type.Exp);
-            AddExp(1);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad2)) {
-            //LogManager.instance.AddLog("You gained 10 exp!", Log.Type.Exp);
-            AddExp(10);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad3)) {
-            //LogManager.instance.AddLog("You gained 100 exp!", Log.Type.Exp);
-            AddExp(100);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad4)) {
-            //LogManager.instance.AddLog("You gained 1000 exp!", Log.Type.Exp);
-            AddExp(1000);
-        }
-        if (Input.GetKeyDown(KeyCode.Keypad5)) {
-            //LogManager.instance.AddLog("You gained 10000 exp!", Log.Type.Exp);
-            AddExp(10000);
-        }
-    }
-
     #region Stat Increasers
     public void AddStatsPoints(int amount) {
         _characterDefinition.AddStatsPoints(amount);
