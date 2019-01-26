@@ -1,22 +1,9 @@
-﻿using System.Collections.Generic;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour, IAttackable {
-
-    public class PositionEntry {
-        public Vector3 vector3;
-        public double updateTime;
-        public int inputSequenceID;
-
-        public PositionEntry(double updateTime, Vector3 vector3, int inputSequenceID) {
-            this.updateTime = updateTime;
-            this.vector3 = vector3;
-            this.inputSequenceID = inputSequenceID;
-        }
-    }
+public class PlayerController : MonoBehaviour {
 
     public bool HasInput {
         get {
@@ -30,15 +17,8 @@ public class PlayerController : MonoBehaviour, IAttackable {
         }
     }
 
+    public NetworkIdentifier NetworkIdentifier { get { return _networkIdentifier; } }
     public Vector3 CurrentInput { get; private set; }
-    public List<SPlayerInput> PlayerInputs { get { return _playerInputs; } }
-    public int Oid { get { return _playerData.Oid; } }
-    public bool IsMe { get { return _isMe; } }
-
-    public List<PositionEntry> PositionBuffer { get { return _positionBuffer; } set { _positionBuffer = value; } }
-
-    public int LastProcessedInputSequenceID { get { return _lastProcessedInputSequenceID; } set { _lastProcessedInputSequenceID = value; } }
-
     public CharacterController CharacterController { get { return _characterController; } }
 
     [SerializeField]
@@ -52,22 +32,15 @@ public class PlayerController : MonoBehaviour, IAttackable {
     private GameObject _HUDPrefab;
 
     private bool _isMe;
+    private NetworkIdentifier _networkIdentifier;
     private CharacterController _characterController;
-    private PlayerObject _playerData;
     private CharacterStats _characterStats;
     private Joystick _joystick;
     private Button _btnAttack;
 
-    private List<PositionEntry> _positionBuffer = new List<PositionEntry>();
-    private int _lastProcessedInputSequenceID;
-    private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
-    private int _nonAckInputIndex = 0;
-
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
         _characterStats = GetComponent<CharacterStats>();
-
-        CreateHUD();
     }
 
     private void Start() {
@@ -91,22 +64,11 @@ public class PlayerController : MonoBehaviour, IAttackable {
             CurrentInput = new Vector3(_xInput, 0, _zInput);
 
             if (!_isOfflineMode && HasInput && NetworkManager.mss != null) {
-                ShiftServerData data = new ShiftServerData();
-
-                data.PlayerInput = new SPlayerInput();
-                data.PlayerInput.SequenceID = _nonAckInputIndex++;
-
-                data.PlayerInput.PosX = CurrentInput.x;
-                data.PlayerInput.PosZ = CurrentInput.z;
-                data.PlayerInput.PressTime = Time.fixedDeltaTime;
-
-                NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
-
-                PlayerInputs.Add(data.PlayerInput);
+                _networkIdentifier.SendInputData(CurrentInput);
             }
 
             if (HasInput) {
-                Move();
+                MoveByInput();
             } else {
                 Stop();
             }
@@ -117,49 +79,23 @@ public class PlayerController : MonoBehaviour, IAttackable {
     }
 
     public void Initialize(PlayerObject playerData) {
-        this._playerData = playerData;
+        _networkIdentifier = new NetworkIdentifier(playerData);
+
         this._characterStats.Initialize(playerData);
 
-        if (_playerData.Name == AccountManager.instance.SelectedCharacterName) {
+        if (_networkIdentifier.PlayerName == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;
+
+            CreateHUD();
 
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
-            HideControllers();
         }
-    }
-
-    public void AddPositionToBuffer(double timestamp, Vector3 position, int inputSequenceID) {
-        _positionBuffer.Add(new PositionEntry(timestamp, position, inputSequenceID));
-    }
-
-    public Vector2 GetVectorByInput(int index) {
-        return new Vector2(PlayerInputs[index].PosX, PlayerInputs[index].PosY);
-    }
-
-    public void ClearPlayerInputs() {
-        _playerInputs = new List<SPlayerInput>();
-    }
-
-    public void RemoveRange(int index, int count) {
-        _playerInputs.RemoveRange(index, count);
-    }
-
-    public int GetSequenceID(int index) {
-        return PlayerInputs[index].SequenceID;
     }
 
     public void SetJoystick(FixedJoystick joystick) {
         this._joystick = joystick;
-    }
-
-    public void ShowControllers() {
-        CharacterController.ShowControllers();
-    }
-
-    public void HideControllers() {
-        CharacterController.HideControllers();
     }
 
     public void TakeDamage(int damage) {
@@ -175,12 +111,16 @@ public class PlayerController : MonoBehaviour, IAttackable {
         CharacterController.Attack();
     }
 
-    public void Move() {
-        CharacterController.Move(CurrentInput);
+    public void MoveByInput() {
+        CharacterController.MoveToInput(CurrentInput);
     }
 
-    public void Move(Vector3 input) {
-        CharacterController.Move(input);
+    public void MoveToPosition(Vector3 position) {
+        if (position == Vector3.zero) {
+            Stop();
+        } else {
+            CharacterController.MoveToPosition(position);
+        }
     }
 
     public void Stop() {
@@ -189,10 +129,6 @@ public class PlayerController : MonoBehaviour, IAttackable {
 
     public void Rotate() {
         CharacterController.Rotate(CurrentInput);
-    }
-
-    public void ToNewPosition(Vector3 newPosition) {
-        CharacterController.ToNewPosition(newPosition);
     }
 
     public void Destroy() {
@@ -215,7 +151,7 @@ public class PlayerController : MonoBehaviour, IAttackable {
     private TextMeshProUGUI _txtNonAckPlayerInputs;
 
     private void UpdatePlayerInputsUI() {
-        _txtNonAckPlayerInputs.text = PlayerInputs.Count.ToString();
+        _txtNonAckPlayerInputs.text = _networkIdentifier.PlayerInputs.Count.ToString();
     }
 
 }

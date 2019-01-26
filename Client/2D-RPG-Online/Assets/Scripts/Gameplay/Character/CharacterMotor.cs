@@ -6,16 +6,27 @@ public class CharacterMotor : MonoBehaviour {
     private CharacterStats _characterStats;
     private Rigidbody _rb;
 
-    private void Start() {
+    private void Awake() {
         _rb = GetComponent<Rigidbody>();
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    public void Move(Vector3 direction) {
+    public void MoveToInput(Vector3 input) {
         _rb.transform.SetPositionAndRotation(
-                _rb.position + (direction * _characterStats.GetMovementSpeed() * Time.fixedDeltaTime),
-                Quaternion.LookRotation(direction)
-        );
+            _rb.position + (input * _characterStats.GetMovementSpeed() * Time.fixedDeltaTime),
+            Quaternion.LookRotation(input));
+
+        if (AudioManager.instance != null) {
+            AudioManager.instance.Play("footstep");
+        }
+    }
+
+    public void MoveToPosition(Vector3 position) {
+        Vector3 desiredRotation = position - transform.position;
+
+        _rb.transform.SetPositionAndRotation(
+            position, 
+            Quaternion.Euler(desiredRotation));
 
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("footstep");

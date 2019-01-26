@@ -63,12 +63,8 @@ public class CharacterAttack : MonoBehaviour {
         PlayerController target = null;
         float distance = Mathf.Infinity;
 
-        //for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
-        List<PlayerController> potantialTargets = FindObjectsOfType<PlayerController>().ToList();
-        potantialTargets.Remove(this.gameObject.GetComponent<PlayerController>());
-        for (int ii = 0; ii < potantialTargets.Count; ii++) {
-
-            PlayerController potantialTarget = potantialTargets[ii];
+        for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
+            PlayerController potantialTarget = RoomManager.instance.OtherPlayerControllers[ii];
             if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
                 float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);

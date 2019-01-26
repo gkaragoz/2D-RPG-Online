@@ -88,24 +88,23 @@ public class RoomManager : Menu {
                 PlayerController entity = OtherPlayerControllers[ii];
 
                 // Drop older positions.
-                while (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[1].updateTime <= renderTimestamp) {
-                    entity.PositionBuffer = entity.PositionBuffer.Skip(1).ToList();
+                while (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[1].updateTime <= renderTimestamp) {
+                    entity.NetworkIdentifier.PositionBuffer = entity.NetworkIdentifier.PositionBuffer.Skip(1).ToList();
                 }
 
                 // Interpolate between the two surrounding authoritative positions.
-                if (entity.PositionBuffer.Count >= 2 && entity.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.PositionBuffer[1].updateTime) {
-                    Vector3 firstVector = entity.PositionBuffer[0].vector3;
-                    Vector3 secondVector = entity.PositionBuffer[1].vector3;
+                if (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.NetworkIdentifier.PositionBuffer[1].updateTime) {
+                    Vector3 firstVector = entity.NetworkIdentifier.PositionBuffer[0].vector3;
+                    Vector3 secondVector = entity.NetworkIdentifier.PositionBuffer[1].vector3;
 
-                    double t0 = entity.PositionBuffer[0].updateTime;
-                    double t1 = entity.PositionBuffer[1].updateTime;
+                    double t0 = entity.NetworkIdentifier.PositionBuffer[0].updateTime;
+                    double t1 = entity.NetworkIdentifier.PositionBuffer[1].updateTime;
 
                     double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
                     double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
 
                     Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
-
-                    entity.ToNewPosition(newPosition);
+                    entity.MoveToPosition(newPosition);
                 }
             }
         }
@@ -205,39 +204,39 @@ public class RoomManager : Menu {
     private void OnRoomUpdated(ShiftServerData data) {
         serverTickrate = data.SvTickRate;
 
-        //Debug.Log(data);
+        Debug.Log(data);
 
         for (int ii = 0; ii < data.GoUpdatePacket.PlayerList.Count; ii++) {
             PlayerObject updatedPlayerObject = data.GoUpdatePacket.PlayerList[ii];
-            if (updatedPlayerObject.Oid == _myPlayerController.Oid) {
+            if (updatedPlayerObject.Oid == _myPlayerController.NetworkIdentifier.Oid) {
 
                 //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
                 //My Reconciliation
                 if (NetworkManager.instance.Reconciliaton) {
-                    for (int jj = 0; jj < _myPlayerController.PlayerInputs.Count; jj++) {
-                        if (_myPlayerController.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
-                            _myPlayerController.RemoveRange(jj, 1);
+                    for (int jj = 0; jj < _myPlayerController.NetworkIdentifier.PlayerInputs.Count; jj++) {
+                        if (_myPlayerController.NetworkIdentifier.GetSequenceID(jj) <= updatedPlayerObject.LastProcessedSequenceID) {
+                            _myPlayerController.NetworkIdentifier.RemoveRange(jj, 1);
                         } else {
                             // re apply
                         }
                     }
                 } else {
-                    _myPlayerController.ClearPlayerInputs();
+                    _myPlayerController.NetworkIdentifier.ClearPlayerInputs();
                 }
             }
 
             //Other Entity's Movement
             for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
-                if (OtherPlayerControllers[jj].Oid == updatedPlayerObject.Oid) {
+                if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedPlayerObject.Oid) {
                     Vector3 updatedPosition = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
 
-                    if (OtherPlayerControllers[jj].LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
+                    if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedPlayerObject.LastProcessedSequenceID) {
                         DateTime updateTime = DateTime.UtcNow;
                         var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                        OtherPlayerControllers[jj].AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
+                        OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedPlayerObject.LastProcessedSequenceID);
                     }
-                    OtherPlayerControllers[jj].LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
+                    OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedPlayerObject.LastProcessedSequenceID;
                 }
             }
         }
@@ -306,13 +305,13 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
-            if (playerInfo.CurrentGObject.Oid == OtherPlayerControllers[ii].Oid) {
-                OtherPlayerControllers.Remove(OtherPlayerControllers[ii]);
-                OtherPlayerControllers[ii].Destroy();
-                break;
-            }
-        }
+        //for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
+        //    if (playerInfo.CurrentGObject.Oid == OtherPlayerControllers[ii].Oid) {
+        //        OtherPlayerControllers.Remove(OtherPlayerControllers[ii]);
+        //        OtherPlayerControllers[ii].Destroy();
+        //        break;
+        //    }
+        //}
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {

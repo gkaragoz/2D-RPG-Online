@@ -15,7 +15,7 @@ public class CharacterController : MonoBehaviour {
     private CharacterUI _characterUI;
     private CharacterStats _characterStats;
 
-    private void Start() {
+    private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
         _characterAnimator = GetComponent<CharacterAnimator>();
@@ -37,10 +37,17 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    public void Move(Vector3 direction) {
+    public void MoveToInput(Vector3 input) {
         if (!_isDeath) {
-            _characterMotor.Move(direction);
-            _characterAnimator.OnMove(direction);
+            _characterMotor.MoveToInput(input);
+            _characterAnimator.OnMove(input);
+        }
+    }
+
+    public void MoveToPosition(Vector3 position) {
+        if (!_isDeath) {
+            _characterMotor.MoveToPosition(position);
+            _characterAnimator.OnMove(position);
         }
     }
 
@@ -63,32 +70,8 @@ public class CharacterController : MonoBehaviour {
         _characterMotor.Rotate(direction);
     }
 
-    public void ToNewPosition(Vector3 newPosition) {
-        if (new Vector3(newPosition.x, newPosition.z) != transform.position) {
-            Vector3 direction = new Vector3(newPosition.x, 0, newPosition.z) - transform.position;
-
-            _characterAnimator.OnMove(direction);
-
-            Vector3 rotation = new Vector3(direction.x, 0f, direction.z);
-
-            if (rotation != Vector3.zero) {
-                transform.rotation = Quaternion.LookRotation(rotation);
-            }
-
-            transform.position = newPosition;
-        }
-    }
-
     public void UpdateUI() {
         _characterUI.UpdateUI();
-    }
-
-    public void ShowControllers() {
-        _characterUI.Show();
-    }
-
-    public void HideControllers() {
-        _characterUI.Hide();
     }
 
 }
