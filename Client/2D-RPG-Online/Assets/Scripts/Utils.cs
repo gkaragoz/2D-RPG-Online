@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Utils : MonoBehaviour {
@@ -18,5 +16,14 @@ public class Utils : MonoBehaviour {
         }
     }
 #endif
+
+    public static bool IsValid(params string[] value) {
+        for (int ii = 0; ii < value.Length; ii++) {
+            if (value[ii] == string.Empty || value[ii] == null) {
+                return false;
+            }
+        }
+        return true;
+    }
 
 }
