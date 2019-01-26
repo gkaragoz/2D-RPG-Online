@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Telepathy;
 using PhysX;
-
+using ShiftServer.Proto.Utils;
 
 namespace ShiftServer.Base.Factory.Entities
 {
@@ -84,13 +84,13 @@ namespace ShiftServer.Base.Factory.Entities
 
             if (State == EntityState.NEWSPAWN)
             {
-                networkIdentifier.PositionX = this.Position.X;
-                networkIdentifier.PositionY = this.Position.Y;
-                networkIdentifier.PositionZ = this.Position.Z;
+                networkIdentifier.PositionX = this.Position.X.ToStringDefault();
+                networkIdentifier.PositionY = this.Position.Y.ToStringDefault();
+                networkIdentifier.PositionZ = this.Position.Z.ToStringDefault();
 
-                networkIdentifier.RotationX = this.Rotation.X;
-                networkIdentifier.RotationY = this.Rotation.Y;
-                networkIdentifier.RotationZ = this.Rotation.Z;
+                networkIdentifier.RotationX = this.Rotation.X.ToStringDefault();
+                networkIdentifier.RotationY = this.Rotation.Y.ToStringDefault();
+                networkIdentifier.RotationZ = this.Rotation.Z.ToStringDefault();
 
                 pObject.AttackSpeed = (float)this.AttackSpeed;
                 pObject.AttackDamage = this.AttackDamage;
@@ -101,13 +101,13 @@ namespace ShiftServer.Base.Factory.Entities
 
             if (State == EntityState.MOVE)
             {
-                networkIdentifier.PositionX = this.Position.X;
-                networkIdentifier.PositionY = this.Position.Y;
-                networkIdentifier.PositionZ = this.Position.Z;
+                networkIdentifier.PositionX = this.Position.X.ToStringDefault();
+                networkIdentifier.PositionY = this.Position.Y.ToStringDefault();
+                networkIdentifier.PositionZ = this.Position.Z.ToStringDefault();
 
-                networkIdentifier.RotationX = this.Rotation.X;
-                networkIdentifier.RotationY = this.Rotation.Y;
-                networkIdentifier.RotationZ = this.Rotation.Z;
+                networkIdentifier.RotationX = this.Rotation.X.ToStringDefault();
+                networkIdentifier.RotationY = this.Rotation.Y.ToStringDefault();
+                networkIdentifier.RotationZ = this.Rotation.Z.ToStringDefault();
             }
          
             if (State == EntityState.GETHIT || State == EntityState.ATTACK)

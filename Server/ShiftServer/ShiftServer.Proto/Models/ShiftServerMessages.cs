@@ -61,10 +61,10 @@ public static partial class ShiftServerMessagesReflection {
           "ZBgTIAEoAhIdCgZpbnB1dHMYFCADKAsyDS5TUGxheWVySW5wdXQSDAoEbmFt",
           "ZRgWIAEoCSKtAgoRTmV0d29ya0lkZW50aWZpZXISCgoCaWQYASABKAUSIAoE",
           "dHlwZRgCIAEoDjISLk5ldElkZW50aWZpZXJGbGFnEhIKCnBvc2l0aW9uX3gY",
-          "AyABKAISEgoKcG9zaXRpb25feRgEIAEoAhISCgpwb3NpdGlvbl96GAUgASgC",
-          "EhIKCnJvdGF0aW9uX3gYBiABKAISEgoKcm90YXRpb25feRgHIAEoAhISCgpy",
-          "b3RhdGlvbl96GAggASgCEg8KB3NjYWxlX3gYCSABKAISDwoHc2NhbGVfeRgK",
-          "IAEoAhIPCgdzY2FsZV96GAsgASgCEiEKClBsYXllckRhdGEYDCABKAsyDS5Q",
+          "AyABKAkSEgoKcG9zaXRpb25feRgEIAEoCRISCgpwb3NpdGlvbl96GAUgASgJ",
+          "EhIKCnJvdGF0aW9uX3gYBiABKAkSEgoKcm90YXRpb25feRgHIAEoCRISCgpy",
+          "b3RhdGlvbl96GAggASgJEg8KB3NjYWxlX3gYCSABKAkSDwoHc2NhbGVfeRgK",
+          "IAEoCRIPCgdzY2FsZV96GAsgASgJEiEKClBsYXllckRhdGEYDCABKAsyDS5Q",
           "bGF5ZXJPYmplY3QSHAoUbGFzdFByb2Nlc3NlZElucHV0SUQYDSABKAUimwEK",
           "DFNQbGF5ZXJJbnB1dBIjCgtwbGF5ZXJFdmVudBgBIAEoDjIOLk1TUGxheWVy",
           "RXZlbnQSDQoFcG9zX3gYAiABKAISDQoFcG9zX3kYAyABKAISDQoFcG9zX3oY",
@@ -3058,100 +3058,100 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
 
   /// <summary>Field number for the "position_x" field.</summary>
   public const int PositionXFieldNumber = 3;
-  private float positionX_;
+  private string positionX_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float PositionX {
+  public string PositionX {
     get { return positionX_; }
     set {
-      positionX_ = value;
+      positionX_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "position_y" field.</summary>
   public const int PositionYFieldNumber = 4;
-  private float positionY_;
+  private string positionY_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float PositionY {
+  public string PositionY {
     get { return positionY_; }
     set {
-      positionY_ = value;
+      positionY_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "position_z" field.</summary>
   public const int PositionZFieldNumber = 5;
-  private float positionZ_;
+  private string positionZ_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float PositionZ {
+  public string PositionZ {
     get { return positionZ_; }
     set {
-      positionZ_ = value;
+      positionZ_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "rotation_x" field.</summary>
   public const int RotationXFieldNumber = 6;
-  private float rotationX_;
+  private string rotationX_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float RotationX {
+  public string RotationX {
     get { return rotationX_; }
     set {
-      rotationX_ = value;
+      rotationX_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "rotation_y" field.</summary>
   public const int RotationYFieldNumber = 7;
-  private float rotationY_;
+  private string rotationY_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float RotationY {
+  public string RotationY {
     get { return rotationY_; }
     set {
-      rotationY_ = value;
+      rotationY_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "rotation_z" field.</summary>
   public const int RotationZFieldNumber = 8;
-  private float rotationZ_;
+  private string rotationZ_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float RotationZ {
+  public string RotationZ {
     get { return rotationZ_; }
     set {
-      rotationZ_ = value;
+      rotationZ_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "scale_x" field.</summary>
   public const int ScaleXFieldNumber = 9;
-  private float scaleX_;
+  private string scaleX_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float ScaleX {
+  public string ScaleX {
     get { return scaleX_; }
     set {
-      scaleX_ = value;
+      scaleX_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "scale_y" field.</summary>
   public const int ScaleYFieldNumber = 10;
-  private float scaleY_;
+  private string scaleY_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float ScaleY {
+  public string ScaleY {
     get { return scaleY_; }
     set {
-      scaleY_ = value;
+      scaleY_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
   /// <summary>Field number for the "scale_z" field.</summary>
   public const int ScaleZFieldNumber = 11;
-  private float scaleZ_;
+  private string scaleZ_ = "";
   [global::System.Diagnostics.DebuggerNonUserCodeAttribute]
-  public float ScaleZ {
+  public string ScaleZ {
     get { return scaleZ_; }
     set {
-      scaleZ_ = value;
+      scaleZ_ = pb::ProtoPreconditions.CheckNotNull(value, "value");
     }
   }
 
@@ -3192,15 +3192,15 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
     }
     if (Id != other.Id) return false;
     if (Type != other.Type) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PositionX, other.PositionX)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PositionY, other.PositionY)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(PositionZ, other.PositionZ)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotationX, other.RotationX)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotationY, other.RotationY)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(RotationZ, other.RotationZ)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(ScaleX, other.ScaleX)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(ScaleY, other.ScaleY)) return false;
-    if (!pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.Equals(ScaleZ, other.ScaleZ)) return false;
+    if (PositionX != other.PositionX) return false;
+    if (PositionY != other.PositionY) return false;
+    if (PositionZ != other.PositionZ) return false;
+    if (RotationX != other.RotationX) return false;
+    if (RotationY != other.RotationY) return false;
+    if (RotationZ != other.RotationZ) return false;
+    if (ScaleX != other.ScaleX) return false;
+    if (ScaleY != other.ScaleY) return false;
+    if (ScaleZ != other.ScaleZ) return false;
     if (!object.Equals(PlayerData, other.PlayerData)) return false;
     if (LastProcessedInputID != other.LastProcessedInputID) return false;
     return Equals(_unknownFields, other._unknownFields);
@@ -3211,15 +3211,15 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
     int hash = 1;
     if (Id != 0) hash ^= Id.GetHashCode();
     if (Type != 0) hash ^= Type.GetHashCode();
-    if (PositionX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PositionX);
-    if (PositionY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PositionY);
-    if (PositionZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(PositionZ);
-    if (RotationX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotationX);
-    if (RotationY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotationY);
-    if (RotationZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(RotationZ);
-    if (ScaleX != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(ScaleX);
-    if (ScaleY != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(ScaleY);
-    if (ScaleZ != 0F) hash ^= pbc::ProtobufEqualityComparers.BitwiseSingleEqualityComparer.GetHashCode(ScaleZ);
+    if (PositionX.Length != 0) hash ^= PositionX.GetHashCode();
+    if (PositionY.Length != 0) hash ^= PositionY.GetHashCode();
+    if (PositionZ.Length != 0) hash ^= PositionZ.GetHashCode();
+    if (RotationX.Length != 0) hash ^= RotationX.GetHashCode();
+    if (RotationY.Length != 0) hash ^= RotationY.GetHashCode();
+    if (RotationZ.Length != 0) hash ^= RotationZ.GetHashCode();
+    if (ScaleX.Length != 0) hash ^= ScaleX.GetHashCode();
+    if (ScaleY.Length != 0) hash ^= ScaleY.GetHashCode();
+    if (ScaleZ.Length != 0) hash ^= ScaleZ.GetHashCode();
     if (playerData_ != null) hash ^= PlayerData.GetHashCode();
     if (LastProcessedInputID != 0) hash ^= LastProcessedInputID.GetHashCode();
     if (_unknownFields != null) {
@@ -3243,41 +3243,41 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
       output.WriteRawTag(16);
       output.WriteEnum((int) Type);
     }
-    if (PositionX != 0F) {
-      output.WriteRawTag(29);
-      output.WriteFloat(PositionX);
+    if (PositionX.Length != 0) {
+      output.WriteRawTag(26);
+      output.WriteString(PositionX);
     }
-    if (PositionY != 0F) {
-      output.WriteRawTag(37);
-      output.WriteFloat(PositionY);
+    if (PositionY.Length != 0) {
+      output.WriteRawTag(34);
+      output.WriteString(PositionY);
     }
-    if (PositionZ != 0F) {
-      output.WriteRawTag(45);
-      output.WriteFloat(PositionZ);
+    if (PositionZ.Length != 0) {
+      output.WriteRawTag(42);
+      output.WriteString(PositionZ);
     }
-    if (RotationX != 0F) {
-      output.WriteRawTag(53);
-      output.WriteFloat(RotationX);
+    if (RotationX.Length != 0) {
+      output.WriteRawTag(50);
+      output.WriteString(RotationX);
     }
-    if (RotationY != 0F) {
-      output.WriteRawTag(61);
-      output.WriteFloat(RotationY);
+    if (RotationY.Length != 0) {
+      output.WriteRawTag(58);
+      output.WriteString(RotationY);
     }
-    if (RotationZ != 0F) {
-      output.WriteRawTag(69);
-      output.WriteFloat(RotationZ);
+    if (RotationZ.Length != 0) {
+      output.WriteRawTag(66);
+      output.WriteString(RotationZ);
     }
-    if (ScaleX != 0F) {
-      output.WriteRawTag(77);
-      output.WriteFloat(ScaleX);
+    if (ScaleX.Length != 0) {
+      output.WriteRawTag(74);
+      output.WriteString(ScaleX);
     }
-    if (ScaleY != 0F) {
-      output.WriteRawTag(85);
-      output.WriteFloat(ScaleY);
+    if (ScaleY.Length != 0) {
+      output.WriteRawTag(82);
+      output.WriteString(ScaleY);
     }
-    if (ScaleZ != 0F) {
-      output.WriteRawTag(93);
-      output.WriteFloat(ScaleZ);
+    if (ScaleZ.Length != 0) {
+      output.WriteRawTag(90);
+      output.WriteString(ScaleZ);
     }
     if (playerData_ != null) {
       output.WriteRawTag(98);
@@ -3301,32 +3301,32 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
     if (Type != 0) {
       size += 1 + pb::CodedOutputStream.ComputeEnumSize((int) Type);
     }
-    if (PositionX != 0F) {
-      size += 1 + 4;
+    if (PositionX.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(PositionX);
     }
-    if (PositionY != 0F) {
-      size += 1 + 4;
+    if (PositionY.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(PositionY);
     }
-    if (PositionZ != 0F) {
-      size += 1 + 4;
+    if (PositionZ.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(PositionZ);
     }
-    if (RotationX != 0F) {
-      size += 1 + 4;
+    if (RotationX.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(RotationX);
     }
-    if (RotationY != 0F) {
-      size += 1 + 4;
+    if (RotationY.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(RotationY);
     }
-    if (RotationZ != 0F) {
-      size += 1 + 4;
+    if (RotationZ.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(RotationZ);
     }
-    if (ScaleX != 0F) {
-      size += 1 + 4;
+    if (ScaleX.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(ScaleX);
     }
-    if (ScaleY != 0F) {
-      size += 1 + 4;
+    if (ScaleY.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(ScaleY);
     }
-    if (ScaleZ != 0F) {
-      size += 1 + 4;
+    if (ScaleZ.Length != 0) {
+      size += 1 + pb::CodedOutputStream.ComputeStringSize(ScaleZ);
     }
     if (playerData_ != null) {
       size += 1 + pb::CodedOutputStream.ComputeMessageSize(PlayerData);
@@ -3351,31 +3351,31 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
     if (other.Type != 0) {
       Type = other.Type;
     }
-    if (other.PositionX != 0F) {
+    if (other.PositionX.Length != 0) {
       PositionX = other.PositionX;
     }
-    if (other.PositionY != 0F) {
+    if (other.PositionY.Length != 0) {
       PositionY = other.PositionY;
     }
-    if (other.PositionZ != 0F) {
+    if (other.PositionZ.Length != 0) {
       PositionZ = other.PositionZ;
     }
-    if (other.RotationX != 0F) {
+    if (other.RotationX.Length != 0) {
       RotationX = other.RotationX;
     }
-    if (other.RotationY != 0F) {
+    if (other.RotationY.Length != 0) {
       RotationY = other.RotationY;
     }
-    if (other.RotationZ != 0F) {
+    if (other.RotationZ.Length != 0) {
       RotationZ = other.RotationZ;
     }
-    if (other.ScaleX != 0F) {
+    if (other.ScaleX.Length != 0) {
       ScaleX = other.ScaleX;
     }
-    if (other.ScaleY != 0F) {
+    if (other.ScaleY.Length != 0) {
       ScaleY = other.ScaleY;
     }
-    if (other.ScaleZ != 0F) {
+    if (other.ScaleZ.Length != 0) {
       ScaleZ = other.ScaleZ;
     }
     if (other.playerData_ != null) {
@@ -3406,40 +3406,40 @@ public sealed partial class NetworkIdentifier : pb::IMessage<NetworkIdentifier> 
           type_ = (global::NetIdentifierFlag) input.ReadEnum();
           break;
         }
-        case 29: {
-          PositionX = input.ReadFloat();
+        case 26: {
+          PositionX = input.ReadString();
           break;
         }
-        case 37: {
-          PositionY = input.ReadFloat();
+        case 34: {
+          PositionY = input.ReadString();
           break;
         }
-        case 45: {
-          PositionZ = input.ReadFloat();
+        case 42: {
+          PositionZ = input.ReadString();
           break;
         }
-        case 53: {
-          RotationX = input.ReadFloat();
+        case 50: {
+          RotationX = input.ReadString();
           break;
         }
-        case 61: {
-          RotationY = input.ReadFloat();
+        case 58: {
+          RotationY = input.ReadString();
           break;
         }
-        case 69: {
-          RotationZ = input.ReadFloat();
+        case 66: {
+          RotationZ = input.ReadString();
           break;
         }
-        case 77: {
-          ScaleX = input.ReadFloat();
+        case 74: {
+          ScaleX = input.ReadString();
           break;
         }
-        case 85: {
-          ScaleY = input.ReadFloat();
+        case 82: {
+          ScaleY = input.ReadString();
           break;
         }
-        case 93: {
-          ScaleZ = input.ReadFloat();
+        case 90: {
+          ScaleZ = input.ReadString();
           break;
         }
         case 98: {
