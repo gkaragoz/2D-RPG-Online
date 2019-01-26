@@ -10,7 +10,7 @@ namespace ShiftServer.Proto.Utils
     {
         public static string ToStringDefault(this float value)
         {
-            return value.ToString("0.000");
+            return value.ToString("0.000000");
         }
 
         public static float ToFloat(this string value)
