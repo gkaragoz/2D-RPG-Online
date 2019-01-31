@@ -9,11 +9,11 @@ QualitySettings:
   - serializedVersion: 2
     name: Normal
     pixelLightCount: 1
-    shadows: 0
+    shadows: 1
     shadowResolution: 0
-    shadowProjection: 0
+    shadowProjection: 1
     shadowCascades: 1
-    shadowDistance: 0
+    shadowDistance: 20
     shadowNearPlaneOffset: 3
     shadowCascade2Split: 0.33333334
     shadowCascade4Split: {x: 0.06666667, y: 0.2, z: 0.46666667}
@@ -24,8 +24,8 @@ QualitySettings:
     antiAliasing: 0
     softParticles: 0
     softVegetation: 0
-    realtimeReflectionProbes: 1
-    billboardsFaceCameraPosition: 1
+    realtimeReflectionProbes: 0
+    billboardsFaceCameraPosition: 0
     vSyncCount: 0
     lodBias: 0.7
     maximumLODLevel: 0
