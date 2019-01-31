@@ -57,7 +57,9 @@ public class NetworkManager : MonoBehaviour {
     private void Update() {
         if (mss != null) {
             if (mss.GetError() != null) {
-                Debug.Log(mss.GetError().StackTrace);
+                if (!string.IsNullOrEmpty(mss.GetError().StackTrace)) {
+                    Debug.Log(mss.GetError().StackTrace);
+                }
             }
         }
     }

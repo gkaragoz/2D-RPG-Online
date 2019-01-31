@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
     private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
 
     private void Start() {
-        Application.targetFrameRate = 60;
+        //Application.targetFrameRate = 60;
 
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;

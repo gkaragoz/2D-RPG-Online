@@ -266,7 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   locomotionAnimationSmoothTime: 0.1
-  _animator: {fileID: 0}
+  _animator: {fileID: 8857471114562524201}
 --- !u!114 &382
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1320,9 +1320,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c24fe12730a81e429a3df3f137f2eb2, type: 3}
---- !u!1 &8915131981008428781 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1544001266168408, guid: 4c24fe12730a81e429a3df3f137f2eb2,
+--- !u!95 &8857471114562524201 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 95026405186975900, guid: 4c24fe12730a81e429a3df3f137f2eb2,
     type: 3}
   m_PrefabInstance: {fileID: 8916446731784940725}
   m_PrefabAsset: {fileID: 0}
@@ -1332,15 +1332,21 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8916446731784940725}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &8911686704693866345 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4854175601165276, guid: 4c24fe12730a81e429a3df3f137f2eb2,
+    type: 3}
+  m_PrefabInstance: {fileID: 8916446731784940725}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8911976012090170715 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4547548783325678, guid: 4c24fe12730a81e429a3df3f137f2eb2,
     type: 3}
   m_PrefabInstance: {fileID: 8916446731784940725}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &8911686704693866345 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4854175601165276, guid: 4c24fe12730a81e429a3df3f137f2eb2,
+--- !u!1 &8915131981008428781 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1544001266168408, guid: 4c24fe12730a81e429a3df3f137f2eb2,
     type: 3}
   m_PrefabInstance: {fileID: 8916446731784940725}
   m_PrefabAsset: {fileID: 0}
