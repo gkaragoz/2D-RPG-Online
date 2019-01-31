@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(MeshRenderer), typeof(MeshFilter))]
 public class MeshMerge : MonoBehaviour {
 
-    public void BasicMegrge() {
+    public void BasicMerge() {
         Quaternion oldRot = transform.rotation;
         Vector3 oldPos = transform.position;
 
@@ -59,7 +59,7 @@ public class MeshMergeEditor : Editor {
         GUILayout.Space(10f);
         GUILayout.Label("Mesh Merge");
         if (GUILayout.Button("Basic Merge")) {
-            meshMerge.BasicMegrge();
+            meshMerge.BasicMerge();
         }
         GUI.backgroundColor = Color.white;
 
