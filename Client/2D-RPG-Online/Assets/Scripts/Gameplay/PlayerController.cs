@@ -160,7 +160,9 @@ public class PlayerController : MonoBehaviour {
     private TextMeshProUGUI _txtNonAckPlayerInputs;
 
     private void UpdatePlayerInputsUI() {
-        _txtNonAckPlayerInputs.text = _networkIdentifier.PlayerInputs.Count.ToString();
+        if (_networkIdentifier != null) {
+            _txtNonAckPlayerInputs.text = _networkIdentifier.PlayerInputs.Count.ToString();
+        }
     }
 
 }
