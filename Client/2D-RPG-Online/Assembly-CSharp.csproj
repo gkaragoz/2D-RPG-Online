@@ -373,7 +373,6 @@
     <Compile Include="Assets\Scripts\Visualize\PopupTween.cs" />
     <Compile Include="Assets\Scripts\Visualize\ScaleTween.cs" />
     <Compile Include="Assets\Scripts\Visualize\TickingTween.cs" />
-    <Compile Include="Assets\Shaders\MobileDiffuse.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
@@ -387,10 +386,8 @@
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\ParadeRender.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\LutGen.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\HistogramRender.shader" />
-    <None Include="Assets\Shaders\Unlit_texture_color_lightmap.shader" />
     <None Include="Assets\Fonts\nunito-sans\SIL Open Font License.txt" />
     <None Include="Assets\PostProcessing\Editor Resources\UI\CurveBackground.shader" />
-    <None Include="Assets\Shaders\Unlit_color_cutout.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\ScreenSpaceReflection.shader" />
     <None Include="Assets\PostProcessing\Utilities\CustomMotionTexture\Shaders\CustomMotionVectorTexture.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\ACES.cginc" />
@@ -412,7 +409,6 @@
     <None Include="Assets\PostProcessing\Resources\Bluenoise64\LICENSE.txt" />
     <None Include="Assets\PostProcessing\Resources\Shaders\BuiltinDebugViews.shader" />
     <None Include="Assets\Scripts\Network\ShiftServer\MongoDB.Bson.xml" />
-    <None Include="Assets\Shaders\unlit_trans_color_Zoff.shader" />
     <None Include="Assets\Scripts\Network\ShiftServer\protobuf-net.xml" />
     <None Include="Assets\PostProcessing\Resources\Shaders\Common.cginc" />
     <None Include="Assets\PostProcessing\Resources\Bluenoise64\COPYING.txt" />
@@ -429,7 +425,6 @@
     <None Include="Assets\Sprites\Kyrise's 16x16 RPG Icon Pack - V1.2\read me.txt" />
     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.cginc" />
     <None Include="Assets\PostProcessing\Resources\Shaders\GrainGen.shader" />
-    <None Include="Assets\Shaders\unlit_trans_color.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\FXAA.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF Overlay.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\DiskKernels.cginc" />
@@ -447,7 +442,6 @@
     <None Include="Assets\Scripts\Network\ShiftServer\ShiftServer.Client.xml" />
     <None Include="Assets\PostProcessing\Resources\Shaders\EyeAdaptation.shader" />
     <None Include="Assets\Resources\log.txt" />
-    <None Include="Assets\Shaders\Unlit_texture_color.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF.shader" />
     <None Include="Assets\PostProcessing\Resources\Shaders\ColorGrading.cginc" />
     <None Include="Assets\Shaders\MobileDiffuse.shader" />
@@ -456,7 +450,6 @@
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\PostProcessing\Editor Resources\Monitors\WaveformCompute.compute" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
-    <None Include="Assets\Shaders\unlit_cutout_lightmapped.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
