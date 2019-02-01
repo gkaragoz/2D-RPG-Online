@@ -50,8 +50,10 @@ public class PlayerController : MonoBehaviour {
                 _xInput = Input.GetAxis("Horizontal");
                 _zInput = Input.GetAxis("Vertical");
             } else {
-                _xInput = _joystick.Horizontal;
-                _zInput = _joystick.Vertical;
+                if (_joystick != null) {
+                    _xInput = _joystick.Horizontal;
+                    _zInput = _joystick.Vertical;
+                }
             }
 
             if (Input.GetButtonDown("Fire1")) {
