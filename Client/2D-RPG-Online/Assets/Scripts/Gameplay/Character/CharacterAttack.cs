@@ -1,61 +1,120 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour {
 
-    [Header("Initialization")]
-    public float attackSpeed = 1f;
-    public float attackRangeX = 0.35f;
-    public float attackRangeY = 0.35f;
-
     public LayerMask attackables;
-
-    public Transform attackHitPoint;
 
     public bool IsAttacking { get; private set; }
 
     public bool CanAttack {
         get {
-            return Time.time > _nextAttackTime;
+            if (Time.time > _nextAttackTime) {
+                if (!IsAttacking) {
+                    if (!HasTargetDied) {
+                        if (IsTargetInRange()) {
+                            return true;
+                        }
+                    }
+                }
+            }
+            return false;
         }
     }
+
+    public bool HasTarget {
+        get {
+            return Target == null ? false : true;
+        }
+    }
+
+    public bool HasTargetDied {
+        get {
+            if (HasTarget) {
+                return _target.CharacterController.IsDeath;
+            }
+            return false;
+        }
+    }
+
+    public PlayerController Target { get { return _target; } }
+    public Vector3 TargetPosition { get { return _target.transform.position; } }
 
     [SerializeField]
     [Utils.ReadOnly]
     private float _nextAttackTime;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private PlayerController _target;
+
+    private CharacterStats _characterStats;
+
+    private void Start() {
+        _characterStats = GetComponent<CharacterStats>();
+    }
 
     public void Attack() {
         StartCoroutine(IAttack());
     }
 
-    public void OnHit() {
-        Debug.Log("On Hit.");
-        IsAttacking = false;
+    public void SearchTarget() {
+        PlayerController target = null;
+        float distance = Mathf.Infinity;
+
+        for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
+            PlayerController potantialTarget = RoomManager.instance.OtherPlayerControllers[ii];
+            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+
+                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+
+                if (potantialTargetDistance < distance) {
+                    target = potantialTarget;
+                }
+
+            }
+        }
+        this._target = target;
     }
 
     private IEnumerator IAttack() {
-        AudioManager.instance.Play("swing" + Random.Range(1, 3));
+        if (AudioManager.instance != null) {
+            AudioManager.instance.Play("swing" + Random.Range(1, 3));
+        }
 
-        _nextAttackTime = Time.time + attackSpeed;
-
-        //Collider2D[] objectsToDamage = Physics2D.OverlapBoxAll(attackHitPoint.position, new Vector2(attackRangeX, attackRangeY), 0f, attackables);
-        //for (int ii = 0; ii < objectsToDamage.Length; ii++) {
-        //    //Run on damage function in the victim side.
-        //    objectsToDamage[ii].GetComponent<Destructable>().OnDamageTaken();
-        //}
+        _nextAttackTime = Time.time + _characterStats.GetAttackSpeed();
 
         IsAttacking = true;
 
-        yield return new WaitForSeconds(attackSpeed);
+        yield return new WaitForSeconds(0.3f);
 
-        OnHit();
+        _target.TakeDamage(_characterStats.GetAttackDamage());
+
+        yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
+
+        IsAttacking = false;
+    }
+
+    private bool IsTargetInRange() {
+        if (HasTarget) {
+            float distance = Vector3.Distance(transform.position, Target.transform.position);
+            if (distance <= _characterStats.GetAttackRange()) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private float GetDistanceOf(Transform target) {
+        return Vector3.Distance(transform.position, target.position);
     }
 
     private void OnDrawGizmos() {
-        if (attackHitPoint != null) {
+        if (_characterStats != null) {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackHitPoint.position, new Vector3(attackRangeX, attackRangeY, 1f));
+            Gizmos.DrawWireSphere(transform.position, _characterStats.GetAttackRange());
         }
     }
 

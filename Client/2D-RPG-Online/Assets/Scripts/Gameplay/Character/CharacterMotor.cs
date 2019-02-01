@@ -3,38 +3,45 @@ using UnityEngine;
 
 public class CharacterMotor : MonoBehaviour {
 
-    [Header("Initialization")]
-    public float speed = 3f;
-
-    public bool IsMoving {
-        get {
-            return _rb.velocity.magnitude > 0 ? true : false;
-        }
-    }
-
+    private CharacterStats _characterStats;
     private Rigidbody _rb;
 
-    private void Start() {
+    private void Awake() {
         _rb = GetComponent<Rigidbody>();
+        _characterStats = GetComponent<CharacterStats>();
     }
 
-    public void SetMovementSpeed(float speed) {
-        this.speed = speed;
-    }
-
-    public void Move(Vector3 direction) {
-        Vector3 currentPosition = _rb.transform.position;
-
-        _rb.transform.rotation = Quaternion.LookRotation(direction);
-        _rb.MovePosition(currentPosition + (direction * speed * Time.fixedDeltaTime));
+    public void MoveToInput(Vector3 input) {
+        _rb.transform.SetPositionAndRotation(
+            _rb.position + (input * _characterStats.GetMovementSpeed() * Time.fixedDeltaTime),
+            Quaternion.LookRotation(input));
 
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("footstep");
         }
     }
 
+    public void MoveToPosition(Vector3 position) {
+        Vector3 desiredRotation = position - transform.position;
+
+        _rb.transform.SetPositionAndRotation(
+            position, 
+            Quaternion.LookRotation(desiredRotation));
+
+        if (AudioManager.instance != null) {
+            AudioManager.instance.Play("footstep");
+        }
+    }
+
+    public void LookTo(Vector3 direction) {
+        if (direction != Vector3.zero) {
+            Vector3 relativePos = direction - transform.position;
+            _rb.MoveRotation(Quaternion.LookRotation(relativePos));
+        }
+    }
+
     public void Rotate(Vector3 direction) {
-        _rb.transform.rotation = Quaternion.Euler(transform.position - direction);
+        _rb.rotation = Quaternion.Euler(direction - transform.position);
     }
 
 }

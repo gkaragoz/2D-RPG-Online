@@ -10,19 +10,6 @@ using UnityEditor;
 [CreateAssetMenu(fileName = "Character Stats", menuName = "Character/Character Stats")]
 public class CharacterStats_SO : ScriptableObject {
 
-    #region Events
-
-    public delegate void CurrentExperienceValueChanged();
-    public event CurrentExperienceValueChanged onCurrentExperienceValueChanged;
-
-    public delegate void MaxExperienceValueChanged();
-    public event MaxExperienceValueChanged onMaxExperienceValueChanged;
-
-    public delegate void LevelValueChanged();
-    public event LevelValueChanged onLevelValueChanged;
-
-    #endregion
-
     #region Base Stats Class
 
     [System.Serializable]
@@ -83,6 +70,9 @@ public class CharacterStats_SO : ScriptableObject {
     public bool isPlayer = false;
 
     [SerializeField]
+    private string _name = string.Empty;
+
+    [SerializeField]
     private int _statsPoints = 0;
 
     [SerializeField]
@@ -90,29 +80,26 @@ public class CharacterStats_SO : ScriptableObject {
     [SerializeField]
     private BaseStats _baseDexterity;
     [SerializeField]
-    private BaseStats _baseConstitution;
-    [SerializeField]
-    private BaseStats _baseAgility;
-    [SerializeField]
     private BaseStats _baseIntelligence;
-    [SerializeField]
-    private BaseStats _baseCharisma;
 
+    [SerializeField]
+    private float _maxHealth = 0;
     [SerializeField]
     private float _currentHealth = 0;
 
     [SerializeField]
-    private float _currentStamina = 0;
+    private float _maxMana = 0;
+    [SerializeField]
+    private float _currentMana = 0;
 
     [SerializeField]
-    private float _currentWeight = 0;
-
+    private int _attackDamage = 5;
     [SerializeField]
-    private float _speed = 2;
+    private float _attackSpeed = 1.0f;
     [SerializeField]
-    private float _angularSpeed = 999;
+    private float _movementSpeed = 2;
     [SerializeField]
-    private float _acceleration = 8;
+    private float _attackRange = 1;
 
     [SerializeField]
     private int _level = 0;
@@ -121,14 +108,19 @@ public class CharacterStats_SO : ScriptableObject {
     [SerializeField]
     private int _currentExperience = 0;
 
-    [SerializeField]
-    private float _fame = 0;
-    [SerializeField]
-    private float _honor = 0;
-
     #endregion
 
     #region Getter Setters
+
+    public string Name {
+        get {
+            return _name;
+        }
+
+        set {
+            _name = value;
+        }
+    }
 
     public int StatsPoints {
         get {
@@ -160,26 +152,6 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public BaseStats BaseConstitution {
-        get {
-            return _baseConstitution;
-        }
-
-        set {
-            _baseConstitution = value;
-        }
-    }
-
-    public BaseStats BaseAgility {
-        get {
-            return _baseAgility;
-        }
-
-        set {
-            _baseAgility = value;
-        }
-    }
-
     public BaseStats BaseIntelligence {
         get {
             return _baseIntelligence;
@@ -190,28 +162,19 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public BaseStats BaseCharisma {
+    public float MaxHealth {
         get {
-            return _baseCharisma;
+            return _maxHealth;
         }
 
         set {
-            _baseCharisma = value;
-        }
-    }
-
-    public float MaxHealth {
-        get {
-            return BaseStrength.Value * 5;
+            _maxHealth = value;
         }
     }
 
     public float CurrentHealth {
         get {
-            if (_currentHealth > MaxHealth)
-                return MaxHealth;
-            else
-                return _currentHealth;
+            return _currentHealth;
         }
 
         set {
@@ -219,76 +182,74 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public float MaxStamina {
+    public float MaxMana {
         get {
-            return BaseConstitution.Value * 5;
-        }
-    }
-
-    public float CurrentStamina {
-        get {
-            if (_currentStamina > MaxStamina)
-                return MaxStamina;
-            else
-                return _currentStamina;
+            return _maxMana;
         }
 
         set {
-            _currentStamina = value;
+            _maxMana = value;
         }
     }
 
-    public float MaxWeight {
+    public float CurrentMana {
         get {
-            return BaseStrength.Value;
-        }
-    }
-
-    public float CurrentWeight {
-        get {
-            return _currentWeight;
+            return _currentMana;
         }
 
         set {
-            _currentWeight = value;
+            _currentMana = value;
         }
     }
 
-    public float Speed {
+    public int AttackDamage {
         get {
-            return _speed;
+            return _attackDamage;
         }
 
         set {
-            _speed = value;
-            if (_speed < 0) {
-                _speed = 0;
+            _attackDamage = value;
+            if (_attackDamage < 0) {
+                _attackDamage = 0;
             }
         }
     }
 
-    public float AngularSpeed {
+    public float AttackSpeed {
         get {
-            return _angularSpeed;
+            return _attackSpeed;
         }
 
         set {
-            _angularSpeed = value;
-            if (_angularSpeed < 0) {
-                _angularSpeed = 0;
+            _attackSpeed = value;
+            if (_attackSpeed < 0) {
+                _attackSpeed = 0;
             }
         }
     }
 
-    public float Acceleration {
+    public float AttackRange {
         get {
-            return _acceleration;
+            return _attackRange;
         }
 
         set {
-            _acceleration = value;
-            if (_acceleration < 0) {
-                _acceleration = 0;
+            _attackRange = value;
+            if (_attackRange < 0) {
+                _attackRange = 0;
+            }
+        }
+    }
+
+    public float MovementSpeed {
+        get {
+            return _movementSpeed;
+        }
+
+        set {
+            _movementSpeed = value;
+            if (_movementSpeed < 0) {
+                _movementSpeed = 0;
             }
         }
     }
@@ -300,10 +261,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _level = value;
-
-            if (onLevelValueChanged != null) {
-                onLevelValueChanged.Invoke();
-            }
         }
     }
 
@@ -314,10 +271,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _maxExperience = value;
-
-            if (onMaxExperienceValueChanged != null) {
-                onMaxExperienceValueChanged.Invoke();
-            }
         }
     }
 
@@ -328,30 +281,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _currentExperience = value;
-
-            if (onCurrentExperienceValueChanged != null) {
-                onCurrentExperienceValueChanged.Invoke();
-            }
-        }
-    }
-
-    public float Fame {
-        get {
-            return _fame;
-        }
-
-        set {
-            _fame = value;
-        }
-    }
-
-    public float Honor {
-        get {
-            return _honor;
-        }
-
-        set {
-            _honor = value;
         }
     }
 
@@ -377,31 +306,10 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public void IncreaseConstitution() {
-        if (StatsPoints >= BaseConstitution.RequiredStatsPoints) {
-            SpendStatsPoints(BaseConstitution.RequiredStatsPoints);
-            BaseConstitution.Increase();
-        }
-    }
-
-    public void IncreaseAgility() {
-        if (StatsPoints >= BaseAgility.RequiredStatsPoints) {
-            SpendStatsPoints(BaseAgility.RequiredStatsPoints);
-            BaseAgility.Increase();
-        }
-    }
-
     public void IncreaseIntelligence() {
         if (StatsPoints >= BaseIntelligence.RequiredStatsPoints) {
             SpendStatsPoints(BaseIntelligence.RequiredStatsPoints);
             BaseIntelligence.Increase();
-        }
-    }
-
-    public void IncreaseCharisma() {
-        if (StatsPoints >= BaseCharisma.RequiredStatsPoints) {
-            SpendStatsPoints(BaseCharisma.RequiredStatsPoints);
-            BaseCharisma.Increase();
         }
     }
 
@@ -413,20 +321,24 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
-    public void ApplyStamina(float staminaAmount) {
-        if ((CurrentStamina + staminaAmount) > MaxStamina) {
-            CurrentStamina = MaxStamina;
+    public void ApplyMana(float manaAmount) {
+        if ((CurrentMana + manaAmount) > MaxMana) {
+            CurrentMana = MaxMana;
         } else {
-            CurrentStamina += staminaAmount;
+            CurrentMana += manaAmount;
         }
     }
 
-    public void AddWeight(float weightAmount) {
-        if ((CurrentWeight + weightAmount) > MaxWeight) {
-            CurrentWeight = MaxWeight;
-        } else {
-            CurrentWeight += weightAmount;
-        }
+    public void AddAttackDamage(int damageAmount) {
+        AttackDamage += damageAmount;
+    }
+
+    public void AddAttackSpeed(float speedAmount) {
+        AttackSpeed += speedAmount;
+    }
+
+    public void AddAttackRange(float rangeAmount) {
+        AttackRange += rangeAmount;
     }
 
     public void AddExp(int expAmount) {
@@ -458,24 +370,29 @@ public class CharacterStats_SO : ScriptableObject {
         CurrentHealth -= amount;
 
         if (CurrentHealth <= 0) {
-            //Death();
+            CurrentHealth = 0;
+            Debug.Log("Death");
         }
     }
 
-    public void TakeStamina(float amount) {
-        CurrentStamina -= amount;
+    public void TakeMana(float amount) {
+        CurrentMana -= amount;
 
-        if (CurrentStamina <= 0) {
-            CurrentStamina = 0;
+        if (CurrentMana <= 0) {
+            CurrentMana = 0;
         }
     }
 
-    public void ReleaseWeight(float amount) {
-        CurrentWeight -= amount;
+    public void ReduceAttackDamage(int damageAmount) {
+        AttackDamage -= damageAmount;
+    }
 
-        if (CurrentWeight <= 0) {
-            CurrentWeight = 0;
-        }
+    public void ReduceAttackSpeed(float speedAmount) {
+        AttackSpeed -= speedAmount;
+    }
+
+    public void ReduceAttackRange(float rangeAmount) {
+        AttackRange -= rangeAmount;
     }
 
     public void LooseExp(int expAmount) {
@@ -495,30 +412,28 @@ public class CharacterStats_SO : ScriptableObject {
         //Display death visualization.
     }
 
-    public void SetLevel(int level) {
-        StatsPoints = 0;
+    public void Initialize(NetworkIdentifier networkObject) {
+        //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
+        this.Name = AccountManager.instance.SelectedCharacterName;
 
-        BaseStrength = new BaseStats(40);
-        BaseDexterity = new BaseStats(40);
-        BaseConstitution = new BaseStats(20);
-        BaseAgility = new BaseStats(20);
-        BaseIntelligence = new BaseStats(20);
-        BaseCharisma = new BaseStats(20);
+        this.BaseStrength = new BaseStats(networkObject.PlayerData.Strength);
+        this.BaseDexterity = new BaseStats(networkObject.PlayerData.Dexterity);
+        this.BaseIntelligence = new BaseStats(networkObject.PlayerData.Intelligence);
 
-        CurrentHealth = MaxHealth;
-        CurrentStamina = MaxStamina;
-        CurrentWeight = 0;
+        this.CurrentHealth = networkObject.PlayerData.CurrentHp;
+        this.MaxHealth = networkObject.PlayerData.MaxHp;
+        this.CurrentMana = networkObject.PlayerData.CurrentMana;
+        this.MaxMana = networkObject.PlayerData.MaxMana;
 
-        Speed = 2;
-        AngularSpeed = 999;
-        Acceleration = 8;
+        this.AttackDamage = networkObject.PlayerData.AttackDamage;
+        this.AttackSpeed = networkObject.PlayerData.AttackSpeed;
+        this.AttackRange = networkObject.PlayerData.AttackRange;
+        this.MovementSpeed = networkObject.PlayerData.MoveSpeed;
 
-        Level = 0;
-        MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
-        CurrentExperience = 0;
-
-        Fame = 0;
-        Honor = 0;
+        //this.Level = level;
+        this.MaxExperience = 10 + (Level * 10) + (Level + 1) ^ 3;
+        //this.MaxExperience = maxExperience;
+        this.CurrentExperience = 0;
     }
 
     public void LevelUp() {

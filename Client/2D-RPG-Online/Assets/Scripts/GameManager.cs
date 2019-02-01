@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();

@@ -54,6 +54,16 @@ public class NetworkManager : MonoBehaviour {
         InitializeGameplayServer();
     }
 
+    private void Update() {
+        if (mss != null) {
+            if (mss.GetError() != null) {
+                if (!string.IsNullOrEmpty(mss.GetError().StackTrace)) {
+                    Debug.Log(mss.GetError().StackTrace);
+                }
+            }
+        }
+    }
+
     public IEnumerator ConnectToGameplayServer(Action<bool> success) {
         Debug.Log(CONNECT);
 
