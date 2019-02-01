@@ -48,7 +48,7 @@ public class GameManager : MonoBehaviour {
     private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
 
     private void Start() {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = 60;
 
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
@@ -123,7 +123,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
@@ -131,7 +131,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();

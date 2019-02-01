@@ -80,7 +80,7 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (NetworkManager.mss.IsConnected) {
             var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
             var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
@@ -211,7 +211,7 @@ public class RoomManager : Menu {
     private void OnRoomUpdated(ShiftServerData data) {
         serverTickrate = data.SvTickRate;
 
-        //Debug.Log(data);
+        Debug.Log(data);
 
         for (int ii = 0; ii < data.StateUpdate.NetworkObjects.Count; ii++) {
             NetworkIdentifier updatedNetworkObject = data.StateUpdate.NetworkObjects[ii];

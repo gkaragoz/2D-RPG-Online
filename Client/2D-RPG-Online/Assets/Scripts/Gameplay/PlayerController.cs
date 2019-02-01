@@ -84,8 +84,6 @@ public class PlayerController : MonoBehaviour {
             _isMe = true;
 
             CreateHUD();
-
-            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
         }

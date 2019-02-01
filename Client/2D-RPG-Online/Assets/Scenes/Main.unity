@@ -16511,7 +16511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c09798ce980645488be944e6181f2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostName: 192.168.1.2
+  _hostName: 18.194.38.100
   _port: 2000
   _reconciliaton: 1
 --- !u!4 &1045909617
@@ -35024,7 +35024,7 @@ PrefabInstance:
     - target: {fileID: 4638725470540306969, guid: 3260074a3a6bf7c42ae710b90a4744f6,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 15
+      value: 12
       objectReference: {fileID: 0}
     - target: {fileID: 4638725470540306969, guid: 3260074a3a6bf7c42ae710b90a4744f6,
         type: 3}
@@ -35071,7 +35071,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 6966641771036533388, guid: 3260074a3a6bf7c42ae710b90a4744f6,
+        type: 3}
+      propertyPath: orthographic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6966641771036533388, guid: 3260074a3a6bf7c42ae710b90a4744f6,
+        type: 3}
+      propertyPath: orthographic size
+      value: 8
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 6276823526578817763, guid: 3260074a3a6bf7c42ae710b90a4744f6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 3260074a3a6bf7c42ae710b90a4744f6, type: 3}
 --- !u!1001 &5864759407097757448
 PrefabInstance:
