@@ -1,9 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<RunSettings>
-  <!-- Parameters used by tests at runtime -->
-  <TestRunParameters>
-    <Parameter name="gameserverIp" value="127.0.0.1" />
-    <Parameter name="port" value="2000" />
-  </TestRunParameters>
-  <!-- Adapter Specific sections -->
-</RunSettings>

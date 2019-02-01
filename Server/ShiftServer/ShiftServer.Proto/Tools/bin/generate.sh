@@ -1,1 +1,0 @@
-protoc -I=C:\Users\CAN\source\repos\2D-RPG-Online\Server\ShiftServer\ShiftServer.Proto\Protos --csharp_out=C:\Users\CAN\source\repos\2D-RPG-Online\Server\ShiftServer\ShiftServer.Proto\Models C:\Users\CAN\source\repos\2D-RPG-Online\Server\ShiftServer\ShiftServer.Proto\Protos\ShiftServer_Messages.proto
