@@ -28,11 +28,28 @@ public class CharacterAnimator : MonoBehaviour {
         _animator.SetTrigger(anim_BasicAttack);
     }
 
+    public void OnMoveExample() {
+        _animator.SetFloat(anim_InputMagnitude, 1f);
+    }
+
+    public void OnStopExample() {
+        _animator.SetFloat(anim_InputMagnitude, 0f);
+    }
+
     public void OnDeath() {
         _animator.SetLayerWeight(0, 0);
         _animator.SetLayerWeight(1, 0);
         _animator.SetLayerWeight(2, 0);
         _animator.SetTrigger(anim_Die);
+    }
+
+    public void Reset() {
+        _animator.ResetTrigger(anim_BasicAttack);
+        _animator.ResetTrigger(anim_OnHit);
+        _animator.ResetTrigger(anim_Die);
+
+        _animator.SetFloat(anim_InputMagnitude, 0f);
+        transform.position = Vector3.zero;
     }
 
 }
