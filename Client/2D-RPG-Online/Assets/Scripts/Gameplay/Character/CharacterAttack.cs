@@ -13,10 +13,8 @@ public class CharacterAttack : MonoBehaviour {
         get {
             if (Time.time > _nextAttackTime) {
                 if (!IsAttacking) {
-                    if (!HasTargetDied) {
-                        if (IsTargetInRange()) {
-                            return true;
-                        }
+                    if (IsTargetInRange()) {
+                        return true;
                     }
                 }
             }
@@ -67,7 +65,7 @@ public class CharacterAttack : MonoBehaviour {
             LivingEntity[] potantialTargets = GameObject.FindObjectsOfType<LivingEntity>();
             for (int ii = 0; ii < potantialTargets.Length; ii++) {
                 LivingEntity potantialTarget = potantialTargets[ii];
-                if (potantialTarget.EntityType == LivingEntity.Type.Player) {
+                if (potantialTarget.EntityType == LivingEntity.Type.Player || potantialTarget.IsDeath) {
                     continue;
                 }
 
@@ -77,6 +75,7 @@ public class CharacterAttack : MonoBehaviour {
 
                     if (potantialTargetDistance < distance) {
                         target = potantialTarget;
+                        distance = potantialTargetDistance;
                     }
                 }
             }
