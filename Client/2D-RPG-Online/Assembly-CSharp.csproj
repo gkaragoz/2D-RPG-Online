@@ -310,6 +310,7 @@
     <Compile Include="Assets\Scripts\ApplicationTargetFrame.cs" />
     <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\BotController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\CameraController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\AnimationBehaviour\OnHitBehaviour.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAnimator.cs" />
@@ -324,6 +325,9 @@
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShaker.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\Utilities\CameraUtilities.cs" />
     <Compile Include="Assets\Scripts\Gameplay\FadeInOut.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\LivingEntity\ILivingEntity.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\LivingEntity\LivingEntity.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\LivingEntity\LivingEntity_SO.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Menu.cs" />
     <Compile Include="Assets\Scripts\Gameplay\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />

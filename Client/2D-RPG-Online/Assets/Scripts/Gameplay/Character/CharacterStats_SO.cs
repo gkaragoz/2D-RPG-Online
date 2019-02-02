@@ -7,7 +7,7 @@ using UnityEngine.Events;
 using UnityEditor;
 #endif
 
-[CreateAssetMenu(fileName = "Character Stats", menuName = "Character/Character Stats")]
+[CreateAssetMenu(fileName = "Character Stats", menuName = "Scriptable Objects/Character Stats")]
 public class CharacterStats_SO : ScriptableObject {
 
     #region Base Stats Class

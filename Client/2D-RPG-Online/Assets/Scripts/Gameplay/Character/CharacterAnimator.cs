@@ -6,11 +6,19 @@ public class CharacterAnimator : MonoBehaviour {
 
     [SerializeField]
     private Animator _animator;
+    [SerializeField]
+    private PathFollower _pathFollower;
 
     private static readonly int anim_OnHit = Animator.StringToHash("OnHit");
     private static readonly int anim_BasicAttack = Animator.StringToHash("BasicAttack");
     private static readonly int anim_InputMagnitude = Animator.StringToHash("InputMagnitude");
     private static readonly int anim_Die = Animator.StringToHash("Die");
+
+    private void Update() {
+        if (_pathFollower != null) {
+            OnMove(_pathFollower.DesiredPointPosition);
+        }
+    }
 
     public void OnMove(Vector3 direction) {
         _animator.SetFloat(anim_InputMagnitude, direction.magnitude, locomotionAnimationSmoothTime, Time.deltaTime);

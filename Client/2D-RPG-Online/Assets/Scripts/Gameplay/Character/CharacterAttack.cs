@@ -33,13 +33,13 @@ public class CharacterAttack : MonoBehaviour {
     public bool HasTargetDied {
         get {
             if (HasTarget) {
-                return _target.CharacterController.IsDeath;
+                return _target.IsDeath;
             }
             return false;
         }
     }
 
-    public PlayerController Target { get { return _target; } }
+    public LivingEntity Target { get { return _target; } }
     public Vector3 TargetPosition { get { return _target.transform.position; } }
 
     [SerializeField]
@@ -47,7 +47,7 @@ public class CharacterAttack : MonoBehaviour {
     private float _nextAttackTime;
     [SerializeField]
     [Utils.ReadOnly]
-    private PlayerController _target;
+    private LivingEntity _target;
 
     private CharacterStats _characterStats;
 
@@ -59,22 +59,41 @@ public class CharacterAttack : MonoBehaviour {
         StartCoroutine(IAttack());
     }
 
-    public void SearchTarget() {
-        PlayerController target = null;
+    public void SearchTarget(bool isOfflineMode) {
+        LivingEntity target = null;
         float distance = Mathf.Infinity;
 
-        for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
-            PlayerController potantialTarget = RoomManager.instance.OtherPlayerControllers[ii];
-            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
-
-                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
-
-                if (potantialTargetDistance < distance) {
-                    target = potantialTarget;
+        if (isOfflineMode) {
+            LivingEntity[] potantialTargets = GameObject.FindObjectsOfType<LivingEntity>();
+            for (int ii = 0; ii < potantialTargets.Length; ii++) {
+                LivingEntity potantialTarget = potantialTargets[ii];
+                if (potantialTarget.EntityType == LivingEntity.Type.Player) {
+                    continue;
                 }
 
+                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+
+                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+
+                    if (potantialTargetDistance < distance) {
+                        target = potantialTarget;
+                    }
+                }
+            }
+        } else {
+            for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
+                LivingEntity potantialTarget = RoomManager.instance.OtherPlayerControllers[ii];
+                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+
+                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+
+                    if (potantialTargetDistance < distance) {
+                        target = potantialTarget;
+                    }
+                }
             }
         }
+
         this._target = target;
     }
 
