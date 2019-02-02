@@ -36,6 +36,7 @@ public class CharacterController : MonoBehaviour {
     public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
         this._characterStats.Initialize(networkObject);
         this._livingEntity = livingEntity;
+        this._characterAnimator.Initialize(_livingEntity.onDeathEvent);
     }
 
     public void Attack() {
@@ -64,8 +65,14 @@ public class CharacterController : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         _characterStats.TakeDamage(damage);
-        _characterAnimator.OnHit();
-        _characterUI.UpdateUI();
+
+        if (_characterStats.GetCurrentHealth() <= 0) {
+            OnDeath();
+            Debug.Log("Death");
+        } else {
+            _characterAnimator.OnHit();
+            _characterUI.UpdateUI();
+        }
     }
 
     public void OnDeath() {

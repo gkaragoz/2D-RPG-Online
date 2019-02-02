@@ -371,7 +371,6 @@ public class CharacterStats_SO : ScriptableObject {
 
         if (CurrentHealth <= 0) {
             CurrentHealth = 0;
-            Debug.Log("Death");
         }
     }
 

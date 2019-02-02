@@ -759,7 +759,7 @@ MonoBehaviour:
   _livingEntityDefinition_Template: {fileID: 11400000, guid: ed67749a29a204746905e43b70bbfb81,
     type: 2}
   _livingEntityDefinition: {fileID: 0}
-  _type: 2
+  _type: 1
 --- !u!114 &2042664998682478086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -861,7 +861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pathEditor: {fileID: 0}
-  movementSpeed: 3
+  movementSpeed: 1
   stoppingDistance: 0.2
   rotationSpeed: 3.5
   rotate: 1

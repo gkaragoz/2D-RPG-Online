@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class LivingEntity : MonoBehaviour, ILivingEntity {
+
+    public Action onDeathEvent;
 
     [Header("Initialization")]
     [SerializeField]
@@ -13,12 +16,22 @@ public class LivingEntity : MonoBehaviour, ILivingEntity {
 
     public enum Type {
         Player,
-        Friend,
-        Enemy,
+        BOT,
         Object
     }
 
-    public bool IsDeath { get { return _livingEntityDefinition.isDeath; } set { _livingEntityDefinition.isDeath = value; } }
+    public bool IsDeath {
+        get {
+            return _livingEntityDefinition.isDeath;
+        }
+        set {
+            _livingEntityDefinition.isDeath = value;
+
+            if (value == true) {
+                onDeathEvent?.Invoke();
+            }
+        }
+    }
 
     public Type EntityType { get { return _type; } }
 

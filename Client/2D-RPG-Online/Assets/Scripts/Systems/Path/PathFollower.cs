@@ -23,7 +23,9 @@ public class PathFollower : MonoBehaviour {
     private int _currentPathPointIndex = 0;
     [SerializeField]
     [Utils.ReadOnly]
-    private bool isRunning = false;
+    private bool _isRunning = false;
+
+    public bool IsRunning { get { return _isRunning; } }
 
     public bool HasPathCompleted { get { return _currentPathPointIndex >= pathEditor.allPaths.Count ? true : false; } }
 
@@ -41,7 +43,7 @@ public class PathFollower : MonoBehaviour {
     }
 
     private void Update() {
-        if (isRunning) {
+        if (_isRunning) {
             Process();
         }
     }
@@ -51,11 +53,11 @@ public class PathFollower : MonoBehaviour {
             SetNextPointAsARandom();
         }
 
-        isRunning = true;
+        _isRunning = true;
     }
 
     public void Stop() {
-        isRunning = false;
+        _isRunning = false;
     }
 
     private void Process() {

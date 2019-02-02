@@ -108,7 +108,11 @@ public class CharacterAttack : MonoBehaviour {
 
         yield return new WaitForSeconds(0.3f);
 
-        _target.TakeDamage(_characterStats.GetAttackDamage());
+        if (_target.EntityType == LivingEntity.Type.Player) {
+            _target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
+        } else if (_target.EntityType == LivingEntity.Type.BOT) {
+            _target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
+        }
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
