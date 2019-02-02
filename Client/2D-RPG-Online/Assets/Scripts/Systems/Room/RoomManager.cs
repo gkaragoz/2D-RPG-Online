@@ -240,6 +240,9 @@ public class RoomManager : Menu {
                         if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
                             DateTime updateTime = DateTime.UtcNow;
                             var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                            if (OtherPlayerControllers[jj].NetworkIdentifier.PositionBuffer.Count == 0) {
+                                OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, OtherPlayerControllers[jj].transform.position, updatedNetworkObject.LastProcessedInputID);
+                            }
                             OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
                         }
 
