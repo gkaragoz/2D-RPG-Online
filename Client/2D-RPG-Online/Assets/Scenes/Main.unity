@@ -16511,7 +16511,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c09798ce980645488be944e6181f2a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hostName: 18.194.38.100
+  _hostName: 192.168.1.2:2000
   _port: 2000
   _reconciliaton: 1
 --- !u!4 &1045909617

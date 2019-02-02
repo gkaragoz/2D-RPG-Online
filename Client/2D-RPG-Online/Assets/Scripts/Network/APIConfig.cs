@@ -19,11 +19,11 @@ public static class APIConfig {
 
     public static string ERROR_INVALID_JSON = "04106";
 
-    public static string URL_SessionID = "https://manashift-heroes-auth.herokuapp.com/api/auth/login";
-    public static string URL_AccountData = "https://manashift-heroes-auth.herokuapp.com/api/user/account";
-    public static string URL_GuestLogin = "https://manashift-heroes-auth.herokuapp.com/api/auth/guestlogin";
-    public static string URL_CreateCharacter = "https://manashift-heroes-auth.herokuapp.com/api/char/add";
-    public static string URL_SelectCharacter = "https://manashift-heroes-auth.herokuapp.com/api/char/select";
+    public static string URL_SessionID = "http://192.168.1.2:8000/api/auth/login";
+    public static string URL_AccountData = "http://192.168.1.2:8000/api/user/account";
+    public static string URL_GuestLogin = "http://192.168.1.2:8000/api/auth/guestlogin";
+    public static string URL_CreateCharacter = "http://192.168.1.2:8000/api/char/add";
+    public static string URL_SelectCharacter = "http://192.168.1.2:8000/api/char/select";
 
     public static string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
     public static string ATTEMP_TO_GOOGLE_PLAY_SIGN_IN = "ATTEMP to Google Play sign in!";
