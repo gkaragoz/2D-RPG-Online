@@ -5,6 +5,8 @@ public class CharacterController : MonoBehaviour {
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
 
+    public ParticleSystem takeHitFX;
+
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
@@ -65,6 +67,7 @@ public class CharacterController : MonoBehaviour {
 
     public void TakeDamage(int damage) {
         _characterStats.TakeDamage(damage);
+        takeHitFX.Play();
 
         if (_characterStats.GetCurrentHealth() <= 0) {
             OnDeath();
