@@ -27,6 +27,8 @@ public class PathFollower : MonoBehaviour {
 
     public bool HasPathCompleted { get { return _currentPathPointIndex >= pathEditor.allPaths.Count ? true : false; } }
 
+    public Vector3 DesiredPointPosition { get { return _desiredPointPosition; } }
+
     private Vector3 _desiredPointPosition;
     private Vector3 _currentPosition;
 
