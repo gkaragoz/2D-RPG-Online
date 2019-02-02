@@ -40,25 +40,7 @@ public class PathFollower : MonoBehaviour {
 
     private void Update() {
         if (isRunning) {
-            if (!HasPathCompleted) {
-                _currentPosition = transform.position;
-                _desiredPointPosition = pathEditor.GetPathPoint(_currentPathPointIndex);
-
-                Move();
-                Rotate();
-
-                if (HasReachedToPoint()) {
-                    if (mixPath) {
-                        SetNextPointAsARandom();
-                    } else {
-                        SetNextPoint();
-                    }
-                }
-
-                if (HasCompletedPath()) {
-                    OnPathCompleted();
-                }
-            }
+            Process();
         }
     }
 
@@ -72,6 +54,28 @@ public class PathFollower : MonoBehaviour {
 
     public void Stop() {
         isRunning = false;
+    }
+
+    private void Process() {
+        if (!HasPathCompleted) {
+            _currentPosition = transform.position;
+            _desiredPointPosition = pathEditor.GetPathPoint(_currentPathPointIndex);
+
+            Move();
+            Rotate();
+
+            if (HasReachedToPoint()) {
+                if (mixPath) {
+                    SetNextPointAsARandom();
+                } else {
+                    SetNextPoint();
+                }
+            }
+
+            if (HasCompletedPath()) {
+                OnPathCompleted();
+            }
+        }
     }
 
     private void Move() {
@@ -124,6 +128,41 @@ public class PathFollower : MonoBehaviour {
         }
     }
 
+    protected virtual void EditorUpdate() {
+        if (!Application.isPlaying) {
+            Process();
+        }
+    }
+
+#if UNITY_EDITOR
+
+    public void EditorPlay() {
+        //MonoBehaviour.res
+        if (!Application.isPlaying) {
+            //StopAllCoroutines();
+            EditorApplication.update -= EditorUpdate;
+            //RecalculatePath();
+            EditorApplication.update += EditorUpdate;
+            //goto restart;
+        } else {
+            Debug.Log("Play is only used in edit mode");
+        }
+    }
+
+    public void EditorStop() {
+        if (!Application.isPlaying) {
+            EditorApplication.update -= EditorUpdate;
+            //transform.position = Nodes.First().transform.position;
+            //StopCoroutine(ienum);
+            StopAllCoroutines();
+        } else {
+            Debug.Log("Stop is only used in edit mode");
+        }
+    }
+
+#endif
+
+
 }
 
 #if UNITY_EDITOR
@@ -136,11 +175,19 @@ public class PathFollowerDrawer : Editor {
         GUI.backgroundColor = Color.green;
         if (GUILayout.Button("Start")) {
             script.Run();
+
+#if UNITY_EDITOR
+            script.EditorPlay();
+#endif
         }
 
         GUI.backgroundColor = Color.red;
         if (GUILayout.Button("Stop")) {
             script.Stop();
+
+#if UNITY_EDITOR
+            script.EditorStop();
+#endif
         }
 
         GUI.backgroundColor = Color.cyan;
