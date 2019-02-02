@@ -4771,6 +4771,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Sparks
       objectReference: {fileID: 0}
+    - target: {fileID: 60160147577796483, guid: a6a433f2a23879846893130ebf0074b3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 60160147577796482, guid: a6a433f2a23879846893130ebf0074b3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4825,6 +4830,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 60160147577796481, guid: a6a433f2a23879846893130ebf0074b3,
+        type: 3}
+      propertyPath: m_MaxParticleSize
+      value: 0.26
+      objectReference: {fileID: 0}
+    - target: {fileID: 60160147577796481, guid: a6a433f2a23879846893130ebf0074b3,
+        type: 3}
+      propertyPath: m_LengthScale
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 60160147577796480, guid: a6a433f2a23879846893130ebf0074b3,
         type: 3}
@@ -5021,16 +5036,6 @@ PrefabInstance:
       propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 60160147577796481, guid: a6a433f2a23879846893130ebf0074b3,
-        type: 3}
-      propertyPath: m_MaxParticleSize
-      value: 0.26
-      objectReference: {fileID: 0}
-    - target: {fileID: 60160147577796481, guid: a6a433f2a23879846893130ebf0074b3,
-        type: 3}
-      propertyPath: m_LengthScale
-      value: 0.6
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a6a433f2a23879846893130ebf0074b3, type: 3}
 --- !u!4 &4875946759759326681 stripped
@@ -5046,6 +5051,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4875946758960837720}
     m_Modifications:
+    - target: {fileID: 955862084513477334, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
+        type: 3}
+      propertyPath: m_Name
+      value: ImpactShape
+      objectReference: {fileID: 0}
+    - target: {fileID: 955862084513477334, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 955862084513477335, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5101,11 +5116,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 955862084513477334, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
-        type: 3}
-      propertyPath: m_Name
-      value: ImpactShape
-      objectReference: {fileID: 0}
     - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -5129,12 +5139,12 @@ PrefabInstance:
     - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 2
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: InitialModule.startSize.minScalar
-      value: 0.66
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
@@ -5161,6 +5171,16 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4875946758960837720}
     m_Modifications:
+    - target: {fileID: 3629903767419579896, guid: e06e19438dbca014e8bffa78daa17d60,
+        type: 3}
+      propertyPath: m_Name
+      value: Shockwave
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629903767419579896, guid: e06e19438dbca014e8bffa78daa17d60,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3629903767419579895, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5216,15 +5236,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3629903767419579896, guid: e06e19438dbca014e8bffa78daa17d60,
-        type: 3}
-      propertyPath: m_Name
-      value: Shockwave
-      objectReference: {fileID: 0}
     - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
       propertyPath: InitialModule.startSize.scalar
-      value: 1.52
+      value: 2.2
       objectReference: {fileID: 0}
     - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
@@ -5284,6 +5299,11 @@ PrefabInstance:
     - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
       propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
+        type: 3}
+      propertyPath: InitialModule.size3D
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
