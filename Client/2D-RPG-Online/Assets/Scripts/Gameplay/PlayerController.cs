@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
-public class PlayerController : MonoBehaviour {
+public class PlayerController : LivingEntity {
 
     public bool HasInput {
         get {
@@ -14,7 +14,7 @@ public class PlayerController : MonoBehaviour {
 
     public int AttackDamage {
         get {
-            return _characterStats.GetAttackDamage();
+            return _characterController.AttackDamage;
         }
     }
 
@@ -35,13 +35,19 @@ public class PlayerController : MonoBehaviour {
     private bool _isMe;
     private NetworkEntity _networkIdentifier;
     private CharacterController _characterController;
-    private CharacterStats _characterStats;
     private Joystick _joystick;
     private Button _btnAttack;
 
-    private void Awake() {
+    public override void Awake() {
+        base.Awake();
+
         _characterController = GetComponent<CharacterController>();
-        _characterStats = GetComponent<CharacterStats>();
+    }
+
+    private void Start() {
+        if (_isOfflineMode) {
+            this.CharacterController.InitializeOffline(this);
+        }
     }
 
     private void FixedUpdate() {
@@ -80,7 +86,7 @@ public class PlayerController : MonoBehaviour {
     public void Initialize(NetworkIdentifier networkData) {
         _networkIdentifier = new NetworkEntity(networkData);
 
-        this._characterStats.Initialize(networkData);
+        this.CharacterController.Initialize(networkData, this);
 
         if (_networkIdentifier.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
             _isMe = true;
@@ -111,36 +117,35 @@ public class PlayerController : MonoBehaviour {
         this._joystick = joystick;
     }
 
-    public void TakeDamage(int damage) {
-        _characterStats.TakeDamage(damage);
-        CharacterController.TakeDamage();
+    public override void TakeDamage(int damage) {
+        CharacterController.TakeDamage(damage);
     }
 
-    public void OnDeath() {
+    public override void OnDeath() {
         CharacterController.OnDeath();
     }
 
-    public void Attack() {
+    public override void Attack() {
         CharacterController.Attack();
     }
 
-    public void MoveByInput() {
+    public override void MoveByInput() {
         CharacterController.MoveToInput(CurrentInput);
     }
 
-    public void MoveToPosition(Vector3 position) {
+    public override void MoveToPosition(Vector3 position) {
         CharacterController.MoveToPosition(position);
     }
 
-    public void Stop() {
+    public override void Stop() {
         CharacterController.Stop();
     }
 
-    public void Rotate() {
+    public override void Rotate() {
         CharacterController.Rotate(CurrentInput);
     }
 
-    public void Destroy() {
+    public override void Destroy() {
         Destroy(this.gameObject);
     }
 

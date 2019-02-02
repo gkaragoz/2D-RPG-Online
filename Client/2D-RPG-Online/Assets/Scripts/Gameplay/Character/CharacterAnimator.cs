@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour {
 
@@ -6,11 +7,25 @@ public class CharacterAnimator : MonoBehaviour {
 
     [SerializeField]
     private Animator _animator;
+    [SerializeField]
+    private PathFollower _pathFollower;
 
     private static readonly int anim_OnHit = Animator.StringToHash("OnHit");
     private static readonly int anim_BasicAttack = Animator.StringToHash("BasicAttack");
     private static readonly int anim_InputMagnitude = Animator.StringToHash("InputMagnitude");
     private static readonly int anim_Die = Animator.StringToHash("Die");
+
+    private void Update() {
+        if (_pathFollower != null) {
+            if (_pathFollower.IsRunning) {
+                OnMove(_pathFollower.DesiredPointPosition);
+            }
+        }
+    }
+
+    public void Initialize(Action onDeathEvent) {
+        onDeathEvent += OnDeath;
+    }
 
     public void OnMove(Vector3 direction) {
         _animator.SetFloat(anim_InputMagnitude, direction.magnitude, locomotionAnimationSmoothTime, Time.deltaTime);
@@ -37,6 +52,12 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     public void OnDeath() {
+        if (_pathFollower != null) {
+            if (_pathFollower.IsRunning) {
+                _pathFollower.Stop();
+            }
+        }
+
         _animator.SetLayerWeight(0, 0);
         _animator.SetLayerWeight(1, 0);
         _animator.SetLayerWeight(2, 0);

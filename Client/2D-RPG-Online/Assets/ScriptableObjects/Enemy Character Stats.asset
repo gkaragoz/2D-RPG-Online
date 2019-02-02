@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Enemy Character Stats
   m_EditorClassIdentifier: 
   isPlayer: 0
+  _name: '#BOT392'
   _statsPoints: 0
   _baseStrength:
     _value: 30
@@ -27,7 +28,10 @@ MonoBehaviour:
   _currentHealth: 300
   _maxMana: 350
   _currentMana: 300
-  _speed: 2
+  _attackDamage: 5
+  _attackSpeed: 1
+  _movementSpeed: 2
+  _attackRange: 1
   _level: 1
   _maxExperience: 1000
   _currentExperience: 0

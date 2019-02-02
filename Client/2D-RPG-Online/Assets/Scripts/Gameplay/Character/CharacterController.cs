@@ -3,17 +3,16 @@
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
 
-    public bool IsDeath { get { return _isDeath; } }
-
-    [SerializeField]
-    [Utils.ReadOnly]
-    private bool _isDeath;
+    public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
 
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
     private CharacterUI _characterUI;
     private CharacterStats _characterStats;
+    private LivingEntity _livingEntity;
+
+    private bool _isOfflineMode = false;
 
     private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
@@ -29,8 +28,21 @@ public class CharacterController : MonoBehaviour {
         //Attack();
     }
 
+    public void InitializeOffline(LivingEntity livingEntity) {
+        this._livingEntity = livingEntity;
+        this._isOfflineMode = true;
+    }
+
+    public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
+        this._characterStats.Initialize(networkObject);
+        this._livingEntity = livingEntity;
+        this._characterAnimator.Initialize(_livingEntity.onDeathEvent);
+    }
+
     public void Attack() {
-        if (_characterAttack.CanAttack && !_isDeath) {
+        _characterAttack.SearchTarget(_isOfflineMode);
+
+        if (_characterAttack.CanAttack && !_livingEntity.IsDeath) {
             _characterMotor.LookTo(_characterAttack.TargetPosition);
             _characterAttack.Attack();
             _characterAnimator.OnAttack();
@@ -38,26 +50,33 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void MoveToInput(Vector3 input) {
-        if (!_isDeath) {
+        if (!_livingEntity.IsDeath) {
             _characterMotor.MoveToInput(input);
             _characterAnimator.OnMove(input);
         }
     }
 
     public void MoveToPosition(Vector3 position) {
-        if (!_isDeath) {
+        if (!_livingEntity.IsDeath) {
             _characterMotor.MoveToPosition(position);
             _characterAnimator.OnMove(position);
         }
     }
 
-    public void TakeDamage() {
-        _characterAnimator.OnHit();
-        _characterUI.UpdateUI();
+    public void TakeDamage(int damage) {
+        _characterStats.TakeDamage(damage);
+
+        if (_characterStats.GetCurrentHealth() <= 0) {
+            OnDeath();
+            Debug.Log("Death");
+        } else {
+            _characterAnimator.OnHit();
+            _characterUI.UpdateUI();
+        }
     }
 
     public void OnDeath() {
-        _isDeath = true;
+        _livingEntity.IsDeath = true;
         _characterAnimator.OnDeath();
         _characterUI.UpdateUI();
     }
