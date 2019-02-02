@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.RestModels;
+﻿using ManaShiftServer.Data.RestModels;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json;
-using ShiftServer.Proto.RestModels;
+﻿using ManaShiftServer.Data.RestModels;
+using Newtonsoft.Json;
 using SimpleHTTP;
 using System;
 using System.Collections;

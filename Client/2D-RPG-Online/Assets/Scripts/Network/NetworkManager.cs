@@ -1,13 +1,11 @@
 ﻿using UnityEngine;
-using ShiftServer.Client;
-using ShiftServer.Client.Data.Entities;
 using System;
-using System.Threading.Tasks;
 using System.Collections;
+using ManaShiftServer.UnityClient.Data.Entities;
 
 public class NetworkManager : MonoBehaviour {
 
-    public static ManaShiftServer mss;
+    public static ManaShiftServer.UnityClient.ManaShiftServer mss;
     public static string SessionID { get; set; }
 
     public static string UserID {
@@ -89,7 +87,7 @@ public class NetworkManager : MonoBehaviour {
     }
 
     private void InitializeGameplayServer() {
-        mss = new ManaShiftServer();
+        mss = new ManaShiftServer.UnityClient.ManaShiftServer();
         mss.AddEventListener(MSServerEvent.Connection, OnConnectionSuccess);
         mss.AddEventListener(MSServerEvent.ConnectionFailed, OnConnectionFailed);
         mss.AddEventListener(MSServerEvent.ConnectionLost, OnConnectionLost);

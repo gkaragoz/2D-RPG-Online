@@ -1,4 +1,4 @@
-﻿using ShiftServer.Proto.Utils;
+﻿using ManaShiftServer.Data.Utils;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -92,6 +92,8 @@ public class PlayerController : LivingEntity {
             _isMe = true;
 
             CreateHUD();
+
+            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         } else {
             _isMe = false;
         }

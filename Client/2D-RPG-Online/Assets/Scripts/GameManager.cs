@@ -1,5 +1,4 @@
-﻿using System;
-using ShiftServer.Proto.RestModels;
+﻿using ManaShiftServer.Data.RestModels;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -123,7 +122,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
@@ -131,7 +130,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("ToonGameplay", LoadSceneMode.Additive);
+        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
