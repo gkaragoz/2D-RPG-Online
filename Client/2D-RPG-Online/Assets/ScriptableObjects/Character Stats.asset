@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Character Stats
   m_EditorClassIdentifier: 
   isPlayer: 0
+  _name: sust4in
   _statsPoints: 0
   _baseStrength:
     _value: 0

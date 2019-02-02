@@ -51,7 +51,7 @@ ParticleSystem:
   ringBufferLoopRange: {x: 0, y: 1}
   looping: 0
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 0
   useRigidbodyForVelocity: 1
@@ -5016,6 +5016,11 @@ PrefabInstance:
       propertyPath: ClampVelocityModule.magnitude.maxCurve.m_Curve.Array.data[0].value
       value: 0.28729248
       objectReference: {fileID: 0}
+    - target: {fileID: 60160147577796480, guid: a6a433f2a23879846893130ebf0074b3,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 60160147577796481, guid: a6a433f2a23879846893130ebf0074b3,
         type: 3}
       propertyPath: m_MaxParticleSize
@@ -5041,11 +5046,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4875946758960837720}
     m_Modifications:
-    - target: {fileID: 955862084513477334, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
-        type: 3}
-      propertyPath: m_Name
-      value: ImpactShape
-      objectReference: {fileID: 0}
     - target: {fileID: 955862084513477335, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5101,6 +5101,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 955862084513477334, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
+        type: 3}
+      propertyPath: m_Name
+      value: ImpactShape
+      objectReference: {fileID: 0}
     - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
         type: 3}
       propertyPath: InitialModule.startLifetime.scalar
@@ -5136,6 +5141,11 @@ PrefabInstance:
       propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[1].time
       value: 0.8285606
       objectReference: {fileID: 0}
+    - target: {fileID: 955862084513477329, guid: 42e5c7203b9b07e4a855b8cdc5733b7d,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42e5c7203b9b07e4a855b8cdc5733b7d, type: 3}
 --- !u!4 &4875946758681478607 stripped
@@ -5151,11 +5161,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4875946758960837720}
     m_Modifications:
-    - target: {fileID: 3629903767419579896, guid: e06e19438dbca014e8bffa78daa17d60,
-        type: 3}
-      propertyPath: m_Name
-      value: Shockwave
-      objectReference: {fileID: 0}
     - target: {fileID: 3629903767419579895, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5210,6 +5215,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629903767419579896, guid: e06e19438dbca014e8bffa78daa17d60,
+        type: 3}
+      propertyPath: m_Name
+      value: Shockwave
       objectReference: {fileID: 0}
     - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
         type: 3}
@@ -5270,6 +5280,11 @@ PrefabInstance:
         type: 3}
       propertyPath: ColorModule.gradient.maxGradient.ctime1
       value: 7517
+      objectReference: {fileID: 0}
+    - target: {fileID: 3629903767419579893, guid: e06e19438dbca014e8bffa78daa17d60,
+        type: 3}
+      propertyPath: playOnAwake
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e06e19438dbca014e8bffa78daa17d60, type: 3}

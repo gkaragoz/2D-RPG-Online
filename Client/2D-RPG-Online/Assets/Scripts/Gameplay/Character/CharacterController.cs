@@ -81,7 +81,7 @@ public class CharacterController : MonoBehaviour {
     public void OnDeath() {
         _livingEntity.IsDeath = true;
         _characterAnimator.OnDeath();
-        _characterUI.UpdateUI();
+        _characterUI.HideUI();
     }
 
     public void Stop() {

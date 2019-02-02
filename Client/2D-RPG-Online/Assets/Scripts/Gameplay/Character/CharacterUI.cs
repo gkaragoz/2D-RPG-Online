@@ -10,6 +10,8 @@ public class CharacterUI : Menu {
     private Image _imgHealthBar;
     [SerializeField]
     private Image _imgManaBar;
+    [SerializeField]
+    private GameObject _targetIndicatorObj;
 
     private CharacterStats _characterStats;
 
@@ -23,6 +25,18 @@ public class CharacterUI : Menu {
         SetName();
         SetHealthBar();
         SetManaBar();
+    }
+
+    public void OpenUI() {
+        Show();
+
+        _targetIndicatorObj.SetActive(true);
+    }
+
+    public void HideUI() {
+        Hide();
+
+        _targetIndicatorObj.SetActive(false);
     }
 
     private void SetName() {
