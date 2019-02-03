@@ -9,9 +9,9 @@ public class Sound {
         Music
     }
 
-    public Type type;
-
 	public string name;
+
+    public Type type;
 
 	public AudioClip clip;
 

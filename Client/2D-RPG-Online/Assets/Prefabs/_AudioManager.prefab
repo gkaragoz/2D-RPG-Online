@@ -45,6 +45,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sounds:
   - name: footstep
+    type: 0
     clip: {fileID: 8300000, guid: fe7e014e5dd315a408e53c61456d1513, type: 3}
     volume: 0.3
     volumeVariance: 0.5
@@ -55,6 +56,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: MenuMusic
+    type: 0
     clip: {fileID: 8300000, guid: d3b3130bf85af994790d56731e881408, type: 3}
     volume: 1
     volumeVariance: 0
@@ -65,6 +67,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: swing1
+    type: 0
     clip: {fileID: 8300000, guid: b59e1950f9083534bba26cc9b207441d, type: 3}
     volume: 1
     volumeVariance: 0
@@ -75,6 +78,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: swing2
+    type: 0
     clip: {fileID: 8300000, guid: 51b65f93ec117fc4481920ea7a47f4d1, type: 3}
     volume: 1
     volumeVariance: 0
@@ -85,6 +89,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: swing3
+    type: 0
     clip: {fileID: 8300000, guid: 17e070d9e94cab349ab0666037a2949e, type: 3}
     volume: 1
     volumeVariance: 0
@@ -95,6 +100,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: destruct1
+    type: 0
     clip: {fileID: 8300000, guid: 8a300d0ee9b9c204e9bed811e6788bce, type: 3}
     volume: 1
     volumeVariance: 0
@@ -105,6 +111,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: destruct2
+    type: 0
     clip: {fileID: 8300000, guid: ebbe651c130c06845bccfebe54d87d6e, type: 3}
     volume: 1
     volumeVariance: 0
@@ -115,6 +122,7 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: destruct3
+    type: 0
     clip: {fileID: 8300000, guid: e92ce840c04091940ac4094907a4b369, type: 3}
     volume: 1
     volumeVariance: 0
@@ -125,17 +133,30 @@ MonoBehaviour:
       type: 2}
     source: {fileID: 0}
   - name: BattleMusic1
+    type: 1
     clip: {fileID: 8300000, guid: 465419276d494e4488064f7ec81069d7, type: 3}
-    volume: 1
+    volume: 0.4
     volumeVariance: 0
     pitch: 1
     pitchVariance: 0
-    loop: 0
+    loop: 1
     mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
       type: 2}
     source: {fileID: 0}
   - name: BattleMusic2
+    type: 1
     clip: {fileID: 8300000, guid: 6e5090acbdee4c74e9e8a2ba5c76d4a2, type: 3}
+    volume: 0.4
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 1
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: OnHit
+    type: 0
+    clip: {fileID: 8300000, guid: 8fbfa8e68df3f1b4b955510553b6a938, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1

@@ -68,6 +68,10 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
+        if (AudioManager.instance != null) {
+            AudioManager.instance.Play("OnHit");
+        }
+
         _characterStats.TakeDamage(damage);
         takeHitFX.Play();
 
