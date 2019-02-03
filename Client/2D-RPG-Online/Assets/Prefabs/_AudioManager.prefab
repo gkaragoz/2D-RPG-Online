@@ -54,8 +54,8 @@ MonoBehaviour:
     mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
       type: 2}
     source: {fileID: 0}
-  - name: Desecrated Temple
-    clip: {fileID: 8300000, guid: 1eacfcdb92668214da15f032d1137407, type: 3}
+  - name: MenuMusic
+    clip: {fileID: 8300000, guid: d3b3130bf85af994790d56731e881408, type: 3}
     volume: 1
     volumeVariance: 0
     pitch: 1
@@ -124,4 +124,24 @@ MonoBehaviour:
     mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
       type: 2}
     source: {fileID: 0}
-  _playBgMusic: 0
+  - name: BattleMusic1
+    clip: {fileID: 8300000, guid: 465419276d494e4488064f7ec81069d7, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  - name: BattleMusic2
+    clip: {fileID: 8300000, guid: 6e5090acbdee4c74e9e8a2ba5c76d4a2, type: 3}
+    volume: 1
+    volumeVariance: 0
+    pitch: 1
+    pitchVariance: 0
+    loop: 0
+    mixerGroup: {fileID: 243116553248794534, guid: 314e9b5dd43c7ce41b7636beac7f1135,
+      type: 2}
+    source: {fileID: 0}
+  _playBgMusic: 1

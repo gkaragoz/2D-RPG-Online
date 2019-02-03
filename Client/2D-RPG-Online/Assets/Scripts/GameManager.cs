@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour {
     private const string ERROR_GET_ID_TOKEN_TITLE = "Wow!";
     private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
 
+    private Scene _currentScene;
+
     private void Start() {
         Application.targetFrameRate = 60;
 
@@ -54,6 +56,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator Bootup() {
+        AudioManager.instance.ChangeBackgroundMusic(SceneManager.GetActiveScene());
+
         yield return new WaitForSeconds(3f);
 
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
@@ -62,6 +66,7 @@ public class GameManager : MonoBehaviour {
         CharacterManager.instance.onCharacterSelected += OnCharacterSelected;
         RoomManager.instance.onRoomCreated += OnRoomCreated;
         RoomManager.instance.onRoomJoined += OnRoomJoined;
+        RoomManager.instance.onRoomLeft += OnRoomLeft;
 
         Debug.Log("First time play? " + !HasPlayedBefore);
 
@@ -99,6 +104,8 @@ public class GameManager : MonoBehaviour {
             //Go To Tutorial Scene.
             SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
 
+            _currentScene = SceneManager.GetSceneByName("Tutorial");
+
             TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
 
@@ -131,6 +138,10 @@ public class GameManager : MonoBehaviour {
         //Go To Gameplay Scene.
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
 
+        _currentScene = SceneManager.GetSceneByName("Gameplay");
+
+        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
     }
@@ -139,8 +150,24 @@ public class GameManager : MonoBehaviour {
         //Go To Gameplay Scene.
         SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
 
+        _currentScene = SceneManager.GetSceneByName("Gameplay");
+
+        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
+    }
+
+    private void OnRoomLeft() {
+        //Go To Menu Scene.
+        SceneManager.UnloadSceneAsync("Gameplay");
+
+        _currentScene = SceneManager.GetSceneByName("Main");
+
+        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+
+        RoomManager.instance.Hide();
+        MenuManager.instance.Show();
     }
 
 #if UNITY_EDITOR

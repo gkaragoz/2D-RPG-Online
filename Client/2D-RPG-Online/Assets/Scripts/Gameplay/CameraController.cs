@@ -8,10 +8,6 @@ public class CameraController : MonoBehaviour {
 
     public Vector3 offset;
 
-    private void Awake() {
-        DontDestroyOnLoad(gameObject);
-    }
-
     private void LateUpdate() {
         if (target == null)
             return;

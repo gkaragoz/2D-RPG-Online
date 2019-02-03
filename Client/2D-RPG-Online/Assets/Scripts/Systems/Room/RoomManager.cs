@@ -26,6 +26,7 @@ public class RoomManager : Menu {
 
     public Action onRoomCreated;
     public Action onRoomJoined;
+    public Action onRoomLeft;
 
     public List<PlayerController> OtherPlayerControllers { get { return _otherPlayerControllers; } }
 
@@ -329,10 +330,7 @@ public class RoomManager : Menu {
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
 
-        SceneManager.UnloadSceneAsync("Gameplay");
-
-        this.Hide();
-        MenuManager.instance.Show();
+        onRoomLeft?.Invoke();
     }
 
     private void OnRoomLeaveFailed(ShiftServerData data) {

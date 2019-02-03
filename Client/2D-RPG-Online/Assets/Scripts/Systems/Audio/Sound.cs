@@ -4,6 +4,13 @@ using UnityEngine;
 [System.Serializable]
 public class Sound {
 
+    public enum Type {
+        FX,
+        Music
+    }
+
+    public Type type;
+
 	public string name;
 
 	public AudioClip clip;
