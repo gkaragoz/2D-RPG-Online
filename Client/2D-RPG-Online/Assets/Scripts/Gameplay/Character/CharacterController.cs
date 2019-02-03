@@ -4,6 +4,7 @@
 public class CharacterController : MonoBehaviour {
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
+    public LivingEntity SelectedTarget { get { return _characterAttack.Target; } }
 
     public ParticleSystem takeHitFX;
 

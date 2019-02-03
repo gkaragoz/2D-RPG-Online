@@ -39,7 +39,7 @@ public class NetworkEntity {
         this._networkObject = networkObject;
     }
 
-    public void SendInputData(Vector3 input) {
+    public void SendMovementInputData(Vector3 input) {
         ShiftServerData data = new ShiftServerData();
 
         data.PlayerInput = new SPlayerInput();
@@ -52,6 +52,17 @@ public class NetworkEntity {
         NetworkManager.mss.SendMessage(MSPlayerEvent.Move, data);
 
         PlayerInputs.Add(data.PlayerInput);
+    }
+
+    public void SendAttackInputData(int targetID) {
+        ShiftServerData data = new ShiftServerData();
+
+        data.PlayerInput = new SPlayerInput();
+        data.PlayerInput.PlayerEvent = MSPlayerEvent.Attack;
+        data.PlayerInput.TargetID = targetID;
+        data.PlayerInput.PressTime = Time.fixedDeltaTime;
+
+        NetworkManager.mss.SendMessage(MSPlayerEvent.Attack, data);
     }
 
     public void AddPositionToBuffer(double timestamp, Vector3 position, int inputSequenceID) {

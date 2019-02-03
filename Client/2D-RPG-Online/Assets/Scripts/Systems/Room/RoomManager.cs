@@ -81,37 +81,15 @@ public class RoomManager : Menu {
 
     private void Update() {
         if (NetworkManager.mss.IsConnected) {
-            var interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-            var renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
+            double interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+            double renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
 
             for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
                 PlayerController entity = OtherPlayerControllers[ii];
-                NetworkEntity updatedEntityData = entity.NetworkIdentifier;
 
-                // Drop older positions.
-                while (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[1].updateTime <= renderTimestamp) {
-                    entity.NetworkIdentifier.PositionBuffer = entity.NetworkIdentifier.PositionBuffer.Skip(1).ToList();
-                }
+                ProcessInterpolation(renderTimestamp, entity);
 
-                // Interpolate between the two surrounding authoritative positions.
-                if (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.NetworkIdentifier.PositionBuffer[1].updateTime) {
-                    Vector3 firstVector = entity.NetworkIdentifier.PositionBuffer[0].vector3;
-                    Vector3 secondVector = entity.NetworkIdentifier.PositionBuffer[1].vector3;
-
-                    double t0 = entity.NetworkIdentifier.PositionBuffer[0].updateTime;
-                    double t1 = entity.NetworkIdentifier.PositionBuffer[1].updateTime;
-
-                    double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
-                    double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
-
-                    Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
-
-                    updatedEntityData.NetworkObject.PositionX = newPosition.x.ToString();
-                    updatedEntityData.NetworkObject.PositionY = newPosition.y.ToString();
-                    updatedEntityData.NetworkObject.PositionZ = newPosition.z.ToString();
-                }
-
-                entity.Render(updatedEntityData);
+                entity.Render(entity.NetworkIdentifier);
             }
         }
     }
@@ -215,43 +193,80 @@ public class RoomManager : Menu {
         for (int ii = 0; ii < data.StateUpdate.NetworkObjects.Count; ii++) {
             NetworkIdentifier updatedNetworkObject = data.StateUpdate.NetworkObjects[ii];
             if (updatedNetworkObject.Id == _myPlayerController.NetworkIdentifier.Oid) {
-
-                //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
-
-                //My Reconciliation
-                if (NetworkManager.instance.Reconciliaton) {
-                    for (int jj = 0; jj < _myPlayerController.NetworkIdentifier.PlayerInputs.Count; jj++) {
-                        if (_myPlayerController.NetworkIdentifier.GetSequenceID(jj) <= updatedNetworkObject.LastProcessedInputID) {
-                            _myPlayerController.NetworkIdentifier.RemoveRange(jj, 1);
-                        } else {
-                            // re apply
-                        }
-                    }
-                } else {
-                    _myPlayerController.NetworkIdentifier.ClearPlayerInputs();
-                }
+                Reconciliation(updatedNetworkObject);
             }
 
-            //Other Entity's Movement
-            for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
-                if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedNetworkObject.Id) {
-                    if (Utils.IsValid(updatedNetworkObject.PositionX, updatedNetworkObject.PositionY, updatedNetworkObject.PositionZ)) {
-                        Vector3 updatedPosition = new Vector3(updatedNetworkObject.PositionX.ToFloat(), updatedNetworkObject.PositionY.ToFloat(), updatedNetworkObject.PositionZ.ToFloat());
+            FillInterpolationBuffer(updatedNetworkObject);
+            HandleAttacks(updatedNetworkObject);
+        }
+    }
 
-                        if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
-                            DateTime updateTime = DateTime.UtcNow;
-                            var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-                            if (OtherPlayerControllers[jj].NetworkIdentifier.PositionBuffer.Count == 0) {
-                                OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, OtherPlayerControllers[jj].transform.position, updatedNetworkObject.LastProcessedInputID);
-                            }
-                            OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
+    private void Reconciliation(NetworkIdentifier updatedNetworkObject) {
+        //_myPlayerController.transform.position = new Vector3(updatedPlayerObject.PosX, updatedPlayerObject.PosY, updatedPlayerObject.PosZ);
+
+        //My Reconciliation
+        if (NetworkManager.instance.Reconciliaton) {
+            for (int jj = 0; jj < _myPlayerController.NetworkIdentifier.PlayerInputs.Count; jj++) {
+                if (_myPlayerController.NetworkIdentifier.GetSequenceID(jj) <= updatedNetworkObject.LastProcessedInputID) {
+                    _myPlayerController.NetworkIdentifier.RemoveRange(jj, 1);
+                } else {
+                    // re apply
+                }
+            }
+        } else {
+            _myPlayerController.NetworkIdentifier.ClearPlayerInputs();
+        }
+    }
+
+    private void FillInterpolationBuffer(NetworkIdentifier updatedNetworkObject) {
+        //Other Entity's Movement
+        for (int jj = 0; jj < OtherPlayerControllers.Count; jj++) {
+            if (OtherPlayerControllers[jj].NetworkIdentifier.Oid == updatedNetworkObject.Id) {
+                if (Utils.IsValid(updatedNetworkObject.PositionX, updatedNetworkObject.PositionY, updatedNetworkObject.PositionZ)) {
+                    Vector3 updatedPosition = new Vector3(updatedNetworkObject.PositionX.ToFloat(), updatedNetworkObject.PositionY.ToFloat(), updatedNetworkObject.PositionZ.ToFloat());
+
+                    if (OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID <= updatedNetworkObject.LastProcessedInputID) {
+                        DateTime updateTime = DateTime.UtcNow;
+                        var now = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
+                        if (OtherPlayerControllers[jj].NetworkIdentifier.PositionBuffer.Count == 0) {
+                            OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, OtherPlayerControllers[jj].transform.position, updatedNetworkObject.LastProcessedInputID);
                         }
-
-                        OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedNetworkObject.LastProcessedInputID;
+                        OtherPlayerControllers[jj].NetworkIdentifier.AddPositionToBuffer(now, updatedPosition, updatedNetworkObject.LastProcessedInputID);
                     }
+
+                    OtherPlayerControllers[jj].NetworkIdentifier.LastProcessedInputSequenceID = updatedNetworkObject.LastProcessedInputID;
                 }
             }
         }
+    }
+
+    private void ProcessInterpolation(double renderTimestamp, PlayerController entity) {
+        // Drop older positions.
+        while (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[1].updateTime <= renderTimestamp) {
+            entity.NetworkIdentifier.PositionBuffer = entity.NetworkIdentifier.PositionBuffer.Skip(1).ToList();
+        }
+
+        // Interpolate between the two surrounding authoritative positions.
+        if (entity.NetworkIdentifier.PositionBuffer.Count >= 2 && entity.NetworkIdentifier.PositionBuffer[0].updateTime <= renderTimestamp && renderTimestamp <= entity.NetworkIdentifier.PositionBuffer[1].updateTime) {
+            Vector3 firstVector = entity.NetworkIdentifier.PositionBuffer[0].vector3;
+            Vector3 secondVector = entity.NetworkIdentifier.PositionBuffer[1].vector3;
+
+            double t0 = entity.NetworkIdentifier.PositionBuffer[0].updateTime;
+            double t1 = entity.NetworkIdentifier.PositionBuffer[1].updateTime;
+
+            double interpX = firstVector.x + (secondVector.x - firstVector.x) * (renderTimestamp - t0) / (t1 - t0);
+            double interpZ = firstVector.z + (secondVector.z - firstVector.z) * (renderTimestamp - t0) / (t1 - t0);
+
+            Vector3 newPosition = new Vector3((float)interpX, 0, (float)interpZ);
+
+            entity.NetworkIdentifier.NetworkObject.PositionX = newPosition.x.ToString();
+            entity.NetworkIdentifier.NetworkObject.PositionY = newPosition.y.ToString();
+            entity.NetworkIdentifier.NetworkObject.PositionZ = newPosition.z.ToString();
+        }
+    }
+
+    private void HandleAttacks(NetworkIdentifier updatedNetworkObject) {
+        Debug.Log("Attack");
     }
 
     private void OnPlayerCreated(ShiftServerData data) {

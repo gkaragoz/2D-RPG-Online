@@ -64,12 +64,16 @@ public class PlayerController : LivingEntity {
 
             if (Input.GetButton("Fire1")) {
                 Attack();
+
+                if (!_isOfflineMode && NetworkManager.mss != null) {
+                    //_networkIdentifier.SendAttackInputData(_characterController.SelectedTarget.);
+                }
             }
 
             CurrentInput = new Vector3(_xInput, 0, _zInput);
 
             if (!_isOfflineMode && HasInput && NetworkManager.mss != null) {
-                _networkIdentifier.SendInputData(CurrentInput);
+                _networkIdentifier.SendMovementInputData(CurrentInput);
             }
 
             if (HasInput) {
