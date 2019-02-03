@@ -76,7 +76,7 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
-    public void ApplyHealth(float healthAmount) {
+    public void ApplyHealth(int healthAmount) {
         if ((_char.CurrentHealth + healthAmount) > _char.MaxHealth) {
             _char.CurrentHealth = _char.MaxHealth;
         } else {
@@ -84,7 +84,7 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
-    public void ApplyMana(float manaAmount) {
+    public void ApplyMana(int manaAmount) {
         if ((_char.CurrentMana + manaAmount) > _char.MaxMana) {
             _char.CurrentMana = _char.MaxMana;
         } else {
@@ -129,7 +129,7 @@ public class CharacterStats : MonoBehaviour {
         _char.StatsPoints -= amount;
     }
 
-    public void TakeDamage(float amount) {
+    public void TakeDamage(int amount) {
         _char.CurrentHealth -= amount;
 
         if (_char.CurrentHealth <= 0) {
@@ -138,7 +138,7 @@ public class CharacterStats : MonoBehaviour {
         }
     }
 
-    public void TakeMana(float amount) {
+    public void TakeMana(int amount) {
         _char.CurrentMana -= amount;
 
         if (_char.CurrentMana <= 0) {
@@ -222,19 +222,19 @@ public class CharacterStats : MonoBehaviour {
         return _char.BaseIntelligence.Value;
     }
 
-    public float GetMaxHealth() {
+    public int GetMaxHealth() {
         return _char.MaxHealth;
     }
 
-    public float GetCurrentHealth() {
+    public int GetCurrentHealth() {
         return _char.CurrentHealth;
     }
 
-    public float GetMaxMana() {
+    public int GetMaxMana() {
         return _char.MaxMana;
     }
 
-    public float GetCurrentMana() {
+    public int GetCurrentMana() {
         return _char.CurrentMana;
     }
 
