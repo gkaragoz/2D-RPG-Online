@@ -1,6 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class CharacterStats : MonoBehaviour {
+
+    public Action onDeathEvent;
 
     [Header("Initialization")]
     [SerializeField]
@@ -9,89 +12,170 @@ public class CharacterStats : MonoBehaviour {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private CharacterStats_SO _characterDefinition;
+    private CharacterStats_SO _char;
 
     #region Initializations
 
     private void Awake() {
         if (_characterDefinition_Template != null) {
-            _characterDefinition = Instantiate(_characterDefinition_Template);
+            _char = Instantiate(_characterDefinition_Template);
         }
     }
 
     #endregion
 
     public void Initialize(NetworkIdentifier networkObject) {
-        _characterDefinition.Initialize(networkObject);
+        //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
+        _char.Name = networkObject.PlayerData.Name;
+
+        _char.BaseStrength = new CharacterStats_SO.BaseStats(networkObject.PlayerData.Strength);
+        _char.BaseDexterity = new CharacterStats_SO.BaseStats(networkObject.PlayerData.Dexterity);
+        _char.BaseIntelligence = new CharacterStats_SO.BaseStats(networkObject.PlayerData.Intelligence);
+
+        _char.CurrentHealth = networkObject.PlayerData.CurrentHp;
+        _char.MaxHealth = networkObject.PlayerData.MaxHp;
+        _char.CurrentMana = networkObject.PlayerData.CurrentMana;
+        _char.MaxMana = networkObject.PlayerData.MaxMana;
+
+        _char.AttackDamage = networkObject.PlayerData.AttackDamage;
+        _char.AttackSpeed = networkObject.PlayerData.AttackSpeed;
+        _char.AttackRange = networkObject.PlayerData.AttackRange;
+        _char.MovementSpeed = networkObject.PlayerData.MoveSpeed;
+
+        //_characterDefinition.Level = level;
+        _char.MaxExperience = 10 + (_char.Level * 10) + (_char.Level + 1) ^ 3;
+        //_characterDefinition.MaxExperience = maxExperience;
+        _char.CurrentExperience = 0;
     }
 
+
     #region Stat Increasers
-    public void AddStatsPoints(int amount) {
-        _characterDefinition.AddStatsPoints(amount);
+
+    public void AddStatsPoints(int statsPointsAmount) {
+        _char.StatsPoints += statsPointsAmount;
     }
 
     public void IncreaseStrength() {
-        _characterDefinition.IncreaseStrength();
+        if (_char.StatsPoints >= _char.BaseStrength.RequiredStatsPoints) {
+            SpendStatsPoints(_char.BaseStrength.RequiredStatsPoints);
+            _char.BaseStrength.Increase();
+        }
     }
 
     public void IncreaseDexterity() {
-        _characterDefinition.IncreaseDexterity();
+        if (_char.StatsPoints >= _char.BaseDexterity.RequiredStatsPoints) {
+            SpendStatsPoints(_char.BaseDexterity.RequiredStatsPoints);
+            _char.BaseDexterity.Increase();
+        }
     }
 
     public void IncreaseIntelligence() {
-        _characterDefinition.IncreaseIntelligence();
+        if (_char.StatsPoints >= _char.BaseIntelligence.RequiredStatsPoints) {
+            SpendStatsPoints(_char.BaseIntelligence.RequiredStatsPoints);
+            _char.BaseIntelligence.Increase();
+        }
     }
 
     public void ApplyHealth(float healthAmount) {
-        _characterDefinition.ApplyHealth(healthAmount);
+        if ((_char.CurrentHealth + healthAmount) > _char.MaxHealth) {
+            _char.CurrentHealth = _char.MaxHealth;
+        } else {
+            _char.CurrentHealth += healthAmount;
+        }
     }
 
     public void ApplyMana(float manaAmount) {
-        _characterDefinition.ApplyMana(manaAmount);
+        if ((_char.CurrentMana + manaAmount) > _char.MaxMana) {
+            _char.CurrentMana = _char.MaxMana;
+        } else {
+            _char.CurrentMana += manaAmount;
+        }
     }
 
     public void AddAttackDamage(int damageAmount) {
-        _characterDefinition.AddAttackDamage(damageAmount);
+        _char.AttackDamage += damageAmount;
     }
 
-    public void AddAttackSpeed(int speedAmount) {
-        _characterDefinition.AddAttackSpeed(speedAmount);
+    public void AddAttackSpeed(float speedAmount) {
+        _char.AttackSpeed += speedAmount;
     }
 
-    public void AddAttackRange(int speedAmount) {
-        _characterDefinition.AddAttackRange(speedAmount);
+    public void AddAttackRange(float rangeAmount) {
+        _char.AttackRange += rangeAmount;
     }
 
     public void AddExp(int expAmount) {
-        _characterDefinition.AddExp(expAmount);
+        if (_char.CurrentExperience + expAmount >= _char.MaxExperience) {
+            int needExpAmount = _char.MaxExperience - _char.CurrentExperience;
+            int remainingExpAmount = expAmount - needExpAmount;
+
+            LevelUp();
+
+            if (remainingExpAmount > 0) {
+                AddExp(remainingExpAmount);
+            } else {
+                _char.CurrentExperience += needExpAmount;
+            }
+        } else {
+            _char.CurrentExperience += expAmount;
+        }
     }
 
     #endregion
 
     #region Stat Reducers
 
+    public void SpendStatsPoints(int amount) {
+        _char.StatsPoints -= amount;
+    }
+
     public void TakeDamage(float amount) {
-        _characterDefinition.TakeDamage(amount);
+        _char.CurrentHealth -= amount;
+
+        if (_char.CurrentHealth <= 0) {
+            _char.CurrentHealth = 0;
+            onDeathEvent?.Invoke();
+        }
     }
 
     public void TakeMana(float amount) {
-        _characterDefinition.TakeMana(amount);
+        _char.CurrentMana -= amount;
+
+        if (_char.CurrentMana <= 0) {
+            _char.CurrentMana = 0;
+        }
     }
 
-    public void ReduceAttackDamage(int amount) {
-        _characterDefinition.ReduceAttackDamage(amount);
+    public void ReduceAttackDamage(int damageAmount) {
+        _char.AttackDamage -= damageAmount;
+
+        if (_char.AttackDamage <= 0) {
+            _char.AttackDamage = 0;
+        }
     }
 
-    public void ReduceAttackSpeed(int amount) {
-        _characterDefinition.ReduceAttackSpeed(amount);
+    public void ReduceAttackSpeed(float speedAmount) {
+        _char.AttackSpeed -= speedAmount;
+
+        if (_char.AttackSpeed <= 0) {
+            _char.AttackSpeed = 0;
+        }
     }
 
-    public void ReduceAttackRange(float amount) {
-        _characterDefinition.ReduceAttackRange(amount);
+    public void ReduceAttackRange(float rangeAmount) {
+        _char.AttackRange -= rangeAmount;
+
+        if (_char.AttackRange <= 0) {
+            _char.AttackRange = 0;
+        }
     }
 
-    public void LooseExp(int amount) {
-        _characterDefinition.LooseExp(amount);
+    public void LooseExp(int expAmount) {
+        _char.CurrentExperience -= expAmount;
+
+        if (_char.CurrentExperience <= 0) {
+            _char.CurrentExperience = 0;
+        }
     }
 
     #endregion
@@ -99,85 +183,100 @@ public class CharacterStats : MonoBehaviour {
     #region Reporters
 
     public string GetName() {
-        return _characterDefinition.Name;
+        return _char.Name;
+    }
+
+    public bool IsDeath() {
+        return _char.CurrentHealth <= 0;
     }
 
     public bool CanIncreaseStrength() {
-        return GetStatsPoints() >= _characterDefinition.BaseStrength.RequiredStatsPoints ? true : false;
+        return GetStatsPoints() >= _char.BaseStrength.RequiredStatsPoints ? true : false;
     }
 
     public bool CanIncreaseDexterity() {
-        return GetStatsPoints() >= _characterDefinition.BaseDexterity.RequiredStatsPoints ? true : false;
+        return GetStatsPoints() >= _char.BaseDexterity.RequiredStatsPoints ? true : false;
     }
 
     public bool CanIncreaseIntelligence() {
-        return GetStatsPoints() >= _characterDefinition.BaseIntelligence.RequiredStatsPoints ? true : false;
+        return GetStatsPoints() >= _char.BaseIntelligence.RequiredStatsPoints ? true : false;
     }
 
     public bool HasStatsPoints() {
-        return _characterDefinition.StatsPoints > 0 ? true : false;
+        return _char.StatsPoints > 0 ? true : false;
     }
 
     public int GetStatsPoints() {
-        return _characterDefinition.StatsPoints;
+        return _char.StatsPoints;
     }
 
     public int GetBaseStrength() {
-        return _characterDefinition.BaseStrength.Value;
+        return _char.BaseStrength.Value;
     }
 
     public int GetBaseDexterity() {
-        return _characterDefinition.BaseDexterity.Value;
+        return _char.BaseDexterity.Value;
     }
 
     public int GetBaseIntelligence() {
-        return _characterDefinition.BaseIntelligence.Value;
+        return _char.BaseIntelligence.Value;
     }
 
     public float GetMaxHealth() {
-        return _characterDefinition.MaxHealth;
+        return _char.MaxHealth;
     }
 
     public float GetCurrentHealth() {
-        return _characterDefinition.CurrentHealth;
+        return _char.CurrentHealth;
     }
 
     public float GetMaxMana() {
-        return _characterDefinition.MaxMana;
+        return _char.MaxMana;
     }
 
     public float GetCurrentMana() {
-        return _characterDefinition.CurrentMana;
+        return _char.CurrentMana;
     }
 
     public int GetAttackDamage() {
-        return _characterDefinition.AttackDamage;
+        return _char.AttackDamage;
     }
 
     public float GetAttackSpeed() {
-        return _characterDefinition.AttackSpeed;
+        return _char.AttackSpeed;
     }
 
     public float GetMovementSpeed() {
-        return _characterDefinition.MovementSpeed;
+        return _char.MovementSpeed;
     }
 
     public float GetAttackRange() {
-        return _characterDefinition.AttackRange;
+        return _char.AttackRange;
     }
 
     public int GetLevel() {
-        return _characterDefinition.Level;
+        return _char.Level;
     }
 
     public int GetMaxExperience() {
-        return _characterDefinition.MaxExperience;
+        return _char.MaxExperience;
     }
 
     public int GetCurrentExperience() {
-        return _characterDefinition.CurrentExperience;
+        return _char.CurrentExperience;
     }
 
     #endregion
+
+    private void LevelUp() {
+        _char.StatsPoints += 12;
+        _char.Level++;
+
+        _char.CurrentExperience = 0;
+        _char.MaxExperience = 10 + (_char.Level * 10) + (int)Mathf.Pow(_char.Level + 1, 3);
+
+        //LogManager.instance.AddLog("Level up! Your level is: " + Level, Log.Type.Loot);
+        //LogManager.instance.AddLog("You have unspend " + StatsPoints + " stats points.", Log.Type.Loot);
+    }
 
 }

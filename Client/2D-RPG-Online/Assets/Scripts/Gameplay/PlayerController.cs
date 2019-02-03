@@ -18,9 +18,7 @@ public class PlayerController : LivingEntity {
         }
     }
 
-    public NetworkEntity NetworkIdentifier { get { return _networkIdentifier; } }
     public Vector3 CurrentInput { get; private set; }
-    public CharacterController CharacterController { get { return _characterController; } }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -33,20 +31,17 @@ public class PlayerController : LivingEntity {
     private GameObject _HUDPrefab;
 
     private bool _isMe;
-    private NetworkEntity _networkIdentifier;
     private CharacterController _characterController;
     private Joystick _joystick;
     private Button _btnAttack;
 
-    public override void Awake() {
-        base.Awake();
-
+    private void Awake() {
         _characterController = GetComponent<CharacterController>();
     }
 
     private void Start() {
         if (_isOfflineMode) {
-            this.CharacterController.InitializeOffline(this);
+            this.Initialize(null);
         }
     }
 
@@ -64,17 +59,9 @@ public class PlayerController : LivingEntity {
 
             if (Input.GetButton("Fire1")) {
                 Attack();
-
-                if (!_isOfflineMode && NetworkManager.mss != null) {
-                    _networkIdentifier.SendAttackInputData(_characterController.SelectedTarget.GetComponent<PlayerController>().NetworkIdentifier.Oid);
-                }
             }
 
             CurrentInput = new Vector3(_xInput, 0, _zInput);
-
-            if (!_isOfflineMode && HasInput && NetworkManager.mss != null) {
-                _networkIdentifier.SendMovementInputData(CurrentInput);
-            }
 
             if (HasInput) {
                 MoveByInput();
@@ -87,27 +74,29 @@ public class PlayerController : LivingEntity {
         UpdatePlayerInputsUI();
     }
 
-    public void Initialize(NetworkIdentifier networkData) {
-        _networkIdentifier = new NetworkEntity(networkData);
+    public void Initialize(NetworkIdentifier networkIdentifier) {
+        _networkEntity = new NetworkEntity(networkIdentifier);
 
-        this.CharacterController.Initialize(networkData, this);
+        this._characterController.Initialize(networkIdentifier, this, _isOfflineMode);
 
-        if (_networkIdentifier.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
-            _isMe = true;
+        if (!_isOfflineMode) {
+            if (_networkEntity.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
+                _isMe = true;
 
-            CreateHUD();
+                CreateHUD();
 
-            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
-        } else {
-            _isMe = false;
+                Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
+            } else {
+                _isMe = false;
+            }
         }
     }
 
     public void Render(NetworkEntity networkData) {
-        _networkIdentifier = networkData;
+        _networkEntity = networkData;
 
-        if (Utils.IsValid(_networkIdentifier.NetworkObject.PositionX, _networkIdentifier.NetworkObject.PositionY, _networkIdentifier.NetworkObject.PositionZ)) {
-            Vector3 newPosition = new Vector3(_networkIdentifier.NetworkObject.PositionX.ToFloat(), _networkIdentifier.NetworkObject.PositionY.ToFloat(), _networkIdentifier.NetworkObject.PositionZ.ToFloat());
+        if (Utils.IsValid(_networkEntity.NetworkObject.PositionX, _networkEntity.NetworkObject.PositionY, _networkEntity.NetworkObject.PositionZ)) {
+            Vector3 newPosition = new Vector3(_networkEntity.NetworkObject.PositionX.ToFloat(), _networkEntity.NetworkObject.PositionY.ToFloat(), _networkEntity.NetworkObject.PositionZ.ToFloat());
 
             if (newPosition != transform.position) {
                 MoveToPosition(newPosition);
@@ -124,31 +113,31 @@ public class PlayerController : LivingEntity {
     }
 
     public override void TakeDamage(int damage) {
-        CharacterController.TakeDamage(damage);
+        _characterController.TakeDamage(damage);
     }
 
-    public override void OnDeath() {
-        CharacterController.OnDeath();
+    public override void Die() {
+        _characterController.Die();
     }
 
     public override void Attack() {
-        CharacterController.Attack();
+        _characterController.Attack();
     }
 
     public override void MoveByInput() {
-        CharacterController.MoveToInput(CurrentInput);
+        _characterController.MoveToInput(CurrentInput);
     }
 
     public override void MoveToPosition(Vector3 position) {
-        CharacterController.MoveToPosition(position);
+        _characterController.MoveToPosition(position);
     }
 
     public override void Stop() {
-        CharacterController.Stop();
+        _characterController.Stop();
     }
 
     public override void Rotate() {
-        CharacterController.Rotate(CurrentInput);
+        _characterController.Rotate(CurrentInput);
     }
 
     public override void Destroy() {
@@ -171,8 +160,8 @@ public class PlayerController : LivingEntity {
     private TextMeshProUGUI _txtNonAckPlayerInputs;
 
     private void UpdatePlayerInputsUI() {
-        if (_networkIdentifier != null) {
-            _txtNonAckPlayerInputs.text = _networkIdentifier.PlayerInputs.Count.ToString();
+        if (_networkEntity != null) {
+            _txtNonAckPlayerInputs.text = _networkEntity.PlayerInputs.Count.ToString();
         }
     }
 

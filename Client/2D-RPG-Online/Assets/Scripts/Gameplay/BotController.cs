@@ -6,22 +6,20 @@ public class BotController : LivingEntity {
 
     private CharacterController _characterController;
 
-    public override void Awake() {
-        base.Awake();
-
+    private void Awake() {
         _characterController = GetComponent<CharacterController>();
     }
 
     private void Start() {
-        this.CharacterController.InitializeOffline(this);
+        this.CharacterController.Initialize(null, this, true);
     }
 
     public override void TakeDamage(int damage) {
         CharacterController.TakeDamage(damage);
     }
 
-    public override void OnDeath() {
-        CharacterController.OnDeath();
+    public override void Die() {
+        CharacterController.Die();
     }
 
     public override void Attack() {

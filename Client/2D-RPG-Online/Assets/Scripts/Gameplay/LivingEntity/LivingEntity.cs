@@ -1,18 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class LivingEntity : MonoBehaviour, ILivingEntity {
 
-    public Action onDeathEvent;
+    public NetworkEntity NetworkEntity { get { return _networkEntity; } }
 
-    [Header("Initialization")]
-    [SerializeField]
-    private LivingEntity_SO _livingEntityDefinition_Template;
+    public bool IsDeath { get; set; }
 
-    [Header("Debug")]
-    [SerializeField]
-    [Utils.ReadOnly]
-    private LivingEntity_SO _livingEntityDefinition;
+    protected NetworkEntity _networkEntity;
 
     public enum Type {
         Player,
@@ -20,35 +14,16 @@ public class LivingEntity : MonoBehaviour, ILivingEntity {
         Object
     }
 
-    public bool IsDeath {
-        get {
-            return _livingEntityDefinition.isDeath;
-        }
-        set {
-            _livingEntityDefinition.isDeath = value;
-
-            if (value == true) {
-                onDeathEvent?.Invoke();
-            }
-        }
-    }
-
     public Type EntityType { get { return _type; } }
 
     [SerializeField]
     private Type _type;
-
-    public virtual void Awake() {
-        if (_livingEntityDefinition_Template != null) {
-            _livingEntityDefinition = Instantiate(_livingEntityDefinition_Template);
-        }
-    }
-
+    
     public virtual void TakeDamage(int damage) {
 
     }
 
-    public virtual void OnDeath() {
+    public virtual void Die() {
 
     }
 

@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour {
@@ -31,7 +29,7 @@ public class CharacterAttack : MonoBehaviour {
     public bool HasTargetDied {
         get {
             if (HasTarget) {
-                return _target.IsDeath;
+                return _characterStats.IsDeath();
             }
             return false;
         }

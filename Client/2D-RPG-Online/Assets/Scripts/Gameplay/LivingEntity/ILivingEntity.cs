@@ -4,7 +4,7 @@ public interface ILivingEntity {
 
     void TakeDamage(int damage);
 
-    void OnDeath();
+    void Die();
 
     void Attack();
 

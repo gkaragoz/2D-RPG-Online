@@ -31,23 +31,24 @@ public class CharacterController : MonoBehaviour {
         //Attack();
     }
 
-    public void InitializeOffline(LivingEntity livingEntity) {
+    public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity, bool isOfflineMode) {
+        this._isOfflineMode = isOfflineMode;
         this._livingEntity = livingEntity;
-        this._isOfflineMode = true;
-        this._characterUI.UpdateUI();
-    }
-
-    public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
-        this._characterStats.Initialize(networkObject);
-        this._livingEntity = livingEntity;
-        this._characterAnimator.Initialize(_livingEntity.onDeathEvent);
+        if (!_isOfflineMode) {
+            this._characterStats.Initialize(networkObject);
+        }
+        this._characterAnimator.Initialize(_characterStats.onDeathEvent);
         this._characterUI.UpdateUI();
     }
 
     public void Attack() {
         _characterAttack.SearchTarget(_isOfflineMode);
 
-        if (_characterAttack.CanAttack && !_livingEntity.IsDeath) {
+        if (_characterAttack.CanAttack && !_characterStats.IsDeath()) {
+            if (!_isOfflineMode && NetworkManager.mss != null) {
+                _livingEntity.NetworkEntity.SendAttackInputData(SelectedTarget.NetworkEntity.Oid);
+            }
+
             _characterMotor.LookTo(_characterAttack.TargetPosition);
             _characterAttack.Attack();
             _characterAnimator.OnAttack();
@@ -55,14 +56,18 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void MoveToInput(Vector3 input) {
-        if (!_livingEntity.IsDeath) {
+        if (!_characterStats.IsDeath()) {
+            if (!_isOfflineMode && NetworkManager.mss != null) {
+                _livingEntity.NetworkEntity.SendMovementInputData(input);
+            }
+
             _characterMotor.MoveToInput(input);
             _characterAnimator.OnMove(input);
         }
     }
 
     public void MoveToPosition(Vector3 position) {
-        if (!_livingEntity.IsDeath) {
+        if (!_characterStats.IsDeath()) {
             _characterMotor.MoveToPosition(position);
             _characterAnimator.OnMove(position);
         }
@@ -77,7 +82,7 @@ public class CharacterController : MonoBehaviour {
         takeHitFX.Play();
 
         if (_characterStats.GetCurrentHealth() <= 0) {
-            OnDeath();
+            Die();
             Debug.Log("Death");
         } else {
             _characterAnimator.OnHit();
@@ -85,7 +90,7 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    public void OnDeath() {
+    public void Die() {
         _livingEntity.IsDeath = true;
         _characterAnimator.OnDeath();
         _characterUI.HideUI();
