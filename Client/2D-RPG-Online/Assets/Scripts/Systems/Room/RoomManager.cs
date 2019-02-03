@@ -196,8 +196,13 @@ public class RoomManager : Menu {
                 Reconciliation(updatedNetworkObject);
             }
 
+            for (int jj = 0; jj < updatedNetworkObject.PlayerInputs.Count; jj++) {
+                if (MSPlayerEvent.Attack == updatedNetworkObject.PlayerInputs[ii].PlayerEvent) {
+                    HandleAttacks(updatedNetworkObject);
+                }
+            }
+
             FillInterpolationBuffer(updatedNetworkObject);
-            HandleAttacks(updatedNetworkObject);
         }
     }
 
@@ -266,7 +271,7 @@ public class RoomManager : Menu {
     }
 
     private void HandleAttacks(NetworkIdentifier updatedNetworkObject) {
-        Debug.Log("Attack");
+        Debug.Log("Got, ATTACK!");
     }
 
     private void OnPlayerCreated(ShiftServerData data) {

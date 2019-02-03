@@ -66,7 +66,7 @@ public class PlayerController : LivingEntity {
                 Attack();
 
                 if (!_isOfflineMode && NetworkManager.mss != null) {
-                    //_networkIdentifier.SendAttackInputData(_characterController.SelectedTarget.);
+                    _networkIdentifier.SendAttackInputData(_characterController.SelectedTarget.GetComponent<PlayerController>().NetworkIdentifier.Oid);
                 }
             }
 
