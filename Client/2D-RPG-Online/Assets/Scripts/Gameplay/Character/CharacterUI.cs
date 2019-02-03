@@ -15,10 +15,8 @@ public class CharacterUI : Menu {
 
     private CharacterStats _characterStats;
 
-    private void Start() {
+    private void Awake() {
         _characterStats = GetComponent<CharacterStats>();
-
-        UpdateUI();
     }
 
     public void UpdateUI() {

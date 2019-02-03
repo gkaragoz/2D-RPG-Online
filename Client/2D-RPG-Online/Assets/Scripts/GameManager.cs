@@ -1,4 +1,5 @@
 ﻿using ManaShiftServer.Data.RestModels;
+using System.Collections;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -48,6 +49,12 @@ public class GameManager : MonoBehaviour {
 
     private void Start() {
         Application.targetFrameRate = 60;
+
+        StartCoroutine(Bootup());
+    }
+
+    private IEnumerator Bootup() {
+        yield return new WaitForSeconds(3f);
 
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;

@@ -413,7 +413,7 @@ public class CharacterStats_SO : ScriptableObject {
 
     public void Initialize(NetworkIdentifier networkObject) {
         //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
-        this.Name = AccountManager.instance.SelectedCharacterName;
+        this.Name = networkObject.PlayerData.Name;
 
         this.BaseStrength = new BaseStats(networkObject.PlayerData.Strength);
         this.BaseDexterity = new BaseStats(networkObject.PlayerData.Dexterity);

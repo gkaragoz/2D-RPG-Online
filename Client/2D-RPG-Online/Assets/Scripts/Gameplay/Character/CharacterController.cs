@@ -33,12 +33,14 @@ public class CharacterController : MonoBehaviour {
     public void InitializeOffline(LivingEntity livingEntity) {
         this._livingEntity = livingEntity;
         this._isOfflineMode = true;
+        this._characterUI.UpdateUI();
     }
 
     public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
         this._characterStats.Initialize(networkObject);
         this._livingEntity = livingEntity;
         this._characterAnimator.Initialize(_livingEntity.onDeathEvent);
+        this._characterUI.UpdateUI();
     }
 
     public void Attack() {
