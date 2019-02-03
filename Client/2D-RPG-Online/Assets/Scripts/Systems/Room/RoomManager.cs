@@ -316,13 +316,14 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        //for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
-        //    if (playerInfo.CurrentGObject.Oid == OtherPlayerControllers[ii].Oid) {
-        //        OtherPlayerControllers.Remove(OtherPlayerControllers[ii]);
-        //        OtherPlayerControllers[ii].Destroy();
-        //        break;
-        //    }
-        //}
+        for (int ii = 0; ii < OtherPlayerControllers.Count; ii++) {
+            if (playerInfo.NetworkObject.Id == OtherPlayerControllers[ii].NetworkIdentifier.Oid) {
+                PlayerController leftPlayer = OtherPlayerControllers[ii];
+                OtherPlayerControllers.Remove(OtherPlayerControllers[ii]);
+                leftPlayer.Destroy();
+                break;
+            }
+        }
     }
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
