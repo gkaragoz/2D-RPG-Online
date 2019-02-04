@@ -136,7 +136,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
 
         _currentScene = SceneManager.GetSceneByName("Gameplay");
 
@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         //Go To Gameplay Scene.
-        SceneManager.LoadScene("Gameplay", LoadSceneMode.Additive);
+        SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
 
         _currentScene = SceneManager.GetSceneByName("Gameplay");
 
