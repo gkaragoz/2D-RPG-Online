@@ -31,6 +31,10 @@ public class LivingEntity : MonoBehaviour, ILivingEntity {
 
     }
 
+    public virtual void AttackAnimation(Vector3 direction) {
+
+    }
+
     public virtual void MoveByInput() {
 
     }

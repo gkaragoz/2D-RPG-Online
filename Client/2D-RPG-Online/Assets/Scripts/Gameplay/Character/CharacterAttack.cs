@@ -78,8 +78,8 @@ public class CharacterAttack : MonoBehaviour {
                 }
             }
         } else {
-            for (int ii = 0; ii < RoomManager.instance.OtherPlayerControllers.Count; ii++) {
-                LivingEntity potantialTarget = RoomManager.instance.OtherPlayerControllers[ii];
+            for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
+                LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
                 if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
                     float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);

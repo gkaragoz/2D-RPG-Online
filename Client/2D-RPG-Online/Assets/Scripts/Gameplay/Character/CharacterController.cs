@@ -55,6 +55,13 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
+    public void AttackAnimation(Vector3 direction) {
+        if (!_characterStats.IsDeath()) {
+            _characterMotor.LookTo(direction);
+            _characterAnimator.OnAttack();
+        }
+    }
+
     public void MoveToInput(Vector3 input) {
         if (!_characterStats.IsDeath()) {
             if (!_isOfflineMode && NetworkManager.mss != null) {

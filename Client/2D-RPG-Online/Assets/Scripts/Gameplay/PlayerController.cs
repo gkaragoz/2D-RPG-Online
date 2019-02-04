@@ -124,6 +124,10 @@ public class PlayerController : LivingEntity {
         _characterController.Attack();
     }
 
+    public override void AttackAnimation(Vector3 direction) {
+        _characterController.AttackAnimation(direction);
+    }
+
     public override void MoveByInput() {
         _characterController.MoveToInput(CurrentInput);
     }
