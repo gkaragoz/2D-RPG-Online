@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CharacterAttack : MonoBehaviour {
 
-    public LayerMask attackables;
-
     public bool IsAttacking { get; private set; }
 
     public bool CanAttack {
@@ -18,38 +16,9 @@ public class CharacterAttack : MonoBehaviour {
         }
     }
 
-    public bool HasTarget {
-        get {
-            return Target == null ? false : true;
-        }
-    }
-
-    public bool HasTargetDied {
-        get {
-            if (HasTarget) {
-                return _characterStats.IsDeath();
-            }
-            return false;
-        }
-    }
-
-    public LivingEntity Target { get { return _target; } }
-    public Vector3 TargetPosition {
-        get {
-            if (_target != null) {
-                return _target.transform.position;
-            } else {
-                return Vector3.forward;
-            }
-        }
-    }
-
     [SerializeField]
     [Utils.ReadOnly]
     private float _nextAttackTime;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private LivingEntity _target;
 
     private CharacterStats _characterStats;
 
@@ -57,50 +26,17 @@ public class CharacterAttack : MonoBehaviour {
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    public void Attack() {
-        StartCoroutine(IAttack());
+    public void EmptyAttack() {
+        StartCoroutine(IEmptyAttack());
     }
 
-    public void SearchTarget(bool isOfflineMode) {
-        LivingEntity target = null;
-        float distance = Mathf.Infinity;
-
-        if (isOfflineMode) {
-            LivingEntity[] potantialTargets = GameObject.FindObjectsOfType<LivingEntity>();
-            for (int ii = 0; ii < potantialTargets.Length; ii++) {
-                LivingEntity potantialTarget = potantialTargets[ii];
-                if (potantialTarget.EntityType == LivingEntity.Type.Player || potantialTarget.IsDeath) {
-                    continue;
-                }
-
-                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
-
-                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
-
-                    if (potantialTargetDistance < distance) {
-                        target = potantialTarget;
-                        distance = potantialTargetDistance;
-                    }
-                }
-            }
-        } else {
-            for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
-                LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
-                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
-
-                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
-
-                    if (potantialTargetDistance < distance) {
-                        target = potantialTarget;
-                    }
-                }
-            }
-        }
-
-        this._target = target;
+    public void AttackToTarget(LivingEntity target) {
+        StartCoroutine(IAttackToTarget(target));
     }
 
-    private IEnumerator IAttack() {
+    private IEnumerator IEmptyAttack() {
+        Debug.Log("Empty Attack");
+
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("swing" + Random.Range(1, 3));
         }
@@ -111,32 +47,33 @@ public class CharacterAttack : MonoBehaviour {
 
         yield return new WaitForSeconds(0.3f);
 
-        if (IsTargetInRange()) {
-            if (_target.EntityType == LivingEntity.Type.Player) {
-                _target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
-            } else if (_target.EntityType == LivingEntity.Type.BOT) {
-                _target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
-            }
-        }
-
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
         IsAttacking = false;
     }
 
-    private bool IsTargetInRange() {
-        if (HasTarget) {
-            float distance = Vector3.Distance(transform.position, Target.transform.position);
-            if (distance <= _characterStats.GetAttackRange()) {
-                return true;
-            }
+    private IEnumerator IAttackToTarget(LivingEntity target) {
+        Debug.Log("Attack to target: " + target.name);
+
+        if (AudioManager.instance != null) {
+            AudioManager.instance.Play("swing" + Random.Range(1, 3));
         }
 
-        return false;
-    }
+        _nextAttackTime = Time.time + _characterStats.GetAttackSpeed();
 
-    private float GetDistanceOf(Transform target) {
-        return Vector3.Distance(transform.position, target.position);
+        IsAttacking = true;
+
+        yield return new WaitForSeconds(0.3f);
+
+        if (target.EntityType == LivingEntity.Type.Player) {
+            target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
+        } else if (target.EntityType == LivingEntity.Type.BOT) {
+            target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
+        }
+
+        yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
+
+        IsAttacking = false;
     }
 
     private void OnDrawGizmos() {

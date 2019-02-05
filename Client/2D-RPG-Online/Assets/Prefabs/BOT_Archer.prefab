@@ -162,6 +162,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1038815987331132093}
+  - component: {fileID: 6778756530338564531}
   - component: {fileID: 8042297251300780730}
   - component: {fileID: 2539801118422082289}
   - component: {fileID: 1679414577316570369}
@@ -196,6 +197,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 79.004005, z: 0}
+--- !u!65 &6778756530338564531
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1747418271897715270}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.5, y: 2, z: 0.5}
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!54 &8042297251300780730
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -224,9 +238,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43805ef3d5b2de74fbb234e39eea005e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _livingEntityDefinition_Template: {fileID: 11400000, guid: ed67749a29a204746905e43b70bbfb81,
-    type: 2}
-  _livingEntityDefinition: {fileID: 0}
   _type: 1
 --- !u!114 &1679414577316570369
 MonoBehaviour:
@@ -252,11 +263,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58b718141f5e3ac4f998d8f54fda1959, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackables:
-    serializedVersion: 2
-    m_Bits: 1024
   _nextAttackTime: 0
-  _target: {fileID: 0}
 --- !u!114 &7455611550212571126
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -284,7 +291,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc7da4d23d3eaa94f9a0f9b9708dd2b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  attackables:
+    serializedVersion: 2
+    m_Bits: 1024
   takeHitFX: {fileID: 7072057538004103887}
+  _selectedTarget: {fileID: 0}
 --- !u!114 &7335514689584709502
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -317,7 +328,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _characterDefinition_Template: {fileID: 11400000, guid: 3de953c5d09834745a2aa966d57ac0da,
     type: 2}
-  _characterDefinition: {fileID: 0}
+  _char: {fileID: 0}
 --- !u!114 &1792799596320993558
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -651,19 +662,6 @@ MonoBehaviour:
   m_EffectColor: {r: 0.6981132, g: 0.02963687, b: 0.03366401, a: 1}
   m_EffectDistance: {x: 1, y: -1}
   m_UseGraphicAlpha: 1
---- !u!65 &492007040710132534
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3339910085560886866}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 0.5, y: 2, z: 0.5}
-  m_Center: {x: 0, y: 1, z: 0}
 --- !u!1 &3355038078711179397
 GameObject:
   m_ObjectHideFlags: 0
@@ -20231,6 +20229,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Chr_Fantasy_Druid_01
       objectReference: {fileID: 0}
+    - target: {fileID: 1203895893252470, guid: 122a6f75e59a53040800bfc5e259b0b4, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4637273496912250, guid: 122a6f75e59a53040800bfc5e259b0b4, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -20296,12 +20298,6 @@ Animator:
 --- !u!4 &3336465811623329374 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4637273496912250, guid: 122a6f75e59a53040800bfc5e259b0b4,
-    type: 3}
-  m_PrefabInstance: {fileID: 3341099629181255460}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &3339910085560886866 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1203895893252470, guid: 122a6f75e59a53040800bfc5e259b0b4,
     type: 3}
   m_PrefabInstance: {fileID: 3341099629181255460}
   m_PrefabAsset: {fileID: 0}

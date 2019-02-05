@@ -1,6 +1,7 @@
 ﻿using ManaShiftServer.Data.Utils;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
@@ -29,6 +30,8 @@ public class PlayerController : LivingEntity {
     private bool _isControllerActive;
     [SerializeField]
     private GameObject _HUDPrefab;
+    [SerializeField]
+    private LayerMask selectables;
 
     private bool _isMe;
     private CharacterController _characterController;
@@ -56,6 +59,37 @@ public class PlayerController : LivingEntity {
                     _zInput = _joystick.Vertical;
                 }
             }
+
+#if UNITY_EDITOR
+            if (Input.GetMouseButtonDown(0)) {
+                if (EventSystem.current.IsPointerOverGameObject()) {
+                    return;
+                }
+
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    if (selectables == (selectables | (1 << hit.collider.gameObject.layer))) {
+                        SelectTarget(hit.collider.gameObject.GetComponent<LivingEntity>());
+                    } else {
+                        DeselectTarget();
+                    }
+                }
+            }
+#else
+            if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
+                if (EventSystem.current.IsPointerOverGameObject()) {
+                    return;
+                }
+
+                RaycastHit hit;
+                Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity, selectables)) {
+                    Debug.Log("Touched it: " + hit.collider.gameObject.name);
+                }
+            }
+
+#endif
 
             if (Input.GetButton("Fire1")) {
                 Attack();
@@ -89,6 +123,10 @@ public class PlayerController : LivingEntity {
             } else {
                 _isMe = false;
             }
+        } else {
+            CreateHUD();
+
+            Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
 
@@ -110,6 +148,14 @@ public class PlayerController : LivingEntity {
 
     public void SetJoystick(FixedJoystick joystick) {
         this._joystick = joystick;
+    }
+
+    public void SelectTarget(LivingEntity livingEntity) {
+        _characterController.SelectTarget(livingEntity);
+    }
+
+    public void DeselectTarget() {
+        _characterController.DeselectTarget();
     }
 
     public override void TakeDamage(int damage) {
