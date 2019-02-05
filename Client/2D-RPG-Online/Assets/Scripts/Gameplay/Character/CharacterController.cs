@@ -40,8 +40,12 @@ public class CharacterController : MonoBehaviour {
     private void Update() {
         LivingEntity closestTarget = GetClosestTarget(_isOfflineMode);
         if (closestTarget != null) {
-            if (IsTargetInRange(closestTarget) && !HasTarget) {
-                AttackToTarget(closestTarget);
+            if (IsTargetInRange(closestTarget)) {
+                if (!HasTarget) {
+                    AttackToTarget(closestTarget);
+                } else {
+                    AttackToSelectedTarget();
+                }
             }
         }
     }
