@@ -1136,7 +1136,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 381, guid: 564f9f84665c4af43b54572dc2955368, type: 3}
       propertyPath: _isControllerActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 390, guid: 564f9f84665c4af43b54572dc2955368, type: 3}
       propertyPath: m_havePropertiesChanged

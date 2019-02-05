@@ -19949,7 +19949,7 @@ GameObject:
   - component: {fileID: 2178737800568331132}
   - component: {fileID: 3348871751531221741}
   - component: {fileID: 1254567595943324542}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: BOT_Mage
   m_TagString: Untagged
   m_Icon: {fileID: 0}

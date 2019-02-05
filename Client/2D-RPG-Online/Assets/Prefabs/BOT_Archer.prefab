@@ -172,7 +172,7 @@ GameObject:
   - component: {fileID: 7335514689584709502}
   - component: {fileID: 6988388964058154064}
   - component: {fileID: 1792799596320993558}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: BOT_Archer
   m_TagString: Untagged
   m_Icon: {fileID: 0}

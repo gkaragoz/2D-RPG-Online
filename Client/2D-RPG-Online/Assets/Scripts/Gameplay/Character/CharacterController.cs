@@ -10,37 +10,6 @@ public class CharacterController : MonoBehaviour {
             return _selectedTarget == null ? false : true;
         }
     }
-    public int SelectedTargetID {
-        get {
-            int targetID = -1;
-            if (SelectedTarget != null) {
-                targetID = SelectedTarget.NetworkEntity.Oid;
-            }
-            _livingEntity.NetworkEntity.SendAttackInputData(targetID);
-
-            return targetID;
-        }
-    }
-
-    public bool HasTargetDied {
-        get {
-            if (HasTarget) {
-                return _selectedTarget.IsDeath;
-            }
-            return false;
-        }
-    }
-
-    public bool IsTargetInRange() {
-        if (HasTarget) {
-            float distance = Vector3.Distance(transform.position, _selectedTarget.transform.position);
-            if (distance <= _characterStats.GetAttackRange()) {
-                return true;
-            }
-        }
-
-        return false;
-    }
 
     [Header("Initialization")]
     public LayerMask attackables;
@@ -69,9 +38,12 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        //if (!HasTarget) {
-        //    SearchTarget(_isOfflineMode);
-        //}
+        LivingEntity closestTarget = GetClosestTarget(_isOfflineMode);
+        if (closestTarget != null) {
+            if (IsTargetInRange(closestTarget) && !HasTarget) {
+                AttackToTarget(closestTarget);
+            }
+        }
     }
 
     public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity, bool isOfflineMode) {
@@ -92,7 +64,7 @@ public class CharacterController : MonoBehaviour {
         _selectedTarget = null;
     }
 
-    public void SearchTarget(bool isOfflineMode) {
+    public LivingEntity GetClosestTarget(bool isOfflineMode) {
         LivingEntity target = null;
         float distance = Mathf.Infinity;
 
@@ -117,6 +89,11 @@ public class CharacterController : MonoBehaviour {
         } else {
             for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
                 LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
+
+                if (potantialTarget.IsDeath) {
+                    continue;
+                }
+
                 if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
                     float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
@@ -128,23 +105,39 @@ public class CharacterController : MonoBehaviour {
             }
         }
 
-        SelectTarget(target);
+        return target;
     }
 
-    public void Attack() {
-        if (_characterAttack.CanAttack && !_characterStats.IsDeath()) {
-            if (!_isOfflineMode && NetworkManager.mss != null) {
-                _livingEntity.NetworkEntity.SendAttackInputData(SelectedTargetID);
-            }
+    public void AttackToSelectedTarget() {
+        if (_selectedTarget != null) {
+            AttackToTarget(_selectedTarget);
+        } else {
+            AttackEmpty();
+        }
+    }
 
-            if (!HasTargetDied && IsTargetInRange()) {
-                _characterMotor.LookTo(_selectedTarget.transform.position);
-                _characterAttack.AttackToTarget(_selectedTarget);
-            } else {
-                _characterAttack.EmptyAttack();
-            }
+    public void AttackEmpty() {
+        if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
+            _livingEntity.NetworkEntity.SendAttackInputData(GetTargetID(null));
 
+            _characterAttack.AttackEmpty();
             _characterAnimator.OnAttack();
+        }
+    }
+
+    public void AttackToTarget(LivingEntity target) {
+        if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
+            if (!HasTargetDied(target)) {
+                if (IsTargetInRange(target)) {
+                    _livingEntity.NetworkEntity.SendAttackInputData(GetTargetID(target));
+
+                    _characterMotor.LookTo(target.transform.position);
+                    _characterAttack.AttackToTarget(target);
+                    _characterAnimator.OnAttack();
+                }
+            } else {
+                DeselectTarget();
+            }
         }
     }
 
@@ -206,6 +199,30 @@ public class CharacterController : MonoBehaviour {
 
     public void UpdateUI() {
         _characterUI.UpdateUI();
+    }
+
+    private int GetTargetID (LivingEntity target) { 
+        int targetID = -1;
+        if (target != null) {
+            if (target.NetworkEntity != null) {
+                targetID = target.NetworkEntity.Oid;
+            }
+        }
+
+        return targetID;
+    }
+
+    private bool HasTargetDied(LivingEntity target) {
+        return target.IsDeath;
+    }
+
+    private bool IsTargetInRange(LivingEntity target) {
+        float distance = Vector3.Distance(transform.position, target.transform.position);
+        if (distance <= _characterStats.GetAttackRange()) {
+            return true;
+        }
+
+        return false;
     }
 
     private float GetDistanceOf(Transform target) {

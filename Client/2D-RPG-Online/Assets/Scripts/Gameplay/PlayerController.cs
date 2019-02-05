@@ -109,7 +109,7 @@ public class PlayerController : LivingEntity {
     }
 
     public void Initialize(NetworkIdentifier networkIdentifier) {
-        _networkEntity = new NetworkEntity(networkIdentifier);
+        _networkEntity = new NetworkEntity(networkIdentifier, _isOfflineMode);
 
         this._characterController.Initialize(networkIdentifier, this, _isOfflineMode);
 
@@ -167,7 +167,7 @@ public class PlayerController : LivingEntity {
     }
 
     public override void Attack() {
-        _characterController.Attack();
+        _characterController.AttackToSelectedTarget();
     }
 
     public override void AttackAnimation(Vector3 direction) {

@@ -254,7 +254,7 @@ MonoBehaviour:
     type: 3}
   selectables:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 15360
   _txtNonAckPlayerInputs: {fileID: 390}
 --- !u!114 &394
 MonoBehaviour:
@@ -303,7 +303,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackables:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 7168
   takeHitFX: {fileID: 6791531585856611655}
   _selectedTarget: {fileID: 0}
 --- !u!114 &379

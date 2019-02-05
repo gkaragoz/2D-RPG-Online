@@ -26,16 +26,16 @@ public class CharacterAttack : MonoBehaviour {
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    public void EmptyAttack() {
-        StartCoroutine(IEmptyAttack());
+    public void AttackEmpty() {
+        StartCoroutine(IAttackEmpty());
     }
 
     public void AttackToTarget(LivingEntity target) {
         StartCoroutine(IAttackToTarget(target));
     }
 
-    private IEnumerator IEmptyAttack() {
-        Debug.Log("Empty Attack");
+    private IEnumerator IAttackEmpty() {
+        Debug.Log("Attack Empty");
 
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("swing" + Random.Range(1, 3));

@@ -935,7 +935,7 @@ GameObject:
   - component: {fileID: 2042664998682478106}
   - component: {fileID: 2042664998682478107}
   - component: {fileID: 2042664998682478083}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: BOT_Warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}

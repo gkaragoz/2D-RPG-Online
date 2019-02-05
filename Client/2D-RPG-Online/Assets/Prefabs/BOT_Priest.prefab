@@ -10359,7 +10359,7 @@ GameObject:
   - component: {fileID: 4374074331914073783}
   - component: {fileID: 403390511103543704}
   - component: {fileID: 8803903202522640237}
-  m_Layer: 10
+  m_Layer: 12
   m_Name: BOT_Priest
   m_TagString: Untagged
   m_Icon: {fileID: 0}
