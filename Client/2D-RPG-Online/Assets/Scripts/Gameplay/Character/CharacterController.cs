@@ -61,15 +61,19 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void SelectTarget(LivingEntity livingEntity) {
+        if (_selectedTarget != null) {
+            DeselectTarget();
+        }
+
         _selectedTarget = livingEntity;
 
-        _characterUI.ShowTargetUI(livingEntity.CharacterStats);
+        _characterUI.SelectTarget(livingEntity);
     }
 
     public void DeselectTarget() {
         _selectedTarget = null;
 
-        _characterUI.HideTargetUI();
+        _characterUI.DeselectTarget();
     }
 
     public LivingEntity GetClosestTarget(bool isOfflineMode) {

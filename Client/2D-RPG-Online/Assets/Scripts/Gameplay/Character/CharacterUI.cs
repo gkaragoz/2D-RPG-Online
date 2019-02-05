@@ -11,20 +11,40 @@ public class CharacterUI : Menu {
     [SerializeField]
     private Image _imgManaBar;
     [SerializeField]
-    private GameObject _targetIndicatorObj;
+    private Image _imgTargetIndicatorCircle;
     [SerializeField]
     private TargetUI _targetUI;
 
-    private CharacterStats _characterStats;
+    private LivingEntity _livingEntity;
 
     private void Awake() {
-        _characterStats = GetComponent<CharacterStats>();
+        _livingEntity = GetComponent<LivingEntity>();
     }
 
     public void UpdateUI() {
         SetName();
         SetHealthBar();
         SetManaBar();
+    }
+
+    public void SelectTarget(LivingEntity livingEntity) {
+        this._livingEntity = livingEntity;
+
+        //NPC, MOB, OBJECT don't have target UI.
+        if (_targetUI != null) {
+            _targetUI.OpenUI(_livingEntity.CharacterStats);
+        }
+
+        _livingEntity.GetComponent<CharacterUI>().OnSelected();
+    }
+
+    public void DeselectTarget() {
+        //NPC, MOB, OBJECT don't have target UI.
+        if (_targetUI != null) {
+            _targetUI.Hide();
+        }
+
+        _livingEntity.GetComponent<CharacterUI>().OnDeselected();
     }
 
     public void UpdateTargetUI() {
@@ -34,32 +54,28 @@ public class CharacterUI : Menu {
         }
     }
 
+    public void OnSelected() {
+        _imgTargetIndicatorCircle.enabled = true;
+    }
+
+    public void OnDeselected() {
+        _imgTargetIndicatorCircle.enabled = false;
+    }
+
     public void OpenUI() {
         Show();
-
-        _targetIndicatorObj.SetActive(true);
     }
 
     public void HideUI() {
         Hide();
-
-        _targetIndicatorObj.SetActive(false);
-    }
-
-    public void ShowTargetUI(CharacterStats characterStats) {
-        _targetUI.OpenUI(characterStats);
-    }
-
-    public void HideTargetUI() {
-        _targetUI.Hide();
     }
 
     private void SetName() {
-        _txtName.text = _characterStats.GetName();
+        _txtName.text = _livingEntity.CharacterStats.GetName();
     }
 
     private void SetHealthBar() {
-        _imgHealthBar.fillAmount = ((float)_characterStats.GetCurrentHealth() / (float)_characterStats.GetMaxHealth());
+        _imgHealthBar.fillAmount = ((float)_livingEntity.CharacterStats.GetCurrentHealth() / (float)_livingEntity.CharacterStats.GetMaxHealth());
 
         if (_imgHealthBar.fillAmount == 0) {
             _imgHealthBar.transform.parent.gameObject.SetActive(false);
@@ -68,7 +84,7 @@ public class CharacterUI : Menu {
     }
 
     private void SetManaBar() {
-        _imgManaBar.fillAmount = (_characterStats.GetCurrentMana() / _characterStats.GetMaxMana());
+        _imgManaBar.fillAmount = (_livingEntity.CharacterStats.GetCurrentMana() / _livingEntity.CharacterStats.GetMaxMana());
     }
 
 }

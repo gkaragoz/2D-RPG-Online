@@ -10498,7 +10498,7 @@ MonoBehaviour:
   _txtName: {fileID: 7765118468784952614}
   _imgHealthBar: {fileID: 9192035206869601507}
   _imgManaBar: {fileID: 6312246260238753591}
-  _targetIndicatorObj: {fileID: 4457729806172519343}
+  _imgTargetIndicatorCircle: {fileID: 2300987644544804467}
   _targetUI: {fileID: 0}
 --- !u!114 &403390511103543704
 MonoBehaviour:
