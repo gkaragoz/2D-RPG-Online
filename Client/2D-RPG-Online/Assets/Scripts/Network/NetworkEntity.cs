@@ -45,8 +45,8 @@ public class NetworkEntity {
         if (_isOfflineMode) {
             return;
         }
-        if (NetworkManager.mss != null) {
-            Debug.LogWarning("MSS is null!");
+        if (NetworkManager.mss == null) {
+            Debug.LogError("MSS is null!");
             return;
         }
 
@@ -68,7 +68,7 @@ public class NetworkEntity {
         if (_isOfflineMode) {
             return;
         }
-        if (NetworkManager.mss != null) {
+        if (NetworkManager.mss == null) {
             Debug.LogWarning("MSS is null!");
             return;
         }
