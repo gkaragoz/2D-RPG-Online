@@ -15,10 +15,10 @@ TagManager:
   - 
   - 
   - 
-  - Attackable
-  - 
-  - 
-  - 
+  - Player
+  - Destructable
+  - Mob
+  - NPC
   - 
   - 
   - 
