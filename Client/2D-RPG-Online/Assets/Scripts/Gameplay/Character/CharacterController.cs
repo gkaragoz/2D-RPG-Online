@@ -44,7 +44,7 @@ public class CharacterController : MonoBehaviour {
                 if (!HasTarget) {
                     AttackToTarget(closestTarget);
                 } else {
-                    AttackToSelectedTarget();
+                    Attack();
                 }
             }
         }
@@ -112,7 +112,7 @@ public class CharacterController : MonoBehaviour {
         return target;
     }
 
-    public void AttackToSelectedTarget() {
+    public void Attack() {
         if (_selectedTarget != null) {
             AttackToTarget(_selectedTarget);
         } else {

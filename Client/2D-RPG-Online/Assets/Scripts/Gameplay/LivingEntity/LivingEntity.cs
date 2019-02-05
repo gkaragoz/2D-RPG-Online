@@ -16,6 +16,7 @@ public class LivingEntity : MonoBehaviour, ILivingEntity {
 
     public Type EntityType { get { return _type; } }
 
+    [Header("Initialization")]
     [SerializeField]
     private Type _type;
     

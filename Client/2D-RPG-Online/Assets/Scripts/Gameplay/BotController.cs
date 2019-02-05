@@ -23,7 +23,7 @@ public class BotController : LivingEntity {
     }
 
     public override void Attack() {
-        CharacterController.AttackToSelectedTarget();
+        CharacterController.Attack();
     }
 
     public void MoveByInput(Vector3 input) {

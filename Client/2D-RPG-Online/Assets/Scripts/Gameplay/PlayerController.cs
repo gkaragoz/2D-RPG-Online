@@ -21,22 +21,31 @@ public class PlayerController : LivingEntity {
 
     public Vector3 CurrentInput { get; private set; }
 
+    /// <summary>
+    /// DEBUG
+    /// </summary>
+    /// 
     [SerializeField]
-    [Utils.ReadOnly]
-    private float _xInput, _zInput;
+    private TextMeshProUGUI _txtNonAckPlayerInputs;
     [SerializeField]
     private bool _isOfflineMode;
     [SerializeField]
     private bool _isControllerActive;
     [SerializeField]
-    private GameObject _HUDPrefab;
+    private GameObject _HUDObject;
+    [SerializeField]
+    private Joystick _joystick;
     [SerializeField]
     private LayerMask selectables;
 
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
     private bool _isMe;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _xInput, _zInput;
     private CharacterController _characterController;
-    private Joystick _joystick;
-    private Button _btnAttack;
 
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
@@ -117,15 +126,13 @@ public class PlayerController : LivingEntity {
             if (_networkEntity.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
                 _isMe = true;
 
-                CreateHUD();
-
                 Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
             } else {
                 _isMe = false;
-            }
-        } else {
-            CreateHUD();
 
+                Destroy(_HUDObject);
+            }
+        } else { 
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
         }
     }
@@ -167,7 +174,7 @@ public class PlayerController : LivingEntity {
     }
 
     public override void Attack() {
-        _characterController.AttackToSelectedTarget();
+        _characterController.Attack();
     }
 
     public override void AttackAnimation(Vector3 direction) {
@@ -193,21 +200,6 @@ public class PlayerController : LivingEntity {
     public override void Destroy() {
         Destroy(this.gameObject);
     }
-
-    private void CreateHUD() {
-        GameObject HUDObject = Instantiate(_HUDPrefab, transform);
-        _joystick = HUDObject.GetComponentInChildren<FixedJoystick>();
-        _btnAttack = HUDObject.transform.Find("btnAttack").GetComponent<Button>();
-
-        _btnAttack.onClick.AddListener(Attack);
-    }
-
-    /// <summary>
-    /// DEBUG
-    /// </summary>
-    /// 
-    [SerializeField]
-    private TextMeshProUGUI _txtNonAckPlayerInputs;
 
     private void UpdatePlayerInputsUI() {
         if (_networkEntity != null) {
