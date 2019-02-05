@@ -5,6 +5,17 @@ public class CharacterController : MonoBehaviour {
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
     public LivingEntity SelectedTarget { get { return _characterAttack.Target; } }
+    public int SelectedTargetID {
+        get {
+            int targetID = -1;
+            if (SelectedTarget != null) {
+                targetID = SelectedTarget.NetworkEntity.Oid;
+            }
+            _livingEntity.NetworkEntity.SendAttackInputData(targetID);
+
+            return targetID;
+        }
+    }
 
     public ParticleSystem takeHitFX;
 
@@ -46,7 +57,7 @@ public class CharacterController : MonoBehaviour {
 
         if (_characterAttack.CanAttack && !_characterStats.IsDeath()) {
             if (!_isOfflineMode && NetworkManager.mss != null) {
-                _livingEntity.NetworkEntity.SendAttackInputData(SelectedTarget.NetworkEntity.Oid);
+                _livingEntity.NetworkEntity.SendAttackInputData(SelectedTargetID);
             }
 
             _characterMotor.LookTo(_characterAttack.TargetPosition);

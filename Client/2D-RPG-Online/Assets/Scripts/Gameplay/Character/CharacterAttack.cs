@@ -11,9 +11,7 @@ public class CharacterAttack : MonoBehaviour {
         get {
             if (Time.time > _nextAttackTime) {
                 if (!IsAttacking) {
-                    if (IsTargetInRange()) {
-                        return true;
-                    }
+                    return true;
                 }
             }
             return false;
@@ -36,7 +34,15 @@ public class CharacterAttack : MonoBehaviour {
     }
 
     public LivingEntity Target { get { return _target; } }
-    public Vector3 TargetPosition { get { return _target.transform.position; } }
+    public Vector3 TargetPosition {
+        get {
+            if (_target != null) {
+                return _target.transform.position;
+            } else {
+                return Vector3.forward;
+            }
+        }
+    }
 
     [SerializeField]
     [Utils.ReadOnly]
@@ -105,10 +111,12 @@ public class CharacterAttack : MonoBehaviour {
 
         yield return new WaitForSeconds(0.3f);
 
-        if (_target.EntityType == LivingEntity.Type.Player) {
-            _target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
-        } else if (_target.EntityType == LivingEntity.Type.BOT) {
-            _target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
+        if (IsTargetInRange()) {
+            if (_target.EntityType == LivingEntity.Type.Player) {
+                _target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
+            } else if (_target.EntityType == LivingEntity.Type.BOT) {
+                _target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
+            }
         }
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
