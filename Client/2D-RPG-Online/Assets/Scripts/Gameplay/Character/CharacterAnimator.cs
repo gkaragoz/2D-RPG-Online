@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterAnimator : MonoBehaviour {
 
@@ -21,10 +20,6 @@ public class CharacterAnimator : MonoBehaviour {
                 OnMove(_pathFollower.DesiredPointPosition);
             }
         }
-    }
-
-    public void Initialize(Action onDeathEvent) {
-        onDeathEvent += OnDeath;
     }
 
     public void OnMove(Vector3 direction) {

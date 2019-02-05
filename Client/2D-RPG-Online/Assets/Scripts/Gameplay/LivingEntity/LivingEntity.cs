@@ -3,10 +3,12 @@
 public class LivingEntity : MonoBehaviour, ILivingEntity {
 
     public NetworkEntity NetworkEntity { get { return _networkEntity; } }
+    public CharacterStats CharacterStats { get { return _characterStats; } }
 
     public bool IsDeath { get; set; }
 
     protected NetworkEntity _networkEntity;
+    protected CharacterStats _characterStats;
 
     public enum Type {
         Player,
@@ -19,7 +21,7 @@ public class LivingEntity : MonoBehaviour, ILivingEntity {
     [Header("Initialization")]
     [SerializeField]
     private Type _type;
-    
+
     public virtual void TakeDamage(int damage) {
 
     }

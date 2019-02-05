@@ -3,8 +3,6 @@ using UnityEngine;
 
 public class CharacterStats : MonoBehaviour {
 
-    public Action onDeathEvent;
-
     [Header("Initialization")]
     [SerializeField]
     private CharacterStats_SO _characterDefinition_Template;
@@ -134,7 +132,6 @@ public class CharacterStats : MonoBehaviour {
 
         if (_char.CurrentHealth <= 0) {
             _char.CurrentHealth = 0;
-            onDeathEvent?.Invoke();
         }
     }
 

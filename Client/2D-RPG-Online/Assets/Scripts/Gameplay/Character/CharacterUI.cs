@@ -12,6 +12,8 @@ public class CharacterUI : Menu {
     private Image _imgManaBar;
     [SerializeField]
     private GameObject _targetIndicatorObj;
+    [SerializeField]
+    private TargetUI _targetUI;
 
     private CharacterStats _characterStats;
 
@@ -25,6 +27,13 @@ public class CharacterUI : Menu {
         SetManaBar();
     }
 
+    public void UpdateTargetUI() {
+        //NPC, MOB, OBJECT don't have target UI.
+        if (_targetUI != null) {
+            _targetUI.UpdateUI();
+        }
+    }
+
     public void OpenUI() {
         Show();
 
@@ -35,6 +44,14 @@ public class CharacterUI : Menu {
         Hide();
 
         _targetIndicatorObj.SetActive(false);
+    }
+
+    public void ShowTargetUI(CharacterStats characterStats) {
+        _targetUI.OpenUI(characterStats);
+    }
+
+    public void HideTargetUI() {
+        _targetUI.Hide();
     }
 
     private void SetName() {

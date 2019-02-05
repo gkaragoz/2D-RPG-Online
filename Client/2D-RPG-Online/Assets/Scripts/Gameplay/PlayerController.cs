@@ -49,6 +49,7 @@ public class PlayerController : LivingEntity {
 
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
+        _characterStats = GetComponent<CharacterStats>();
     }
 
     private void Start() {

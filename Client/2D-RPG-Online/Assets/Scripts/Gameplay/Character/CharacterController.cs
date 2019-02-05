@@ -56,16 +56,20 @@ public class CharacterController : MonoBehaviour {
         if (!_isOfflineMode) {
             this._characterStats.Initialize(networkObject);
         }
-        this._characterAnimator.Initialize(_characterStats.onDeathEvent);
         this._characterUI.UpdateUI();
+        this._characterUI.UpdateTargetUI();
     }
 
     public void SelectTarget(LivingEntity livingEntity) {
         _selectedTarget = livingEntity;
+
+        _characterUI.ShowTargetUI(livingEntity.CharacterStats);
     }
 
     public void DeselectTarget() {
         _selectedTarget = null;
+
+        _characterUI.HideTargetUI();
     }
 
     public LivingEntity GetClosestTarget(bool isOfflineMode) {
@@ -138,9 +142,8 @@ public class CharacterController : MonoBehaviour {
                     _characterMotor.LookTo(target.transform.position);
                     _characterAttack.AttackToTarget(target);
                     _characterAnimator.OnAttack();
+                    _characterUI.UpdateTargetUI();
                 }
-            } else {
-                DeselectTarget();
             }
         }
     }
@@ -199,10 +202,6 @@ public class CharacterController : MonoBehaviour {
 
     public void Rotate(Vector3 direction) {
         _characterMotor.Rotate(direction);
-    }
-
-    public void UpdateUI() {
-        _characterUI.UpdateUI();
     }
 
     private int GetTargetID (LivingEntity target) { 
