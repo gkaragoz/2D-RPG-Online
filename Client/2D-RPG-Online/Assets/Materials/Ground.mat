@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Ground
-  m_Shader: {fileID: 4800000, guid: 91f9ba6e76c421c41863d7bd9f6b82c6, type: 3}
+  m_Shader: {fileID: 4800000, guid: a97e290cd0cec1a4cb176e474e69c1dc, type: 3}
   m_ShaderKeywords: OUTLINES TCP2_DISABLE_WRAPPED_LIGHT _EMISSION
   m_LightmapFlags: 1
   m_EnableInstancingVariants: 0
@@ -32,6 +32,8 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Floats:
+    - _Glossiness: 0
+    - _Metallic: 0
     - _Offset1: 0
     - _Offset2: 0
     - _Outline: 1
