@@ -70,7 +70,6 @@ public class PlayerController : LivingEntity {
                 }
             }
 
-#if UNITY_EDITOR
             if (Input.GetMouseButtonDown(0)) {
                 if (EventSystem.current.IsPointerOverGameObject()) {
                     return;
@@ -86,7 +85,7 @@ public class PlayerController : LivingEntity {
                     }
                 }
             }
-#else
+
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
                 if (EventSystem.current.IsPointerOverGameObject()) {
                     return;
@@ -98,8 +97,6 @@ public class PlayerController : LivingEntity {
                     Debug.Log("Touched it: " + hit.collider.gameObject.name);
                 }
             }
-
-#endif
 
             if (Input.GetButton("Fire1")) {
                 Attack();

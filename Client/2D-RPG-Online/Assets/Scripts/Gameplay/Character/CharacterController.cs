@@ -38,16 +38,16 @@ public class CharacterController : MonoBehaviour {
     }
 
     private void Update() {
-        LivingEntity closestTarget = GetClosestTarget(_isOfflineMode);
-        if (closestTarget != null) {
-            if (IsTargetInRange(closestTarget)) {
-                if (!HasTarget) {
-                    AttackToTarget(closestTarget);
-                } else {
-                    Attack();
-                }
-            }
-        }
+        //LivingEntity closestTarget = GetClosestTarget(_isOfflineMode);
+        //if (closestTarget != null) {
+        //    if (IsTargetInRange(closestTarget)) {
+        //        if (!HasTarget) {
+        //            AttackToTarget(closestTarget);
+        //        } else {
+        //            Attack();
+        //        }
+        //    }
+        //}
     }
 
     public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity, bool isOfflineMode) {

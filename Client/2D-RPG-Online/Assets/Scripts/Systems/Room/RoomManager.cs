@@ -218,11 +218,13 @@ public class RoomManager : Menu {
                         if (targetID == _myPlayerController.NetworkEntity.Oid) {
                             victim = _myPlayerController;
                             _otherPlayerControllers[attackerID].AttackAnimation(victim.transform.position);
-                        } else {
+                            victim.TakeDamage(damage);
+                        } else if (targetID == 0) {
+                            _otherPlayerControllers[attackerID].AttackAnimation(_otherPlayerControllers[attackerID].transform.forward);
+                        } else { 
                             victim = _otherPlayerControllers[targetID];
+                            victim.TakeDamage(damage);
                         }
-
-                        victim.TakeDamage(damage);
                     }
                 }
             }
