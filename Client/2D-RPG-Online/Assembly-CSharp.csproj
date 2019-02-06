@@ -334,7 +334,6 @@
     <Compile Include="Assets\Scripts\Visualize\PopupTween.cs" />
     <Compile Include="Assets\Scripts\Visualize\ScaleTween.cs" />
     <Compile Include="Assets\Scripts\Visualize\TickingTween.cs" />
-    <Compile Include="Assets\Shaders\FastMobileBloom.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Base\Joystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
     <Compile Include="Assets\Virtual Joystick Pack\Scripts\Joysticks\FloatingJoystick.cs" />
@@ -344,7 +343,6 @@
     <None Include="Assets\TextMesh Pro\Resources\LineBreaking Leading Characters.txt" />
     <None Include="Assets\Fonts\nunito-sans\SIL Open Font License.txt" />
     <None Include="Assets\BrokenVector\Low Poly Rocks Pack\Demo\Asset _Scenes\Info.txt" />
-    <None Include="Assets\Shaders\FastMobileBloom.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro_Properties.cginc" />
     <None Include="Assets\LeanTween\ReadMe.txt" />
     <None Include="Assets\GooglePlayGames\Plugins\Android\GooglePlayGamesManifest.plugin\AndroidManifest.xml" />
