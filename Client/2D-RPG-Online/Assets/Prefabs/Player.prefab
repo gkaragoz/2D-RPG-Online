@@ -1052,7 +1052,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0.01}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8373091578000343865
@@ -1334,7 +1334,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8496358319495561615}
   m_LocalRotation: {x: 0.4497943, y: -0.54560524, z: 0.54560524, w: 0.4497943}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.01, z: 0}
   m_LocalScale: {x: 0.20000008, y: 0.20000009, z: 0.20000012}
   m_Children: []
   m_Father: {fileID: 192}
@@ -1637,6 +1637,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: HUDCanvas Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 3658960468798918573, guid: 213a789db2c72e94481d3a963f50134c,
+        type: 3}
+      propertyPath: _targetIndicatorObj
+      value: 
+      objectReference: {fileID: 8729850470395696306}
+    - target: {fileID: 5069968481488747403, guid: 213a789db2c72e94481d3a963f50134c,
+        type: 3}
+      propertyPath: background
+      value: 
+      objectReference: {fileID: 8085164545523710932}
+    - target: {fileID: 5069968481488747403, guid: 213a789db2c72e94481d3a963f50134c,
+        type: 3}
+      propertyPath: handle
+      value: 
+      objectReference: {fileID: 8085363553378602870}
     - target: {fileID: 5171305066112340019, guid: 213a789db2c72e94481d3a963f50134c,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1742,6 +1757,16 @@ PrefabInstance:
       propertyPath: m_Pivot.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3581763391376525883, guid: 213a789db2c72e94481d3a963f50134c,
+        type: 3}
+      propertyPath: m_textInfo.textComponent
+      value: 
+      objectReference: {fileID: 385225516894922394}
+    - target: {fileID: 6266308979246136177, guid: 213a789db2c72e94481d3a963f50134c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8937521546598680091, guid: 213a789db2c72e94481d3a963f50134c,
         type: 3}
       propertyPath: m_TargetGraphic
@@ -1752,31 +1777,6 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 381}
-    - target: {fileID: 5069968481488747403, guid: 213a789db2c72e94481d3a963f50134c,
-        type: 3}
-      propertyPath: background
-      value: 
-      objectReference: {fileID: 8085164545523710932}
-    - target: {fileID: 5069968481488747403, guid: 213a789db2c72e94481d3a963f50134c,
-        type: 3}
-      propertyPath: handle
-      value: 
-      objectReference: {fileID: 8085363553378602870}
-    - target: {fileID: 6266308979246136177, guid: 213a789db2c72e94481d3a963f50134c,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3581763391376525883, guid: 213a789db2c72e94481d3a963f50134c,
-        type: 3}
-      propertyPath: m_textInfo.textComponent
-      value: 
-      objectReference: {fileID: 385225516894922394}
-    - target: {fileID: 3658960468798918573, guid: 213a789db2c72e94481d3a963f50134c,
-        type: 3}
-      propertyPath: _targetIndicatorObj
-      value: 
-      objectReference: {fileID: 8729850470395696306}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 213a789db2c72e94481d3a963f50134c, type: 3}
 --- !u!1 &8297962362129022102 stripped
