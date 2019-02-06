@@ -58,7 +58,7 @@ public class PlayerController : LivingEntity {
         }
     }
 
-    private void FixedUpdate() {
+    private void Update() {
         if (_isMe || _isOfflineMode) {
             if (_isControllerActive) {
                 _xInput = Input.GetAxis("Horizontal");
