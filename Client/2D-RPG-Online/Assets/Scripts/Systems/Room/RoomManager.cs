@@ -1,10 +1,8 @@
 ﻿using ManaShiftServer.Data.Utils;
-using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomManager : Menu {
@@ -42,12 +40,10 @@ public class RoomManager : Menu {
     private Button _btnLeave;
 
     private Dictionary<int, PlayerController> _otherPlayerControllers = new Dictionary<int, PlayerController>();
+    private List<RoomPlayerInfo> _otherPlayerRoomInfos = new List<RoomPlayerInfo>();
 
     private PlayerController _myPlayerController;
-
-    private RoomPlayerInfo _leaderPlayerInfo;
-    private FixedJoystick _joystick;
-    private Button _btnAttack;
+    private RoomPlayerInfo _myRoomPlayerInfo;
 
     public int serverTickrate;
 
@@ -77,6 +73,8 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatus, OnPlayerReadyStatusChanged);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
+
+        SceneController.instance.onSceneLoaded = OnSceneLoaded;
     }
 
     private void Update() {
@@ -94,12 +92,13 @@ public class RoomManager : Menu {
         }
     }
 
-    public void Initialize() {
-        if (GameObject.Find("DummyCamera") != null) {
-            GameObject.Find("DummyCamera").SetActive(false);
+    public void OnSceneLoaded(string sceneName) {
+        if (sceneName == "Gameplay") {
+            CreateMyPlayer();
+            for (int ii = 0; ii < _otherPlayerRoomInfos.Count; ii++) {
+                CreatePlayer(_otherPlayerRoomInfos[ii]);
+            }
         }
-
-        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     public PlayerController GetPlayerByIndex(int index) {
@@ -175,11 +174,11 @@ public class RoomManager : Menu {
         NetworkManager.mss.SendMessage(MSServerEvent.RoomPlayerReadyStatus, data);
     }
 
-    private void CreateMyPlayer(RoomPlayerInfo playerInfo) {
-        GameObject player = Instantiate(_playerPrefab, new Vector3(playerInfo.NetworkObject.PositionX.ToFloat(), playerInfo.NetworkObject.PositionY.ToFloat(), playerInfo.NetworkObject.PositionZ.ToFloat()), Quaternion.identity);
+    private void CreateMyPlayer() {
+        GameObject player = Instantiate(_playerPrefab, new Vector3(_myRoomPlayerInfo.NetworkObject.PositionX.ToFloat(), _myRoomPlayerInfo.NetworkObject.PositionY.ToFloat(), _myRoomPlayerInfo.NetworkObject.PositionZ.ToFloat()), Quaternion.identity);
 
         _myPlayerController = player.GetComponent<PlayerController>();
-        _myPlayerController.Initialize(playerInfo.NetworkObject);
+        _myPlayerController.Initialize(_myRoomPlayerInfo.NetworkObject);
     }
 
 
@@ -308,9 +307,9 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         if (playerInfo.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
-            CreateMyPlayer(playerInfo);
+            _myRoomPlayerInfo = playerInfo;
         } else {
-            CreatePlayer(playerInfo);
+            _otherPlayerRoomInfos.Add(playerInfo);
         }
     }
 
@@ -320,7 +319,7 @@ public class RoomManager : Menu {
         MSSRoom joinedRoom = data.RoomData.Room;
 
         for (int ii = 0; ii < data.RoomData.PlayerList.Count; ii++) {
-            CreatePlayer(data.RoomData.PlayerList[ii]);
+            _otherPlayerRoomInfos.Add(data.RoomData.PlayerList[ii]);
         }
 
         onRoomJoined?.Invoke();
@@ -357,7 +356,7 @@ public class RoomManager : Menu {
 
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
-        CreatePlayer(playerInfo);
+        _otherPlayerRoomInfos.Add(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
@@ -406,14 +405,5 @@ public class RoomManager : Menu {
     private void OnPlayerReadyStatusChangeFailed(ShiftServerData data) {
         Debug.Log("OnPlayerReadyStatusChangeFailed: " + data);
     }
-
-    private void OnEnable() {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-
-    private void OnSceneLoaded(Scene scene, LoadSceneMode loadMode) {
-        if (scene.name == "Gameplay") {
-            Initialize();
-        }
-    }
+    
 }

@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class CameraController : MonoBehaviour {
 
+    public enum SceneBehaviour {
+        Gameplay,
+        CharacterSelection
+    }
+
     public Transform target;
 
     public bool smoothFollow = true;
@@ -45,6 +50,31 @@ public class CameraController : MonoBehaviour {
         }
     }
 
+    public void SetBehaviour(SceneBehaviour behaviour) {
+        switch (behaviour) {
+            case SceneBehaviour.Gameplay:
+                GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+                transform.localRotation = Quaternion.Euler(new Vector3(45, 0f, 0));
+                transform.localPosition = new Vector3(0, 8, -7);
+                this.enabled = true;
+                break;
+            case SceneBehaviour.CharacterSelection:
+                this.enabled = false;
+                GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+                break;
+            default:
+                break;
+        }
+    }
+
+    public void ApplyRotation(int amount) {
+        transform.Rotate(Vector3.right * amount);
+    }
+
+    public void SetTarget(Transform target) {
+        this.target = target;
+    }
+
     private void HeightCalculation() {
         //if (useScrollwheelZooming)
         //    _zoomPos -= ScrollWheel * Time.deltaTime * scrollWheelZoomingSensitivity;
@@ -56,11 +86,4 @@ public class CameraController : MonoBehaviour {
         //Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetHeight, Time.deltaTime * heightDampening);
     }
 
-    public void ApplyRotation(int amount) {
-        transform.Rotate(Vector3.right * amount);
-    }
-
-    public void SetTarget(Transform target) {
-        this.target = target;
-    }
 }
