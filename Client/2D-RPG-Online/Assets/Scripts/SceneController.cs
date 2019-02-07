@@ -37,7 +37,6 @@ public class SceneController : MonoBehaviour {
         AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name, mode);
 
         while (!asyncLoad.isDone) {
-            Debug.Log(asyncLoad.progress);
             yield return null;
         }
 
