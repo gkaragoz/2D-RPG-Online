@@ -262,7 +262,6 @@
     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
-    <Compile Include="Assets\SceneController.cs" />
     <Compile Include="Assets\Scripts\ApplicationTargetFrame.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\BotController.cs" />
@@ -302,6 +301,7 @@
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Request.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\RequestBody.cs" />
     <Compile Include="Assets\Scripts\Network\SimpleHTTP\Response.cs" />
+    <Compile Include="Assets\Scripts\SceneController.cs" />
     <Compile Include="Assets\Scripts\Systems\Account\AccountManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\AudioManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Audio\Sound.cs" />
@@ -388,6 +388,12 @@
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
+    </Reference>
+    <Reference Include="Cinemachine">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>
