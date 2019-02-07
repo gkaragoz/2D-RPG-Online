@@ -72,7 +72,9 @@ public class CharacterSelection : Menu {
 
     public void SelectCharacter(CharacterSlotController selectedSlot) {
         if (this._selectedSlot != null) {
-            this._selectedSlot.Sit();
+            if (this._selectedSlot != selectedSlot) {
+                this._selectedSlot.Sit();
+            }
         }
 
         this._selectedSlot = selectedSlot;

@@ -40,7 +40,7 @@ public class TargetIndicator : Menu {
     }
 
     public void OnLoadingCompleted() {
-        if (SceneController.instance.GetActiveScene().name == "CharacterSelection" || SceneController.instance.GetActiveScene().name == "Gameplay") {
+        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
             Hide();
         }
     }

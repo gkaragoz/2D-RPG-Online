@@ -307,10 +307,6 @@ public class RoomManager : Menu {
         }
     }
 
-    private void HandleAttacks(NetworkIdentifier updatedNetworkObject) {
-        Debug.Log("Got, ATTACK!");
-    }
-
     private void OnPlayerCreated(ShiftServerData data) {
         Debug.Log("OnPlayerCreated: " + data);
         
@@ -354,7 +350,9 @@ public class RoomManager : Menu {
     private void OnRoomDeleted(ShiftServerData data) {
         Debug.Log("OnRoomDeleted: " + data);
 
+        _myPlayerController = null;
         _otherPlayerControllers = new Dictionary<int, PlayerController>();
+        _otherPlayerRoomInfos = new List<RoomPlayerInfo>();
     }
 
     private void OnRoomDeleteFailed(ShiftServerData data) {
@@ -367,6 +365,7 @@ public class RoomManager : Menu {
         RoomPlayerInfo playerInfo = data.RoomData.PlayerInfo;
 
         _otherPlayerRoomInfos.Add(data.RoomData.PlayerInfo);
+        CreatePlayer(data.RoomData.PlayerInfo);
     }
 
     private void OnRoomPlayerLeft(ShiftServerData data) {
@@ -379,7 +378,8 @@ public class RoomManager : Menu {
 
             if (playerInfo.NetworkObject.Id == otherPlayerController.NetworkEntity.Oid) {
                 PlayerController leftPlayer = otherPlayerController;
-                _otherPlayerControllers.Remove(otherPlayerController.NetworkEntity.Oid);
+                _otherPlayerControllers.Remove(leftPlayer.NetworkEntity.Oid);
+                _otherPlayerRoomInfos.Remove(_otherPlayerRoomInfos.Where(roomPlayerInfo => roomPlayerInfo.NetworkObject.Id == leftPlayer.NetworkEntity.Oid).First());
                 leftPlayer.Destroy();
                 break;
             }
@@ -388,6 +388,10 @@ public class RoomManager : Menu {
 
     private void OnRoomLeaveSuccess(ShiftServerData data) {
         Debug.Log("OnRoomLeaveSuccess: " + data);
+
+        _myPlayerController = null;
+        _otherPlayerControllers = new Dictionary<int, PlayerController>();
+        _otherPlayerRoomInfos = new List<RoomPlayerInfo>();
 
         onRoomLeft?.Invoke();
     }
