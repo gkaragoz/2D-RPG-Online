@@ -17,54 +17,54 @@ public class CharacterSelection : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private GameObject _selectedCharacterObject;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private string _selectedCharacterName;
+    private int _selectedIndex;
     [Utils.ReadOnly]
     [SerializeField]
     private GameObject[] _characterSlots;
-    
-    public string SelectedCharacterName {
-        get { return _selectedCharacterName; }
-    }
 
     public void Initialize() {
         _characterSlots = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
 
         for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
-            _characterSlots[ii].transform.Find("Spot Light").gameObject.SetActive(true);
             Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlots[ii].transform).transform;
 
             PlayerClass playerClass = (PlayerClass)AccountManager.instance.AllCharacters[ii].class_index;
 
+            GameObject _characterObject = null;
+            
             switch (playerClass) {
                 case PlayerClass.Warrior:
-                    Instantiate(_warriorPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_warriorPrefab, slotCharacterParent);
                     break;
                 case PlayerClass.Archer:
-                    Instantiate(_archerPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_archerPrefab, slotCharacterParent);
                     break;
                 case PlayerClass.Mage:
-                    Instantiate(_magePrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_magePrefab, slotCharacterParent);
                     break;
                 case PlayerClass.Priest:
-                    Instantiate(_priestPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_priestPrefab, slotCharacterParent);
                     break;
                 default:
                     Debug.LogError("CLASS NOT FOUND!");
                     break;
             }
+
+            slotCharacterParent.GetComponent<CharacterSlotController>().Initialize(AccountManager.instance.AllCharacters[ii]);
         }
+
+        SelectCharacter(0);
     }
 
-    public void SelectCharacter(int selectedIndex) {
-        _selectedCharacterName = CharacterManager.instance.GetCharacterName(selectedIndex);
+    public void SelectCharacter(int index) {
+        _characterSlots[_selectedIndex].transform.Find("Spot Light").gameObject.SetActive(false);
+        _selectedIndex = index;
+        _characterSlots[_selectedIndex].transform.Find("Spot Light").gameObject.SetActive(true);
     }
 
     public void SubmitSelectCharacter() {
         RequestCharSelect RequestSelectCharacter = new RequestCharSelect();
-        RequestSelectCharacter.char_name = SelectedCharacterName;
+        RequestSelectCharacter.char_name = CharacterManager.instance.GetCharacterName(_selectedIndex);
         RequestSelectCharacter.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ISelectCharacterPostMethod(RequestSelectCharacter, OnSelectCharacterResponse));
@@ -74,7 +74,8 @@ public class CharacterSelection : Menu {
         if (selectedCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 
-            CharacterManager.instance.SelectCharacter(CharacterManager.instance.GetCharacterModel(_selectedCharacterName));
+            string selectedCharacterName = CharacterManager.instance.GetCharacterName(_selectedIndex);
+            CharacterManager.instance.SelectCharacter(CharacterManager.instance.GetCharacterModel(selectedCharacterName));
         } else {
             Debug.Log(APIConfig.ERROR_SELECT_CHARACTER);
 
