@@ -15,7 +15,7 @@ public class CharacterSlotController : MonoBehaviour {
     public void Initialize(CharacterModel characterModel) {
         this._characterModel = characterModel;
         txtName.text = characterModel.name;
-        txtLevel.name = characterModel.level.ToString();
+        txtLevel.text = "Lv. " + characterModel.level;
     }
 
 }
