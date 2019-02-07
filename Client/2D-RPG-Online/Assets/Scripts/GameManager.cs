@@ -2,7 +2,6 @@
 using System.Collections;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -47,8 +46,6 @@ public class GameManager : MonoBehaviour {
     private const string ERROR_GET_ID_TOKEN_TITLE = "Wow!";
     private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
 
-    private Scene _currentScene;
-
     private void Start() {
         Application.targetFrameRate = 60;
 
@@ -56,10 +53,11 @@ public class GameManager : MonoBehaviour {
     }
 
     private IEnumerator Bootup() {
-        AudioManager.instance.ChangeBackgroundMusic(SceneManager.GetActiveScene());
+        AudioManager.instance.ChangeBackgroundMusic(SceneController.instance.GetActiveScene());
 
         yield return new WaitForSeconds(3f);
 
+        AccountManager.instance.onAccountManagerInitialized += OnAccountManagerInitialized;
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
         CharacterManager.instance.onCharacterCreated += OnCharacterCreated;
@@ -71,7 +69,7 @@ public class GameManager : MonoBehaviour {
         Debug.Log("First time play? " + !HasPlayedBefore);
 
         if (HasPlayedBefore) {
-            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.Show();
             LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
             LoadingManager.instance.AddTask(LoginManager.instance.googlePlaySignInResponseProgress);
             LoadingManager.instance.AddTask(LoginManager.instance.sessionIdResponseProgress);
@@ -82,29 +80,36 @@ public class GameManager : MonoBehaviour {
             LoginManager.instance.Initialize();
             LoginManager.instance.Login();
         } else {
-            LoadingManager.instance.ResetTasks();
+            LoadingManager.instance.Show();
             LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
+            LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
 
             LoginManager.instance.Initialize();
+        }
+    }
+
+    private void OnAccountManagerInitialized() {
+        if (!HasPlayedBefore) {
+            //Go To Tutorial Scene.
+            SceneController.instance.LoadSceneAsync("Tutorial", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        } else {
+            //Go To Character Selection Scene.
+            SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 
     private void OnTutorialCompleted() {
         PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
 
-        SceneManager.UnloadSceneAsync("Tutorial");
+        //Go To Character Selection Scene.
+        SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
         CharacterManager.instance.ShowCharacterCreationMenu();
     }
 
     private void OnLoadingCompleted() {
-        LoadingManager.instance.Hide();
-
-        if (!HasPlayedBefore) {
-            //Go To Tutorial Scene.
-            SceneManager.LoadScene("Tutorial", LoadSceneMode.Additive);
-
-            _currentScene = SceneManager.GetSceneByName("Tutorial");
+        if (SceneController.instance.GetActiveScene().name == "Tutorial") {
+            Debug.Log("Tutorial scene loaded!");
 
             TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
@@ -112,9 +117,13 @@ public class GameManager : MonoBehaviour {
             LoginManager.instance.Login();
 
             TutorialManager.instance.PauseTutorial();
-        } else {
+        } else if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
+            Debug.Log("CharacterSelection scene loaded!");
+
             //Open Character Selection Menu.
             CharacterManager.instance.ShowCharacterSelectionMenu();
+        } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+            Debug.Log("Gameplay scene loaded!");
         }
     }
 
@@ -136,11 +145,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         //Go To Gameplay Scene.
-        SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
-
-        _currentScene = SceneManager.GetSceneByName("Gameplay");
-
-        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+        SceneController.instance.LoadSceneAsync("Gameplay", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
@@ -148,23 +153,15 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         //Go To Gameplay Scene.
-        SceneManager.LoadSceneAsync("Gameplay", LoadSceneMode.Additive);
-
-        _currentScene = SceneManager.GetSceneByName("Gameplay");
-
-        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+        SceneController.instance.LoadSceneAsync("Gameplay", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
         MenuManager.instance.Hide();
         RoomManager.instance.Show();
     }
 
     private void OnRoomLeft() {
-        //Go To Menu Scene.
-        SceneManager.UnloadSceneAsync("Gameplay");
-
-        _currentScene = SceneManager.GetSceneByName("Main");
-
-        AudioManager.instance.ChangeBackgroundMusic(_currentScene);
+        //Go To Character Selection Scene.
+        SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
         RoomManager.instance.Hide();
         MenuManager.instance.Show();

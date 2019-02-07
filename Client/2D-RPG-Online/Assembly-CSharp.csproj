@@ -262,8 +262,8 @@
     <Compile Include="Assets\LeanTween\Framework\LTDescr.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTDescrOptional.cs" />
     <Compile Include="Assets\LeanTween\Framework\LTSeq.cs" />
+    <Compile Include="Assets\SceneController.cs" />
     <Compile Include="Assets\Scripts\ApplicationTargetFrame.cs" />
-    <Compile Include="Assets\Scripts\DummySettings.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\Gameplay\BotController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\CameraController.cs" />
@@ -272,6 +272,7 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterAttack.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterMotor.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Character\CharacterSlotController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterUI.cs" />
@@ -308,7 +309,6 @@
     <Compile Include="Assets\Scripts\Systems\Character\CharacterCreation.cs" />
     <Compile Include="Assets\Scripts\Systems\Character\CharacterManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Character\CharacterSelection.cs" />
-    <Compile Include="Assets\Scripts\Systems\Character\CharacterSelectionSlot.cs" />
     <Compile Include="Assets\Scripts\Systems\Facebook\FacebookManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Friend\FriendRow.cs" />

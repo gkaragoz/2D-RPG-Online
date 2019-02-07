@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 4638725470540306969}
   - component: {fileID: 6966641771036533388}
-  - component: {fileID: 7504947828607974662}
   - component: {fileID: 1578333834165079536}
   - component: {fileID: 6730681678649464245}
   - component: {fileID: 6276823526578817763}
@@ -77,14 +76,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!92 &7504947828607974662
-Behaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2799427133271749690}
-  m_Enabled: 1
 --- !u!124 &1578333834165079536
 Behaviour:
   m_ObjectHideFlags: 0
@@ -114,4 +105,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  smoothFollow: 1
+  smoothSpeed: 0.125
   offset: {x: 0, y: 8, z: -8}
+  maxHeight: 10
+  minHeight: 5
+  heightDampening: 5
+  scrollWheelZoomingSensitivity: 60
+  useScrollwheelZooming: 1
+  zoomingAxis: Mouse ScrollWheel

@@ -1,42 +1,64 @@
 ﻿using ManaShiftServer.Data.RestModels;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class CharacterSelection : Menu {
 
-    [Header("Initialization")]
     [SerializeField]
-    private Button _btnSelectCharacter;
+    private GameObject _slotCharacterPrefab;
     [SerializeField]
-    private List<CharacterSelectionSlot> _characterSelectionSlots = new List<CharacterSelectionSlot>();
+    private GameObject _warriorPrefab;
+    [SerializeField]
+    private GameObject _archerPrefab;
+    [SerializeField]
+    private GameObject _magePrefab;
+    [SerializeField]
+    private GameObject _priestPrefab;
 
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
+    private GameObject _selectedCharacterObject;
+    [SerializeField]
+    [Utils.ReadOnly]
     private string _selectedCharacterName;
-
+    [Utils.ReadOnly]
+    [SerializeField]
+    private GameObject[] _characterSlots;
+    
     public string SelectedCharacterName {
         get { return _selectedCharacterName; }
     }
 
-    private void Start() {
-        _btnSelectCharacter.interactable = false;
-    }
-
     public void Initialize() {
-        for (int ii = 0; ii < _characterSelectionSlots.Count; ii++) {
-            if (ii < AccountManager.instance.AllCharacters.Count) {
-                _characterSelectionSlots[ii].Initialize(AccountManager.instance.AllCharacters[ii]);
-            } else {
-                _characterSelectionSlots[ii].SetInteractable(false);
+        _characterSlots = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
+
+        for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
+            Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlots[ii].transform).transform;
+
+            PlayerClass playerClass = (PlayerClass)AccountManager.instance.AllCharacters[ii].class_index;
+
+            switch (playerClass) {
+                case PlayerClass.Warrior:
+                    Instantiate(_warriorPrefab, slotCharacterParent);
+                    break;
+                case PlayerClass.Archer:
+                    Instantiate(_archerPrefab, slotCharacterParent);
+                    break;
+                case PlayerClass.Mage:
+                    Instantiate(_magePrefab, slotCharacterParent);
+                    break;
+                case PlayerClass.Priest:
+                    Instantiate(_priestPrefab, slotCharacterParent);
+                    break;
+                default:
+                    Debug.LogError("CLASS NOT FOUND!");
+                    break;
             }
         }
     }
 
     public void SelectCharacter(int selectedIndex) {
         _selectedCharacterName = CharacterManager.instance.GetCharacterName(selectedIndex);
-        _btnSelectCharacter.interactable = true;
     }
 
     public void SubmitSelectCharacter() {

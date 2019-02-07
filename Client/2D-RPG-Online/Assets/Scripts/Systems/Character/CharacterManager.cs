@@ -37,7 +37,13 @@ public class CharacterManager : MonoBehaviour {
     private CharacterModel _selectedCharacter;
 
     private void Start() {
-        AccountManager.instance.onAccountManagerInitialized += Initialize;
+        SceneController.instance.onSceneLoaded += OnSceneLoaded;
+    }
+
+    private void OnSceneLoaded(string sceneName) {
+        if (sceneName == "CharacterSelection") {
+            Initialize();
+        }
     }
 
     public void Initialize() {
