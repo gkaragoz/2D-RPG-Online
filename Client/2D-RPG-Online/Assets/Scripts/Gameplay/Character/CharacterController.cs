@@ -60,50 +60,32 @@ public class CharacterController : MonoBehaviour {
             DeselectTarget();
         }
 
+        TargetIndicator.instance.SetPosition(transform, TargetIndicator.Type.Enemy);
         _selectedTarget = livingEntity;
     }
 
     public void DeselectTarget() {
+        TargetIndicator.instance.Hide();
         _selectedTarget = null;
     }
 
-    public LivingEntity GetClosestTarget(bool isOfflineMode) {
+    public LivingEntity GetClosestTarget() {
         LivingEntity target = null;
         float distance = Mathf.Infinity;
 
-        if (isOfflineMode) {
-            LivingEntity[] potantialTargets = GameObject.FindObjectsOfType<LivingEntity>();
-            for (int ii = 0; ii < potantialTargets.Length; ii++) {
-                LivingEntity potantialTarget = potantialTargets[ii];
-                if (potantialTarget.EntityType == LivingEntity.Type.Player || potantialTarget.IsDeath) {
-                    continue;
-                }
+        for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
+            LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
 
-                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
-
-                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
-
-                    if (potantialTargetDistance < distance) {
-                        target = potantialTarget;
-                        distance = potantialTargetDistance;
-                    }
-                }
+            if (potantialTarget.IsDeath) {
+                continue;
             }
-        } else {
-            for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
-                LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
 
-                if (potantialTarget.IsDeath) {
-                    continue;
-                }
+            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
-                if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
 
-                    float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
-
-                    if (potantialTargetDistance < distance) {
-                        target = potantialTarget;
-                    }
+                if (potantialTargetDistance < distance) {
+                    target = potantialTarget;
                 }
             }
         }

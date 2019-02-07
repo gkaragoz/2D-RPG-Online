@@ -85,8 +85,12 @@ public class PlayerController : LivingEntity {
 
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-                if (Physics.Raycast(ray, out hit, Mathf.Infinity, selectables)) {
-                    Debug.Log("Touched it: " + hit.collider.gameObject.name);
+                if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    if (selectables == (selectables | (1 << hit.collider.gameObject.layer))) {
+                        SelectTarget(hit.collider.gameObject.GetComponent<LivingEntity>());
+                    } else {
+                        DeselectTarget();
+                    }
                 }
             }
 

@@ -13,6 +13,9 @@ GameObject:
   - component: {fileID: 1578333834165079536}
   - component: {fileID: 6730681678649464245}
   - component: {fileID: 6276823526578817763}
+  - component: {fileID: 4917003391081522045}
+  - component: {fileID: 4917003391081522046}
+  - component: {fileID: 4917003391081522047}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -43,8 +46,8 @@ Camera:
   m_GameObject: {fileID: 2799427133271749690}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.11280704, g: 0.12045607, b: 0.122641504, a: 1}
+  m_ClearFlags: 1
+  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
   m_projectionMatrixMode: 1
   m_SensorSize: {x: 36, y: 24}
   m_LensShift: {x: 0, y: 0}
@@ -104,13 +107,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 33587b4f07f3c7d4090cd3d0c5be65df, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  smoothFollow: 1
-  smoothSpeed: 0.125
-  offset: {x: 0, y: 8, z: -8}
-  maxHeight: 10
-  minHeight: 5
-  heightDampening: 5
-  scrollWheelZoomingSensitivity: 60
-  useScrollwheelZooming: 1
-  zoomingAxis: Mouse ScrollWheel
+  _physicsRaycaster: {fileID: 4917003391081522047}
+  _cinemachineBrain: {fileID: 4917003391081522046}
+  _zoomingAxis: Mouse ScrollWheel
+  _blockProcess: 0
+  _useScrollwheelZooming: 1
+  _smoothFollow: 1
+  _smoothSpeed: 0.125
+  _offset: {x: 0, y: 8, z: -7}
+  _maxHeight: 10
+  _minHeight: 5
+  _heightDampening: 5
+  _scrollWheelZoomingSensitivity: 60
+  _target: {fileID: 0}
+  _zoomPos: 0
+--- !u!114 &4917003391081522045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799427133271749690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46aa5690d67984c4a82949875115fbf9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetFrameRate: 60
+--- !u!114 &4917003391081522046
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799427133271749690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowDebugText: 0
+  m_ShowCameraFrustum: 1
+  m_IgnoreTimeScale: 0
+  m_WorldUpOverride: {fileID: 0}
+  m_UpdateMethod: 2
+  m_DefaultBlend:
+    m_Style: 1
+    m_Time: 2
+    m_CustomCurve:
+      serializedVersion: 2
+      m_Curve: []
+      m_PreInfinity: 2
+      m_PostInfinity: 2
+      m_RotationOrder: 4
+  m_CustomBlends: {fileID: 0}
+  m_CameraCutEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Cinemachine.CinemachineBrain+BrainEvent, Cinemachine, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  m_CameraActivatedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: Cinemachine.CinemachineBrain+VcamActivatedEvent, Cinemachine, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+--- !u!114 &4917003391081522047
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2799427133271749690}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -768656878, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_EventMask:
+    serializedVersion: 2
+    m_Bits: 15360
+  m_MaxRayIntersections: 0

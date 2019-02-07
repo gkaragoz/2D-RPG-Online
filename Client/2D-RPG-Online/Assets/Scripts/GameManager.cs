@@ -117,10 +117,8 @@ public class GameManager : MonoBehaviour {
 
             TutorialManager.instance.PauseTutorial();
         } else if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
-            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.CharacterSelection);
             CharacterManager.instance.ShowCharacterSelectionMenu();
         } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
-            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.Gameplay);
         }
     }
 
