@@ -28,8 +28,6 @@ public class PlayerController : LivingEntity {
     [SerializeField]
     private TextMeshProUGUI _txtNonAckPlayerInputs;
     [SerializeField]
-    private bool _isOfflineMode;
-    [SerializeField]
     private bool _isControllerActive;
     [SerializeField]
     private GameObject _HUDObject;
@@ -52,14 +50,8 @@ public class PlayerController : LivingEntity {
         _characterStats = GetComponent<CharacterStats>();
     }
 
-    private void Start() {
-        if (_isOfflineMode) {
-            this.Initialize(null);
-        }
-    }
-
     private void Update() {
-        if (_isMe || _isOfflineMode) {
+        if (_isMe) {
             if (_isControllerActive) {
                 _xInput = Input.GetAxis("Horizontal");
                 _zInput = Input.GetAxis("Vertical");
@@ -116,22 +108,38 @@ public class PlayerController : LivingEntity {
     }
 
     public void Initialize(NetworkIdentifier networkIdentifier) {
-        _networkEntity = new NetworkEntity(networkIdentifier, _isOfflineMode);
+        _networkEntity = new NetworkEntity(networkIdentifier);
 
-        this._characterController.Initialize(networkIdentifier, this, _isOfflineMode);
+        this._playerClass = _networkEntity.NetworkObject.PlayerData.PClass;
 
-        if (!_isOfflineMode) {
-            if (_networkEntity.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
-                _isMe = true;
+        switch (this._playerClass) {
+            case PlayerClass.Warrior:
+                _characterObject = Instantiate(_warriorPrefab, this.transform);
+                break;
+            case PlayerClass.Archer:
+                _characterObject = Instantiate(_archerPrefab, this.transform);
+                break;
+            case PlayerClass.Mage:
+                _characterObject = Instantiate(_magePrefab, this.transform);
+                break;
+            case PlayerClass.Priest:
+                _characterObject = Instantiate(_priestPrefab, this.transform);
+                break;
+            default:
+                Debug.LogError("CLASS NOT FOUND!");
+                break;
+        }
 
-                Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
-            } else {
-                _isMe = false;
+        this._characterController.Initialize(networkIdentifier, this);
 
-                Destroy(_HUDObject);
-            }
-        } else { 
+        if (_networkEntity.NetworkObject.PlayerData.Name == AccountManager.instance.SelectedCharacterName) {
+            _isMe = true;
+
             Camera.main.GetComponent<CameraController>().SetTarget(this.transform);
+        } else {
+            _isMe = false;
+
+            Destroy(_HUDObject);
         }
     }
 

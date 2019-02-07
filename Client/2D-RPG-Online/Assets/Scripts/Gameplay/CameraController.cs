@@ -46,14 +46,14 @@ public class CameraController : MonoBehaviour {
     }
 
     private void HeightCalculation() {
-        if (useScrollwheelZooming)
-            _zoomPos -= ScrollWheel * Time.deltaTime * scrollWheelZoomingSensitivity;
+        //if (useScrollwheelZooming)
+        //    _zoomPos -= ScrollWheel * Time.deltaTime * scrollWheelZoomingSensitivity;
 
-        _zoomPos = Mathf.Clamp01(_zoomPos);
+        //_zoomPos = Mathf.Clamp01(_zoomPos);
 
-        float targetHeight = Mathf.Lerp(minHeight, maxHeight, _zoomPos);
+        //float targetHeight = Mathf.Lerp(minHeight, maxHeight, _zoomPos);
 
-        Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetHeight, Time.deltaTime * heightDampening);
+        //Camera.main.orthographicSize = Mathf.Lerp(Camera.main.orthographicSize, targetHeight, Time.deltaTime * heightDampening);
     }
 
     public void ApplyRotation(int amount) {

@@ -12,7 +12,7 @@ public class BotController : LivingEntity {
     }
 
     private void Start() {
-        this.CharacterController.Initialize(null, this, true);
+        this.CharacterController.Initialize(null, this);
     }
 
     public override void TakeDamage(int damage) {

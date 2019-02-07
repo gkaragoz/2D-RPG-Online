@@ -2479,7 +2479,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 0}
+  smoothFollow: 1
+  smoothSpeed: 0.125
   offset: {x: 0, y: 8, z: -7}
+  maxHeight: 10
+  minHeight: 5
+  heightDampening: 5
+  scrollWheelZoomingSensitivity: 60
+  useScrollwheelZooming: 1
+  zoomingAxis: Mouse ScrollWheel
 --- !u!1001 &724467989
 PrefabInstance:
   m_ObjectHideFlags: 0

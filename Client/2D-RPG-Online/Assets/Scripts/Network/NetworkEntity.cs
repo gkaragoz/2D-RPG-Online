@@ -34,17 +34,12 @@ public class NetworkEntity {
     private List<SPlayerInput> _playerInputs = new List<SPlayerInput>();
     private int _lastProcessedInputSequenceID;
     private int _nonAckInputIndex = 0;
-    private bool _isOfflineMode;
 
-    public NetworkEntity(NetworkIdentifier networkObject, bool isOfflineMode) {
+    public NetworkEntity(NetworkIdentifier networkObject) {
         this._networkObject = networkObject;
-        this._isOfflineMode = isOfflineMode;
     }
 
     public void SendMovementInputData(Vector3 input) {
-        if (_isOfflineMode) {
-            return;
-        }
         if (NetworkManager.mss == null) {
             Debug.LogError("MSS is null!");
             return;
@@ -65,11 +60,8 @@ public class NetworkEntity {
     }
 
     public void SendAttackInputData(int targetID) {
-        if (_isOfflineMode) {
-            return;
-        }
         if (NetworkManager.mss == null) {
-            Debug.LogWarning("MSS is null!");
+            Debug.LogError("MSS is null!");
             return;
         }
 

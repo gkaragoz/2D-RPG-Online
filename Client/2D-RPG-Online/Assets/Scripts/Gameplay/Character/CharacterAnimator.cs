@@ -5,9 +5,9 @@ public class CharacterAnimator : MonoBehaviour {
     public float locomotionAnimationSmoothTime = 0.1f;
 
     [SerializeField]
-    private Animator _animator;
-    [SerializeField]
     private PathFollower _pathFollower;
+
+    private Animator _animator;
 
     private static readonly int anim_OnHit = Animator.StringToHash("OnHit");
     private static readonly int anim_BasicAttack = Animator.StringToHash("BasicAttack");
@@ -20,6 +20,10 @@ public class CharacterAnimator : MonoBehaviour {
                 OnMove(_pathFollower.DesiredPointPosition);
             }
         }
+    }
+
+    public void SetAnimator(Animator animator) {
+        this._animator = animator;
     }
 
     public void OnMove(Vector3 direction) {

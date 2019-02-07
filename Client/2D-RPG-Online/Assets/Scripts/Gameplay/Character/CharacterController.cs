@@ -27,8 +27,6 @@ public class CharacterController : MonoBehaviour {
     [Utils.ReadOnly]
     private LivingEntity _selectedTarget;
 
-    private bool _isOfflineMode = false;
-
     private void Awake() {
         _characterMotor = GetComponent<CharacterMotor>();
         _characterAttack = GetComponent<CharacterAttack>();
@@ -50,12 +48,10 @@ public class CharacterController : MonoBehaviour {
         //}
     }
 
-    public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity, bool isOfflineMode) {
-        this._isOfflineMode = isOfflineMode;
+    public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
         this._livingEntity = livingEntity;
-        if (!_isOfflineMode) {
-            this._characterStats.Initialize(networkObject);
-        }
+        this._characterStats.Initialize(networkObject);
+        this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
         this._characterUI.UpdateUI();
         this._characterUI.UpdateTargetUI();
     }
@@ -161,7 +157,7 @@ public class CharacterController : MonoBehaviour {
 
     public void MoveToInput(Vector3 input) {
         if (!_characterStats.IsDeath()) {
-            if (!_isOfflineMode && NetworkManager.mss != null) {
+            if (NetworkManager.mss != null) {
                 _livingEntity.NetworkEntity.SendMovementInputData(input);
             }
 
