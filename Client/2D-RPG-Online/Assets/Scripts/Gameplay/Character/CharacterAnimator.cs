@@ -3,6 +3,7 @@
 public class CharacterAnimator : MonoBehaviour {
 
     public float locomotionAnimationSmoothTime = 0.1f;
+    public bool IsSitting { get { return _animator.GetBool(anim_IsSitting); } }
 
     [SerializeField]
     private PathFollower _pathFollower;
@@ -13,6 +14,7 @@ public class CharacterAnimator : MonoBehaviour {
     private static readonly int anim_BasicAttack = Animator.StringToHash("BasicAttack");
     private static readonly int anim_InputMagnitude = Animator.StringToHash("InputMagnitude");
     private static readonly int anim_Die = Animator.StringToHash("Die");
+    private static readonly string anim_IsSitting = "IsSitting";
 
     private void Update() {
         if (_pathFollower != null) {
@@ -27,6 +29,9 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     public void OnMove(Vector3 direction) {
+        if (IsSitting) {
+            StandUp();
+        }
         _animator.SetFloat(anim_InputMagnitude, direction.magnitude, locomotionAnimationSmoothTime, Time.deltaTime);
     }
 
@@ -35,10 +40,16 @@ public class CharacterAnimator : MonoBehaviour {
     }
 
     public void OnHit() {
+        if (IsSitting) {
+            StandUp();
+        }
         _animator.SetTrigger(anim_OnHit);
     }
 
     public void OnAttack() {
+        if (IsSitting) {
+            StandUp();
+        }
         _animator.SetTrigger(anim_BasicAttack);
     }
 
@@ -50,7 +61,18 @@ public class CharacterAnimator : MonoBehaviour {
         _animator.SetFloat(anim_InputMagnitude, 0f);
     }
 
+    public void Sit() {
+        _animator.SetBool(anim_IsSitting, true);
+    }
+
+    public void StandUp() {
+        _animator.SetBool(anim_IsSitting, false);
+    }
+
     public void OnDeath() {
+        if (IsSitting) {
+            StandUp();
+        }
         if (_pathFollower != null) {
             if (_pathFollower.IsRunning) {
                 _pathFollower.Stop();
@@ -69,6 +91,7 @@ public class CharacterAnimator : MonoBehaviour {
         _animator.ResetTrigger(anim_Die);
 
         _animator.SetFloat(anim_InputMagnitude, 0f);
+        _animator.SetBool(anim_IsSitting, false);
         transform.position = Vector3.zero;
     }
 

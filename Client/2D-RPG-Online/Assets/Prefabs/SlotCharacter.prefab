@@ -214,6 +214,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _txtName: {fileID: 2265495317483356212}
   _txtLevel: {fileID: 6304736785851212051}
+  _characterAnimator: {fileID: 461706326483382770}
   _slotIndex: 0
 --- !u!114 &461706326483382770
 MonoBehaviour:

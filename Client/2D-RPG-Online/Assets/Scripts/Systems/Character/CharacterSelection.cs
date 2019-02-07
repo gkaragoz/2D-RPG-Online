@@ -55,14 +55,25 @@ public class CharacterSelection : Menu {
             }
 
             _characterSlotControllers.Add(slotCharacterParent.GetComponent<CharacterSlotController>());
-            _characterSlotControllers[ii].Initialize(AccountManager.instance.AllCharacters[ii], ii);
+            _characterSlotControllers[ii].Initialize(AccountManager.instance.AllCharacters[ii], ii, _characterObject);
             _characterSlotControllers[ii].onSelected += SelectCharacter;
+        }
+
+        for (int ii = 0; ii < _characterSlotControllers.Count; ii++) {
+            if (ii == 0) {
+                continue;
+            }
+            _characterSlotControllers[ii].Sit();
         }
 
         SelectCharacter(_characterSlotControllers[0]);
     }
 
     public void SelectCharacter(CharacterSlotController selectedSlot) {
+        if (this._selectedSlot != null) {
+            this._selectedSlot.Sit();
+        }
+
         this._selectedSlot = selectedSlot;
         SlotHighlighter.instance.SetPosition(this._selectedSlot.transform);
     }

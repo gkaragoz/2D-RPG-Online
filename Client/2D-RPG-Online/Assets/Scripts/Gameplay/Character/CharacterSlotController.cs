@@ -15,6 +15,8 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
     private TextMeshProUGUI _txtName;
     [SerializeField]
     private TextMeshProUGUI _txtLevel;
+    [SerializeField]
+    private CharacterAnimator _characterAnimator;
 
     [Header("Debug")]
     [SerializeField]
@@ -23,15 +25,29 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     private CharacterModel _characterModel;
 
-    public void Initialize(CharacterModel characterModel, int slotIndex) {
+    public void Initialize(CharacterModel characterModel, int slotIndex, GameObject characterObject) {
         this._characterModel = characterModel;
         this._slotIndex = slotIndex;
         _txtName.text = characterModel.name;
         _txtLevel.text = "Lv. " + characterModel.level;
+        SetAnimator(characterObject.GetComponent<Animator>());
+    }
+
+    public void SetAnimator(Animator animator) {
+        _characterAnimator.SetAnimator(animator);
+    }
+
+    public void Sit() {
+        _characterAnimator.Sit();
+    }
+
+    public void StandUp() {
+        _characterAnimator.StandUp();
     }
 
     public void OnSelected() {
         TargetIndicator.instance.SetPosition(transform, TargetIndicator.Type.CharacterSelection);
+        StandUp();
         onSelected?.Invoke(this);
     }
 
