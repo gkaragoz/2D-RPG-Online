@@ -1,8 +1,6 @@
 ﻿using ManaShiftServer.Data.Utils;
 using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(CharacterController))]
 public class PlayerController : LivingEntity {
@@ -63,7 +61,7 @@ public class PlayerController : LivingEntity {
             }
 
             if (Input.GetMouseButtonDown(0)) {
-                if (EventSystem.current.IsPointerOverGameObject()) {
+                if (Utils.IsPointerOverUIObject()) {
                     return;
                 }
 
@@ -79,13 +77,14 @@ public class PlayerController : LivingEntity {
             }
 
             if (Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began) {
-                if (EventSystem.current.IsPointerOverGameObject()) {
+                if (Utils.IsPointerOverUIObject()) {
                     return;
                 }
 
                 RaycastHit hit;
                 Ray ray = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
                 if (Physics.Raycast(ray, out hit, Mathf.Infinity)) {
+                    Debug.Log(hit.transform.gameObject.name);
                     if (selectables == (selectables | (1 << hit.collider.gameObject.layer))) {
                         SelectTarget(hit.collider.gameObject.GetComponent<LivingEntity>());
                     } else {
@@ -113,6 +112,8 @@ public class PlayerController : LivingEntity {
 
     public void Initialize(NetworkIdentifier networkIdentifier) {
         _networkEntity = new NetworkEntity(networkIdentifier);
+
+        gameObject.name = _networkEntity.NetworkObject.PlayerData.Name + "(" + _networkEntity.NetworkObject.Id + ")";
 
         this._playerClass = _networkEntity.NetworkObject.PlayerData.PClass;
 
