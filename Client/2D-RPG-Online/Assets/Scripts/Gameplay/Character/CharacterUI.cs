@@ -12,8 +12,6 @@ public class CharacterUI : Menu {
     private Image _imgManaBar;
     [SerializeField]
     private Image _imgTargetIndicatorCircle;
-    [SerializeField]
-    private TargetUI _targetUI;
 
     private LivingEntity _livingEntity;
 
@@ -25,41 +23,6 @@ public class CharacterUI : Menu {
         SetName();
         SetHealthBar();
         SetManaBar();
-    }
-
-    public void SelectTarget(LivingEntity livingEntity) {
-        this._livingEntity = livingEntity;
-
-        //NPC, MOB, OBJECT don't have target UI.
-        if (_targetUI != null) {
-            _targetUI.OpenUI(_livingEntity.CharacterStats);
-        }
-
-        _livingEntity.GetComponent<CharacterUI>().OnSelected();
-    }
-
-    public void DeselectTarget() {
-        //NPC, MOB, OBJECT don't have target UI.
-        if (_targetUI != null) {
-            _targetUI.Hide();
-        }
-
-        _livingEntity.GetComponent<CharacterUI>().OnDeselected();
-    }
-
-    public void UpdateTargetUI() {
-        //NPC, MOB, OBJECT don't have target UI.
-        if (_targetUI != null) {
-            _targetUI.UpdateUI();
-        }
-    }
-
-    public void OnSelected() {
-        _imgTargetIndicatorCircle.enabled = true;
-    }
-
-    public void OnDeselected() {
-        _imgTargetIndicatorCircle.enabled = false;
     }
 
     public void OpenUI() {

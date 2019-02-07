@@ -53,7 +53,6 @@ public class CharacterController : MonoBehaviour {
         this._characterStats.Initialize(networkObject);
         this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
         this._characterUI.UpdateUI();
-        this._characterUI.UpdateTargetUI();
     }
 
     public void SelectTarget(LivingEntity livingEntity) {
@@ -62,14 +61,10 @@ public class CharacterController : MonoBehaviour {
         }
 
         _selectedTarget = livingEntity;
-
-        _characterUI.SelectTarget(livingEntity);
     }
 
     public void DeselectTarget() {
         _selectedTarget = null;
-
-        _characterUI.DeselectTarget();
     }
 
     public LivingEntity GetClosestTarget(bool isOfflineMode) {
@@ -142,7 +137,6 @@ public class CharacterController : MonoBehaviour {
                     _characterMotor.LookTo(target.transform.position);
                     _characterAttack.AttackToTarget(target);
                     _characterAnimator.OnAttack();
-                    _characterUI.UpdateTargetUI();
                 }
             }
         }

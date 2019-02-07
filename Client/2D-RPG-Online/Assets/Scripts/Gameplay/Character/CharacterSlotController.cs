@@ -1,8 +1,9 @@
 ﻿using ManaShiftServer.Data.RestModels;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class CharacterSlotController : MonoBehaviour {
+public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     [Header("Initialization")]
     [SerializeField]
@@ -18,4 +19,7 @@ public class CharacterSlotController : MonoBehaviour {
         txtLevel.text = "Lv. " + characterModel.level;
     }
 
+    public void OnPointerClick(PointerEventData eventData) {
+        TargetIndicator.instance.SetPosition(eventData.pointerCurrentRaycast.gameObject.transform);
+    }
 }
