@@ -35,8 +35,19 @@ public class TargetIndicator : Menu {
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Transform _target;
+
     private void Start() {
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+    }
+
+    private void Update() {
+        if (this._target != null && isOpen) {
+            transform.localPosition = this._target.position;
+        }
     }
 
     public void OnLoadingCompleted() {
@@ -46,11 +57,13 @@ public class TargetIndicator : Menu {
     }
 
     public void SetPosition(Transform target, Type type) {
+        this._target = target;
+
         SetColor(type);
 
         Show();
 
-        transform.localPosition = target.position;
+        transform.localPosition = this._target.position;
     }
 
     private void SetColor(Type type) {
