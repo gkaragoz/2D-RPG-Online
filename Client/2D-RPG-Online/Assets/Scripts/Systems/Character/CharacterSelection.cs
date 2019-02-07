@@ -61,12 +61,13 @@ public class CharacterSelection : Menu {
 
         for (int ii = 0; ii < _characterSlotControllers.Count; ii++) {
             if (ii == 0) {
-                continue;
+                TargetIndicator.instance.SetPosition(_characterSlotControllers[ii].transform, TargetIndicator.Type.CharacterSelection);
+                SlotHighlighter.instance.SetPosition(_characterSlotControllers[ii].transform);
+                SelectCharacter(_characterSlotControllers[ii]);
+            } else {
+                _characterSlotControllers[ii].Sit();
             }
-            _characterSlotControllers[ii].Sit();
         }
-
-        SelectCharacter(_characterSlotControllers[0]);
     }
 
     public void SelectCharacter(CharacterSlotController selectedSlot) {
@@ -75,7 +76,6 @@ public class CharacterSelection : Menu {
         }
 
         this._selectedSlot = selectedSlot;
-        SlotHighlighter.instance.SetPosition(this._selectedSlot.transform);
     }
 
     public void SubmitSelectCharacter() {

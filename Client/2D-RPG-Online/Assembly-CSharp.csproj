@@ -375,6 +375,9 @@
     <None Include="Assets\Shaders\UltimateOutlineShadows.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Surface.shader" />
+    <Reference Include="Cinemachine">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>
@@ -384,17 +387,14 @@
     <Reference Include="Unity.CollabProxy.Editor">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.CollabProxy.Editor.dll</HintPath>
     </Reference>
+    <Reference Include="com.unity.cinemachine.editor">
+      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.TextMeshPro">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
     </Reference>
     <Reference Include="Unity.Analytics.DataPrivacy">
       <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
-    </Reference>
-    <Reference Include="Cinemachine">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/Cinemachine.dll</HintPath>
-    </Reference>
-    <Reference Include="com.unity.cinemachine.editor">
-      <HintPath>D:/Unity3D Workspace/2D-RPG-Online/Client/2D-RPG-Online/Library/ScriptAssemblies/com.unity.cinemachine.editor.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.AIModule">
       <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEngine.AIModule.dll</HintPath>

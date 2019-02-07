@@ -47,6 +47,7 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     public void OnSelected() {
         TargetIndicator.instance.SetPosition(transform, TargetIndicator.Type.CharacterSelection);
+        SlotHighlighter.instance.SetPosition(transform);
         StandUp();
         onSelected?.Invoke(this);
     }
