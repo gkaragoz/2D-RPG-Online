@@ -48,8 +48,9 @@ public class CharacterUI : Menu {
         _imgHealthBar.fillAmount = ((float)_livingEntity.CharacterStats.GetCurrentHealth() / (float)_livingEntity.CharacterStats.GetMaxHealth());
 
         if (_imgHealthBar.fillAmount == 0) {
-            _imgHealthBar.transform.parent.gameObject.SetActive(false);
-            _imgManaBar.transform.parent.gameObject.SetActive(false);
+            _imgHealthBar.color = new Color(_imgHealthBar.color.r, _imgHealthBar.color.g, _imgHealthBar.color.b, 110);
+        } else {
+            _imgHealthBar.color = new Color(_imgHealthBar.color.r, _imgHealthBar.color.g, _imgHealthBar.color.b, 255);
         }
     }
 

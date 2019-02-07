@@ -162,14 +162,14 @@ public class CharacterController : MonoBehaviour {
             Debug.Log("Death");
         } else {
             _characterAnimator.OnHit();
-            _characterUI.UpdateUI();
         }
+
+        _characterUI.UpdateUI();
     }
 
     public void Die() {
         _livingEntity.IsDeath = true;
         _characterAnimator.OnDeath();
-        _characterUI.HideUI();
     }
 
     public void Stop() {
