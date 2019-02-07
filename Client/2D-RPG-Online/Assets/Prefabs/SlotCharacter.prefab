@@ -212,8 +212,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff4b488ee6cfb9f419fba33670d7743c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  txtName: {fileID: 2265495317483356212}
-  txtLevel: {fileID: 6304736785851212051}
+  _txtName: {fileID: 2265495317483356212}
+  _txtLevel: {fileID: 6304736785851212051}
+  _slotIndex: 0
 --- !u!114 &461706326483382770
 MonoBehaviour:
   m_ObjectHideFlags: 0

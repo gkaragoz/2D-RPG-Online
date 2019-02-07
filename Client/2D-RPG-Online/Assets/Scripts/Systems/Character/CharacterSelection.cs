@@ -1,4 +1,5 @@
 ﻿using ManaShiftServer.Data.RestModels;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class CharacterSelection : Menu {
@@ -17,16 +18,19 @@ public class CharacterSelection : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private int _selectedIndex;
+    private CharacterSlotController _selectedSlot;
     [Utils.ReadOnly]
     [SerializeField]
-    private GameObject[] _characterSlots;
+    private List<CharacterSlotController> _characterSlotControllers = new List<CharacterSlotController>();
+    [Utils.ReadOnly]
+    [SerializeField]
+    private GameObject[] _characterSlotPositions;
 
     public void Initialize() {
-        _characterSlots = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
+        _characterSlotPositions = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
 
         for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
-            Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlots[ii].transform).transform;
+            Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlotPositions[ii].transform).transform;
 
             PlayerClass playerClass = (PlayerClass)AccountManager.instance.AllCharacters[ii].class_index;
 
@@ -50,21 +54,22 @@ public class CharacterSelection : Menu {
                     break;
             }
 
-            slotCharacterParent.GetComponent<CharacterSlotController>().Initialize(AccountManager.instance.AllCharacters[ii]);
+            _characterSlotControllers.Add(slotCharacterParent.GetComponent<CharacterSlotController>());
+            _characterSlotControllers[ii].Initialize(AccountManager.instance.AllCharacters[ii], ii);
+            _characterSlotControllers[ii].onSelected += SelectCharacter;
         }
 
-        SelectCharacter(0);
+        SelectCharacter(_characterSlotControllers[0]);
     }
 
-    public void SelectCharacter(int index) {
-        _characterSlots[_selectedIndex].transform.Find("Spot Light").gameObject.SetActive(false);
-        _selectedIndex = index;
-        _characterSlots[_selectedIndex].transform.Find("Spot Light").gameObject.SetActive(true);
+    public void SelectCharacter(CharacterSlotController selectedSlot) {
+        this._selectedSlot = selectedSlot;
+        SlotHighlighter.instance.SetPosition(this._selectedSlot.transform);
     }
 
     public void SubmitSelectCharacter() {
         RequestCharSelect RequestSelectCharacter = new RequestCharSelect();
-        RequestSelectCharacter.char_name = CharacterManager.instance.GetCharacterName(_selectedIndex);
+        RequestSelectCharacter.char_name = CharacterManager.instance.GetCharacterName(this._selectedSlot.SlotIndex);
         RequestSelectCharacter.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ISelectCharacterPostMethod(RequestSelectCharacter, OnSelectCharacterResponse));
@@ -74,7 +79,7 @@ public class CharacterSelection : Menu {
         if (selectedCharacterResponse.success) {
             Debug.Log(APIConfig.SUCCESS_TO_SELECT_CHARACTER);
 
-            string selectedCharacterName = CharacterManager.instance.GetCharacterName(_selectedIndex);
+            string selectedCharacterName = CharacterManager.instance.GetCharacterName(this._selectedSlot.SlotIndex);
             CharacterManager.instance.SelectCharacter(CharacterManager.instance.GetCharacterModel(selectedCharacterName));
         } else {
             Debug.Log(APIConfig.ERROR_SELECT_CHARACTER);
