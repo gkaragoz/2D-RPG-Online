@@ -109,7 +109,7 @@ public class GameManager : MonoBehaviour {
 
     private void OnLoadingCompleted() {
         if (SceneController.instance.GetActiveScene().name == "Tutorial") {
-            Debug.Log("Tutorial scene loaded!");
+            //Camera.main.gameObject.SetActive(true);
 
             TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
@@ -118,12 +118,12 @@ public class GameManager : MonoBehaviour {
 
             TutorialManager.instance.PauseTutorial();
         } else if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
-            Debug.Log("CharacterSelection scene loaded!");
+            //Camera.main.gameObject.SetActive(false);
 
             //Open Character Selection Menu.
             CharacterManager.instance.ShowCharacterSelectionMenu();
         } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
-            Debug.Log("Gameplay scene loaded!");
+            //Camera.main.gameObject.SetActive(true);
         }
     }
 

@@ -33,6 +33,7 @@ public class CharacterSelection : Menu {
         _characterSlots = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
 
         for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
+            _characterSlots[ii].transform.Find("Spot Light").gameObject.SetActive(true);
             Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlots[ii].transform).transform;
 
             PlayerClass playerClass = (PlayerClass)AccountManager.instance.AllCharacters[ii].class_index;
