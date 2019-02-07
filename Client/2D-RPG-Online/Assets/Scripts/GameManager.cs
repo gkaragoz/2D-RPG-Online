@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour {
     private IEnumerator Bootup() {
         AudioManager.instance.ChangeBackgroundMusic(SceneController.instance.GetActiveScene());
 
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(1f);
 
         AccountManager.instance.onAccountManagerInitialized += OnAccountManagerInitialized;
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
