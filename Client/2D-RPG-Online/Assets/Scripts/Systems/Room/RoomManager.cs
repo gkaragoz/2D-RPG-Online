@@ -45,6 +45,8 @@ public class RoomManager : Menu {
     private PlayerController _myPlayerController;
     private RoomPlayerInfo _myRoomPlayerInfo;
 
+    private bool _hasInitialized = false;
+
     public int serverTickrate;
 
     private void Start() {
@@ -98,6 +100,10 @@ public class RoomManager : Menu {
             for (int ii = 0; ii < _otherPlayerRoomInfos.Count; ii++) {
                 CreatePlayer(_otherPlayerRoomInfos[ii]);
             }
+
+            _hasInitialized = true;
+        } else {
+            _hasInitialized = false;
         }
     }
 
@@ -195,6 +201,10 @@ public class RoomManager : Menu {
     }
 
     private void OnRoomUpdated(ShiftServerData data) {
+        if (!_hasInitialized) {
+            return;
+        }
+
         serverTickrate = data.SvTickRate;
 
         //Debug.Log(data);
