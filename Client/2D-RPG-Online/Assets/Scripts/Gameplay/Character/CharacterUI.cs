@@ -7,6 +7,8 @@ public class CharacterUI : Menu {
     [SerializeField]
     private TextMeshProUGUI _txtName;
     [SerializeField]
+    private TextMeshProUGUI _txtLevel;
+    [SerializeField]
     private Image _imgHealthBar;
     [SerializeField]
     private Image _imgManaBar;
@@ -21,6 +23,7 @@ public class CharacterUI : Menu {
 
     public void UpdateUI() {
         SetName();
+        SetLevel();
         SetHealthBar();
         SetManaBar();
     }
@@ -35,6 +38,10 @@ public class CharacterUI : Menu {
 
     private void SetName() {
         _txtName.text = _livingEntity.CharacterStats.GetName();
+    }
+
+    private void SetLevel() {
+        _txtLevel.text = _livingEntity.CharacterStats.GetLevel().ToString();
     }
 
     private void SetHealthBar() {

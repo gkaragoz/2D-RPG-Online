@@ -35,6 +35,16 @@ public class TargetIndicator : Menu {
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
+    private void Start() {
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+    }
+
+    public void OnLoadingCompleted() {
+        if (SceneController.instance.GetActiveScene().name == "CharacterSelection" || SceneController.instance.GetActiveScene().name == "Gameplay") {
+            Hide();
+        }
+    }
+
     public void SetPosition(Transform target, Type type) {
         SetColor(type);
 

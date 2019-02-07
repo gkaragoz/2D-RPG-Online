@@ -21,6 +21,16 @@ public class SlotHighlighter : MonoBehaviour {
     [SerializeField]
     private Light _spotLight;
 
+    private void Start() {
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+    }
+
+    public void OnLoadingCompleted() {
+        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+            _spotLight.gameObject.SetActive(false);
+        }
+    }
+
     public void SetPosition(Transform target) {
         _spotLight.gameObject.SetActive(true);
         transform.localPosition = target.position;
