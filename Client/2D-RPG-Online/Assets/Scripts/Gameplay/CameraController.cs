@@ -51,10 +51,6 @@ public class CameraController : MonoBehaviour {
         get { return Input.GetAxis(_zoomingAxis); }
     }
 
-    private void Awake() {
-        DontDestroyOnLoad(gameObject);
-    }
-
     private void Start() {
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
     }
