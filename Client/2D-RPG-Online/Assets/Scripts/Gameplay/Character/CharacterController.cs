@@ -60,8 +60,8 @@ public class CharacterController : MonoBehaviour {
             DeselectTarget();
         }
 
-        TargetIndicator.instance.SetPosition(transform, TargetIndicator.Type.Enemy);
         _selectedTarget = livingEntity;
+        TargetIndicator.instance.SetPosition(_selectedTarget.transform, TargetIndicator.Type.Enemy);
     }
 
     public void DeselectTarget() {
