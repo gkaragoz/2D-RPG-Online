@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour {
 
@@ -9,43 +10,72 @@ public class CameraController : MonoBehaviour {
         CharacterSelection
     }
 
-    public Transform target;
+    [Header("Initialization")]
+    [SerializeField]
+    private PhysicsRaycaster _physicsRaycaster;
+    [SerializeField]
+    private Cinemachine.CinemachineBrain _cinemachineBrain;
+    [SerializeField]
+    private string _zoomingAxis = "Mouse ScrollWheel";
 
-    public bool smoothFollow = true;
-    public float smoothSpeed = 0.125f;
-    public Vector3 offset;
+    [Header("Settings")]
+    [SerializeField]
+    private bool _blockProcess;
+    [SerializeField]
+    private bool _useScrollwheelZooming = true;
+    [SerializeField]
+    private bool _smoothFollow = true;
+    [SerializeField]
+    private float _smoothSpeed = 0.125f;
+    [SerializeField]
+    private Vector3 _offset;
 
-    public float maxHeight = 10f;
-    public float minHeight = 5f;
-    public float heightDampening = 5f;
-    public float scrollWheelZoomingSensitivity = 60f;
-
-    private float _zoomPos = 0; //value in range (0, 1) used as t in Matf.Lerp
-
-    public bool useScrollwheelZooming = true;
-    public string zoomingAxis = "Mouse ScrollWheel";
+    [SerializeField]
+    private float _maxHeight = 10f;
+    [SerializeField]
+    private float _minHeight = 5f;
+    [SerializeField]
+    private float _heightDampening = 5f;
+    [SerializeField]
+    private float _scrollWheelZoomingSensitivity = 60f;
+    
+    [Header("Debug")]
+    [SerializeField]
+    [Utils.ReadOnly]
+    private Transform _target;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _zoomPos = 0;
 
     private float ScrollWheel {
-        get { return Input.GetAxis(zoomingAxis); }
+        get { return Input.GetAxis(_zoomingAxis); }
     }
 
     private void Awake() {
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Start() {
+        LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
+    }
+
     private void LateUpdate() {
-        if (useScrollwheelZooming)
-            HeightCalculation();
-
-        if (target == null)
+        if (_blockProcess) {
             return;
+        }
+        if (_target == null) {
+            return;
+        }
+        if (_useScrollwheelZooming) {
+            HeightCalculation();
+        }
 
-        if (smoothFollow) {
-            Vector3 desiredPosition = target.position + offset;
-            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, smoothSpeed);
+        if (_smoothFollow) {
+            Vector3 desiredPosition = _target.position + _offset;
+            Vector3 smoothedPosition = Vector3.Lerp(transform.position, desiredPosition, _smoothSpeed);
             transform.position = smoothedPosition;
         } else {
-            Vector3 desiredPosition = target.position + offset;
+            Vector3 desiredPosition = _target.position + _offset;
             transform.position = desiredPosition;
         }
     }
@@ -53,14 +83,16 @@ public class CameraController : MonoBehaviour {
     public void SetBehaviour(SceneBehaviour behaviour) {
         switch (behaviour) {
             case SceneBehaviour.Gameplay:
-                GetComponent<Cinemachine.CinemachineBrain>().enabled = false;
+                _cinemachineBrain.enabled = false;
+                _physicsRaycaster.enabled = false;
                 transform.localRotation = Quaternion.Euler(new Vector3(45, 0f, 0));
                 transform.localPosition = new Vector3(0, 8, -7);
-                this.enabled = true;
+                _blockProcess = false;
                 break;
             case SceneBehaviour.CharacterSelection:
-                this.enabled = false;
-                GetComponent<Cinemachine.CinemachineBrain>().enabled = true;
+                _physicsRaycaster.enabled = true;
+                _cinemachineBrain.enabled = true;
+                _blockProcess = true;
                 break;
             default:
                 break;
@@ -72,7 +104,15 @@ public class CameraController : MonoBehaviour {
     }
 
     public void SetTarget(Transform target) {
-        this.target = target;
+        this._target = target;
+    }
+
+    private void OnLoadingCompleted() {
+        if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
+            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.CharacterSelection);
+        } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.Gameplay);
+        }
     }
 
     private void HeightCalculation() {
