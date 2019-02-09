@@ -148,6 +148,7 @@ public class LoginManager : MonoBehaviour {
             onLoginResult.Invoke(APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA);
         } else {
             Debug.Log(APIConfig.ERROR_GET_ACCOUNT_INFO);
+
             onLoginResult.Invoke(APIConfig.LoginResults.ERROR_GET_ACCOUNT_DATA);
         }
     }

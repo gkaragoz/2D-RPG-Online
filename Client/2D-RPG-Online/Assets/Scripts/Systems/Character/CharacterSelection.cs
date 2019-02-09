@@ -25,8 +25,21 @@ public class CharacterSelection : Menu {
     [Utils.ReadOnly]
     [SerializeField]
     private GameObject[] _characterSlotPositions;
+    [Utils.ReadOnly]
+    [SerializeField]
+    private GameObject _selectionSlotsParent;
 
-    public void Initialize() {
+    public void Initialize(bool show) {
+        _selectionSlotsParent = GameObject.Find("SelectionSlots");
+
+        if (!show) {
+            _selectionSlotsParent.SetActive(false);
+            Hide();
+            return;
+        }
+
+        Show();
+
         _characterSlotPositions = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
 
         for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {

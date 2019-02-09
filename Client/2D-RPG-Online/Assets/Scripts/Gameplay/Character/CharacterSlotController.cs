@@ -12,16 +12,13 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     [Header("Initialization")]
     [SerializeField]
+    private int _slotIndex;
+    [SerializeField]
     private TextMeshProUGUI _txtName;
     [SerializeField]
     private TextMeshProUGUI _txtLevel;
     [SerializeField]
     private CharacterAnimator _characterAnimator;
-
-    [Header("Debug")]
-    [SerializeField]
-    [Utils.ReadOnly]
-    private int _slotIndex;
 
     private CharacterModel _characterModel;
 

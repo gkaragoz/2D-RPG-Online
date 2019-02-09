@@ -1,4 +1,5 @@
 ﻿using ManaShiftServer.Data.RestModels;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -12,8 +13,6 @@ public class CharacterCreation : Menu {
     private TMP_InputField _inputFieldCharacterName;
     [SerializeField]
     private Button _btnCreateCharacter;
-    [SerializeField]
-    private Image _imageClassHighlight;
 
     [Header("Settings")]
     [SerializeField]
@@ -22,37 +21,53 @@ public class CharacterCreation : Menu {
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
-    private int _selectedClassID;
-
-    public int SelectedClassID {
-        get { return _selectedClassID; }
-    }
+    private CharacterSlotController _selectedSlot;
+    [Utils.ReadOnly]
+    [SerializeField]
+    private CharacterSlotController[] _characterSlotControllers;
+    [Utils.ReadOnly]
+    [SerializeField]
+    private GameObject _characterCreationObjectParent;
 
     public string CharacterName {
         get { return _inputFieldCharacterName.text; }
     }
 
-    private void Start() {
-        SelectClass(0);
+    public void Initialize(bool show) {
+        _characterCreationObjectParent = GameObject.Find("CreationSlots");
+
+        if (!show) {
+            _characterCreationObjectParent.SetActive(false);
+            return;
+        }
+
+        Show();
+
+        _characterSlotControllers = _characterCreationObjectParent.GetComponentsInChildren<CharacterSlotController>();
+
+        for (int ii = 0; ii < _characterSlotControllers.Length; ii++) {
+            _characterSlotControllers[ii].onSelected += SelectClass;
+
+            if (ii == 0) {
+                TargetIndicator.instance.SetPosition(_characterSlotControllers[ii].transform, TargetIndicator.Type.CharacterSelection);
+                SlotHighlighter.instance.SetPosition(_characterSlotControllers[ii].transform);
+                SelectClass(_characterSlotControllers[ii]);
+            } else {
+                _characterSlotControllers[ii].Sit();
+            }
+        }
+
         CheckNameAvailability();
     }
 
-    public void SelectClass(int classID) {
-        _selectedClassID = classID;
-
-        if (classID == 0) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Warrior).ClassDescription;
-        } else if (classID == 1) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Archer).ClassDescription;
-        } else if (classID == 2) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Mage).ClassDescription;
-        } else if (classID == 3) {
-            _imageClassHighlight.color = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassFrameColor;
-            _txtClassDescription.text = CharacterClassVisualization.instance.GetVisualizationProperties(CharacterClassVisualization.Classes.Priest).ClassDescription;
+    public void SelectClass(CharacterSlotController selectedSlot) {
+        if (this._selectedSlot != null) {
+            if (this._selectedSlot != selectedSlot) {
+                this._selectedSlot.Sit();
+            }
         }
+
+        this._selectedSlot = selectedSlot;
     }
 
     public void OnInputFieldValueChanged() {
@@ -61,7 +76,7 @@ public class CharacterCreation : Menu {
 
     public void CreateCharacter() {
         RequestCharAdd requestCreateCharacter = new RequestCharAdd();
-        requestCreateCharacter.class_index = SelectedClassID;
+        requestCreateCharacter.class_index = this._selectedSlot.SlotIndex;
         requestCreateCharacter.char_name = CharacterName;
         requestCreateCharacter.session_id = NetworkManager.SessionID;
 

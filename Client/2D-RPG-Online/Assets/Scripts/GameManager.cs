@@ -57,6 +57,7 @@ public class GameManager : MonoBehaviour {
 
         yield return new WaitForSeconds(1f);
 
+        SceneController.instance.onSceneLoaded += OnSceneLoaded;
         AccountManager.instance.onAccountManagerInitialized += OnAccountManagerInitialized;
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
         LoadingManager.instance.onLoadingCompleted += OnLoadingCompleted;
@@ -85,6 +86,17 @@ public class GameManager : MonoBehaviour {
             LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
 
             LoginManager.instance.Initialize();
+            LoginManager.instance.Login();
+        }
+    }
+
+    private void OnSceneLoaded() {
+        if (SceneController.instance.GetActiveScene().name == "Characters") {
+            if (AccountManager.instance.HasCharacter) {
+                CharacterManager.instance.InitializeCharacterSelection();
+            } else {
+                CharacterManager.instance.InitializeCharacterCreation();
+            }
         }
     }
 
@@ -93,31 +105,25 @@ public class GameManager : MonoBehaviour {
             //Go To Tutorial Scene.
             SceneController.instance.LoadSceneAsync("Tutorial", UnityEngine.SceneManagement.LoadSceneMode.Single);
         } else {
-            //Go To Character Selection Scene.
-            SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
+            //Go To Characters Scene.
+            SceneController.instance.LoadSceneAsync("Characters", UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
     }
 
     private void OnTutorialCompleted() {
         PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
 
-        //Go To Character Selection Scene.
-        SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
-
-        CharacterManager.instance.ShowCharacterCreationMenu();
+        LoadingManager.instance.ResetTasks();
+        //Go To Characters Scene.
+        SceneController.instance.LoadSceneAsync("Characters", UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void OnLoadingCompleted() {
         if (SceneController.instance.GetActiveScene().name == "Tutorial") {
-
             TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
+
             TutorialManager.instance.StartTutorial();
-
-            LoginManager.instance.Login();
-
-            TutorialManager.instance.PauseTutorial();
-        } else if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
-            CharacterManager.instance.ShowCharacterSelectionMenu();
+        } else if (SceneController.instance.GetActiveScene().name == "Characters") {
         } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
         }
     }
@@ -155,8 +161,8 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnRoomLeft() {
-        //Go To Character Selection Scene.
-        SceneController.instance.LoadSceneAsync("CharacterSelection", UnityEngine.SceneManagement.LoadSceneMode.Single);
+        //Go To Characters Scene.
+        SceneController.instance.LoadSceneAsync("Characters", UnityEngine.SceneManagement.LoadSceneMode.Single);
 
         RoomManager.instance.Hide();
         MenuManager.instance.Show();

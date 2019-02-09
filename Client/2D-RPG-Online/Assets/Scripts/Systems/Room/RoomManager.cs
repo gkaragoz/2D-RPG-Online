@@ -80,6 +80,10 @@ public class RoomManager : Menu {
     }
 
     private void Update() {
+        if (NetworkManager.mss == null) {
+            return;
+        }
+
         if (NetworkManager.mss.IsConnected) {
             double interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
             double renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
@@ -94,8 +98,8 @@ public class RoomManager : Menu {
         }
     }
 
-    public void OnSceneLoaded(string sceneName) {
-        if (sceneName == "Gameplay") {
+    public void OnSceneLoaded() {
+        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
             CreateMyPlayer();
             for (int ii = 0; ii < _otherPlayerRoomInfos.Count; ii++) {
                 CreatePlayer(_otherPlayerRoomInfos[ii]);

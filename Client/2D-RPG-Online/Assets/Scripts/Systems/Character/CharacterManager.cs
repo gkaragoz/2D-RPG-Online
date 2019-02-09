@@ -13,8 +13,6 @@ public class CharacterManager : MonoBehaviour {
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
-
-        DontDestroyOnLoad(instance);
     }
 
     #endregion
@@ -36,18 +34,16 @@ public class CharacterManager : MonoBehaviour {
     [SerializeField]
     private CharacterModel _selectedCharacter;
 
-    private void Start() {
-        SceneController.instance.onSceneLoaded += OnSceneLoaded;
+    public void InitializeCharacterSelection() {
+        _characterSelection.Initialize(true);
+        _characterCreation.Initialize(false);
+
+        initializationProgress.Invoke();
     }
 
-    private void OnSceneLoaded(string sceneName) {
-        if (sceneName == "CharacterSelection") {
-            Initialize();
-        }
-    }
-
-    public void Initialize() {
-        _characterSelection.Initialize();
+    public void InitializeCharacterCreation() {
+        _characterCreation.Initialize(true);
+        _characterSelection.Initialize(false);
 
         initializationProgress.Invoke();
     }

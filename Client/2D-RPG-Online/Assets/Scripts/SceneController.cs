@@ -20,7 +20,7 @@ public class SceneController : MonoBehaviour {
 
     public LoadingTask sceneLoadedProgress;
 
-    public Action<string> onSceneLoaded;
+    public Action onSceneLoaded;
 
     public Scene GetActiveScene() {
         return SceneManager.GetActiveScene();
@@ -40,7 +40,7 @@ public class SceneController : MonoBehaviour {
             yield return null;
         }
 
-        onSceneLoaded?.Invoke(name);
+        onSceneLoaded?.Invoke();
         sceneLoadedProgress?.Invoke();
     }
 
