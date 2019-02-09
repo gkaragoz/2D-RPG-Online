@@ -27,23 +27,19 @@ public class CharacterCreation : Menu {
     private CharacterSlotController[] _characterSlotControllers;
     [Utils.ReadOnly]
     [SerializeField]
-    private GameObject _characterCreationObjectParent;
+    private GameObject _characterCreationParent;
 
     public string CharacterName {
         get { return _inputFieldCharacterName.text; }
     }
 
-    public void Initialize(bool show) {
-        _characterCreationObjectParent = GameObject.Find("CreationSlots");
-
-        if (!show) {
-            _characterCreationObjectParent.SetActive(false);
-            return;
+    public void Initialize() {
+        if (_characterCreationParent == null) {
+            _characterCreationParent = GameObject.Find("CreationSlots");
+            subContainer = _characterCreationParent;
         }
 
-        Show();
-
-        _characterSlotControllers = _characterCreationObjectParent.GetComponentsInChildren<CharacterSlotController>();
+        _characterSlotControllers = _characterCreationParent.GetComponentsInChildren<CharacterSlotController>();
 
         for (int ii = 0; ii < _characterSlotControllers.Length; ii++) {
             _characterSlotControllers[ii].onSelected += SelectClass;

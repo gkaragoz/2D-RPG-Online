@@ -8,6 +8,8 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     public Action<CharacterSlotController> onSelected;
 
+    public bool HasInitialized { get; private set; }
+
     public int SlotIndex { get { return _slotIndex; } }
 
     [Header("Initialization")]
@@ -19,6 +21,8 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
     private TextMeshProUGUI _txtLevel;
     [SerializeField]
     private CharacterAnimator _characterAnimator;
+    [SerializeField]
+    private GameObject _characterFake;
 
     private CharacterModel _characterModel;
 
@@ -55,9 +59,14 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
     public void Initialize(CharacterModel characterModel, int slotIndex, GameObject characterObject) {
         this._characterModel = characterModel;
         this._slotIndex = slotIndex;
+        _characterFake.gameObject.SetActive(false);
+        _txtName.gameObject.SetActive(true);
         _txtName.text = characterModel.name;
+        _txtLevel.gameObject.SetActive(true);
         _txtLevel.text = "Lv. " + characterModel.level;
         SetAnimator(characterObject.GetComponent<Animator>());
+
+        this.HasInitialized = true;
     }
 
     public void SetAnimator(Animator animator) {

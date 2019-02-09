@@ -28,9 +28,13 @@ public class LoginManager : MonoBehaviour {
     public LoadingTask sessionIdResponseProgress;
     public LoadingTask accountDataResponseProgress;
 
+    public bool IsGuest { get { return _isGuest; } }
+
     public static string ATTEMP_TO_GET_GUEST_SESSION = "ATTEMP to get Guest Session!";
     public static string ERROR_GET_GUEST_SESSION = "ERROR on getting Guest Session!";
     public static string SUCCESS_GET_GUEST_SESSION = "SUCCESS on getting Guest Session!";
+
+    private bool _isGuest;
 
     public void Initialize() {
         GooglePlayManager.instance.onGooglePlaySignInResult += OnGooglePlaySignInResult;
@@ -107,12 +111,15 @@ public class LoginManager : MonoBehaviour {
         switch (result) {
             case GooglePlayManager.Results.SUCCESS_SIGN_IN:
                 RequestSessionID();
+                _isGuest = false;
                 break;
             case GooglePlayManager.Results.SUCCESS_SIGN_OUT:
                 LoginAsAGuest();
+                _isGuest = true;
                 break;
             case GooglePlayManager.Results.ERROR_SIGN_IN:
                 LoginAsAGuest();
+                _isGuest = true;
                 break;
             case GooglePlayManager.Results.ERROR_SIGN_OUT:
                 PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);

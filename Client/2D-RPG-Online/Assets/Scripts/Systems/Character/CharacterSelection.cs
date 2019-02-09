@@ -1,11 +1,10 @@
 ﻿using ManaShiftServer.Data.RestModels;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class CharacterSelection : Menu {
 
-    [SerializeField]
-    private GameObject _slotCharacterPrefab;
     [SerializeField]
     private GameObject _warriorPrefab;
     [SerializeField]
@@ -14,6 +13,12 @@ public class CharacterSelection : Menu {
     private GameObject _magePrefab;
     [SerializeField]
     private GameObject _priestPrefab;
+    [SerializeField]
+    private CharacterSlotController[] _characterSlotControllers;
+    [SerializeField]
+    private Button _btnImReady;
+    [SerializeField]
+    private Button _btnCreateCharacter;
 
     [Header("Debug")]
     [SerializeField]
@@ -21,29 +26,20 @@ public class CharacterSelection : Menu {
     private CharacterSlotController _selectedSlot;
     [Utils.ReadOnly]
     [SerializeField]
-    private List<CharacterSlotController> _characterSlotControllers = new List<CharacterSlotController>();
-    [Utils.ReadOnly]
-    [SerializeField]
-    private GameObject[] _characterSlotPositions;
-    [Utils.ReadOnly]
-    [SerializeField]
     private GameObject _selectionSlotsParent;
 
-    public void Initialize(bool show) {
-        _selectionSlotsParent = GameObject.Find("SelectionSlots");
-
-        if (!show) {
-            _selectionSlotsParent.SetActive(false);
-            Hide();
-            return;
+    public void Initialize() {
+        if (_selectionSlotsParent == null) {
+            _selectionSlotsParent = GameObject.Find("SelectionSlots");
+            subContainer = _selectionSlotsParent;
         }
 
-        Show();
-
-        _characterSlotPositions = GameObject.FindGameObjectsWithTag("CharacterSelectionSlot");
+        _characterSlotControllers = _selectionSlotsParent.GetComponentsInChildren<CharacterSlotController>();
 
         for (int ii = 0; ii < AccountManager.instance.AllCharacters.Count; ii++) {
-            Transform slotCharacterParent = Instantiate(_slotCharacterPrefab, _characterSlotPositions[ii].transform).transform;
+            if (_characterSlotControllers[ii].HasInitialized) {
+                continue;
+            }
 
             PlayerClass playerClass = (PlayerClass)AccountManager.instance.AllCharacters[ii].class_index;
 
@@ -51,34 +47,37 @@ public class CharacterSelection : Menu {
             
             switch (playerClass) {
                 case PlayerClass.Warrior:
-                    _characterObject = Instantiate(_warriorPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_warriorPrefab, _characterSlotControllers[ii].transform);
                     break;
                 case PlayerClass.Archer:
-                    _characterObject = Instantiate(_archerPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_archerPrefab, _characterSlotControllers[ii].transform);
                     break;
                 case PlayerClass.Mage:
-                    _characterObject = Instantiate(_magePrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_magePrefab, _characterSlotControllers[ii].transform);
                     break;
                 case PlayerClass.Priest:
-                    _characterObject = Instantiate(_priestPrefab, slotCharacterParent);
+                    _characterObject = Instantiate(_priestPrefab, _characterSlotControllers[ii].transform);
                     break;
                 default:
                     Debug.LogError("CLASS NOT FOUND!");
                     break;
             }
 
-            _characterSlotControllers.Add(slotCharacterParent.GetComponent<CharacterSlotController>());
             _characterSlotControllers[ii].Initialize(AccountManager.instance.AllCharacters[ii], ii, _characterObject);
-            _characterSlotControllers[ii].onSelected += SelectCharacter;
         }
 
-        for (int ii = 0; ii < _characterSlotControllers.Count; ii++) {
-            if (ii == 0) {
-                TargetIndicator.instance.SetPosition(_characterSlotControllers[ii].transform, TargetIndicator.Type.CharacterSelection);
-                SlotHighlighter.instance.SetPosition(_characterSlotControllers[ii].transform);
-                SelectCharacter(_characterSlotControllers[ii]);
-            } else {
-                _characterSlotControllers[ii].Sit();
+        for (int ii = 0; ii < _characterSlotControllers.Length; ii++) {
+            _characterSlotControllers[ii].transform.parent.GetComponentInChildren<Canvas>().enabled = !_characterSlotControllers[ii].HasInitialized;
+            _characterSlotControllers[ii].onSelected += SelectCharacter;
+
+            if (_characterSlotControllers[ii].HasInitialized) {
+                if (ii == 0) {
+                    TargetIndicator.instance.SetPosition(_characterSlotControllers[ii].transform, TargetIndicator.Type.CharacterSelection);
+                    SlotHighlighter.instance.SetPosition(_characterSlotControllers[ii].transform);
+                    SelectCharacter(_characterSlotControllers[ii]);
+                } else {
+                    _characterSlotControllers[ii].Sit();
+                }
             }
         }
     }
@@ -91,6 +90,8 @@ public class CharacterSelection : Menu {
         }
 
         this._selectedSlot = selectedSlot;
+
+        SetSubmitButton();
     }
 
     public void SubmitSelectCharacter() {
@@ -99,6 +100,16 @@ public class CharacterSelection : Menu {
         RequestSelectCharacter.session_id = NetworkManager.SessionID;
 
         StartCoroutine(APIConfig.ISelectCharacterPostMethod(RequestSelectCharacter, OnSelectCharacterResponse));
+    }
+
+    private void SetSubmitButton() {
+        if (this._selectedSlot.HasInitialized) {
+            _btnCreateCharacter.gameObject.SetActive(false);
+            _btnImReady.gameObject.SetActive(true);
+        } else {
+            _btnCreateCharacter.gameObject.SetActive(true);
+            _btnImReady.gameObject.SetActive(false);
+        }
     }
 
     private void OnSelectCharacterResponse(CharSelect selectedCharacterResponse) {

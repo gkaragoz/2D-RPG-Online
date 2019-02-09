@@ -35,15 +35,21 @@ public class CharacterManager : MonoBehaviour {
     private CharacterModel _selectedCharacter;
 
     public void InitializeCharacterSelection() {
-        _characterSelection.Initialize(true);
-        _characterCreation.Initialize(false);
+        _characterCreation.Initialize();
+        _characterSelection.Initialize();
+
+        _characterCreation.Hide();
+        _characterSelection.Show();
 
         initializationProgress.Invoke();
     }
 
     public void InitializeCharacterCreation() {
-        _characterCreation.Initialize(true);
-        _characterSelection.Initialize(false);
+        _characterSelection.Initialize();
+        _characterCreation.Initialize();
+
+        _characterSelection.Hide();
+        _characterCreation.Show();
 
         initializationProgress.Invoke();
     }
