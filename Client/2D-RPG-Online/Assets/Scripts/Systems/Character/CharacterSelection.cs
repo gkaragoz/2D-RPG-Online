@@ -19,6 +19,8 @@ public class CharacterSelection : Menu {
     private Button _btnImReady;
     [SerializeField]
     private Button _btnCreateCharacter;
+    [SerializeField]
+    private Button _btnBack;
 
     [Header("Debug")]
     [SerializeField]
@@ -32,6 +34,12 @@ public class CharacterSelection : Menu {
         if (_selectionSlotsParent == null) {
             _selectionSlotsParent = GameObject.Find("SelectionSlots");
             subContainer = _selectionSlotsParent;
+        }
+
+        if (!AccountManager.instance.HasCharacter) {
+            _btnBack.gameObject.SetActive(false);
+        } else {
+            _btnBack.gameObject.SetActive(true);
         }
 
         _characterSlotControllers = _selectionSlotsParent.GetComponentsInChildren<CharacterSlotController>();
