@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Linq;
+using UnityEngine;
 
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
@@ -13,13 +14,13 @@ public class CharacterController : MonoBehaviour {
 
     [Header("Initialization")]
     public LayerMask attackables;
-    public ParticleSystem takeHitFX;
 
     private CharacterMotor _characterMotor;
     private CharacterAttack _characterAttack;
     private CharacterAnimator _characterAnimator;
     private CharacterUI _characterUI;
     private CharacterStats _characterStats;
+    private SkillController _skillController;
     private LivingEntity _livingEntity;
 
     [Header("Debug")]
@@ -33,6 +34,7 @@ public class CharacterController : MonoBehaviour {
         _characterAnimator = GetComponent<CharacterAnimator>();
         _characterUI = GetComponent<CharacterUI>();
         _characterStats = GetComponent<CharacterStats>();
+        _skillController = GetComponent<SkillController>();
     }
 
     private void Update() {
@@ -52,6 +54,7 @@ public class CharacterController : MonoBehaviour {
         this._livingEntity = livingEntity;
         this._characterStats.Initialize(networkObject);
         this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
+        this._skillController.Initialize(this._characterStats.GetCharacterClass(), GetComponentsInChildren<Skill>());
         this._characterUI.UpdateUI();
     }
 
@@ -155,7 +158,6 @@ public class CharacterController : MonoBehaviour {
         }
 
         _characterStats.TakeDamage(damage);
-        takeHitFX.Play();
 
         if (_characterStats.GetCurrentHealth() <= 0) {
             Die();

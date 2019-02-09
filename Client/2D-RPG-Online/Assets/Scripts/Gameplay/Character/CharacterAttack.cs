@@ -21,9 +21,11 @@ public class CharacterAttack : MonoBehaviour {
     private float _nextAttackTime;
 
     private CharacterStats _characterStats;
+    private SkillController _skillController; 
 
     private void Start() {
         _characterStats = GetComponent<CharacterStats>();
+        _skillController = GetComponent<SkillController>();
     }
 
     public void AttackEmpty() {
@@ -45,7 +47,7 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        yield return new WaitForSeconds(0.3f);
+        _skillController.OnAttack(this.transform);
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 

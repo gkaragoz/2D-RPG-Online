@@ -25,6 +25,36 @@ public class CharacterSlotController : MonoBehaviour, IPointerClickHandler {
 
     private CharacterModel _characterModel;
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Alpha0)) {
+            _characterAnimator.OnMove(Vector3.forward);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha1)) {
+            _characterAnimator.OnHit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha2)) {
+            _characterAnimator.OnAttack();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha3)) {
+            _characterAnimator.Sit();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha4)) {
+            _characterAnimator.StandUp();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Alpha5)) {
+            _characterAnimator.OnDeath();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Tab)) {
+            _characterAnimator.Reset();
+        }
+    }
+
     public void Initialize(CharacterModel characterModel, int slotIndex, GameObject characterObject) {
         this._characterModel = characterModel;
         this._slotIndex = slotIndex;

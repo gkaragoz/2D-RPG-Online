@@ -8,6 +8,7 @@ public class CharacterAnimator : MonoBehaviour {
     [SerializeField]
     private PathFollower _pathFollower;
 
+    [SerializeField]
     private Animator _animator;
 
     private static readonly int anim_OnHit = Animator.StringToHash("OnHit");

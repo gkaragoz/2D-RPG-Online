@@ -316,6 +316,9 @@
     <Compile Include="Assets\Scripts\Gameplay\ObjectDestroy.cs" />
     <Compile Include="Assets\Scripts\Gameplay\PlayerController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Portal.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Skill\Skill.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Skill\Skill_SO.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\Skill\SkillController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\SlotHighlighter.cs" />
     <Compile Include="Assets\Scripts\Gameplay\TargetIndicator.cs" />
     <Compile Include="Assets\Scripts\Gameplay\WorldSpaceBillboard.cs" />

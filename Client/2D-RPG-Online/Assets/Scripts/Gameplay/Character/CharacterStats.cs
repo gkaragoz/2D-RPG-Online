@@ -25,6 +25,7 @@ public class CharacterStats : MonoBehaviour {
     public void Initialize(NetworkIdentifier networkObject) {
         //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
         _char.Name = networkObject.PlayerData.Name;
+        _char.CharacterClass = networkObject.PlayerData.PClass;
 
         _char.BaseStrength = new CharacterStats_SO.BaseStats(networkObject.PlayerData.Strength);
         _char.BaseDexterity = new CharacterStats_SO.BaseStats(networkObject.PlayerData.Dexterity);
@@ -181,6 +182,10 @@ public class CharacterStats : MonoBehaviour {
 
     public string GetName() {
         return _char.Name;
+    }
+
+    public PlayerClass GetCharacterClass() {
+        return _char.CharacterClass;
     }
 
     public bool IsDeath() {

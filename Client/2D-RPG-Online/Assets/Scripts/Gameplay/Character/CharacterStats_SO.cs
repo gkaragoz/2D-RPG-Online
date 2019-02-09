@@ -70,6 +70,9 @@ public class CharacterStats_SO : ScriptableObject {
     private string _name = string.Empty;
 
     [SerializeField]
+    private PlayerClass _characterClass;
+
+    [SerializeField]
     private int _statsPoints = 0;
 
     [SerializeField]
@@ -116,6 +119,16 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _name = value;
+        }
+    }
+
+    public PlayerClass CharacterClass {
+        get {
+            return _characterClass;
+        } 
+
+        set {
+            _characterClass = value;
         }
     }
 
