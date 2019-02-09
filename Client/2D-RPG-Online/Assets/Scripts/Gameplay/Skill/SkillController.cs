@@ -4,26 +4,26 @@ using UnityEngine;
 
 public class SkillController : MonoBehaviour {
 
+    [Header("Initialization")]
+    [SerializeField]
+    private Skill _skillPrefab;
+
     [Header("Debug")]
     [Utils.ReadOnly]
     [SerializeField]
     private List<Skill> _skills = new List<Skill>();
-    [SerializeField]
     [Utils.ReadOnly]
+    [SerializeField]
     private PlayerClass _playerClass;
 
-    public void Initialize(PlayerClass playerClass, Skill[] skills) {
+    public void Initialize(PlayerClass playerClass) {
         this._playerClass = playerClass;
 
-        for (int ii = 0; ii < skills.Length; ii++) {
-            _skills.Add(skills[ii]);
-        }
-    }
+        SkillDatabase db = null;
 
-    public void OnAttack(Transform target) {
-        switch (_playerClass) {
+        switch (this._playerClass) {
             case PlayerClass.Warrior:
-                _skills.Where(skill => skill.SkillName == Skill_SO.Skill_Name.BasicAttack).First().PlayAction(target.localPosition, target.localRotation, 0.25f);
+                db = Resources.Load<SkillDatabase>("ScriptableObjects/Skills/Warrior_SkillDatabase");
                 break;
             case PlayerClass.Archer:
                 break;
@@ -34,6 +34,18 @@ public class SkillController : MonoBehaviour {
             default:
                 break;
         }
+
+        for (int ii = 0; ii < db.skills.Count; ii++) {
+            Skill skill = Instantiate(_skillPrefab, transform);
+            skill.Initialize(db.skills[ii]);
+
+            _skills.Add(skill);
+        }
     }
-    
+
+    public void OnAttack(Skill_SO.Skill_Name skillName, Transform attacker, Transform target) {
+        Skill skill = _skills.Where(s => s.SkillName == skillName).First();
+        skill.Run(attacker, target);
+    }
+
 }

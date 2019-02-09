@@ -47,7 +47,7 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        _skillController.OnAttack(this.transform);
+        _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack, this.transform, this.transform);
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 

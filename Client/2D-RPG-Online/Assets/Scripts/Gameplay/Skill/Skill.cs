@@ -2,10 +2,6 @@
 
 public class Skill : MonoBehaviour {
 
-    [Header("Initialization")]
-    [SerializeField]
-    private Skill_SO _skillDefinition_Template;
-
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
@@ -27,49 +23,19 @@ public class Skill : MonoBehaviour {
         get { return _skill._skillBehaviour; }
     }
 
-    #region Initializations
+    private ParticleSystem _VFX;
 
-    private void Awake() {
-        if (_skillDefinition_Template != null) {
-            _skill = Instantiate(_skillDefinition_Template);
-        }
+    public void Initialize(Skill_SO skill) {
+        this._skill = Instantiate(skill);
     }
 
-    #endregion
+    public void Run(Transform attacker, Transform target) {
+        _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+        _VFX.transform.position = attacker.localPosition;
+        _VFX.transform.rotation = Quaternion.LookRotation(target.position, Vector3.up);
+        _VFX.Play();
 
-    private Vector3 _position;
-    private Quaternion _rotation;
-
-    public void PlayAction(Vector3 position, Quaternion rotation, float delay) {
-        this._position = position;
-        this._rotation = rotation;
-
-        Invoke("PlayActionInvoker", delay);
-    }
-
-    public void PlayEffect(Vector3 position, Quaternion rotation, float delay) {
-        this._position = position;
-        this._rotation = rotation;
-
-        Invoke("PlayEffectInvoker", delay);
-    }
-
-    private void PlayActionInvoker() {
-        ParticleSystem VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
-        VFX.transform.position = this._position;
-        VFX.transform.rotation = this._rotation;
-        VFX.Play();
-
-        Destroy(VFX.gameObject, VFX.main.duration);
-    }
-
-    private void PlayEffectInvoker() {
-        ParticleSystem VFX = Instantiate(_skill._VFX_EffectPrefab, transform);
-        VFX.transform.position = this._position;
-        VFX.transform.rotation = this._rotation;
-        VFX.Play();
-
-        Destroy(VFX.gameObject, VFX.main.duration);
+        Destroy(_VFX.gameObject, _VFX.main.duration);
     }
 
 }

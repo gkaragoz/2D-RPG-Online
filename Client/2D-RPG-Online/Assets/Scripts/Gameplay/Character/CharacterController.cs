@@ -54,7 +54,7 @@ public class CharacterController : MonoBehaviour {
         this._livingEntity = livingEntity;
         this._characterStats.Initialize(networkObject);
         this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
-        this._skillController.Initialize(this._characterStats.GetCharacterClass(), GetComponentsInChildren<Skill>());
+        this._skillController.Initialize(this._characterStats.GetCharacterClass());
         this._characterUI.UpdateUI();
     }
 
