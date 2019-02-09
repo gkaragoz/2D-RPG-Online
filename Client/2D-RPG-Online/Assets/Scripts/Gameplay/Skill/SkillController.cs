@@ -7,6 +7,10 @@ public class SkillController : MonoBehaviour {
     [Header("Initialization")]
     [SerializeField]
     private Skill _skillPrefab;
+    [SerializeField]
+    private Transform _FXCenterPoint;
+    [SerializeField]
+    private Transform _FXBasicAtackPoint;
 
     [Header("Debug")]
     [Utils.ReadOnly]
@@ -43,9 +47,14 @@ public class SkillController : MonoBehaviour {
         }
     }
 
-    public void OnAttack(Skill_SO.Skill_Name skillName, Transform attacker, Transform target) {
+    public void OnAttack(Skill_SO.Skill_Name skillName, Transform target = null) {
         Skill skill = _skills.Where(s => s.SkillName == skillName).First();
-        skill.Run(attacker, target);
+
+        if (target == null) {
+            skill.Run(_FXBasicAtackPoint.position);
+        } else {
+            skill.Run(_FXBasicAtackPoint.position, target);
+        }
     }
 
 }

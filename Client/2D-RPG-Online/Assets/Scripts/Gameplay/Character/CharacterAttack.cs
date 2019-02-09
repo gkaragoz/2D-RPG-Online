@@ -47,7 +47,7 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack, this.transform, this.transform);
+        _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack);
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 
@@ -65,13 +65,13 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        yield return new WaitForSeconds(0.3f);
-
         if (target.EntityType == LivingEntity.Type.Player) {
             target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
         } else if (target.EntityType == LivingEntity.Type.BOT) {
             target.GetComponent<BotController>().TakeDamage(_characterStats.GetAttackDamage());
         }
+
+        _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack, target.transform);
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 

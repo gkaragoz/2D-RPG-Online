@@ -29,10 +29,25 @@ public class Skill : MonoBehaviour {
         this._skill = Instantiate(skill);
     }
 
-    public void Run(Transform attacker, Transform target) {
+    public void Run(Vector3 startPosition) {
         _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
-        _VFX.transform.position = attacker.localPosition;
-        _VFX.transform.rotation = Quaternion.LookRotation(target.position, Vector3.up);
+        _VFX.transform.position = startPosition;
+        _VFX.transform.rotation = new Quaternion(_VFX.transform.rotation.x, transform.rotation.y, _VFX.transform.rotation.z, _VFX.transform.rotation.w);
+
+        _VFX.Play();
+
+        Destroy(_VFX.gameObject, _VFX.main.duration);
+    }
+
+    public void Run(Vector3 startPosition, Transform target) {
+        _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+        _VFX.transform.position = startPosition;
+
+        Vector3 relativePos = target.position - transform.position;
+        if (relativePos != Vector3.zero) {
+            _VFX.transform.rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+        }
+
         _VFX.Play();
 
         Destroy(_VFX.gameObject, _VFX.main.duration);
