@@ -57,4 +57,9 @@ public class SkillController : MonoBehaviour {
         }
     }
 
+    public void OnTakeDamage(Skill_SO.Skill_Name skillName) {
+        Skill skill = _skills.Where(s => s.SkillName == skillName).First();
+        skill.Run(_FXCenterPoint.position);
+    }
+
 }

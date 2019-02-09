@@ -159,6 +159,8 @@ public class CharacterController : MonoBehaviour {
 
         _characterStats.TakeDamage(damage);
 
+        _skillController.OnTakeDamage(Skill_SO.Skill_Name.BasicAttack);
+
         if (_characterStats.GetCurrentHealth() <= 0) {
             Die();
             Debug.Log("Death");

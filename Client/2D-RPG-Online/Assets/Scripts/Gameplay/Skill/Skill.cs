@@ -32,7 +32,10 @@ public class Skill : MonoBehaviour {
     public void Run(Vector3 startPosition) {
         _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
         _VFX.transform.position = startPosition;
-        _VFX.transform.rotation = new Quaternion(_VFX.transform.rotation.x, transform.rotation.y, _VFX.transform.rotation.z, _VFX.transform.rotation.w);
+
+        Vector3 relativePos = startPosition - transform.position;
+        relativePos.y = 0;
+        _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
 
         _VFX.Play();
 
@@ -45,7 +48,7 @@ public class Skill : MonoBehaviour {
 
         Vector3 relativePos = target.position - transform.position;
         if (relativePos != Vector3.zero) {
-            _VFX.transform.rotation = Quaternion.LookRotation(relativePos, Vector3.up);
+            _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
         }
 
         _VFX.Play();
