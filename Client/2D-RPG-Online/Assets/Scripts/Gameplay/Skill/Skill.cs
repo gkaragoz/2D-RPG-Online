@@ -35,7 +35,10 @@ public class Skill : MonoBehaviour {
 
         Vector3 relativePos = startPosition - transform.position;
         relativePos.y = 0;
-        _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
+
+        if (relativePos != Vector3.zero) {
+            _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
+        }
 
         _VFX.Play();
 

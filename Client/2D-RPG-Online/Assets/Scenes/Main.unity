@@ -31904,6 +31904,7 @@ MonoBehaviour:
   _characterSlotControllers: []
   _btnImReady: {fileID: 803808203}
   _btnCreateCharacter: {fileID: 1812106193}
+  _btnBack: {fileID: 391805064}
   _selectedSlot: {fileID: 0}
   _selectionSlotsParent: {fileID: 0}
 --- !u!114 &2058677275
