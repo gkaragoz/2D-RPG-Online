@@ -17,7 +17,7 @@ public class PlayerController : LivingEntity {
         }
     }
 
-    public Vector3 CurrentInput { get; private set; }
+    public Vector3 CurrentInput { get; set; }
 
     /// <summary>
     /// DEBUG
@@ -46,6 +46,9 @@ public class PlayerController : LivingEntity {
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
         _characterStats = GetComponent<CharacterStats>();
+
+        _characterController.onAttack += OnAttack;
+        _characterController.onMove += OnMove;
     }
 
     private void Update() {
@@ -100,9 +103,22 @@ public class PlayerController : LivingEntity {
             CurrentInput = new Vector3(_xInput, 0, _zInput);
 
             if (HasInput) {
-                MoveByInput();
+                Move();
             } else {
                 Stop();
+            }
+        } else {
+            //Move others.
+            if (Utils.IsValid(this.NetworkEntity.NetworkObject.PositionX, this.NetworkEntity.NetworkObject.PositionY, this.NetworkEntity.NetworkObject.PositionZ)) {
+                Vector3 newPosition = new Vector3(this.NetworkEntity.NetworkObject.PositionX.ToFloat(), this.NetworkEntity.NetworkObject.PositionY.ToFloat(), this.NetworkEntity.NetworkObject.PositionZ.ToFloat());
+
+                if (newPosition != this.transform.position) {
+                    this.Move(newPosition);
+                } else {
+                    this.Stop();
+                }
+            } else {
+                this.Stop();
             }
         }
 
@@ -148,22 +164,6 @@ public class PlayerController : LivingEntity {
         }
     }
 
-    public void Render(NetworkEntity networkData) {
-        _networkEntity = networkData;
-
-        if (Utils.IsValid(_networkEntity.NetworkObject.PositionX, _networkEntity.NetworkObject.PositionY, _networkEntity.NetworkObject.PositionZ)) {
-            Vector3 newPosition = new Vector3(_networkEntity.NetworkObject.PositionX.ToFloat(), _networkEntity.NetworkObject.PositionY.ToFloat(), _networkEntity.NetworkObject.PositionZ.ToFloat());
-
-            if (newPosition != transform.position) {
-                MoveToPosition(newPosition);
-            } else {
-                Stop();
-            }
-        } else {
-            Stop();
-        }
-    }
-
     public void SetJoystick(FixedJoystick joystick) {
         this._joystick = joystick;
     }
@@ -176,40 +176,50 @@ public class PlayerController : LivingEntity {
         _characterController.DeselectTarget();
     }
 
-    public override void TakeDamage(int damage) {
+    public void TakeDamage(int damage) {
         _characterController.TakeDamage(damage);
     }
 
-    public override void Die() {
+    public void Die() {
         _characterController.Die();
     }
 
-    public override void Attack() {
-        _characterController.Attack();
+    public void Attack() {
+        if (_isMe) {
+            _characterController.Attack();
+        } else {
+            _characterController.Attack();
+        }
     }
 
-    public override void AttackAnimation(Vector3 direction) {
-        _characterController.AttackAnimation(direction);
+    public void Move() {
+        if (_isMe) {
+            _characterController.MoveToInput(CurrentInput);
+        }
     }
 
-    public override void MoveByInput() {
-        _characterController.MoveToInput(CurrentInput);
+    public void Move(Vector3 newPosition) {
+        _characterController.MoveToPosition(newPosition);
     }
 
-    public override void MoveToPosition(Vector3 position) {
-        _characterController.MoveToPosition(position);
-    }
-
-    public override void Stop() {
+    public void Stop() {
         _characterController.Stop();
     }
 
-    public override void Rotate() {
+    public void Rotate() {
         _characterController.Rotate(CurrentInput);
     }
 
-    public override void Destroy() {
+    public void Destroy() {
         Destroy(this.gameObject);
+    }
+    
+    private void OnMove() {
+        this.NetworkEntity.SendMovementInputData(CurrentInput);
+    }
+
+    private void OnAttack(int targetID) {
+        this.NetworkEntity.SendAttackInputData(targetID);
     }
 
     private void UpdatePlayerInputsUI() {

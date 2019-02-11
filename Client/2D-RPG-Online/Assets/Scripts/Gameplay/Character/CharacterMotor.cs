@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class CharacterMotor : MonoBehaviour {
 
@@ -25,7 +24,7 @@ public class CharacterMotor : MonoBehaviour {
         Vector3 desiredRotation = position - transform.position;
 
         _rb.transform.SetPositionAndRotation(
-            position, 
+            position,
             Quaternion.LookRotation(desiredRotation));
 
         if (AudioManager.instance != null) {

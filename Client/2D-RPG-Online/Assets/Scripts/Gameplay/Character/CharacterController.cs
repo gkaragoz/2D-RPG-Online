@@ -1,8 +1,13 @@
-﻿using System.Linq;
+﻿using System;
 using UnityEngine;
 
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
+
+    public Action onMove;
+    public Action<int> onAttack;
+    public Action onDeath;
+    public Action onTakeDamage;
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
     public LivingEntity SelectedTarget { get { return _selectedTarget; } }
@@ -74,24 +79,24 @@ public class CharacterController : MonoBehaviour {
 
     public LivingEntity GetClosestTarget() {
         LivingEntity target = null;
-        float distance = Mathf.Infinity;
+        //float distance = Mathf.Infinity;
 
-        for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
-            LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
+        //for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
+        //    LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
 
-            if (potantialTarget.IsDeath) {
-                continue;
-            }
+        //    if (potantialTarget.IsDeath) {
+        //        continue;
+        //    }
 
-            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+        //    if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
-                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+        //        float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
 
-                if (potantialTargetDistance < distance) {
-                    target = potantialTarget;
-                }
-            }
-        }
+        //        if (potantialTargetDistance < distance) {
+        //            target = potantialTarget;
+        //        }
+        //    }
+        //}
 
         return target;
     }
@@ -106,10 +111,11 @@ public class CharacterController : MonoBehaviour {
 
     public void AttackEmpty() {
         if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
-            _livingEntity.NetworkEntity.SendAttackInputData(GetTargetID(null));
+            onAttack?.Invoke(GetTargetID(null));
 
             _characterAttack.AttackEmpty();
             _characterAnimator.OnAttack();
+            _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack);
         }
     }
 
@@ -117,28 +123,20 @@ public class CharacterController : MonoBehaviour {
         if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
             if (!HasTargetDied(target)) {
                 if (IsTargetInRange(target)) {
-                    _livingEntity.NetworkEntity.SendAttackInputData(GetTargetID(target));
+                    onAttack?.Invoke(GetTargetID(target));
 
                     _characterMotor.LookTo(target.transform.position);
                     _characterAttack.AttackToTarget(target);
                     _characterAnimator.OnAttack();
+                    _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack, target.transform);
                 }
             }
         }
     }
 
-    public void AttackAnimation(Vector3 direction) {
-        if (!_characterStats.IsDeath()) {
-            _characterMotor.LookTo(direction);
-            _characterAnimator.OnAttack();
-        }
-    }
-
     public void MoveToInput(Vector3 input) {
         if (!_characterStats.IsDeath()) {
-            if (NetworkManager.mss != null) {
-                _livingEntity.NetworkEntity.SendMovementInputData(input);
-            }
+            onMove?.Invoke();
 
             _characterMotor.MoveToInput(input);
             _characterAnimator.OnMove(input);
