@@ -50,10 +50,13 @@ public class RoomManager : Menu {
     public int serverTickrate;
 
     private void Start() {
-        NetworkManager.mss.AddEventListener(MSPlayerEvent.RoomUpdate, OnRoomUpdated);
+        NetworkManager.mss.AddEventListener(MSPlayerEvent.UpdatePlayer, OnPlayerUpdated);
+        NetworkManager.mss.AddEventListener(MSPlayerEvent.Attack, OnPlayerAttackReceived);
+        NetworkManager.mss.AddEventListener(MSPlayerEvent.Spell, OnPlayerSpellReceived);
 
         NetworkManager.mss.AddEventListener(MSPlayerEvent.CreatePlayer, OnPlayerCreated);
 
+        NetworkManager.mss.AddEventListener(MSPlayerEvent.RoomUpdate, OnRoomUpdated);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
 
@@ -92,8 +95,6 @@ public class RoomManager : Menu {
                 PlayerController entity = _otherPlayerControllers.ElementAt(ii).Value;
 
                 ProcessInterpolation(renderTimestamp, entity);
-
-                entity.Render(entity.NetworkEntity);
             }
         }
     }
@@ -204,46 +205,56 @@ public class RoomManager : Menu {
         _otherPlayerControllers.Add(playerInfo.NetworkObject.Id, playerController);
     }
 
-    private void OnRoomUpdated(ShiftServerData data) {
+    private void OnPlayerUpdated(NetworkIdentifier updatedNetworkEntity) {
+        Debug.Log("OnPlayerUpdated: " + updatedNetworkEntity);
+
         if (!_hasInitialized) {
             return;
         }
 
-        serverTickrate = data.SvTickRate;
-
         //Debug.Log(data);
 
-        for (int ii = 0; ii < data.StateUpdate.NetworkObjects.Count; ii++) {
-            NetworkIdentifier updatedNetworkObject = data.StateUpdate.NetworkObjects[ii];
-            if (updatedNetworkObject.Id == _myPlayerController.NetworkEntity.Oid) {
-                Reconciliation(updatedNetworkObject);
-            }
-
-            for (int jj = 0; jj < updatedNetworkObject.PlayerInputs.Count; jj++) {
-                if (MSPlayerEvent.Attack == updatedNetworkObject.PlayerInputs[jj].PlayerEvent) {
-                    int attackerID = updatedNetworkObject.Id;
-                    int targetID = updatedNetworkObject.PlayerInputs[jj].TargetID;
-                    int damage = updatedNetworkObject.PlayerInputs[jj].Damage;
-
-                    PlayerController victim = null;
-
-                    if (attackerID != _myPlayerController.NetworkEntity.Oid) {
-                        if (targetID == _myPlayerController.NetworkEntity.Oid) {
-                            victim = _myPlayerController;
-                            _otherPlayerControllers[attackerID].AttackAnimation(victim.transform.position);
-                            victim.TakeDamage(damage);
-                        } else if (targetID == 0) {
-                            _otherPlayerControllers[attackerID].AttackAnimation(_otherPlayerControllers[attackerID].transform.forward);
-                        } else { 
-                            victim = _otherPlayerControllers[targetID];
-                            victim.TakeDamage(damage);
-                        }
-                    }
-                }
-            }
-
-            FillInterpolationBuffer(updatedNetworkObject);
+        if (updatedNetworkEntity.Id == _myPlayerController.NetworkEntity.Oid) {
+            Reconciliation(updatedNetworkEntity);
         }
+
+        FillInterpolationBuffer(updatedNetworkEntity);
+    }
+
+    private void OnPlayerAttackReceived(SPlayerInput input) {
+        Debug.Log(input);
+
+        //for (int jj = 0; jj < updatedNetworkObject.PlayerInputs.Count; jj++) {
+        //    if (MSPlayerEvent.Attack == updatedNetworkObject.PlayerInputs[jj].PlayerEvent) {
+                //int attackerID = updatedNetworkObject.Id;
+                //int targetID = updatedNetworkObject.PlayerInputs[jj].TargetID;
+                //int damage = updatedNetworkObject.PlayerInputs[jj].Damage;
+
+                //PlayerController victim = null;
+
+                //if (attackerID != _myPlayerController.NetworkEntity.Oid) {
+                //    if (targetID == _myPlayerController.NetworkEntity.Oid) {
+                //        victim = _myPlayerController;
+                //        _otherPlayerControllers[attackerID].AttackAnimation(victim.transform.position);
+                //        victim.TakeDamage(damage);
+                //    } else if (targetID == 0) {
+                //        _otherPlayerControllers[attackerID].AttackAnimation(_otherPlayerControllers[attackerID].transform.forward);
+                //    } else { 
+                //        victim = _otherPlayerControllers[targetID];
+                //        victim.TakeDamage(damage);
+                //    }
+                //}
+        //    }
+        //}
+    }
+
+    private void OnPlayerSpellReceived(ShiftServerData data ) {
+        Debug.Log("OnPlayerSpellReceived: " + data);
+    }
+
+    private void OnRoomUpdated(ShiftServerData data) {
+        Debug.Log("OnRoomUpdated: " + data);
+        serverTickrate = data.SvTickRate;
     }
 
     private void Reconciliation(NetworkIdentifier updatedNetworkObject) {
@@ -344,7 +355,7 @@ public class RoomManager : Menu {
 
         //playerInfo = data.RoomData.CreatedRoom.Teams;
 
-        onRoomCreated?.Invoke();
+        //onRoomCreated?.Invoke();
     }
 
     private void OnRoomCreateFailed(ShiftServerData data) {
