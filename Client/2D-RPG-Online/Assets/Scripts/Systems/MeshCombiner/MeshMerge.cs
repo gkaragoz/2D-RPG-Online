@@ -67,8 +67,9 @@ public class MeshMerge : MonoBehaviour {
         }
 
         if (meshRenderers != null && meshRenderers.Length > 0) {
+#if UNITY_EDITOR
             Unwrapping.GenerateSecondaryUVSet(mesh);
-
+#endif
             MeshRenderer meshRend = GetComponent<MeshRenderer>();
             if (meshRend == null) meshRend = this.gameObject.AddComponent<MeshRenderer>();
             meshRend.sharedMaterials = materials;
