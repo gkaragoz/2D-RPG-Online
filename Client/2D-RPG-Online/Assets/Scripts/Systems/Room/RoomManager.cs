@@ -47,8 +47,6 @@ public class RoomManager : Menu {
 
     private bool _hasInitialized = false;
 
-    public int serverTickrate;
-
     private void Start() {
         NetworkManager.mss.AddEventListener(MSPlayerEvent.UpdatePlayer, OnPlayerUpdated);
         NetworkManager.mss.AddEventListener(MSPlayerEvent.Attack, OnPlayerAttackReceived);
@@ -56,7 +54,6 @@ public class RoomManager : Menu {
 
         NetworkManager.mss.AddEventListener(MSPlayerEvent.CreatePlayer, OnPlayerCreated);
 
-        NetworkManager.mss.AddEventListener(MSPlayerEvent.RoomUpdate, OnRoomUpdated);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoin, OnRoomJoinSuccess);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomJoinFailed, OnRoomJoinFailed);
 
@@ -87,9 +84,9 @@ public class RoomManager : Menu {
             return;
         }
 
-        if (NetworkManager.mss.IsConnected) {
+        if (NetworkManager.mss.IsConnected && NetworkManager.mss.HasPlayerRoom) {
             double interpolationNow = (DateTime.UtcNow - new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc)).TotalMilliseconds;
-            double renderTimestamp = interpolationNow - (1000.0 / serverTickrate);
+            double renderTimestamp = interpolationNow - (1000.0 / NetworkManager.mss.JoinedRoom.ServerTickRate);
 
             for (int ii = 0; ii < _otherPlayerControllers.Count; ii++) {
                 PlayerController entity = _otherPlayerControllers.ElementAt(ii).Value;
@@ -250,11 +247,6 @@ public class RoomManager : Menu {
 
     private void OnPlayerSpellReceived(ShiftServerData data ) {
         Debug.Log("OnPlayerSpellReceived: " + data);
-    }
-
-    private void OnRoomUpdated(ShiftServerData data) {
-        Debug.Log("OnRoomUpdated: " + data);
-        serverTickrate = data.SvTickRate;
     }
 
     private void Reconciliation(NetworkIdentifier updatedNetworkObject) {
