@@ -25,7 +25,7 @@ public class CharacterMotor : MonoBehaviour {
 
         _rb.transform.SetPositionAndRotation(
             position,
-            Quaternion.LookRotation(desiredRotation));
+            Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(desiredRotation), 0.1f));
 
         if (AudioManager.instance != null) {
             AudioManager.instance.Play("footstep");
