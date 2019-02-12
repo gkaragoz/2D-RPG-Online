@@ -203,7 +203,7 @@ public class RoomManager : Menu {
     }
 
     private void OnPlayerUpdated(NetworkIdentifier updatedNetworkEntity) {
-        Debug.Log("OnPlayerUpdated: " + updatedNetworkEntity);
+        //Debug.Log("OnPlayerUpdated: " + updatedNetworkEntity);
 
         if (!_hasInitialized) {
             return;
@@ -219,16 +219,16 @@ public class RoomManager : Menu {
     }
 
     private void OnPlayerAttackReceived(SPlayerInput input) {
-        Debug.Log("OnPlayerAttackReceived: " + input);
+        //Debug.Log("OnPlayerAttackReceived: " + input);
         
         if (MSPlayerEvent.Attack == input.PlayerEvent) {
             int attackerID = input.ObjectId;
             int targetID = input.TargetID;
             int damage = input.Damage;
 
-            Debug.Log("AttackerID: " +  attackerID);
-            Debug.Log("TargetID: " + targetID);
-            Debug.Log("Damage: " + damage);
+            //Debug.Log("AttackerID: " +  attackerID);
+            //Debug.Log("TargetID: " + targetID);
+            //Debug.Log("Damage: " + damage);
 
             PlayerController victim = null;
 
