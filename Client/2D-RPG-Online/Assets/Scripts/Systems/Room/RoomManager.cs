@@ -219,30 +219,49 @@ public class RoomManager : Menu {
     }
 
     private void OnPlayerAttackReceived(SPlayerInput input) {
-        Debug.Log(input);
+        Debug.Log("OnPlayerAttackReceived: " + input);
+        
+        if (MSPlayerEvent.Attack == input.PlayerEvent) {
+            int attackerID = input.ObjectId;
+            int targetID = input.TargetID;
+            int damage = input.Damage;
 
-        //for (int jj = 0; jj < updatedNetworkObject.PlayerInputs.Count; jj++) {
-        //    if (MSPlayerEvent.Attack == updatedNetworkObject.PlayerInputs[jj].PlayerEvent) {
-                //int attackerID = updatedNetworkObject.Id;
-                //int targetID = updatedNetworkObject.PlayerInputs[jj].TargetID;
-                //int damage = updatedNetworkObject.PlayerInputs[jj].Damage;
+            Debug.Log("AttackerID: " +  attackerID);
+            Debug.Log("TargetID: " + targetID);
+            Debug.Log("Damage: " + damage);
 
-                //PlayerController victim = null;
+            PlayerController victim = null;
 
-                //if (attackerID != _myPlayerController.NetworkEntity.Oid) {
-                //    if (targetID == _myPlayerController.NetworkEntity.Oid) {
-                //        victim = _myPlayerController;
-                //        _otherPlayerControllers[attackerID].AttackAnimation(victim.transform.position);
-                //        victim.TakeDamage(damage);
-                //    } else if (targetID == 0) {
-                //        _otherPlayerControllers[attackerID].AttackAnimation(_otherPlayerControllers[attackerID].transform.forward);
-                //    } else { 
-                //        victim = _otherPlayerControllers[targetID];
-                //        victim.TakeDamage(damage);
-                //    }
-                //}
-        //    }
-        //}
+            //If attacker is my player and there is a target.
+            if (targetID != 0 && attackerID == _myPlayerController.NetworkEntity.Oid) {
+                _myPlayerController.Attack();
+                victim = _otherPlayerControllers[targetID];
+                victim.TakeDamage(damage);
+            }
+            //If attacker is my player and there is no target.
+            else if (targetID == 0 && attackerID == _myPlayerController.NetworkEntity.Oid) {
+                return;
+            }
+            //If victim is my player.
+            else if (attackerID != 0 && targetID == _myPlayerController.NetworkEntity.Oid) {
+                victim = _myPlayerController;
+                _otherPlayerControllers[attackerID].SelectTarget(victim);
+                _otherPlayerControllers[attackerID].Attack();
+                victim.TakeDamage(damage);
+            }
+            //If there is no victim and attacker is not my player.
+            else if (targetID == 0 && attackerID != _myPlayerController.NetworkEntity.Oid) {
+                _otherPlayerControllers[attackerID].DeselectTarget();
+                _otherPlayerControllers[attackerID].Attack();
+            }
+            //If victim is other player and attacker is not my player.
+            else if (attackerID != 0 && targetID != _myPlayerController.NetworkEntity.Oid) {
+                victim = _otherPlayerControllers[targetID];
+                victim.TakeDamage(damage);
+                _otherPlayerControllers[attackerID].SelectTarget(victim);
+                _otherPlayerControllers[attackerID].Attack();
+            }
+        }
     }
 
     private void OnPlayerSpellReceived(ShiftServerData data ) {

@@ -51,15 +51,15 @@ public class SkillController : MonoBehaviour {
         Skill skill = _skills.Where(s => s.SkillName == skillName).First();
 
         if (target == null) {
-            skill.Run(_FXBasicAtackPoint.position);
+            skill.Run(_FXBasicAtackPoint.position, Skill.VFXType.Action);
         } else {
-            skill.Run(_FXBasicAtackPoint.position, target);
+            skill.Run(_FXBasicAtackPoint.position, target, Skill.VFXType.Action);
         }
     }
 
     public void OnTakeDamage(Skill_SO.Skill_Name skillName) {
         Skill skill = _skills.Where(s => s.SkillName == skillName).First();
-        skill.Run(_FXCenterPoint.position);
+        skill.Run(_FXCenterPoint.position, Skill.VFXType.Effect);
     }
 
 }

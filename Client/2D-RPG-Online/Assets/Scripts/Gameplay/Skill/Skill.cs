@@ -23,14 +23,27 @@ public class Skill : MonoBehaviour {
         get { return _skill._skillBehaviour; }
     }
 
+    public enum VFXType {
+        Action,
+        Effect
+    }
+
     private ParticleSystem _VFX;
 
     public void Initialize(Skill_SO skill) {
         this._skill = Instantiate(skill);
     }
 
-    public void Run(Vector3 startPosition) {
-        _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+    public void Run(Vector3 startPosition, VFXType vfxType) {
+        switch (vfxType) {
+            case VFXType.Action:
+                _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+                break;
+            case VFXType.Effect:
+                _VFX = Instantiate(_skill._VFX_EffectPrefab, transform);
+                break;
+        }
+
         _VFX.transform.position = startPosition;
 
         Vector3 relativePos = startPosition - transform.position;
@@ -45,8 +58,16 @@ public class Skill : MonoBehaviour {
         Destroy(_VFX.gameObject, _VFX.main.duration);
     }
 
-    public void Run(Vector3 startPosition, Transform target) {
-        _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+    public void Run(Vector3 startPosition, Transform target, VFXType vfxType) {
+        switch (vfxType) {
+            case VFXType.Action:
+                _VFX = Instantiate(_skill._VFX_ActionPrefab, transform);
+                break;
+            case VFXType.Effect:
+                _VFX = Instantiate(_skill._VFX_EffectPrefab, transform);
+                break;
+        }
+
         _VFX.transform.position = startPosition;
 
         Vector3 relativePos = target.position - transform.position;

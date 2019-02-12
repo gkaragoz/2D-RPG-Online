@@ -61,10 +61,9 @@ public class CharacterAttack : MonoBehaviour {
 
         IsAttacking = true;
 
-        if (target.EntityType == LivingEntity.Type.Player) {
-            target.GetComponent<PlayerController>().TakeDamage(_characterStats.GetAttackDamage());
-        } else if (target.EntityType == LivingEntity.Type.BOT) {
-        } else if (target.EntityType == LivingEntity.Type.Object) { }
+        //if (target.EntityType == LivingEntity.Type.Player) {
+        //} else if (target.EntityType == LivingEntity.Type.BOT) {
+        //} else if (target.EntityType == LivingEntity.Type.Object) { }
 
         yield return new WaitForSeconds(_characterStats.GetAttackSpeed());
 

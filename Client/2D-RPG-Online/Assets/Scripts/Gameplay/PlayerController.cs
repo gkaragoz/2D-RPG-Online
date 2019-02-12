@@ -185,11 +185,7 @@ public class PlayerController : LivingEntity {
     }
 
     public void Attack() {
-        if (_isMe) {
-            _characterController.Attack();
-        } else {
-            _characterController.Attack();
-        }
+        _characterController.Attack();
     }
 
     public void Move() {
@@ -215,11 +211,15 @@ public class PlayerController : LivingEntity {
     }
     
     private void OnMove() {
-        this.NetworkEntity.SendMovementInputData(CurrentInput);
+        if (_isMe) {
+            this.NetworkEntity.SendMovementInputData(CurrentInput);
+        }
     }
 
     private void OnAttack(int targetID) {
-        this.NetworkEntity.SendAttackInputData(targetID);
+        if (_isMe) {
+            this.NetworkEntity.SendAttackInputData(targetID);
+        }
     }
 
     private void UpdatePlayerInputsUI() {
