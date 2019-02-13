@@ -98,11 +98,9 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Attack() {
-        if (_selectedTarget == null) {
-            AutoAttack();
-        } else if (_selectedTarget != null) {
+        if (_selectedTarget != null) {
             AttackToTarget(_selectedTarget);
-        } else {
+        } else { 
             AttackEmpty();
         }
     }
@@ -149,10 +147,6 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void TakeDamage(int damage) {
-        if (AudioManager.instance != null) {
-            AudioManager.instance.Play("OnHit");
-        }
-
         _characterStats.TakeDamage(damage);
 
         _skillController.OnTakeDamage(Skill_SO.Skill_Name.BasicAttack);
