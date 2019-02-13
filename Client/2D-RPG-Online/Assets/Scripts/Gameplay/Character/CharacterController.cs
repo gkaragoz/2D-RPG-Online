@@ -42,19 +42,6 @@ public class CharacterController : MonoBehaviour {
         _skillController = GetComponent<SkillController>();
     }
 
-    private void Update() {
-        //LivingEntity closestTarget = GetClosestTarget(_isOfflineMode);
-        //if (closestTarget != null) {
-        //    if (IsTargetInRange(closestTarget)) {
-        //        if (!HasTarget) {
-        //            AttackToTarget(closestTarget);
-        //        } else {
-        //            Attack();
-        //        }
-        //    }
-        //}
-    }
-
     public void Initialize(NetworkIdentifier networkObject, LivingEntity livingEntity) {
         this._livingEntity = livingEntity;
         this._characterStats.Initialize(networkObject);
@@ -75,26 +62,37 @@ public class CharacterController : MonoBehaviour {
         _selectedTarget = null;
     }
 
+    public void AutoAttack() {
+        if (!HasTarget) {
+            LivingEntity closestTarget = GetClosestTarget();
+            if (closestTarget != null) {
+                if (IsTargetInRange(closestTarget)) {
+                        AttackToTarget(closestTarget);
+                }
+            }
+        }
+    }
+
     public LivingEntity GetClosestTarget() {
         LivingEntity target = null;
-        //float distance = Mathf.Infinity;
+        float distance = Mathf.Infinity;
 
-        //for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
-        //    LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
+        for (int ii = 0; ii < RoomManager.instance.OtherPlayersCount; ii++) {
+            LivingEntity potantialTarget = RoomManager.instance.GetPlayerByIndex(ii);
 
-        //    if (potantialTarget.IsDeath) {
-        //        continue;
-        //    }
+            if (potantialTarget.IsDeath) {
+                continue;
+            }
 
-        //    if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
+            if (attackables == (attackables | (1 << potantialTarget.gameObject.layer))) {
 
-        //        float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
+                float potantialTargetDistance = GetDistanceOf(potantialTarget.transform);
 
-        //        if (potantialTargetDistance < distance) {
-        //            target = potantialTarget;
-        //        }
-        //    }
-        //}
+                if (potantialTargetDistance < distance) {
+                    target = potantialTarget;
+                }
+            }
+        }
 
         return target;
     }

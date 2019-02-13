@@ -100,6 +100,8 @@ public class PlayerController : LivingEntity {
                 Attack();
             }
 
+            AutoAttack();
+
             CurrentInput = new Vector3(_xInput, 0, _zInput);
 
             if (HasInput) {
@@ -194,6 +196,10 @@ public class PlayerController : LivingEntity {
 
     public void Attack() {
         _characterController.Attack();
+    }
+
+    public void AutoAttack() {
+        _characterController.AutoAttack();
     }
 
     public void Move() {
