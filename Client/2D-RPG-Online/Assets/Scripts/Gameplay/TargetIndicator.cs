@@ -51,9 +51,7 @@ public class TargetIndicator : Menu {
     }
 
     public void OnLoadingCompleted() {
-        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
-            Hide();
-        }
+        Hide();
     }
 
     public void SetPosition(Transform target, Type type) {

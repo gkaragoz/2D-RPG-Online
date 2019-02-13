@@ -111,7 +111,8 @@ public class CharacterController : MonoBehaviour {
 
             _characterAttack.AttackEmpty();
             _characterAnimator.OnAttack();
-            _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack);
+
+            _skillController.OnAttack(SkillDatabase.instance.GetBasicAttackSkill(_livingEntity.PlayerClass));
         }
     }
 
@@ -124,7 +125,7 @@ public class CharacterController : MonoBehaviour {
                     _characterMotor.LookTo(target.transform.position);
                     _characterAttack.AttackToTarget(target);
                     _characterAnimator.OnAttack();
-                    _skillController.OnAttack(Skill_SO.Skill_Name.BasicAttack, target.transform);
+                    _skillController.OnAttack(SkillDatabase.instance.GetBasicAttackSkill(_livingEntity.PlayerClass), target.transform);
                 }
             }
         }
@@ -146,10 +147,10 @@ public class CharacterController : MonoBehaviour {
         }
     }
 
-    public void TakeDamage(int damage) {
+    public void TakeDamage(Skill_SO.Skill_Name skillName, int damage) {
         _characterStats.TakeDamage(damage);
 
-        _skillController.OnTakeDamage(Skill_SO.Skill_Name.BasicAttack);
+        _skillController.OnTakeDamage(SkillDatabase.instance.GetSkill(skillName));
 
         if (_characterStats.GetCurrentHealth() <= 0) {
             Die();

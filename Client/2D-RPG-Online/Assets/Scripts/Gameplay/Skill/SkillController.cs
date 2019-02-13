@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 
 public class SkillController : MonoBehaviour {
@@ -12,44 +11,22 @@ public class SkillController : MonoBehaviour {
     [SerializeField]
     private Transform _FXBasicAtackPoint;
 
-    [Header("Debug")]
-    [Utils.ReadOnly]
-    [SerializeField]
-    private List<Skill> _skills = new List<Skill>();
     [Utils.ReadOnly]
     [SerializeField]
     private PlayerClass _playerClass;
 
     public void Initialize(PlayerClass playerClass) {
         this._playerClass = playerClass;
-
-        SkillDatabase db = null;
-
-        switch (this._playerClass) {
-            case PlayerClass.Warrior:
-                db = Resources.Load<SkillDatabase>("ScriptableObjects/Skills/Warrior_SkillDatabase");
-                break;
-            case PlayerClass.Archer:
-                break;
-            case PlayerClass.Mage:
-                break;
-            case PlayerClass.Priest:
-                db = Resources.Load<SkillDatabase>("ScriptableObjects/Skills/Priest_SkillDatabase");
-                break;
-            default:
-                break;
-        }
-
-        for (int ii = 0; ii < db.skills.Count; ii++) {
-            Skill skill = Instantiate(_skillPrefab, transform);
-            skill.Initialize(db.skills[ii]);
-
-            _skills.Add(skill);
-        }
     }
 
-    public void OnAttack(Skill_SO.Skill_Name skillName, Transform target = null) {
-        Skill skill = _skills.Where(s => s.SkillName == skillName).First();
+    public void OnAttack(Skill_SO skillSO, Transform target = null) {
+        if (skillSO == null) {
+            Debug.LogError("Skill not found!");
+            return;
+        }
+
+        Skill skill = Instantiate(_skillPrefab, transform);
+        skill.Initialize(skillSO);
 
         if (target == null) {
             skill.Run(_FXBasicAtackPoint.position, Skill.VFXType.Action);
@@ -58,8 +35,15 @@ public class SkillController : MonoBehaviour {
         }
     }
 
-    public void OnTakeDamage(Skill_SO.Skill_Name skillName) {
-        Skill skill = _skills.Where(s => s.SkillName == skillName).First();
+    public void OnTakeDamage(Skill_SO skillSO) {
+        if (skillSO == null) {
+            Debug.LogError("Skill not found!");
+            return;
+        }
+
+        Skill skill = Instantiate(_skillPrefab, transform);
+        skill.Initialize(skillSO);
+
         skill.Run(_FXCenterPoint.position, Skill.VFXType.Effect);
     }
 

@@ -186,8 +186,8 @@ public class PlayerController : LivingEntity {
         }
     }
 
-    public void TakeDamage(int damage) {
-        _characterController.TakeDamage(damage);
+    public void TakeDamage(Skill_SO.Skill_Name skillName, int damage) {
+        _characterController.TakeDamage(skillName, damage);
     }
 
     public void Die() {

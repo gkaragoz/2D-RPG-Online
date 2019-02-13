@@ -44,6 +44,14 @@ public class Skill : MonoBehaviour {
                 break;
         }
 
+        switch (this._skill._skillRange) {
+            case Skill_SO.Skill_Range.Melee:
+                break;
+            case Skill_SO.Skill_Range.Ranged:
+                break;
+            default:
+                break;
+        }
         _VFX.transform.position = startPosition;
 
         Vector3 relativePos = startPosition - transform.position;
@@ -55,7 +63,7 @@ public class Skill : MonoBehaviour {
 
         _VFX.Play();
 
-        Destroy(_VFX.gameObject, _VFX.main.duration);
+        Destroy(gameObject, _VFX.main.duration);
     }
 
     public void Run(Vector3 startPosition, Transform target, VFXType vfxType) {
@@ -77,7 +85,7 @@ public class Skill : MonoBehaviour {
 
         _VFX.Play();
 
-        Destroy(_VFX.gameObject, _VFX.main.duration);
+        Destroy(gameObject, _VFX.main.duration);
     }
 
 }

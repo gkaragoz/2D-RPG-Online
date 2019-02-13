@@ -4,7 +4,11 @@
 public class Skill_SO : ScriptableObject {
 
     public enum Skill_Name {
-        BasicAttack
+        None,
+        Warrior_BasicAttack,
+        Archer_BasicAttack,
+        Mage_BasicAttack,
+        Priest_BasicAttack
     }
 
     public enum Skill_Type {

@@ -225,6 +225,7 @@ public class RoomManager : Menu {
             int attackerID = input.ObjectId;
             int targetID = input.TargetID;
             int damage = input.Damage;
+            //int skillID = input.SkillID;
 
             //Debug.Log("AttackerID: " +  attackerID);
             //Debug.Log("TargetID: " + targetID);
@@ -236,7 +237,7 @@ public class RoomManager : Menu {
             if (targetID != 0 && attackerID == _myPlayerController.NetworkEntity.Oid) {
                 _myPlayerController.Attack();
                 victim = _otherPlayerControllers[targetID];
-                victim.TakeDamage(damage);
+                victim.TakeDamage(SkillDatabase.instance.GetSkillName(_myPlayerController.PlayerClass), damage);
             }
             //If attacker is my player and there is no target.
             else if (targetID == 0 && attackerID == _myPlayerController.NetworkEntity.Oid) {
@@ -247,7 +248,7 @@ public class RoomManager : Menu {
                 victim = _myPlayerController;
                 _otherPlayerControllers[attackerID].SelectTarget(victim);
                 _otherPlayerControllers[attackerID].Attack();
-                victim.TakeDamage(damage);
+                victim.TakeDamage(SkillDatabase.instance.GetSkillName(_otherPlayerControllers[attackerID].PlayerClass), damage);
             }
             //If there is no victim and attacker is not my player.
             else if (targetID == 0 && attackerID != _myPlayerController.NetworkEntity.Oid) {
@@ -257,7 +258,7 @@ public class RoomManager : Menu {
             //If victim is other player and attacker is not my player.
             else if (attackerID != 0 && targetID != _myPlayerController.NetworkEntity.Oid) {
                 victim = _otherPlayerControllers[targetID];
-                victim.TakeDamage(damage);
+                victim.TakeDamage(SkillDatabase.instance.GetSkillName(_otherPlayerControllers[attackerID].PlayerClass), damage);
                 _otherPlayerControllers[attackerID].SelectTarget(victim);
                 _otherPlayerControllers[attackerID].Attack();
             }

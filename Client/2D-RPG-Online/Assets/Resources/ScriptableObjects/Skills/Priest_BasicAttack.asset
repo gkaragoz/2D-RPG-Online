@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a5731a2550a0d8747b37f8ae80926a53, type: 3}
   m_Name: Priest_BasicAttack
   m_EditorClassIdentifier: 
-  _skillName: 0
+  _skillName: 4
   _skillType: 0
   _skillRange: 1
   _skillBehaviour: 0
