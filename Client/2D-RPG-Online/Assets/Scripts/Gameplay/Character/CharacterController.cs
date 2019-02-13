@@ -69,11 +69,9 @@ public class CharacterController : MonoBehaviour {
         }
 
         _selectedTarget = livingEntity;
-        TargetIndicator.instance.SetPosition(_selectedTarget.transform, TargetIndicator.Type.Enemy);
     }
 
     public void DeselectTarget() {
-        TargetIndicator.instance.Hide();
         _selectedTarget = null;
     }
 

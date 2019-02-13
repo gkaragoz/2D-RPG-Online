@@ -170,10 +170,18 @@ public class PlayerController : LivingEntity {
 
     public void SelectTarget(LivingEntity livingEntity) {
         _characterController.SelectTarget(livingEntity);
+
+        if (_isMe) {
+            TargetIndicator.instance.SetPosition(livingEntity.transform, TargetIndicator.Type.Enemy);
+        }
     }
 
     public void DeselectTarget() {
         _characterController.DeselectTarget();
+
+        if (_isMe) {
+            TargetIndicator.instance.Hide();
+        }
     }
 
     public void TakeDamage(int damage) {
