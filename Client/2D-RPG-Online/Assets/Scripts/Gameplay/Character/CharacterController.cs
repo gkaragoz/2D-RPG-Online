@@ -67,7 +67,7 @@ public class CharacterController : MonoBehaviour {
             LivingEntity closestTarget = GetClosestTarget();
             if (closestTarget != null) {
                 if (IsTargetInRange(closestTarget)) {
-                        AttackToTarget(closestTarget);
+                    AttackToTarget(closestTarget);
                 }
             }
         }
@@ -98,7 +98,9 @@ public class CharacterController : MonoBehaviour {
     }
 
     public void Attack() {
-        if (_selectedTarget != null) {
+        if (_selectedTarget == null) {
+            AutoAttack();
+        } else if (_selectedTarget != null) {
             AttackToTarget(_selectedTarget);
         } else {
             AttackEmpty();
