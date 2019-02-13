@@ -70,6 +70,7 @@ public class NetworkEntity {
         data.PlayerInput = new SPlayerInput();
         data.PlayerInput.PlayerEvent = MSPlayerEvent.Attack;
         data.PlayerInput.TargetID = targetID;
+        data.PlayerInput.SequenceID = _nonAckInputIndex++;
         data.PlayerInput.PressTime = Time.fixedDeltaTime;
 
         NetworkManager.mss.SendMessage(MSPlayerEvent.Attack, data);
