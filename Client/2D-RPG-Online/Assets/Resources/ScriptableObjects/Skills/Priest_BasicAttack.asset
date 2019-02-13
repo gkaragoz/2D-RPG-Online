@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a5731a2550a0d8747b37f8ae80926a53, type: 3}
+  m_Name: Priest_BasicAttack
+  m_EditorClassIdentifier: 
+  _skillName: 0
+  _skillType: 0
+  _skillRange: 1
+  _skillBehaviour: 0
+  _VFX_ActionPrefab: {fileID: 1718692477660731533, guid: 714e217e5f981894799cb68d6c4ec887,
+    type: 3}
+  _VFX_EffectPrefab: {fileID: 3619411903081195592, guid: d9c733d004306d7409aba922876aa87b,
+    type: 3}

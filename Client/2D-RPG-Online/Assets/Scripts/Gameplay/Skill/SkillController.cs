@@ -34,6 +34,7 @@ public class SkillController : MonoBehaviour {
             case PlayerClass.Mage:
                 break;
             case PlayerClass.Priest:
+                db = Resources.Load<SkillDatabase>("ScriptableObjects/Skills/Priest_SkillDatabase");
                 break;
             default:
                 break;
