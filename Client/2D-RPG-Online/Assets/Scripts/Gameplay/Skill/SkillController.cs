@@ -25,7 +25,7 @@ public class SkillController : MonoBehaviour {
             return;
         }
 
-        Skill skill = Instantiate(_skillPrefab, transform);
+        Skill skill = Instantiate(_skillPrefab);
         skill.Initialize(skillSO);
 
         if (target == null) {
@@ -41,7 +41,7 @@ public class SkillController : MonoBehaviour {
             return;
         }
 
-        Skill skill = Instantiate(_skillPrefab, transform);
+        Skill skill = Instantiate(_skillPrefab);
         skill.Initialize(skillSO);
 
         skill.Run(_FXCenterPoint.position, Skill.VFXType.Effect);

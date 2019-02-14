@@ -219,7 +219,7 @@ public class RoomManager : Menu {
     }
 
     private void OnPlayerAttackReceived(SPlayerInput input) {
-        //Debug.Log("OnPlayerAttackReceived: " + input);
+        Debug.Log("OnPlayerAttackReceived: " + input);
         
         if (MSPlayerEvent.Attack == input.PlayerEvent) {
             int attackerID = input.ObjectId;

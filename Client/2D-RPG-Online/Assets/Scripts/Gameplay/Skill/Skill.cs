@@ -46,8 +46,6 @@ public class Skill : MonoBehaviour {
 
         switch (this._skill._skillRange) {
             case Skill_SO.Skill_Range.Melee:
-                _VFX.transform.position = startPosition;
-
                 Vector3 relativePos = startPosition - transform.position;
                 relativePos.y = 0;
 
@@ -58,7 +56,9 @@ public class Skill : MonoBehaviour {
                 break;
             case Skill_SO.Skill_Range.Ranged:
                 Projectile projectile = _VFX.gameObject.AddComponent<Projectile>();
+                projectile.transform.position = startPosition;
                 projectile.SetTarget(null);
+                projectile.Run();
                 break;
             default:
                 break;
@@ -91,12 +91,13 @@ public class Skill : MonoBehaviour {
                 break;
             case Skill_SO.Skill_Range.Ranged:
                 Projectile projectile = _VFX.gameObject.AddComponent<Projectile>();
+                projectile.transform.position = startPosition;
                 projectile.SetTarget(target);
+                projectile.Run();
                 break;
             default:
                 break;
         }
-
 
         _VFX.Play();
 
