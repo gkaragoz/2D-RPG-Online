@@ -46,19 +46,22 @@ public class Skill : MonoBehaviour {
 
         switch (this._skill._skillRange) {
             case Skill_SO.Skill_Range.Melee:
+                _VFX.transform.position = startPosition;
+
+                Vector3 relativePos = startPosition - transform.position;
+                relativePos.y = 0;
+
+                if (relativePos != Vector3.zero) {
+                    _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
+                }
+
                 break;
             case Skill_SO.Skill_Range.Ranged:
+                Projectile projectile = _VFX.gameObject.AddComponent<Projectile>();
+                projectile.SetTarget(null);
                 break;
             default:
                 break;
-        }
-        _VFX.transform.position = startPosition;
-
-        Vector3 relativePos = startPosition - transform.position;
-        relativePos.y = 0;
-
-        if (relativePos != Vector3.zero) {
-            _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
         }
 
         _VFX.Play();
@@ -76,12 +79,24 @@ public class Skill : MonoBehaviour {
                 break;
         }
 
-        _VFX.transform.position = startPosition;
+        switch (this._skill._skillRange) {
+            case Skill_SO.Skill_Range.Melee:
+                _VFX.transform.position = startPosition;
 
-        Vector3 relativePos = target.position - transform.position;
-        if (relativePos != Vector3.zero) {
-            _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
+                Vector3 relativePos = target.position - transform.position;
+                if (relativePos != Vector3.zero) {
+                    _VFX.transform.rotation = Quaternion.LookRotation(relativePos);
+                }
+
+                break;
+            case Skill_SO.Skill_Range.Ranged:
+                Projectile projectile = _VFX.gameObject.AddComponent<Projectile>();
+                projectile.SetTarget(target);
+                break;
+            default:
+                break;
         }
+
 
         _VFX.Play();
 
