@@ -23,10 +23,11 @@ public class DamageIndicatorController : MonoBehaviour {
         SceneController.instance.onSceneLoaded += OnSceneLoaded;
     }
 
-    public void CreateDamageIndicator(string text, Transform location) {
+    public void CreateDamageIndicator(Type type, string text, Transform location) {
         DamageIndicator instance = Instantiate(damageIndicator);
 
         instance.transform.SetParent(parentTransform, false);
+        instance.SetColor(type);
         instance.SetText(text);
     }
 

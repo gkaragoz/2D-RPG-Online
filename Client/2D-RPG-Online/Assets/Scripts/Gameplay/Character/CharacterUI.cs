@@ -51,7 +51,7 @@ public class CharacterUI : Menu {
     private void OnTakeDamage(int damage) {
         UpdateUI();
 
-        _damageIndicatorController.CreateDamageIndicator(damage.ToString(), this.transform);
+        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Damage, damage.ToString(), this.transform);
     }
 
     private void SetName() {
