@@ -4,10 +4,11 @@ using UnityEngine;
 [RequireComponent(typeof(CharacterMotor), typeof(CharacterAttack), typeof(CharacterAnimator))]
 public class CharacterController : MonoBehaviour {
 
+    public Action onInitialized;
     public Action onMove;
     public Action<int> onAttack;
     public Action onDeath;
-    public Action onTakeDamage;
+    public Action<int> onTakeDamage;
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
     public LivingEntity SelectedTarget { get { return _selectedTarget; } }
@@ -16,6 +17,7 @@ public class CharacterController : MonoBehaviour {
             return _selectedTarget == null ? false : true;
         }
     }
+    public CharacterStats CharacterStats { get { return _characterStats; } }
 
     [Header("Initialization")]
     public LayerMask attackables;
@@ -47,7 +49,8 @@ public class CharacterController : MonoBehaviour {
         this._characterStats.Initialize(networkObject);
         this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
         this._skillController.Initialize(this._characterStats.GetCharacterClass());
-        this._characterUI.UpdateUI();
+
+        onInitialized?.Invoke();
     }
 
     public void SelectTarget(LivingEntity livingEntity) {
@@ -159,7 +162,7 @@ public class CharacterController : MonoBehaviour {
             _characterAnimator.OnHit();
         }
 
-        _characterUI.UpdateUI();
+        onTakeDamage?.Invoke(damage);
     }
 
     public void Die() {

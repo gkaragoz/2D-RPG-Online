@@ -303,6 +303,8 @@
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterStats_SO.cs" />
     <Compile Include="Assets\Scripts\Gameplay\Character\CharacterUI.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\DamageIndicator\DamageIndicator.cs" />
+    <Compile Include="Assets\Scripts\Gameplay\DamageIndicator\DamageIndicatorController.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakeInstance.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShakePresets.cs" />
     <Compile Include="Assets\Scripts\Gameplay\EZCameraShaker\CameraShaker.cs" />
@@ -353,6 +355,8 @@
     <Compile Include="Assets\Scripts\Systems\Log\LogManager.cs" />
     <Compile Include="Assets\Scripts\Systems\Menu\MenuManager.cs" />
     <Compile Include="Assets\Scripts\Systems\MeshCombiner\MeshMerge.cs" />
+    <Compile Include="Assets\Scripts\Systems\ObjectPooler\IPooledObject.cs" />
+    <Compile Include="Assets\Scripts\Systems\ObjectPooler\ObjectPooler.cs" />
     <Compile Include="Assets\Scripts\Systems\Path\PathEditor.cs" />
     <Compile Include="Assets\Scripts\Systems\Path\PathFollower.cs" />
     <Compile Include="Assets\Scripts\Systems\Popup\PopupLoading.cs" />

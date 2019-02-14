@@ -1,4 +1,5 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,18 +15,18 @@ public class CharacterUI : Menu {
     private Image _imgManaBar;
     [SerializeField]
     private Image _imgTargetIndicatorCircle;
+    [SerializeField]
+    private DamageIndicatorController _damageIndicatorController;
 
-    private LivingEntity _livingEntity;
+    private CharacterController _characterController;
 
     private void Awake() {
-        _livingEntity = GetComponent<LivingEntity>();
+        _characterController = GetComponent<CharacterController>();
     }
 
-    public void UpdateUI() {
-        SetName();
-        SetLevel();
-        SetHealthBar();
-        SetManaBar();
+    private void Start() {
+        _characterController.onInitialized += Initialize;
+        _characterController.onTakeDamage += OnTakeDamage;
     }
 
     public void OpenUI() {
@@ -36,16 +37,33 @@ public class CharacterUI : Menu {
         Hide();
     }
 
+    private void UpdateUI() {
+        SetName();
+        SetLevel();
+        SetHealthBar();
+        SetManaBar();
+    }
+
+    private void Initialize() {
+        UpdateUI();
+    }
+
+    private void OnTakeDamage(int damage) {
+        UpdateUI();
+
+        _damageIndicatorController.CreateDamageIndicator(damage.ToString(), this.transform);
+    }
+
     private void SetName() {
-        _txtName.text = _livingEntity.CharacterStats.GetName();
+        _txtName.text = _characterController.CharacterStats.GetName();
     }
 
     private void SetLevel() {
-        _txtLevel.text = _livingEntity.CharacterStats.GetLevel().ToString();
+        _txtLevel.text = _characterController.CharacterStats.GetLevel().ToString();
     }
 
     private void SetHealthBar() {
-        _imgHealthBar.fillAmount = ((float)_livingEntity.CharacterStats.GetCurrentHealth() / (float)_livingEntity.CharacterStats.GetMaxHealth());
+        _imgHealthBar.fillAmount = ((float)_characterController.CharacterStats.GetCurrentHealth() / (float)_characterController.CharacterStats.GetMaxHealth());
 
         if (_imgHealthBar.fillAmount == 0) {
             _imgHealthBar.color = new Color(_imgHealthBar.color.r, _imgHealthBar.color.g, _imgHealthBar.color.b, 110);
@@ -55,7 +73,6 @@ public class CharacterUI : Menu {
     }
 
     private void SetManaBar() {
-        _imgManaBar.fillAmount = (_livingEntity.CharacterStats.GetCurrentMana() / _livingEntity.CharacterStats.GetMaxMana());
+        _imgManaBar.fillAmount = (_characterController.CharacterStats.GetCurrentMana() / _characterController.CharacterStats.GetMaxMana());
     }
-
 }
