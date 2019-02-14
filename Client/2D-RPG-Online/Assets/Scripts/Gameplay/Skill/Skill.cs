@@ -46,6 +46,8 @@ public class Skill : MonoBehaviour {
 
         switch (this._skill._skillRange) {
             case Skill_SO.Skill_Range.Melee:
+                _VFX.transform.position = startPosition;
+
                 Vector3 relativePos = startPosition - transform.position;
                 relativePos.y = 0;
 
