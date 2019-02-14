@@ -14,9 +14,18 @@ public class SkillController : MonoBehaviour {
     [Utils.ReadOnly]
     [SerializeField]
     private PlayerClass _playerClass;
+    [Utils.ReadOnly]
+    [SerializeField]
+    private CharacterController _characterController;
 
-    public void Initialize(PlayerClass playerClass) {
-        this._playerClass = playerClass;
+    private void Awake() {
+        _characterController = GetComponent<CharacterController>();
+
+        _characterController.onInitialized += Initialize;
+    }
+
+    public void Initialize() {
+        this._playerClass = _characterController.CharacterStats.GetCharacterClass();
     }
 
     public void OnAttack(Skill_SO skillSO, Transform target = null) {

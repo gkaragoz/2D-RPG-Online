@@ -5,7 +5,8 @@ using UnityEngine;
 public class CharacterController : MonoBehaviour {
 
     public Action onInitialized;
-    public Action onMove;
+    public Action<Vector3> onMove;
+    public Action onStop;
     public Action<int> onAttack;
     public Action onDeath;
     public Action<int> onTakeDamage;
@@ -48,7 +49,6 @@ public class CharacterController : MonoBehaviour {
         this._livingEntity = livingEntity;
         this._characterStats.Initialize(networkObject);
         this._characterAnimator.SetAnimator(livingEntity.CharacterObject.GetComponent<Animator>());
-        this._skillController.Initialize(this._characterStats.GetCharacterClass());
 
         onInitialized?.Invoke();
     }
@@ -110,12 +110,11 @@ public class CharacterController : MonoBehaviour {
 
     public void AttackEmpty() {
         if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
-            onAttack?.Invoke(GetTargetID(null));
-
             _characterAttack.AttackEmpty();
-            _characterAnimator.OnAttack();
 
             _skillController.OnAttack(SkillDatabase.instance.GetBasicAttackSkill(_livingEntity.PlayerClass));
+
+            onAttack?.Invoke(GetTargetID(null));
         }
     }
 
@@ -123,12 +122,12 @@ public class CharacterController : MonoBehaviour {
         if (!_characterStats.IsDeath() && _characterAttack.CanAttack) {
             if (!HasTargetDied(target)) {
                 if (IsTargetInRange(target)) {
-                    onAttack?.Invoke(GetTargetID(target));
-
                     _characterMotor.LookTo(target.transform.position);
                     _characterAttack.AttackToTarget(target);
-                    _characterAnimator.OnAttack();
+
                     _skillController.OnAttack(SkillDatabase.instance.GetBasicAttackSkill(_livingEntity.PlayerClass), target.transform);
+
+                    onAttack?.Invoke(GetTargetID(target));
                 }
             }
         }
@@ -136,17 +135,17 @@ public class CharacterController : MonoBehaviour {
 
     public void MoveToInput(Vector3 input) {
         if (!_characterStats.IsDeath()) {
-            onMove?.Invoke();
+            onMove?.Invoke(input);
 
             _characterMotor.MoveToInput(input);
-            _characterAnimator.OnMove(input);
         }
     }
 
     public void MoveToPosition(Vector3 position) {
         if (!_characterStats.IsDeath()) {
             _characterMotor.MoveToPosition(position);
-            _characterAnimator.OnMove(position);
+
+            onMove?.Invoke(position);
         }
     }
 
@@ -157,21 +156,18 @@ public class CharacterController : MonoBehaviour {
 
         if (_characterStats.GetCurrentHealth() <= 0) {
             Die();
-            Debug.Log("Death");
         } else {
-            _characterAnimator.OnHit();
+            onTakeDamage?.Invoke(damage);
         }
-
-        onTakeDamage?.Invoke(damage);
     }
 
     public void Die() {
         _livingEntity.IsDeath = true;
-        _characterAnimator.OnDeath();
+        onDeath?.Invoke();
     }
 
     public void Stop() {
-        _characterAnimator.OnStop();
+        onStop?.Invoke();
     }
 
     public void Rotate(Vector3 direction) {

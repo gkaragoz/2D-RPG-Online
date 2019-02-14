@@ -224,9 +224,9 @@ public class PlayerController : LivingEntity {
         Destroy(this.gameObject);
     }
     
-    private void OnMove() {
+    private void OnMove(Vector3 input) {
         if (_isMe) {
-            this.NetworkEntity.SendMovementInputData(CurrentInput);
+            this.NetworkEntity.SendMovementInputData(input);
         }
     }
 

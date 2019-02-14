@@ -17,6 +17,16 @@ public class CharacterAnimator : MonoBehaviour {
     private static readonly int anim_Die = Animator.StringToHash("Die");
     private static readonly string anim_IsSitting = "IsSitting";
 
+    private void Awake() {
+        CharacterController characterController = GetComponent<CharacterController>();
+
+        characterController.onAttack += OnAttack;
+        characterController.onDeath += OnDeath;
+        characterController.onTakeDamage += OnTakeDamage;
+        characterController.onMove += OnMove;
+        characterController.onStop += OnStop;
+    }
+
     private void Update() {
         if (_pathFollower != null) {
             if (_pathFollower.IsRunning) {
@@ -29,37 +39,14 @@ public class CharacterAnimator : MonoBehaviour {
         this._animator = animator;
     }
 
-    public void OnMove(Vector3 direction) {
-        if (IsSitting) {
-            StandUp();
-        }
-        _animator.SetFloat(anim_InputMagnitude, direction.magnitude, locomotionAnimationSmoothTime, Time.deltaTime);
-    }
+    public void Reset() {
+        _animator.ResetTrigger(anim_BasicAttack);
+        _animator.ResetTrigger(anim_OnHit);
+        _animator.ResetTrigger(anim_Die);
 
-    public void OnStop() {
-        _animator.SetFloat(anim_InputMagnitude, 0, locomotionAnimationSmoothTime, Time.deltaTime);
-    }
-
-    public void OnHit() {
-        if (IsSitting) {
-            StandUp();
-        }
-        _animator.SetTrigger(anim_OnHit);
-    }
-
-    public void OnAttack() {
-        if (IsSitting) {
-            StandUp();
-        }
-        _animator.SetTrigger(anim_BasicAttack);
-    }
-
-    public void OnMoveExample() {
-        _animator.SetFloat(anim_InputMagnitude, 1f);
-    }
-
-    public void OnStopExample() {
         _animator.SetFloat(anim_InputMagnitude, 0f);
+        _animator.SetBool(anim_IsSitting, false);
+        transform.position = Vector3.zero;
     }
 
     public void Sit() {
@@ -70,7 +57,32 @@ public class CharacterAnimator : MonoBehaviour {
         _animator.SetBool(anim_IsSitting, false);
     }
 
-    public void OnDeath() {
+    private void OnMove(Vector3 direction) {
+        if (IsSitting) {
+            StandUp();
+        }
+        _animator.SetFloat(anim_InputMagnitude, direction.magnitude, locomotionAnimationSmoothTime, Time.deltaTime);
+    }
+
+    private void OnStop() {
+        _animator.SetFloat(anim_InputMagnitude, 0, locomotionAnimationSmoothTime, Time.deltaTime);
+    }
+
+    private void OnTakeDamage(int damage) {
+        if (IsSitting) {
+            StandUp();
+        }
+        _animator.SetTrigger(anim_OnHit);
+    }
+
+    private void OnAttack(int targetID) {
+        if (IsSitting) {
+            StandUp();
+        }
+        _animator.SetTrigger(anim_BasicAttack);
+    }
+
+    private void OnDeath() {
         if (IsSitting) {
             StandUp();
         }
@@ -84,16 +96,6 @@ public class CharacterAnimator : MonoBehaviour {
         _animator.SetLayerWeight(1, 0);
         _animator.SetLayerWeight(2, 0);
         _animator.SetTrigger(anim_Die);
-    }
-
-    public void Reset() {
-        _animator.ResetTrigger(anim_BasicAttack);
-        _animator.ResetTrigger(anim_OnHit);
-        _animator.ResetTrigger(anim_Die);
-
-        _animator.SetFloat(anim_InputMagnitude, 0f);
-        _animator.SetBool(anim_IsSitting, false);
-        transform.position = Vector3.zero;
     }
 
 }
