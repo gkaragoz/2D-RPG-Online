@@ -22,9 +22,7 @@ public class CharacterUI : Menu {
 
     private void Awake() {
         _characterController = GetComponent<CharacterController>();
-    }
 
-    private void Start() {
         _characterController.onInitialized += Initialize;
         _characterController.onTakeDamage += OnTakeDamage;
     }
