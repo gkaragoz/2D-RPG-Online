@@ -59,7 +59,7 @@ public class MenuManager : Menu {
             UpdateUI();
         }
 
-        initializationProgress.Invoke();
+        initializationProgress.Complete();
     }
 
     private void UpdateUI() {

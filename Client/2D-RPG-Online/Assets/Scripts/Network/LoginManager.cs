@@ -40,7 +40,7 @@ public class LoginManager : MonoBehaviour {
         GooglePlayManager.instance.onGooglePlaySignInResult += OnGooglePlaySignInResult;
         onLoginResult = OnLoginResult;
 
-        initializationProgress.Invoke();
+        initializationProgress.Complete();
     }
 
     public void Login() {
@@ -90,13 +90,13 @@ public class LoginManager : MonoBehaviour {
                 PopupManager.instance.ShowPopupMessage("ERROR", ((int)result).ToString(), PopupMessage.Type.Error);
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_SESSION_ID:
-                sessionIdResponseProgress.Invoke();
+                sessionIdResponseProgress.Complete();
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_GUEST_SESSION:
-                sessionIdResponseProgress.Invoke();
+                sessionIdResponseProgress.Complete();
                 break;
             case APIConfig.LoginResults.SUCCESS_GET_ACCOUNT_DATA:
-                accountDataResponseProgress.Invoke();
+                accountDataResponseProgress.Complete();
                 onLoginCompleted?.Invoke();
                 break;
             default:
@@ -106,7 +106,7 @@ public class LoginManager : MonoBehaviour {
     }
 
     private void OnGooglePlaySignInResult(GooglePlayManager.Results result) {
-        googlePlaySignInResponseProgress.Invoke();
+        googlePlaySignInResponseProgress.Complete();
 
         switch (result) {
             case GooglePlayManager.Results.SUCCESS_SIGN_IN:

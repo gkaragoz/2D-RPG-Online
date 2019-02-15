@@ -20,11 +20,13 @@ public class CharacterAnimator : MonoBehaviour {
     private void Awake() {
         CharacterController characterController = GetComponent<CharacterController>();
 
-        characterController.onAttack += OnAttack;
-        characterController.onDeath += OnDeath;
-        characterController.onTakeDamage += OnTakeDamage;
-        characterController.onMove += OnMove;
-        characterController.onStop += OnStop;
+        if (characterController != null) {
+            characterController.onAttack += OnAttack;
+            characterController.onDeath += OnDeath;
+            characterController.onTakeDamage += OnTakeDamage;
+            characterController.onMove += OnMove;
+            characterController.onStop += OnStop;
+        }
     }
 
     private void Update() {

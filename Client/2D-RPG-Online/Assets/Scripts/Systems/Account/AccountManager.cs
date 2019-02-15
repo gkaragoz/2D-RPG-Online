@@ -43,7 +43,7 @@ public class AccountManager : MonoBehaviour {
     public void Initialize(Account account) {
         this._account = account;
 
-        initializationProgress.Invoke();
+        initializationProgress.Complete();
         onAccountManagerInitialized?.Invoke();
     }
 

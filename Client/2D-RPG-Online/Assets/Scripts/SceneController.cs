@@ -18,30 +18,66 @@ public class SceneController : MonoBehaviour {
 
     #endregion
 
+    public enum STATE {
+        Main,
+        Tutorial,
+        CharacterSelection,
+        CharacterCreation,
+        Lobby,
+        Gameplay
+    }
+
     public LoadingTask sceneLoadedProgress;
 
     public Action onSceneLoaded;
 
-    public Scene GetActiveScene() {
-        return SceneManager.GetActiveScene();
-    }
+    public STATE State { get; private set; }
 
-    public void LoadSceneAsync(string name, LoadSceneMode mode) {
+    public void LoadSceneAsync(STATE state, LoadSceneMode mode) {
         LoadingManager.instance.Show();
-        LoadingManager.instance.AddTask(this.sceneLoadedProgress);
+        LoadingManager.instance.AddTask(sceneLoadedProgress);
 
-        StartCoroutine(ILoadSceneAsync(name, mode));
+        this.State = state;
+
+        StartCoroutine(ILoadSceneAsync(mode));
     }
 
-    private IEnumerator ILoadSceneAsync(string name, LoadSceneMode mode) {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(name, mode);
+    public void SetState(STATE state) {
+        this.State = state;
+    }
+
+    private IEnumerator ILoadSceneAsync(LoadSceneMode mode) {
+        string sceneName = "";
+
+        switch (this.State) {
+            case STATE.Main:
+                sceneName = "Main";
+                break;
+            case STATE.Tutorial:
+                sceneName = "Tutorial";
+                break;
+            case STATE.CharacterSelection:
+            case STATE.CharacterCreation:
+                sceneName = "Characters";
+                break;
+            case STATE.Lobby:
+                sceneName = "Lobby";
+                break;
+            case STATE.Gameplay:
+                sceneName = "Gameplay";
+                break;
+            default:
+                break;
+        }
+
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync(sceneName, mode);
 
         while (!asyncLoad.isDone) {
             yield return null;
         }
 
         onSceneLoaded?.Invoke();
-        sceneLoadedProgress?.Invoke();
+        sceneLoadedProgress.Complete();
     }
 
 }

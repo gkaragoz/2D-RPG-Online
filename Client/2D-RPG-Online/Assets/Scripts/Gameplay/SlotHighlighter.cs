@@ -26,7 +26,7 @@ public class SlotHighlighter : MonoBehaviour {
     }
 
     public void OnLoadingCompleted() {
-        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+        if (SceneController.instance.State == SceneController.STATE.Gameplay) {
             _spotLight.gameObject.SetActive(false);
         }
     }

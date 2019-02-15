@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -24,6 +25,8 @@ public class LoadingManager : Menu {
     }
 
     #endregion
+
+    public List<LoadingTask> CheckList { get { return _checkList; } }
 
     [SerializeField]
     private Image _imgFilledBar;
@@ -50,9 +53,8 @@ public class LoadingManager : Menu {
     [SerializeField]
     [Utils.ReadOnly]
     private float _divisionProblemAmount;
-    [SerializeField]
-    [Utils.ReadOnly]
-    private List<bool> _checkList = new List<bool>();
+
+    private List<LoadingTask> _checkList = new List<LoadingTask>();
 
     private void Start() {
         _imgFilledBar.fillAmount = 0;
@@ -61,32 +63,23 @@ public class LoadingManager : Menu {
     }
 
     private void Update() {
-        _txtFilledAmount.text = "Loading! %" + (_completedProgressAmount + _divisionProblemAmount);
-        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, (_completedProgressAmount + _divisionProblemAmount) * 0.01f, Time.deltaTime * _lerpSpeed);
     }
 
     public void ResetTasks() {
-        _checkList = new List<bool>();
+        _checkList = new List<LoadingTask>();
     }
 
     public void AddTask(LoadingTask task) {
-        _checkList.Add(false);
+        _checkList.Add(task);
         _progressFilledAmount = GetPerProgressFilledAmount();
     }
 
-    public void Progress() {
-        _completedProgressAmount = 0;
-
-        for (int ii = 0; ii < _checkList.Count; ii++) {
+    public void Progress(LoadingTask task) {
+        if (task.IsCompleted) {
             _completedProgressAmount += _progressFilledAmount;
-
-            if (_checkList[ii]) {
-                continue;
-            } else {
-                _checkList[ii] = true;
-                break;
-            }
         }
+
+        ProgressBar();
 
         if (_completedProgressAmount + _divisionProblemAmount >= 100) {
             StartCoroutine(Delay(() => {
@@ -103,6 +96,11 @@ public class LoadingManager : Menu {
         callback();
     }
 
+    private void ProgressBar() {
+        _txtFilledAmount.text = "Loading! %" + (_completedProgressAmount + _divisionProblemAmount);
+        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, (_completedProgressAmount + _divisionProblemAmount) * 0.01f, Time.deltaTime * _lerpSpeed);
+    }
+
     private float GetPerProgressFilledAmount() {
         float amount = (100 / (_checkList.Count == 0 ? 1 : _checkList.Count));
         _divisionProblemAmount = 100 - (amount * _checkList.Count);
@@ -111,3 +109,27 @@ public class LoadingManager : Menu {
     }
 
 }
+
+#if UNITY_EDITOR
+[CustomEditor(typeof(LoadingManager))]
+public class ExampleScriptEditor : Editor {
+    public LoadingManager loadingManager;
+
+    public void OnEnable() {
+        loadingManager = (LoadingManager)target;
+    }
+
+    public override void OnInspectorGUI() {
+        GUI.backgroundColor = Color.cyan;
+
+        base.OnInspectorGUI();
+
+        GUILayout.Space(10f);
+        GUILayout.Label("Check List");
+
+        for (int ii = 0; ii < loadingManager.CheckList.Count; ii++) {
+            GUILayout.Label(loadingManager.CheckList[ii].Name + " : " + loadingManager.CheckList[ii].IsCompleted);
+        }
+    }
+}
+#endif

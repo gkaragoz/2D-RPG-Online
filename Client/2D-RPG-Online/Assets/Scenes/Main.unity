@@ -6442,6 +6442,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: HideCharacterCreationMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: ShowCharacterSelectionMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &400078869
@@ -9685,6 +9707,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: HideCharacterSelectionMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: ShowCharacterCreationMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &646497124
@@ -10169,7 +10213,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 1089635890}
   subContainer: {fileID: 0}
-  initializationProgress: {fileID: 1469689119}
+  initializationProgress:
+    _isCompleted: 0
+    _taskName: MenuInitialized
   _imgClassBg: {fileID: 625375860}
   _txtAccountGold: {fileID: 1346719510}
   _txtAccountGem: {fileID: 64685931}
@@ -10626,7 +10672,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2a44c16f5b14ce343b34732929eea5d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initializationProgress: {fileID: 1469689119}
+  initializationProgress:
+    _isCompleted: 0
+    _taskName: AccountManagerInitialized
   _account:
     success: 0
     gem: 0
@@ -11734,11 +11782,11 @@ MonoBehaviour:
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -18681,19 +18729,19 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_textInfo:
     textComponent: {fileID: 1192396407}
-    characterCount: 10
+    characterCount: 7
     spriteCount: 0
-    spaceCount: 1
-    wordCount: 2
+    spaceCount: 0
+    wordCount: 1
     linkCount: 0
     lineCount: 1
     pageCount: 1
     materialCount: 1
-  m_havePropertiesChanged: 1
+  m_havePropertiesChanged: 0
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_spriteAnimator: {fileID: 0}
-  m_isInputParsingRequired: 1
+  m_isInputParsingRequired: 0
   m_inputSource: 0
   m_hasFontAssetChanged: 0
   m_subTextObjects:
@@ -21165,10 +21213,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f2f77c5b06e21154c9b477864bbcb1fe, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initializationProgress: {fileID: 1469689119}
-  googlePlaySignInResponseProgress: {fileID: 1469689119}
-  sessionIdResponseProgress: {fileID: 1469689119}
-  accountDataResponseProgress: {fileID: 1469689119}
+  initializationProgress:
+    _isCompleted: 0
+    _taskName: LoginManagerInitialized
+  googlePlaySignInResponseProgress:
+    _isCompleted: 0
+    _taskName: GooglePlaySignIn
+  sessionIdResponseProgress:
+    _isCompleted: 0
+    _taskName: SessionIdReceived
+  accountDataResponseProgress:
+    _isCompleted: 0
+    _taskName: AccountDataReceived
 --- !u!4 &1347909438
 Transform:
   m_ObjectHideFlags: 0
@@ -23335,7 +23391,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1469689118}
   - component: {fileID: 1469689117}
-  - component: {fileID: 1469689119}
   m_Layer: 0
   m_Name: _LoadingManager
   m_TagString: Untagged
@@ -23362,12 +23417,11 @@ MonoBehaviour:
   _background: {fileID: 249084170}
   _randomBackground:
   - {fileID: 21300000, guid: 8ddbb14b2bfe5784292b4c53ef19c6fa, type: 3}
-  _lerpSpeed: 1
-  _delay: 0.5
+  _lerpSpeed: 100
+  _delay: 0.1
   _progressFilledAmount: 0
   _completedProgressAmount: 0
   _divisionProblemAmount: 0
-  _checkList: 
 --- !u!4 &1469689118
 Transform:
   m_ObjectHideFlags: 0
@@ -23382,18 +23436,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1469689119
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1469689116}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dce160c66dfa9ae40a8901ba77bc975c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1470004397
 GameObject:
   m_ObjectHideFlags: 0
@@ -25353,6 +25395,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   container: {fileID: 1904710925}
   subContainer: {fileID: 1647306820}
+  roomManagerInitializedProgress:
+    _isCompleted: 0
+    _taskName: RoomManagerInitialized
   _playerPrefab: {fileID: 84, guid: 564f9f84665c4af43b54572dc2955368, type: 3}
   _btnStartGame: {fileID: 1074621522}
   _btnReady: {fileID: 2029559455}
@@ -27391,6 +27436,28 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: HideCharacterSelectionMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 2058677271}
+        m_MethodName: ShowCharacterCreationMenu
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.UI.Button+ButtonClickedEvent, UnityEngine.UI, Version=1.0.0.0,
       Culture=neutral, PublicKeyToken=null
 --- !u!1 &1820617076
@@ -29236,7 +29303,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba41859e8a3ac7f4ca30abe4371bb318, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  accountDataResponseProgress: {fileID: 1469689119}
+  accountDataResponseProgress:
+    _isCompleted: 0
+    _taskName: AccountDataReceived
 --- !u!4 &1913362829
 Transform:
   m_ObjectHideFlags: 0
@@ -29266,7 +29335,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 893d301e56dc5e041abd851dd90eb1b5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sceneLoadedProgress: {fileID: 1469689119}
+  sceneLoadedProgress:
+    _isCompleted: 0
+    _taskName: SceneLoaded
 --- !u!114 &1913362831
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -31824,7 +31895,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60e08d7d68101bb458269a512c14dc7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initializationProgress: {fileID: 1469689119}
+  initializationProgress:
+    _isCompleted: 0
+    _taskName: CharacterManagerInitialized
   _characterCreation: {fileID: 2058677275}
   _characterSelection: {fileID: 2058677274}
   _selectedCharacter:

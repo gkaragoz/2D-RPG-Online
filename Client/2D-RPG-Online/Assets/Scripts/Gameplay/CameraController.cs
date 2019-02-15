@@ -7,7 +7,7 @@ public class CameraController : MonoBehaviour {
 
     public enum SceneBehaviour {
         Gameplay,
-        CharacterSelection
+        Characters
     }
 
     [Header("Initialization")]
@@ -85,7 +85,7 @@ public class CameraController : MonoBehaviour {
                 transform.localPosition = new Vector3(0, 8, -7);
                 _blockProcess = false;
                 break;
-            case SceneBehaviour.CharacterSelection:
+            case SceneBehaviour.Characters:
                 _physicsRaycaster.enabled = true;
                 _cinemachineBrain.enabled = true;
                 _blockProcess = true;
@@ -104,9 +104,9 @@ public class CameraController : MonoBehaviour {
     }
 
     private void OnLoadingCompleted() {
-        if (SceneController.instance.GetActiveScene().name == "CharacterSelection") {
-            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.CharacterSelection);
-        } else if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+        if (SceneController.instance.State == SceneController.STATE.CharacterCreation || SceneController.instance.State == SceneController.STATE.CharacterSelection) {
+            Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.Characters);
+        } else if (SceneController.instance.State == SceneController.STATE.Gameplay) {
             Camera.main.GetComponent<CameraController>().SetBehaviour(CameraController.SceneBehaviour.Gameplay);
         }
     }

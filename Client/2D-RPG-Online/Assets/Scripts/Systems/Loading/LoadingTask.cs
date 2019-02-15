@@ -1,16 +1,21 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class LoadingTask : MonoBehaviour {
+[System.Serializable]
+public class LoadingTask {
 
-    public Action taskAction;
+    public string Name { get { return _taskName; } }
+    public bool IsCompleted { get { return _isCompleted; } }
 
-    private void Start() {
-        taskAction = new Action(LoadingManager.instance.Progress);
-    }
+    [SerializeField]
+    private bool _isCompleted;
+    [SerializeField]
+    private string _taskName;
 
-    public void Invoke() {
-        taskAction?.Invoke();
+    public void Complete() {
+        if (!_isCompleted) {
+            _isCompleted = true;
+            LoadingManager.instance.Progress(this);
+        }
     }
 
 }

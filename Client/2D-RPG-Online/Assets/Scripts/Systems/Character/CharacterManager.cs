@@ -38,20 +38,14 @@ public class CharacterManager : MonoBehaviour {
         _characterCreation.Initialize();
         _characterSelection.Initialize();
 
-        _characterCreation.Hide();
-        _characterSelection.Show();
-
-        initializationProgress.Invoke();
+        initializationProgress.Complete();
     }
 
     public void InitializeCharacterCreation() {
         _characterSelection.Initialize();
         _characterCreation.Initialize();
 
-        _characterSelection.Hide();
-        _characterCreation.Show();
-
-        initializationProgress.Invoke();
+        initializationProgress.Complete();
     }
 
     public void ShowCharacterCreationMenu() {

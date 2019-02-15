@@ -87,12 +87,12 @@ public class AudioManager : MonoBehaviour {
         }
     }
 
-    public void ChangeBackgroundMusic(Scene scene) {
+    public void ChangeBackgroundMusic(SceneController.STATE state) {
         if (_currentBgMusic != string.Empty) {
             Stop(_currentBgMusic);
         }
 
-        if (scene.name == "Gameplay") {
+        if (state == SceneController.STATE.Gameplay) {
             StopAllSounds();
 
             int random = UnityEngine.Random.Range(0, 1);

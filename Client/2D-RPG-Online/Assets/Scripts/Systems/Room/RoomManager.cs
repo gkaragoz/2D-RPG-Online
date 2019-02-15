@@ -22,6 +22,8 @@ public class RoomManager : Menu {
 
     #endregion
 
+    public LoadingTask roomManagerInitializedProgress;
+
     public Action onRoomCreated;
     public Action onRoomJoined;
     public Action onRoomLeft;
@@ -97,13 +99,14 @@ public class RoomManager : Menu {
     }
 
     public void OnSceneLoaded() {
-        if (SceneController.instance.GetActiveScene().name == "Gameplay") {
+        if (SceneController.instance.State == SceneController.STATE.Gameplay) {
             CreateMyPlayer();
             for (int ii = 0; ii < _otherPlayerRoomInfos.Count; ii++) {
                 CreatePlayer(_otherPlayerRoomInfos[ii]);
             }
-
             _hasInitialized = true;
+
+            roomManagerInitializedProgress.Complete();
         } else {
             _hasInitialized = false;
         }
