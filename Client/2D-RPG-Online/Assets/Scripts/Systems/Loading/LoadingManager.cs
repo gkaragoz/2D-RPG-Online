@@ -124,12 +124,27 @@ public class ExampleScriptEditor : Editor {
 
         base.OnInspectorGUI();
 
+        if (loadingManager.CheckList.Count == 0) {
+            return;
+        }
+
         GUILayout.Space(10f);
         GUILayout.Label("Check List");
 
         for (int ii = 0; ii < loadingManager.CheckList.Count; ii++) {
-            GUILayout.Label(loadingManager.CheckList[ii].Name + " : " + loadingManager.CheckList[ii].IsCompleted);
+            if (loadingManager.CheckList[ii].IsCompleted) {
+                GUIStyle style = new GUIStyle(EditorStyles.textField);
+                style.normal.textColor = Color.green;
+                GUILayout.Label(loadingManager.CheckList[ii].Name + ":" + loadingManager.CheckList[ii].IsCompleted.ToString(), style);
+            } else {
+                GUIStyle style = new GUIStyle(EditorStyles.textField);
+                style.normal.textColor = Color.red;
+                GUILayout.Label(loadingManager.CheckList[ii].Name + ":" + loadingManager.CheckList[ii].IsCompleted.ToString(), style);
+            }
+            GUILayout.Space(10f);
         }
+
+        GUI.backgroundColor = Color.cyan;
     }
 }
 #endif
