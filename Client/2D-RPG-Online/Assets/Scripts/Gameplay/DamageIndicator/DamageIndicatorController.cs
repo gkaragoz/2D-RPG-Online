@@ -8,7 +8,6 @@ public class DamageIndicatorController : MonoBehaviour {
         Heal
     }
 
-    public DamageIndicator damageIndicator;
     public Transform parentTransform;
 
     [Header("Debug")]
@@ -24,11 +23,12 @@ public class DamageIndicatorController : MonoBehaviour {
     }
 
     public void CreateDamageIndicator(Type type, string text, Transform location) {
-        DamageIndicator instance = Instantiate(damageIndicator);
+        DamageIndicator instance = ObjectPooler.instance.SpawnFromPool("DamageIndicator").GetComponent<DamageIndicator>();
 
         instance.transform.SetParent(parentTransform, false);
         instance.SetColor(type);
         instance.SetText(text);
+        instance.Play();
     }
 
     private void OnSceneLoaded() {

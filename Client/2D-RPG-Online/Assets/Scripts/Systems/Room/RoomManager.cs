@@ -78,7 +78,7 @@ public class RoomManager : Menu {
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatus, OnPlayerReadyStatusChanged);
         NetworkManager.mss.AddEventListener(MSServerEvent.RoomPlayerReadyStatusFailed, OnPlayerReadyStatusChangeFailed);
 
-        SceneController.instance.onSceneLoaded = OnSceneLoaded;
+        SceneController.instance.onSceneLoaded += OnSceneLoaded;
     }
 
     private void Update() {
@@ -104,6 +104,9 @@ public class RoomManager : Menu {
             for (int ii = 0; ii < _otherPlayerRoomInfos.Count; ii++) {
                 CreatePlayer(_otherPlayerRoomInfos[ii]);
             }
+
+            ObjectPooler.instance.InitializePool("DamageIndicator");
+
             _hasInitialized = true;
 
             roomManagerInitializedProgress.Complete();

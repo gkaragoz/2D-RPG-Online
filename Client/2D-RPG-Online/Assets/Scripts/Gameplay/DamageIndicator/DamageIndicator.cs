@@ -1,7 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 
-public class DamageIndicator : Menu {
+public class DamageIndicator : Menu, IPooledObject {
 
     [SerializeField]
     private Animator _animator;
@@ -11,11 +11,21 @@ public class DamageIndicator : Menu {
     private Color _damageColor;
     [SerializeField]
     private Color _healColor;
+    [SerializeField]
+    [Utils.ReadOnly]
+    private float _clipLength;
 
-    void OnEnable() {
+    private void Start() {
         AnimatorClipInfo[] clipInfo = _animator.GetCurrentAnimatorClipInfo(0);
 
-        Destroy(gameObject, clipInfo[0].clip.length);
+        _clipLength = clipInfo[0].clip.length;
+    }
+
+    public void OnObjectReused() {
+    }
+
+    public void Play() {
+        Invoke("SetDeactive", _clipLength);
     }
 
     public void SetText(string text) {
@@ -35,4 +45,7 @@ public class DamageIndicator : Menu {
         }
     }
 
+    private void SetDeactive() {
+        gameObject.SetActive(false);
+    }
 }

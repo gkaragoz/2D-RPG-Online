@@ -830,12 +830,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 34827736}
   m_CullTransparentMesh: 0
---- !u!4 &41410855 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-    type: 3}
-  m_PrefabInstance: {fileID: 5837993719566455506}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &42643432
 GameObject:
   m_ObjectHideFlags: 0
@@ -1018,7 +1012,7 @@ Transform:
   m_Children:
   - {fileID: 1443702649}
   m_Father: {fileID: 1913362829}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &64685929
 GameObject:
@@ -10220,7 +10214,6 @@ MonoBehaviour:
   container: {fileID: 1089635890}
   subContainer: {fileID: 0}
   initializationProgress:
-    _isCompleted: 0
     _taskName: MenuInitialized
   _imgClassBg: {fileID: 625375860}
   _txtAccountGold: {fileID: 1346719510}
@@ -10679,7 +10672,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializationProgress:
-    _isCompleted: 0
     _taskName: AccountManagerInitialized
   _account:
     success: 0
@@ -21220,16 +21212,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializationProgress:
-    _isCompleted: 0
     _taskName: LoginManagerInitialized
   googlePlaySignInResponseProgress:
-    _isCompleted: 0
     _taskName: GooglePlaySignIn
   sessionIdResponseProgress:
-    _isCompleted: 0
     _taskName: SessionIdReceived
   accountDataResponseProgress:
-    _isCompleted: 0
     _taskName: AccountDataReceived
 --- !u!4 &1347909438
 Transform:
@@ -25402,7 +25390,6 @@ MonoBehaviour:
   container: {fileID: 1904710925}
   subContainer: {fileID: 1647306820}
   roomManagerInitializedProgress:
-    _isCompleted: 0
     _taskName: RoomManagerInitialized
   _playerPrefab: {fileID: 84, guid: 564f9f84665c4af43b54572dc2955368, type: 3}
   _btnStartGame: {fileID: 1074621522}
@@ -29310,7 +29297,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   accountDataResponseProgress:
-    _isCompleted: 0
     _taskName: AccountDataReceived
 --- !u!4 &1913362829
 Transform:
@@ -29325,7 +29311,6 @@ Transform:
   m_Children:
   - {fileID: 4638725470540306969}
   - {fileID: 281530705}
-  - {fileID: 41410855}
   - {fileID: 61598373}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -29343,7 +29328,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   sceneLoadedProgress:
-    _isCompleted: 0
     _taskName: SceneLoaded
 --- !u!114 &1913362831
 MonoBehaviour:
@@ -31903,7 +31887,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initializationProgress:
-    _isCompleted: 0
     _taskName: CharacterManagerInitialized
   _characterCreation: {fileID: 2058677275}
   _characterSelection: {fileID: 2058677274}
@@ -33440,75 +33423,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3260074a3a6bf7c42ae710b90a4744f6, type: 3}
---- !u!1001 &5837993719566455506
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 1913362829}
-    m_Modifications:
-    - target: {fileID: 5837993719534433268, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_Name
-      value: _ObjectPooler
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalRotation.y
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5837993719534433269, guid: 9b78e0a43d261dd489a06ecf98637923,
-        type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 9b78e0a43d261dd489a06ecf98637923, type: 3}
 --- !u!1001 &5864759407097757448
 PrefabInstance:
   m_ObjectHideFlags: 0
