@@ -47,15 +47,13 @@ public class GameManager : MonoBehaviour {
     private const string ERROR_GET_ID_TOKEN_MESSAGE = "Some problem occured on server!";
 
     private void Start() {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
 
-        StartCoroutine(Bootup());
+        Bootup();
     }
 
-    private IEnumerator Bootup() {
+    private void Bootup() {
         AudioManager.instance.ChangeBackgroundMusic(SceneController.instance.State);
-
-        yield return new WaitForSeconds(1f);
 
         AccountManager.instance.onAccountManagerInitialized += OnAccountManagerInitialized;
         LoginManager.instance.onLoginCompleted += OnLoginCompleted;
@@ -116,20 +114,26 @@ public class GameManager : MonoBehaviour {
             CharacterManager.instance.InitializeCharacterSelection();
         } else if (SceneController.instance.State == SceneController.STATE.CharacterCreation) {
             CharacterManager.instance.InitializeCharacterCreation();
+        } else if (SceneController.instance.State == SceneController.STATE.Gameplay) {
+
         }
     }
 
     private void OnLoadingCompleted() {
         if (SceneController.instance.State == SceneController.STATE.Tutorial) {
+            Application.targetFrameRate = 60;
             TutorialManager.instance.onTutorialCompleted += OnTutorialCompleted;
             TutorialManager.instance.StartTutorial();
         } else if (SceneController.instance.State == SceneController.STATE.CharacterSelection) {
+            Application.targetFrameRate = 30;
             CharacterManager.instance.HideCharacterCreationMenu();
             CharacterManager.instance.ShowCharacterSelectionMenu();
         } else if (SceneController.instance.State == SceneController.STATE.CharacterCreation) {
+            Application.targetFrameRate = 30;
             CharacterManager.instance.HideCharacterSelectionMenu();
             CharacterManager.instance.ShowCharacterCreationMenu();
         } else if (SceneController.instance.State == SceneController.STATE.Gameplay) {
+            Application.targetFrameRate = 60;
             MenuManager.instance.Hide();
             RoomManager.instance.Show();
         }
@@ -152,11 +156,15 @@ public class GameManager : MonoBehaviour {
     }
 
     private void OnRoomCreated() {
+        MenuManager.instance.Hide();
+        LoadingManager.instance.AddTask(RoomManager.instance.roomManagerInitializedProgress);
         //Go To Gameplay Scene.
         SceneController.instance.LoadSceneAsync(SceneController.STATE.Gameplay, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
 
     private void OnRoomJoined() {
+        MenuManager.instance.Hide();
+        LoadingManager.instance.AddTask(RoomManager.instance.roomManagerInitializedProgress);
         //Go To Gameplay Scene.
         SceneController.instance.LoadSceneAsync(SceneController.STATE.Gameplay, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }

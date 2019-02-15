@@ -1,11 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
 
     [System.Serializable]
     public class Pool {
+        public string name;
         public GameObject prefab;
         public int size;
     }
@@ -24,30 +26,55 @@ public class ObjectPooler : MonoBehaviour {
     #endregion
 
     public List<Pool> pools = new List<Pool>();
-    public Dictionary<int, Queue<GameObject>> poolDictionary = new Dictionary<int, Queue<GameObject>>();
+    public Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();
 
-    private void Start() {
-        foreach (Pool pool in pools) {
-            Queue<GameObject> objectPool = new Queue<GameObject>();
+    public void InitializePool(string name) {
+        Pool pool = pools.Where(p => p.name == name).First(); 
 
-            for (int jj = 0; jj < pool.size; jj++) {
-                GameObject newObject = Instantiate(pool.prefab, transform);
-                newObject.SetActive(false);
+        if (pool == null) {
+            Debug.LogError("Pool with key " + name + " doesn't exists.");
+            return;
+        }
 
-                objectPool.Enqueue(newObject);
-            }
+        Queue<GameObject> objectPool = new Queue<GameObject>();
 
-            poolDictionary.Add(pool.prefab.GetInstanceID(), objectPool);
+        for (int ii = 0; ii < pool.size; ii++) {
+            GameObject newObject = Instantiate(pool.prefab, transform);
+            newObject.SetActive(false);
+
+            objectPool.Enqueue(newObject);
+        }
+
+        poolDictionary.Add(pool.name, objectPool);
+    }
+
+    public void ClearPool(string name) {
+        Pool pool = pools.Where(p => p.name == name).First();
+
+        if (pool == null) {
+            Debug.LogError("Pool with key " + name + " doesn't exists.");
+            return;
+        }
+
+        if (!poolDictionary.ContainsKey(pool.name)) {
+            Debug.LogError("Pool with key " + pool.name + " didn't initiliaze yet.");
+            return;
+        }
+
+        Queue<GameObject> willDeletePool = poolDictionary[pool.name];
+
+        for (int ii = 0; ii < willDeletePool.Count; ii++) {
+            Destroy(willDeletePool.Dequeue());
         }
     }
 
-    public GameObject SpawnFromPool(int key, Vector3 position, Quaternion rotation) {
-        if (!poolDictionary.ContainsKey(key)) {
-            Debug.LogError("Pool with key " + key + " doesn't exists.");
+    public GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) {
+        if (!poolDictionary.ContainsKey(name)) {
+            Debug.LogError("Pool with key " + name + " doesn't exists.");
             return null;
         }
 
-        GameObject objectToSpawn = poolDictionary[key].Dequeue();
+        GameObject objectToSpawn = poolDictionary[name].Dequeue();
 
         objectToSpawn.SetActive(true);
         objectToSpawn.transform.position = position;
@@ -59,7 +86,7 @@ public class ObjectPooler : MonoBehaviour {
             pooledObject.OnObjectReused();
         }
 
-        poolDictionary[key].Enqueue(objectToSpawn);
+        poolDictionary[name].Enqueue(objectToSpawn);
 
         return objectToSpawn;
     }
