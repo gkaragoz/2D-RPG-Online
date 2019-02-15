@@ -34,9 +34,6 @@ public class SceneController : MonoBehaviour {
     public STATE State { get; private set; }
 
     public void LoadSceneAsync(STATE state, LoadSceneMode mode) {
-        LoadingManager.instance.Show();
-        LoadingManager.instance.AddTask(sceneLoadedProgress);
-
         this.State = state;
 
         StartCoroutine(ILoadSceneAsync(mode));

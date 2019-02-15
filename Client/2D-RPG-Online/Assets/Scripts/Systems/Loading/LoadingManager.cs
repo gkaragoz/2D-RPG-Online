@@ -26,7 +26,7 @@ public class LoadingManager : Menu {
 
     #endregion
 
-    public List<LoadingTask> CheckList { get { return _checkList; } }
+    public Dictionary<LoadingTask, bool> CheckList { get { return _checkList; } }
 
     [SerializeField]
     private Image _imgFilledBar;
@@ -54,7 +54,7 @@ public class LoadingManager : Menu {
     [Utils.ReadOnly]
     private float _divisionProblemAmount;
 
-    private List<LoadingTask> _checkList = new List<LoadingTask>();
+    private Dictionary<LoadingTask, bool> _checkList = new Dictionary<LoadingTask, bool>();
 
     private void Start() {
         _imgFilledBar.fillAmount = 0;
@@ -66,22 +66,33 @@ public class LoadingManager : Menu {
     }
 
     public void ResetTasks() {
-        _checkList = new List<LoadingTask>();
+        _checkList = new Dictionary<LoadingTask, bool>();
+        _completedProgressAmount = 0;
+        _divisionProblemAmount = 0;
     }
 
     public void AddTask(LoadingTask task) {
-        _checkList.Add(task);
+        _checkList.Add(task, false);
         _progressFilledAmount = GetPerProgressFilledAmount();
     }
 
     public void Progress(LoadingTask task) {
-        if (task.IsCompleted) {
-            _completedProgressAmount += _progressFilledAmount;
+        if (!_checkList.ContainsKey(task)) {
+            return;
         }
 
-        ProgressBar();
+        if (_checkList[task] == true) {
+            Debug.Log("Already checked: " + task.Name);
+            return;
+        }
+
+        _checkList[task] = true;
+        _completedProgressAmount += _progressFilledAmount;
+        Debug.Log("Task: " + task.Name + " " + _completedProgressAmount);
 
         if (_completedProgressAmount + _divisionProblemAmount >= 100) {
+            _completedProgressAmount = 100;
+
             StartCoroutine(Delay(() => {
                 ResetTasks();
                 Hide();
@@ -89,6 +100,8 @@ public class LoadingManager : Menu {
                 onLoadingCompleted?.Invoke();
             }));
         }
+
+        ProgressBar();
     }
 
     private IEnumerator Delay(Action callback) {
@@ -97,8 +110,8 @@ public class LoadingManager : Menu {
     }
 
     private void ProgressBar() {
-        _txtFilledAmount.text = "Loading! %" + (_completedProgressAmount + _divisionProblemAmount);
-        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, (_completedProgressAmount + _divisionProblemAmount) * 0.01f, Time.deltaTime * _lerpSpeed);
+        _txtFilledAmount.text = "Loading! %" + (_completedProgressAmount);
+        _imgFilledBar.fillAmount = Mathf.Lerp(_imgFilledBar.fillAmount, (_completedProgressAmount) * 0.01f, Time.deltaTime * _lerpSpeed);
     }
 
     private float GetPerProgressFilledAmount() {
@@ -131,16 +144,16 @@ public class ExampleScriptEditor : Editor {
         GUILayout.Space(10f);
         GUILayout.Label("Check List");
 
-        for (int ii = 0; ii < loadingManager.CheckList.Count; ii++) {
-            if (loadingManager.CheckList[ii].IsCompleted) {
-                GUIStyle style = new GUIStyle(EditorStyles.textField);
+        foreach (var task in loadingManager.CheckList) {
+            GUIStyle style = null;
+            if (task.Value == true) {
+                style = new GUIStyle(EditorStyles.textField);
                 style.normal.textColor = Color.green;
-                GUILayout.Label(loadingManager.CheckList[ii].Name + ":" + loadingManager.CheckList[ii].IsCompleted.ToString(), style);
             } else {
-                GUIStyle style = new GUIStyle(EditorStyles.textField);
+                style = new GUIStyle(EditorStyles.textField);
                 style.normal.textColor = Color.red;
-                GUILayout.Label(loadingManager.CheckList[ii].Name + ":" + loadingManager.CheckList[ii].IsCompleted.ToString(), style);
             }
+            GUILayout.Label(task.Key.Name + ":" + task.Value.ToString(), style);
             GUILayout.Space(10f);
         }
 

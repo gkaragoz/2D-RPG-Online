@@ -90,12 +90,18 @@ public class GameManager : MonoBehaviour {
 
     private void OnAccountManagerInitialized() {
         if (!HasPlayedBefore) {
+            LoadingManager.instance.Show();
+            LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
             //Go To Tutorial Scene.
             SceneController.instance.LoadSceneAsync(SceneController.STATE.Tutorial, UnityEngine.SceneManagement.LoadSceneMode.Single);
         } else if (AccountManager.instance.HasCharacter) {
+            LoadingManager.instance.Show();
+            LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
             //Go To Characters Scene selection.
             SceneController.instance.LoadSceneAsync(SceneController.STATE.CharacterSelection, UnityEngine.SceneManagement.LoadSceneMode.Single);
         } else if (!AccountManager.instance.HasCharacter) {
+            LoadingManager.instance.Show();
+            LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
             //Go To Characters Scene creation.
             SceneController.instance.LoadSceneAsync(SceneController.STATE.CharacterCreation, UnityEngine.SceneManagement.LoadSceneMode.Single);
         }
@@ -105,6 +111,8 @@ public class GameManager : MonoBehaviour {
         PlayerPrefs.SetInt(HAS_PLAYED_BEFORE, 1);
 
         LoadingManager.instance.ResetTasks();
+        LoadingManager.instance.Show();
+        LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
         //Go To Characters Scene.
         SceneController.instance.LoadSceneAsync(SceneController.STATE.CharacterCreation, UnityEngine.SceneManagement.LoadSceneMode.Single);
     }
@@ -157,6 +165,8 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomCreated() {
         MenuManager.instance.Hide();
+        LoadingManager.instance.Show();
+        LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
         LoadingManager.instance.AddTask(RoomManager.instance.roomManagerInitializedProgress);
         //Go To Gameplay Scene.
         SceneController.instance.LoadSceneAsync(SceneController.STATE.Gameplay, UnityEngine.SceneManagement.LoadSceneMode.Single);
@@ -164,6 +174,8 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomJoined() {
         MenuManager.instance.Hide();
+        LoadingManager.instance.Show();
+        LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
         LoadingManager.instance.AddTask(RoomManager.instance.roomManagerInitializedProgress);
         //Go To Gameplay Scene.
         SceneController.instance.LoadSceneAsync(SceneController.STATE.Gameplay, UnityEngine.SceneManagement.LoadSceneMode.Single);
@@ -171,6 +183,8 @@ public class GameManager : MonoBehaviour {
 
     private void OnRoomLeft() {
         //Go To Characters Scene.
+        LoadingManager.instance.Show();
+        LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
         SceneController.instance.LoadSceneAsync(SceneController.STATE.CharacterSelection, UnityEngine.SceneManagement.LoadSceneMode.Single);
         RoomManager.instance.Hide();
         MenuManager.instance.Show();
