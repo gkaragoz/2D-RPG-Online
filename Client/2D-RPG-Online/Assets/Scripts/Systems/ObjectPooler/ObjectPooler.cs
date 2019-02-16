@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class ObjectPooler : MonoBehaviour {
 
@@ -12,19 +10,6 @@ public class ObjectPooler : MonoBehaviour {
         public GameObject prefab;
         public int size;
     }
-
-    #region Singleton
-
-    public static ObjectPooler instance;
-
-    void Awake() {
-        if (instance == null)
-            instance = this;
-        else if (instance != this)
-            Destroy(gameObject);
-    }
-
-    #endregion
 
     public List<Pool> pools = new List<Pool>();
     public Dictionary<string, Queue<GameObject>> poolDictionary = new Dictionary<string, Queue<GameObject>>();

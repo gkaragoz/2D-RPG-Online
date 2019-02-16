@@ -105,8 +105,6 @@ public class RoomManager : Menu {
                 CreatePlayer(_otherPlayerRoomInfos[ii]);
             }
 
-            ObjectPooler.instance.InitializePool("DamageIndicator");
-
             _hasInitialized = true;
 
             roomManagerInitializedProgress.Complete();
