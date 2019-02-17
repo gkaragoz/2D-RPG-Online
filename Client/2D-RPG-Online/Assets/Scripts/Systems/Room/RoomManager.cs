@@ -207,16 +207,22 @@ public class RoomManager : Menu {
     }
 
     private void OnPlayerUpdated(NetworkIdentifier updatedNetworkEntity) {
-        //Debug.Log("OnPlayerUpdated: " + updatedNetworkEntity);
+        Debug.Log("OnPlayerUpdated: " + updatedNetworkEntity);
 
         if (!_hasInitialized) {
             return;
         }
 
-        //Debug.Log(data);
-
         if (updatedNetworkEntity.Id == _myPlayerController.NetworkEntity.Oid) {
             Reconciliation(updatedNetworkEntity);
+
+            if (updatedNetworkEntity.PlayerData != null) {
+                _myPlayerController.RegenerateHealth(updatedNetworkEntity.PlayerData.RegeneratedHealth);
+            }
+        } else {
+            if (updatedNetworkEntity.PlayerData != null) {
+                _otherPlayerControllers[updatedNetworkEntity.Id].RegenerateHealth(updatedNetworkEntity.PlayerData.RegeneratedHealth);
+            }
         }
 
         FillInterpolationBuffer(updatedNetworkEntity);

@@ -10,6 +10,7 @@ public class CharacterController : MonoBehaviour {
     public Action<int> onAttack;
     public Action onDeath;
     public Action<int> onTakeDamage;
+    public Action<int> onHealthRegenerated;
 
     public int AttackDamage { get { return _characterStats.GetAttackDamage(); } }
     public LivingEntity SelectedTarget { get { return _selectedTarget; } }
@@ -147,6 +148,12 @@ public class CharacterController : MonoBehaviour {
 
             onMove?.Invoke(position);
         }
+    }
+
+    public void RegenerateHealth(int healthAmount) {
+        _characterStats.ApplyHealth(healthAmount);
+
+        onHealthRegenerated?.Invoke(healthAmount);
     }
 
     public void TakeDamage(Skill_SO.Skill_Name skillName, int damage) {

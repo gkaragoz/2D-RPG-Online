@@ -47,6 +47,24 @@ public class AccountManager : MonoBehaviour {
         onAccountManagerInitialized?.Invoke();
     }
 
+    public CharacterModel GetSelectedCharacter() {
+        if (SelectedCharacterName == "" || HasCharacter == false) {
+            return null;
+        }
+
+        return GetCharacter(SelectedCharacterName);
+    }
+
+    public CharacterModel GetCharacter(string characterName) {
+        for (int ii = 0; ii < AllCharacters.Count; ii++) {
+            if (AllCharacters[ii].name == characterName) {
+                return AllCharacters[ii];
+            }
+        }
+        return null;
+    }
+
+
     private void AddCharacter(CharacterModel newCharacter) {
         _account.characters.Add(newCharacter);
 

@@ -86,11 +86,15 @@ public class CharacterStats_SO : ScriptableObject {
     private int _maxHealth = 0;
     [SerializeField]
     private int _currentHealth = 0;
+    [SerializeField]
+    private float _healthRegen = 0;
 
     [SerializeField]
     private int _maxMana = 0;
     [SerializeField]
     private int _currentMana = 0;
+    [SerializeField]
+    private float _manaRegen = 0;
 
     [SerializeField]
     private int _attackDamage = 5;
@@ -192,6 +196,16 @@ public class CharacterStats_SO : ScriptableObject {
         }
     }
 
+    public float HealthRegen {
+        get {
+            return _healthRegen;
+        }
+
+        set {
+            _healthRegen = value;
+        }
+    }
+
     public int MaxMana {
         get {
             return _maxMana;
@@ -209,6 +223,16 @@ public class CharacterStats_SO : ScriptableObject {
 
         set {
             _currentMana = value;
+        }
+    }
+
+    public float ManaRegen {
+        get {
+            return _manaRegen;
+        }
+
+        set {
+            _manaRegen = value;
         }
     }
 

@@ -23,7 +23,7 @@ public class CharacterStats : MonoBehaviour {
     #endregion
 
     public void Initialize(NetworkIdentifier networkObject) {
-        //this.StatsPoints = AccountManager.instance.SelectedCharacterStatsPoint;
+        _char.StatsPoints = AccountManager.instance.GetSelectedCharacter().stat_points;
         _char.Name = networkObject.PlayerData.Name;
         _char.CharacterClass = networkObject.PlayerData.PClass;
 
@@ -33,18 +33,19 @@ public class CharacterStats : MonoBehaviour {
 
         _char.CurrentHealth = networkObject.PlayerData.CurrentHp;
         _char.MaxHealth = networkObject.PlayerData.MaxHp;
+        _char.HealthRegen = AccountManager.instance.GetSelectedCharacter().stat.health_regen;
         _char.CurrentMana = networkObject.PlayerData.CurrentMana;
         _char.MaxMana = networkObject.PlayerData.MaxMana;
+        _char.ManaRegen = AccountManager.instance.GetSelectedCharacter().stat.mana_regen;
 
         _char.AttackDamage = networkObject.PlayerData.AttackDamage;
         _char.AttackSpeed = networkObject.PlayerData.AttackSpeed;
         _char.AttackRange = networkObject.PlayerData.AttackRange;
         _char.MovementSpeed = networkObject.PlayerData.MoveSpeed;
 
-        //_characterDefinition.Level = level;
-        _char.MaxExperience = 10 + (_char.Level * 10) + (_char.Level + 1) ^ 3;
-        //_characterDefinition.MaxExperience = maxExperience;
-        _char.CurrentExperience = 0;
+        _char.Level = AccountManager.instance.GetSelectedCharacter().level;
+        //_char.MaxExperience = ;
+        _char.CurrentExperience = AccountManager.instance.GetSelectedCharacter().exp;
     }
 
 

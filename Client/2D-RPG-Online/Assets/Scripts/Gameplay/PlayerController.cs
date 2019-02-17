@@ -186,6 +186,10 @@ public class PlayerController : LivingEntity {
         }
     }
 
+    public void RegenerateHealth(int healthAmount) {
+        _characterController.RegenerateHealth(healthAmount);
+    }
+
     public void TakeDamage(Skill_SO.Skill_Name skillName, int damage) {
         _characterController.TakeDamage(skillName, damage);
     }

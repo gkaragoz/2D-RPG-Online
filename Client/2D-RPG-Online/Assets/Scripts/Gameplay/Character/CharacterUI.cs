@@ -25,6 +25,7 @@ public class CharacterUI : Menu {
 
         _characterController.onInitialized += Initialize;
         _characterController.onTakeDamage += OnTakeDamage;
+        _characterController.onHealthRegenerated += OnHealthRegenerated;
     }
 
     public void OpenUI() {
@@ -44,6 +45,12 @@ public class CharacterUI : Menu {
 
     private void Initialize() {
         UpdateUI();
+    }
+
+    private void OnHealthRegenerated(int healthAmount) {
+        UpdateUI();
+
+        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Heal, healthAmount.ToString(), this.transform);
     }
 
     private void OnTakeDamage(int damage) {
