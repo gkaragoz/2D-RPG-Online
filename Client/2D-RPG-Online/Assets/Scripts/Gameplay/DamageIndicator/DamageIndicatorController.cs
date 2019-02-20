@@ -8,20 +8,17 @@ public class DamageIndicatorController : MonoBehaviour {
         Heal
     }
 
-    public Transform parentTransform;
-
     [Header("Debug")]
     [SerializeField]
     [Utils.ReadOnly]
     private Transform _target;
 
-    public void CreateDamageIndicator(Type type, string text, Transform location) {
-        //DamageIndicator instance = ObjectPooler.instance.SpawnFromPool("DamageIndicator").GetComponent<DamageIndicator>();
+    public void CreateDamageIndicator(Type type, string text, Vector3 position) {
+        DamageIndicator instance = ObjectPooler.instance.SpawnFromPool("DamageIndicator", position, Quaternion.identity).GetComponent<DamageIndicator>();
 
-        //instance.transform.SetParent(parentTransform, false);
-        //instance.SetColor(type);
-        //instance.SetText(text);
-        //instance.Play();
+        instance.SetColor(type);
+        instance.SetText(text);
+        instance.Play();
     }
 
 }

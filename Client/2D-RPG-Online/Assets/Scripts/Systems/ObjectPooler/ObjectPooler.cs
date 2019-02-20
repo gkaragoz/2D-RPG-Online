@@ -4,8 +4,22 @@ using UnityEngine;
 
 public class ObjectPooler : MonoBehaviour {
 
+    #region Singleton
+
+    public static ObjectPooler instance;
+
+    void Awake() {
+        if (instance == null)
+            instance = this;
+        else if (instance != this)
+            Destroy(gameObject);
+    }
+
+    #endregion
+
     [System.Serializable]
     public class Pool {
+        public Transform parentTransform;
         public string name;
         public GameObject prefab;
         public int size;
@@ -30,7 +44,7 @@ public class ObjectPooler : MonoBehaviour {
         Queue<GameObject> objectPool = new Queue<GameObject>();
 
         for (int ii = 0; ii < pool.size; ii++) {
-            GameObject newObject = Instantiate(pool.prefab, transform);
+            GameObject newObject = Instantiate(pool.prefab, pool.parentTransform);
             newObject.SetActive(false);
             objectPool.Enqueue(newObject);
         }
@@ -58,7 +72,7 @@ public class ObjectPooler : MonoBehaviour {
         }
     }
 
-    public GameObject SpawnFromPool(string name) {
+    public GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) {
         if (!poolDictionary.ContainsKey(name)) {
             Debug.LogError("Pool with key " + name + " doesn't exists.");
             return null;
@@ -66,6 +80,8 @@ public class ObjectPooler : MonoBehaviour {
 
         GameObject objectToSpawn = poolDictionary[name].Dequeue();
         objectToSpawn.SetActive(true);
+        objectToSpawn.transform.position = position;
+        objectToSpawn.transform.rotation = rotation;
 
         IPooledObject pooledObject = objectToSpawn.GetComponent<IPooledObject>();
     

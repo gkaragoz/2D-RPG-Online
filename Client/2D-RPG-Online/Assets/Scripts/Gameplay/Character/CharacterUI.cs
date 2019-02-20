@@ -50,13 +50,13 @@ public class CharacterUI : Menu {
     private void OnHealthRegenerated(int healthAmount) {
         UpdateUI();
 
-        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Heal, healthAmount.ToString(), this.transform);
+        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Heal, healthAmount.ToString(), this.transform.position);
     }
 
     private void OnTakeDamage(int damage) {
         UpdateUI();
 
-        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Damage, damage.ToString(), this.transform);
+        _damageIndicatorController.CreateDamageIndicator(DamageIndicatorController.Type.Damage, damage.ToString(), this.transform.position);
     }
 
     private void SetName() {

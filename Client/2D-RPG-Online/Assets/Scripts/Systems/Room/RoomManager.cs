@@ -107,6 +107,8 @@ public class RoomManager : Menu {
 
             _hasInitialized = true;
 
+            ObjectPooler.instance.InitializePool("DamageIndicator");
+
             roomManagerInitializedProgress.Complete();
         } else {
             _hasInitialized = false;
@@ -192,7 +194,6 @@ public class RoomManager : Menu {
         _myPlayerController = player.GetComponent<PlayerController>();
         _myPlayerController.Initialize(_myRoomPlayerInfo.NetworkObject);
     }
-
 
     private void CreatePlayer(RoomPlayerInfo playerInfo) {
         NetworkIdentifier tempNetworkObject = playerInfo.NetworkObject;
