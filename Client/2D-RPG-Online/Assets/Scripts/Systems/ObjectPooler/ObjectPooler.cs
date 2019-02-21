@@ -72,7 +72,7 @@ public class ObjectPooler : MonoBehaviour {
         }
     }
 
-    public GameObject SpawnFromPool(string name, Vector3 position, Quaternion rotation) {
+    public GameObject SpawnFromPool(string name) {
         if (!poolDictionary.ContainsKey(name)) {
             Debug.LogError("Pool with key " + name + " doesn't exists.");
             return null;
@@ -80,8 +80,6 @@ public class ObjectPooler : MonoBehaviour {
 
         GameObject objectToSpawn = poolDictionary[name].Dequeue();
         objectToSpawn.SetActive(true);
-        objectToSpawn.transform.position = position;
-        objectToSpawn.transform.rotation = rotation;
 
         IPooledObject pooledObject = objectToSpawn.GetComponent<IPooledObject>();
     

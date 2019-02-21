@@ -6,6 +6,8 @@ public class DamageIndicator : Menu, IPooledObject {
     [SerializeField]
     private Animator _animator;
     [SerializeField]
+    private Vector3 _offset;
+    [SerializeField]
     private TextMeshProUGUI _txtDamage;
     [SerializeField]
     private Color _damageColor;
@@ -26,6 +28,10 @@ public class DamageIndicator : Menu, IPooledObject {
 
     public void Play() {
         Invoke("SetDeactive", _clipLength);
+    }
+
+    public void SetPosition(Vector3 newPosition) {
+        transform.position = newPosition;
     }
 
     public void SetText(string text) {

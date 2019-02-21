@@ -35,7 +35,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 200, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8243303399598551897
 CanvasRenderer:
@@ -67,8 +67,8 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_text: 10000
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 72179b31a84ede9488943748755e60cd, type: 2}
-  m_sharedMaterial: {fileID: 21364062978270340, guid: 72179b31a84ede9488943748755e60cd,
+  m_fontAsset: {fileID: 11400000, guid: 11cce4ae351cc2e48a8682d4d16fac8b, type: 2}
+  m_sharedMaterial: {fileID: 21143053162641240, guid: 11cce4ae351cc2e48a8682d4d16fac8b,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -94,8 +94,8 @@ MonoBehaviour:
   m_outlineColor:
     serializedVersion: 2
     rgba: 4278190080
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -197,7 +197,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: -75}
-  m_SizeDelta: {x: 200, y: 30}
+  m_SizeDelta: {x: 200, y: 48}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &5291610061536102097
 Animator:
@@ -233,6 +233,8 @@ MonoBehaviour:
   container: {fileID: 1724397051332197023}
   subContainer: {fileID: 869119503281079786}
   _animator: {fileID: 5291610061536102097}
+  _offset: {x: 0, y: -75, z: 25}
   _txtDamage: {fileID: 8659670881460921229}
   _damageColor: {r: 1, g: 0.3443396, b: 0.34828955, a: 1}
   _healColor: {r: 0, g: 0.72156864, b: 0.5803922, a: 1}
+  _clipLength: 0
