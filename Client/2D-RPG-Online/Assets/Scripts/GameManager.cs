@@ -81,7 +81,6 @@ public class GameManager : MonoBehaviour {
         } else {
             LoadingManager.instance.Show();
             LoadingManager.instance.AddTask(LoginManager.instance.initializationProgress);
-            LoadingManager.instance.AddTask(SceneController.instance.sceneLoadedProgress);
 
             LoginManager.instance.Initialize();
             LoginManager.instance.Login();
