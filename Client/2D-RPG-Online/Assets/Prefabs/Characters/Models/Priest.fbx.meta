@@ -94,7 +94,12 @@ ModelImporter:
     7400000: mixamo.com
     9500000: //RootNode
     13700000: Chr_Fantasy_Queen_01
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: MiniColour24
+    second: {fileID: 2100000, guid: 5ec5815f62a0d37488d95601e3f0129f, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
